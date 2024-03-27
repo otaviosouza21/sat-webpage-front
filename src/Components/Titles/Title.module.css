@@ -1,0 +1,14 @@
+.titleContainer{
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.titleContainer h1{
+    font-weight: bold;
+    font-family: 'Opens Sans', sans-serif;
+}
+
+.titleContainer p{
+    font-size: 2rem;
+}
