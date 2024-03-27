@@ -1,4 +1,33 @@
+main {
+  color: var(--primary1);
+}
 
-main{
-    color: var(--primary1)
+.titulo {
+  display: grid;
+  grid-template-columns: 400px auto;
+  align-items: center;
+}
+
+.titulo h1 {
+  position: relative;
+  left: -40px;
+  justify-self: end;
+}
+
+.titulo img {
+  width: 500px;
+  clip-path: circle(40%);
+  object-fit: cover;
+}
+
+.gridLinks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.figuras {
+  max-width: 400px;
+  justify-self: center;
 }

@@ -1,20 +1,18 @@
-:root{
+:root {
   --black: #000000;
 
-  --primary1: #062D00;
+  --primary1: #062d00;
   --primary2: #014120;
-  --primary3: #1E613E;
+  --primary3: #1e613e;
 
-  --secundary1: #FBF104;
-  --secundary2: #469AAC;
-  --secundary3: #FE7D7D;
+  --secundary1: #fbf104;
+  --secundary2: #469aac;
+  --secundary3: #fe7d7d;
 
-  --gray1: #8C8C8C;
-  --gray2: #F6F6F6;
+  --gray1: #8c8c8c;
+  --gray2: #f6f6f6;
   --white: #ffffff;
 }
-
-
 
 html,
 body,
@@ -103,8 +101,7 @@ video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  font-family: "Open Sans", sans-serif;;
- 
+  font-family: "Open Sans", sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -145,4 +142,10 @@ table {
 
 * {
   box-sizing: border-box;
+}
+
+.container {
+  max-width: 1000px;
+  padding: 0 0.5rem;
+  margin: 2rem auto;
 }
