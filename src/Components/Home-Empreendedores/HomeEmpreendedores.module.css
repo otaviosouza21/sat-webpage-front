@@ -5,7 +5,6 @@ main {
 .titulo {
   display: grid;
   grid-template-columns: 400px 1fr;
-
   margin-top: -75px;
   transition: 0.3s;
   align-items: end;
@@ -28,7 +27,7 @@ main {
 }
 
 .figuras {
-  max-width: 400px;
+  max-width: 100%;
   justify-self: center;
 }
 
@@ -64,22 +63,34 @@ main {
     grid-template-columns: 1fr;
     justify-items: center;
     transition: 0.3s;
+    margin-top: -50px;
   }
   .titulo h1 {
     grid-row: 1;
+    text-align: center;
+    margin-bottom: 50px;
   }
 }
 
 @media (max-width: 420px) {
   .titulo {
-    display: flex;
     margin-top: 0px;
+    align-items: center;
+    justify-content: center;
   }
   .titulo h1 {
-    font-size: 1.1rem;
+    font-size: 8rem;
+    margin-bottom: 16px;
+    text-align: center;
   }
 
   .titulo img {
-    width: 80px;
+   display: none;
   }
+
+  /* .figuras {
+    max-width: 300px;
+    object-fit: cover;
+    justify-self: center;
+  } */
 }

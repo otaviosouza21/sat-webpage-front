@@ -9,7 +9,6 @@
     color: var(--primary1);
     cursor: pointer;
     padding: 20px 10px;
-    border-radius: 10px;
 }
 
 @media (max-width:600px) {
@@ -24,17 +23,24 @@
     .navLinks li{
         background-color: white;
         font-size: 1rem;
+        padding-left: 30px;
+        padding-bottom: 20px;
+        border-bottom: solid 1px rgb(172, 172, 172);
+        font-size: 1.1rem;
     }
     .navLinks {
       flex-direction: column;
       position: absolute;
       top: 50px;
       height: 100%;
+      width: 200px;
       z-index: 150;
       left: 0;
       gap: 5px;
       background-color: white;
-      display: none;
+      margin-bottom: 40px;
+ 
+    
     }
 
 }
