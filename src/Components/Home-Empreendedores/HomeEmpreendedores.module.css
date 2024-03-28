@@ -6,6 +6,8 @@ main {
   display: grid;
   grid-template-columns: 400px auto;
   align-items: center;
+  margin-top: -50px;
+  transition: 0.3s;
 }
 
 .titulo h1 {
@@ -30,4 +32,56 @@ main {
 .figuras {
   max-width: 400px;
   justify-self: center;
+}
+
+.section{
+  margin-bottom: 100px;
+}
+
+@media (max-width: 830px) {
+  .titulo img {
+    width: 300px;
+    transition: 0.3s;
+  }
+  .titulo {
+    grid-template-columns: 0.5fr 1fr;
+    justify-content: center;
+  }
+
+  .gridLinks {
+    grid-template-columns: 1fr;
+  }
+
+  .figuras:nth-child(2) {
+    display: none;
+  }
+
+  .figuras:nth-child(3) {
+    grid-row: 4;
+  }
+}
+
+@media (max-width: 730px) {
+  .titulo {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    transition: 0.3s;
+  }
+  .titulo h1 {
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 420px) {
+  .titulo {
+    display: flex;
+    margin-top: 0px;
+  }
+  .titulo h1 {
+    font-size: 1.1rem;
+  }
+
+  .titulo img {
+    width: 80px;
+  }
 }

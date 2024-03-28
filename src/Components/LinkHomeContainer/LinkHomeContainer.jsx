@@ -8,7 +8,7 @@ const LinkHomeContainer = ({ icon, title, subtitle, button }) => {
     <div className={styles.containerLinkHome}>
       <img src={icon} alt="" srcset="" />
       <div className={styles.titulos}>
-        <Title text={title} fontSize="3" />
+        <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
       <Button>{button}</Button>

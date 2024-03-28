@@ -1,0 +1,40 @@
+.navLinks{
+    display: flex;
+    gap: 30px;
+}
+
+.navLinks li{
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary1);
+    cursor: pointer;
+    padding: 20px 10px;
+    border-radius: 10px;
+}
+
+@media (max-width:600px) {
+    .navLinks li{
+        background-color: rgb(233, 233, 233);
+        font-size: 1.1rem;
+    }
+
+}
+
+@media (max-width:421px) {
+    .navLinks li{
+        background-color: white;
+        font-size: 1rem;
+    }
+    .navLinks {
+      flex-direction: column;
+      position: absolute;
+      top: 50px;
+      height: 100%;
+      z-index: 150;
+      left: 0;
+      gap: 5px;
+      background-color: white;
+      display: none;
+    }
+
+}

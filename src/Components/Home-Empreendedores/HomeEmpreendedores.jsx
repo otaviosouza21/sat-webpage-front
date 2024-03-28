@@ -8,6 +8,7 @@ import contratarIcon from "../../assets/icons/worker.svg";
 import toolsIcons from "../../assets/icons/tools.svg";
 import figuras1 from "../../assets/img/figure1.svg";
 import figuras2 from "../../assets/img/figure2.svg";
+import Footer from "../Footer/Footer";
 
 const HomeEmpreendedores = () => {
   return (
@@ -37,6 +38,7 @@ const HomeEmpreendedores = () => {
           />
         </div>
       </section>
+      <Footer />
     </main>
   );
 };

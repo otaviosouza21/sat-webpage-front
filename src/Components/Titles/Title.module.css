@@ -2,13 +2,27 @@
     display: flex;
     flex-direction: column;
     z-index: 100;
+    transition: .3s;
 }
 
 .titleContainer h1{
     font-weight: bold;
     font-family: 'Opens Sans', sans-serif;
+    transition: .3s;
 }
 
 .titleContainer p{
     font-size: 2rem;
+}
+
+@media (max-width: 950px ) {
+    .titleContainer h1{
+        font-size: 4rem !important;
+    }
+}
+
+@media (max-width: 830px ) {
+    .titleContainer h1{
+        font-size: 3rem !important;
+    }
 }
