@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './NavLinks.module.css'
+import { Link } from 'react-router-dom'
 
 const NavLinks = () => {
     const navLinks = [
@@ -22,7 +23,7 @@ const NavLinks = () => {
   return (
     <ul className={style.navLinks}>
         {navLinks.map((link,index)=>{
-            return <li key={index}>{link.nome}</li>
+            return <li key={index}><Link to={link.patch}>{link.nome}</Link></li>
         })}
     </ul>
   )

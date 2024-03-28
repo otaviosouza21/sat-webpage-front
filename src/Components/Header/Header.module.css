@@ -41,7 +41,8 @@
 
 .logoSat{
     width:  50px;
-    clip-path: circle(40%);
+    border-radius: 50%;
+    border: solid 2px var(--primary2);
 }
 
 .menuBurguer{

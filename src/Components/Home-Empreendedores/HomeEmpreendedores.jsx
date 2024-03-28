@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./HomeEmpreendedores.module.css";
 import { Header } from "../Header/Header";
 import Title from "../Titles/Title";
-import LogoSat from "../../assets/icons/sat_logo_trans.svg";
+import LogoSat from "../../assets/icons/sat_logo.svg";
 import LinkHomeContainer from "../LinkHomeContainer/LinkHomeContainer";
 import contratarIcon from "../../assets/icons/worker.svg";
 import toolsIcons from "../../assets/icons/tools.svg";

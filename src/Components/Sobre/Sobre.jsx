@@ -2,7 +2,7 @@ import React from 'react'
 import { Header } from '../Header/Header'
 import Footer from '../Footer/Footer'
 
-const Servicos = () => {
+const Sobre = () => {
   return (
     <main>
         <Header />
@@ -11,4 +11,4 @@ const Servicos = () => {
   )
 }
 
-export default Servicos
+export default Sobre

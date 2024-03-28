@@ -4,22 +4,20 @@ main {
 
 .titulo {
   display: grid;
-  grid-template-columns: 400px auto;
-  align-items: center;
-  margin-top: -50px;
+  grid-template-columns: 400px 1fr;
+
+  margin-top: -75px;
   transition: 0.3s;
+  align-items: end;
 }
 
 .titulo h1 {
-  position: relative;
-  left: -40px;
-  justify-self: end;
+  margin-bottom: 90px;
 }
 
 .titulo img {
   width: 500px;
   clip-path: circle(40%);
-  object-fit: cover;
 }
 
 .gridLinks {
@@ -34,7 +32,7 @@ main {
   justify-self: center;
 }
 
-.section{
+.section {
   margin-bottom: 100px;
 }
 
