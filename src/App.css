@@ -170,38 +170,19 @@ animation:forwards left-rigth .5s;
   }
 }
 
-.fadeInDown {
-  transform: translate3d(0, -20px, 0);
-}
-.fadeInUp {
-  transform: translate3d(0, 20px, 0);
-}
-.fadeInRight {
-  transform: translate3d(20px, 0, 0);
-}
-.fadeInLeft {
-  transform: translate3d(-20px, 0, 0);
-}
 
-[data-anime] {
-  opacity: 0;
-}
-.anime {
-  opacity: 1;
-  transform: none;
-  transition: transform 0.8s, opacity 0.8s;
-}
-
-/* .animation-show-opacity{
-  animation: forwards show-opacity 2s;
-}
-
+.animation-opacity{
+  transition: .5s;
+  animation:forwards show-opacity .3s;
+  }
 
 @keyframes show-opacity {
   0%{
     opacity: 0;
+    transform: scale(0.8);
   }
   100%{
     opacity: 100%;
+    transform: initial;
   }
-} */
+} 

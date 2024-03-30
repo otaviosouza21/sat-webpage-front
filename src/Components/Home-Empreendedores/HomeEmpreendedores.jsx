@@ -26,11 +26,11 @@ const HomeEmpreendedores = () => {
 
       <section className={`${styles.section} container`}>
         <div className={styles.titulo}>
-          <img src={LogoSat} className="fadeInUp" alt="" data-anime="200" />
+          <img src={LogoSat}  alt=""/>
           <Title text="Portal do Empreendedor" fontSize="1" />
         </div>
 
-        <div className={`${styles.gridLinks} fadeInUp`} data-anime="200" ref={gridLinks}>
+        <div className={`${styles.gridLinks}`} ref={gridLinks}>
           <LinkHomeContainer
             title="Preciso contratar um serviço"
             subtitle="Encontre os melhores prestadores de serviços na região de Taiaçupeba, de qulquer seguimento."

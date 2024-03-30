@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 import wppIcon from "../../assets/icons/wathsapp.svg";
 import styles from "./ServicoContainer.module.css";
 
-const ServicoContainer = ({ servicosData }) => {
+const ServicoContainer = ({ servicosData, setModal,modal }) => {
   const { nome_negocio, descricao_servico, nome_prestado, categoria_servico } =
     servicosData;
 
@@ -18,7 +18,7 @@ const ServicoContainer = ({ servicosData }) => {
           Contato
         </Button>
       </div>
-      <button className={styles.showMore}>+Ver Mais</button>
+      <button onClick={()=>setModal(!modal)} className={styles.showMore}>+Ver Mais</button>
     </div>
   );
 };
