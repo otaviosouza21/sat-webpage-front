@@ -9,21 +9,21 @@ import { SimpleAnime } from "../../plugins/simple-anime";
 import servicosData from '../../jsons/servicos.json'
 
 const Servicos = () => {
+  const [visibleItens,setVisibleItens] = useState(servicosData)
 
   useEffect(() => {
     new SimpleAnime();
   }, []);
 
 
-  console.log(servicosData);
   return (
     <main>
       <Header />
       <section className={`container ${styles.servicosContainer}`}>
         <Title text="Buscar Profissionais" fontSize="3" />
-        <InputSearch placeholder="Busque por nome, categoria ou descrição do serviço..." />
+        <InputSearch visibleItens={visibleItens} setVisibleItens={setVisibleItens} placeholder="Busque por nome, categoria ou descrição do serviço..." />
         <div className={`${styles.servicosGrid}`}>
-        {servicosData.map((servico,key)=>{
+        {visibleItens.map((servico,key)=>{
           return <ServicoContainer key={key} servicosData={servico} />
         })}
 

@@ -9,7 +9,7 @@ import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
 
 const navLinks = [
   {
-    nome: "Home",
+    nome: "Inicio",
     patch: "/",
   },
   {
