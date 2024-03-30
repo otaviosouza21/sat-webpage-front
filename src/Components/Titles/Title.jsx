@@ -4,7 +4,7 @@ import styles from "./Title.module.css";
 const Title = ({ text, fontSize, subtitle }) => {
   const sizeFunction = (size) => {
     if (size === "1") return "5rem";
-    if (size === "3") return "1.5rem";
+    if (size === "3") return "3rem";
   };
 
   return (

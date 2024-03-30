@@ -1,89 +1,76 @@
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 30px;
-    box-shadow: 1px 1px 5px 1px rgb(209, 209, 209);
-    flex-wrap: wrap;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  box-shadow: 1px 1px 5px 1px rgb(209, 209, 209);
+  flex-wrap: wrap;
 }
 
+.header button {
+  border: none;
+  padding: 10px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border: solid 2px var(--primary2);
+  color: var(--primary2);
+  box-shadow: 0px 0px 1px 1px rgb(175, 175, 175);
+}
 
-.header button{
-    border: none;
-    padding: 10px 30px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
-    font-family: 'Roboto',sans-serif;
-    font-size: 1.3rem;
-    display:flex;
-    align-items: center;
+.header button:hover {
+  transform: scale(1.05);
+  background-color: var(--primary2);
+  color: var(--white);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logoSat {
+  width: 50px;
+  border-radius: 50%;
+  border: solid 2px var(--primary2);
+}
+
+@media (max-width: 650px) {
+  .header {
     justify-content: center;
-    background-color: #fff;
-    border: solid 2px var(--primary2);
-    color: var(--primary2);
-    box-shadow: 0px 0px 1px 1px rgb(175, 175, 175);
+    gap: 20px;
+  }
 
+  .header button {
+    font-size: 1.2rem;
+  }
 }
 
-.header button:hover{
-    transform: scale(1.05);
-    background-color: var(--primary2);
-    color: var(--white);
+@media (max-width: 420px) {
+  .header {
+    justify-content: space-between;
+    padding: 10px 10px;
+  }
+  .logoSat {
+    display: none;
+  }
 }
 
-.nav{
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
+@media (max-width: 370px) {
+  .header {
+    justify-content: space-between;
+    gap: 10px;
+  }
 
-.logoSat{
-    width:  50px;
-    border-radius: 50%;
-    border: solid 2px var(--primary2);
-}
-
-.menuBurguer{
-    width: 30px;
-}
-
-@media (max-width:650px) {
-    .header{
-        justify-content: center;
-        gap: 10px;
-        
-    }
-
-    .header button{
-        font-size: 1.2rem;
-    }
-
-}
-
-@media (max-width:420px) {
-    .header{
-       justify-content: space-between;
-        
-    }
-
-   
-
-}
-
-@media (max-width:370px) {
-    .header{
-        justify-content: space-between;
-        gap: 10px;
-    }
-
-    .logoSat{
-        display: none;
-    }
-    
-
-    .header button{
-        font-size: .9rem;
-    }
+  .header button {
+    font-size: 0.9rem;
+  }
 }

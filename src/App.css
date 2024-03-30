@@ -154,3 +154,18 @@ a{
   padding: 0 1rem;
   margin: 2rem auto;
 }
+
+.animation-left-rigth{
+transition: .5s;
+animation:forwards left-rigth .5s;
+}
+
+@keyframes left-rigth {
+  0%{
+    transform: translateX(-150px);
+    transition: 5s;
+  }
+  100%{
+    transform: initial;;
+  }
+}

@@ -32,12 +32,12 @@
 
 @media (max-width:530px) {
   .titulos h2{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     word-wrap: break-word;
    
   }
   .titulos P{
-    font-size: .9rem;
+    font-size: .8rem;
   }
 
   .containerLinkHome img{

@@ -43,6 +43,7 @@ main {
   .titulo {
     grid-template-columns: 0.5fr 1fr;
     justify-content: center;
+    margin-top: -40px;
   }
 
   .gridLinks {
@@ -72,6 +73,12 @@ main {
   }
 }
 
+@media (max-width: 730px) {
+  .titulo img {
+    width: 220px;
+  }
+}
+
 @media (max-width: 420px) {
   .titulo {
     margin-top: 0px;
@@ -79,13 +86,13 @@ main {
     justify-content: center;
   }
   .titulo h1 {
-    font-size: 8rem;
+    font-size: 5rem;
     margin-bottom: 16px;
     text-align: center;
   }
 
   .titulo img {
-   display: none;
+    display: none;
   }
 
   /* .figuras {

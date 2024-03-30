@@ -1,0 +1,26 @@
+[
+    {
+      "nome_negocio": "Limpeza Residencial",
+      "descricao_servico": "Serviço de limpeza residencial profissional, incluindo limpeza de banheiros, cozinhas, áreas comuns e quartos.",
+      "categoria_servico": "Limpeza",
+      "nome_prestado": "Ana Silva"
+    },
+    {
+      "nome_negocio": "Reparo de Encanamento",
+      "descricao_servico": "Serviço de reparo de encanamento em residências, incluindo conserto de vazamentos, substituição de torneiras e desentupimento de canos.",
+      "categoria_servico": "Encanamento",
+      "nome_prestado": "Carlos Oliveira"
+    },
+    {
+      "nome_negocio": "Aulas de Piano",
+      "descricao_servico": "Aulas particulares de piano para iniciantes e avançados, com foco na técnica, teoria musical e repertório variado.",
+      "categoria_servico": "Educação Musical",
+      "nome_prestado": "Maria Fernandes"
+    },
+    {
+      "nome_negocio": "Design de Logotipo",
+      "descricao_servico": "Serviço de design de logotipo personalizado para empresas e marcas, com várias opções de conceitos e revisões ilimitadas.",
+      "categoria_servico": "Design Gráfico",
+      "nome_prestado": "João Santos"
+    }
+  ]

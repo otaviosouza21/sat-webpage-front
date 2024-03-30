@@ -1,0 +1,38 @@
+.inputSearch {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  box-shadow: 0px 0px 1px 1px rgb(190, 190, 190) inset;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 10px;
+  transition: .3s;
+}
+
+.inputSearch img {
+  width: 30px;
+}
+
+.inputSearch input {
+  font-size: 1.5rem;
+  color: var(--primary1);
+  border: none;
+  width: 95%;
+  background-color: #f0f0f0;
+  outline: none;
+}
+
+.inputSearch:focus{
+  transform: scale(1.01);
+  transition: .5s;
+}
+
+@media (max-width:450px) {
+
+  .inputSearch input{
+    font-size: 1.1rem;
+  }
+  .inputSearch img {
+    width: 20px;
+  }
+}

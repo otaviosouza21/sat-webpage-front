@@ -4,39 +4,48 @@ import styles from "./Header.module.css";
 import logoSat from "../../assets/icons/sat_logo.svg";
 import menuBurguer from "../../assets/icons/menu-burgues.svg";
 import NavLinks from "./NavLinks/NavLinks";
+import { Link } from "react-router-dom";
+import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
+
+const navLinks = [
+  {
+    nome: "Home",
+    patch: "/",
+  },
+  {
+    nome: "Serviços",
+    patch: "/servicos",
+  },
+  {
+    nome: "Sobre",
+    patch: "/sobre",
+  },
+];
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
   useEffect(() => {
-    // Função para atualizar o estado baseado na largura da tela
     function handleResize() {
       setIsTelaPequena(window.innerWidth < 421);
     }
 
-    // Adiciona o event listener
     window.addEventListener("resize", handleResize);
-
-    // Chama a função handleResize inicialmente para definir o estado inicial corretamente
     handleResize();
-
-    // Remove o event listener quando o componente for desmontado
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  console.log(isTelaPequena);
   return (
     <header className={styles.header}>
       <div className={styles.nav}>
-        {isTelaPequena ? (
-          <img
-            className={styles.menuBurguer}
-            src={menuBurguer}
-            alt="logotipo"
-          />
-        ) : (
+        <Link to="/">
           <img className={styles.logoSat} src={logoSat} alt="logotipo" />
+        </Link>
+
+        {isTelaPequena ? (
+          <NavLinkMobile isTelaPequena={isTelaPequena} links={navLinks} />
+        ) : (
+          <NavLinks links={navLinks} />
         )}
-        <NavLinks />
       </div>
       <button>Cadastre-se</button>
     </header>

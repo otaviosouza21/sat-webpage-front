@@ -1,0 +1,19 @@
+.servicosContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.servicosGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+
+}
+
+@media (max-width: 850px) {
+    .servicosGrid{
+        grid-template-columns: 1fr;
+    }
+}

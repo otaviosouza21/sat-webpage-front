@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../Button/Button";
 import styles from "./LinkHomeContainer.module.css";
 import Title from "../Titles/Title";
+import { Link } from "react-router-dom";
 
 const LinkHomeContainer = ({ icon, title, subtitle, button }) => {
   return (
@@ -11,7 +12,7 @@ const LinkHomeContainer = ({ icon, title, subtitle, button }) => {
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
-      <Button>{button}</Button>
+     <Button>{button}</Button>
     </div>
   );
 };
