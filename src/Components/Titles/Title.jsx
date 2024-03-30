@@ -8,8 +8,10 @@ const Title = ({ text, fontSize, subtitle }) => {
   };
 
   return (
-    <div className={styles.titleContainer}>
-      <h1 style={{ fontSize: sizeFunction(fontSize) }}>{text}</h1>
+    <div className={`${styles.titleContainer} `}>
+      <h1 className="fadeInUp" style={{ fontSize: sizeFunction(fontSize) }} data-anime="300">
+        {text}
+      </h1>
       {subtitle && <p>{subtitle}</p>}
     </div>
   );

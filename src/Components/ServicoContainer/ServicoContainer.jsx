@@ -3,13 +3,16 @@ import Button from "../Button/Button";
 import wppIcon from "../../assets/icons/wathsapp.svg";
 import styles from "./ServicoContainer.module.css";
 
-const ServicoContainer = () => {
+const ServicoContainer = ({ servicosData }) => {
+  const { nome_negocio, descricao_servico, nome_prestado, categoria_servico } =
+    servicosData;
+
   return (
     <div className={styles.servicosContainer}>
       <div className={styles.servico}>
-        <h3>Diarista Fixa</h3>
-        <span>Diarista</span>
-        <p>Dona Maria</p>
+        <h3>{nome_negocio}</h3>
+        <span>{categoria_servico}</span>
+        <p>{nome_prestado}</p>
         <Button>
           <img src={wppIcon} alt="" />
           Contato
