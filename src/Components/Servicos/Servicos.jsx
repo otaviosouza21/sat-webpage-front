@@ -6,7 +6,7 @@ import InputSearch from "../Forms/Inputs/InputSearch";
 import ServicoContainer from "../ServicoContainer/ServicoContainer";
 import styles from "./Servicos.module.css";
 import { SimpleAnime } from "../../plugins/simple-anime";
-import servicosData from "../../jsons/servicos.json";
+import servicosData from "../../jsons/servicos.json"; // JSON de teste para serviços
 import ModalServico from "../ModalServico/ModalServico";
 
 const Servicos = () => {

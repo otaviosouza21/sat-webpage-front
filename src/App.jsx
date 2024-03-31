@@ -3,8 +3,8 @@ import HomeEmpreendedores from "./Components/Home-Empreendedores/HomeEmpreendedo
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Servicos from "./Components/Servicos/Servicos";
 import Sobre from "./Components/Sobre/Sobre";
-import { SimpleAnime } from "./plugins/simple-anime";
-import { useEffect } from "react";
+import CadastroUsuario from "./Components/CadastroUsuario.jsx/CadastroUsuario";
+import CadastroServico from "./CadastroServico/CadastroServico";
 
 function App() {
 
@@ -13,6 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeEmpreendedores />} />
         <Route path="/servicos" element={<Servicos />} />
+        <Route path="/cadastro-usuario" element={<CadastroUsuario />} />
+        <Route path="/cadastro-servico" element={<CadastroServico />} />
         <Route path="/sobre" element={<Sobre />} />
       </Routes>
     </BrowserRouter>

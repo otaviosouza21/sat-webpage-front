@@ -47,7 +47,9 @@ export const Header = () => {
           <NavLinks links={navLinks} />
         )}
       </div>
-      <button>Cadastre-se</button>
+      <button>
+        <Link to="cadastro-usuario">Cadastre-se</Link>
+      </button>
     </header>
   );
 };

@@ -1,0 +1,16 @@
+.emConstrucao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+}
+
+.emConstrucao h2 {
+  font-size: 2.5rem;
+}
+
+.emConstrucao img {
+  width: 35%;
+}

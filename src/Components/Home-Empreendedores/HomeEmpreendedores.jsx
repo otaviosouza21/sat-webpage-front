@@ -18,15 +18,13 @@ const HomeEmpreendedores = () => {
     new SimpleAnime();
   }, []);
 
- 
-  
   return (
     <main className={`${styles.main}`}>
       <Header />
 
       <section className={`${styles.section} container`}>
         <div className={styles.titulo}>
-          <img src={LogoSat}  alt=""/>
+          <img src={LogoSat} alt="" />
           <Title text="Portal do Empreendedor" fontSize="1" />
         </div>
 
@@ -36,6 +34,7 @@ const HomeEmpreendedores = () => {
             subtitle="Encontre os melhores prestadores de serviços na região de Taiaçupeba, de qulquer seguimento."
             button="Procurar Profissional"
             icon={contratarIcon}
+            patch="/servicos"
           />
           <img className={styles.figuras} src={figuras2} alt="" />
           <img className={styles.figuras} src={figuras1} alt="" />
@@ -44,6 +43,7 @@ const HomeEmpreendedores = () => {
             subtitle="Cadastre-se e aumente a visibilidade do seu trabalho no bairro de Taiaçupeba"
             button="Quero me cadastrar"
             icon={toolsIcons}
+            patch="/cadastro-servico"
           />
         </div>
       </section>

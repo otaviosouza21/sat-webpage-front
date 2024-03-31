@@ -1,24 +1,23 @@
-.navLinks{
-    display: flex;
-    gap: 20px;
+.navLinks {
+  display: flex;
+  gap: 20px;
 }
 
-.navLinks li{
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--primary1);
-    cursor: pointer;
-    padding: 20px 10px;
+.navLinks li {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary1);
+  cursor: pointer;
 }
 
-
-@media (max-width:600px) {
-   
-    .navLinks li{
-        background-color: rgb(250, 250, 250);
-        font-size: 1.1rem;
-        border-radius: 10px;
-    }
-
+.navLinks li a {
+  padding: 20px 10px;
 }
 
+@media (max-width: 600px) {
+  .navLinks li {
+    background-color: rgb(250, 250, 250);
+    font-size: 1.1rem;
+    border-radius: 10px;
+  }
+}

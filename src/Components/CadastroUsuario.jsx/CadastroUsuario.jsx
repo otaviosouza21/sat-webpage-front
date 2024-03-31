@@ -3,14 +3,14 @@ import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
 import EmConstrucao from "../EmConstrucao/EmConstrucao";
 
-const Sobre = () => {
+const CadastroUsuario = () => {
   return (
-    <main>
+    <section>
       <Header />
       <EmConstrucao />
       <Footer />
-    </main>
+    </section>
   );
 };
 
-export default Sobre;
+export default CadastroUsuario;
