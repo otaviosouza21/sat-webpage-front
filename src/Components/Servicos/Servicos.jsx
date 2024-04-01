@@ -6,20 +6,32 @@ import InputSearch from "../Forms/Inputs/InputSearch";
 import ServicoContainer from "../ServicoContainer/ServicoContainer";
 import styles from "./Servicos.module.css";
 import { SimpleAnime } from "../../plugins/simple-anime";
-import servicosData from "../../jsons/servicos.json"; // JSON de teste para serviços
 import ModalServico from "../ModalServico/ModalServico";
+import useFetch from "../../Hooks/useFetch";
+import { GET_ALL } from "../../Api/api.js";
+import Loading from "../Utils/Loading/Loading.jsx";
 
 const Servicos = () => {
-  const [visibleItens, setVisibleItens] = useState(servicosData);
-  const [modal,setModal] = useState(false)
+  const [visibleItens, setVisibleItens] = useState(null);
+  const { error, loading, request } = useFetch();
+
+  useEffect(() => {
+    const { url, options } = GET_ALL("servico");
+    const response = request(url, options);
+    async function ifFetch() {
+      setVisibleItens((await response).json);
+    }
+
+    ifFetch();
+  }, []);
 
   useEffect(() => {
     new SimpleAnime();
   }, []);
-
+  if (loading) return <Loading />;
+  if (error) return "Erro";
   return (
     <main>
-      {modal && <ModalServico setModal={setModal} modal={modal} />}
       <Header />
       <section className={`container ${styles.servicosContainer}`}>
         <Title text="Buscar Profissionais" fontSize="3" />
@@ -28,10 +40,13 @@ const Servicos = () => {
           setVisibleItens={setVisibleItens}
           placeholder="Busque por nome, categoria ou descrição do serviço..."
         />
-        <div className={`${styles.servicosGrid}`}>
-          {visibleItens.map((servico, key) => {
-            return <ServicoContainer setModal={setModal} modal={modal} key={key} servicosData={servico} />;
-          })}
+        <div className={styles.servicosGrid}>
+          {visibleItens &&
+            visibleItens.map((servico) => {
+              return (
+                <ServicoContainer key={servico.id} servicosData={servico} />
+              );
+            })}
         </div>
       </section>
       <Footer />

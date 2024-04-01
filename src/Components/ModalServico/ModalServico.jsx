@@ -7,7 +7,7 @@ import workserIcon from "../../assets/icons/person.svg";
 import toolsIcon from "../../assets/icons/tools.svg";
 import starIcon from "../../assets/icons/star.svg";
 
-const ModalServico = ({modal,setModal}) => {
+const ModalServico = ({ modal, setModal, servicosData, usuario }) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
 
@@ -27,7 +27,9 @@ const ModalServico = ({modal,setModal}) => {
       ref={modalContainerPost}
       onClick={closeModal}
     >
-      <section className={`${styles.modalServico} container animation-opacity `}>
+      <section
+        className={`${styles.modalServico} container animation-opacity `}
+      >
         <button
           ref={CloseContainerPost}
           onClick={closeModal}
@@ -40,18 +42,15 @@ const ModalServico = ({modal,setModal}) => {
             <Title text="Prestador" fontSize="2" />
             <img src={workserIcon} alt="" />
           </div>
-          <p>Dona Maria da Silva</p>
+          <p>{usuario.nome}</p>
         </div>
         <div>
           <div className={styles.containerTitle}>
             <Title text="Serviço" fontSize="2" />
             <img src={toolsIcon} alt="" />
           </div>
-          <p>Diarista Fixa</p>
-          <span>
-            Diarista de imoveis, disponivel em horario comercial, e tambem aos
-            finais de semana, serviço completo de limpeza
-          </span>
+          <p>{servicosData.nome_negocio}</p>
+          <span>{servicosData.descricao_servico}</span>
         </div>
         <div className={styles.avaliacao}>
           <div className={styles.containerTitle}>

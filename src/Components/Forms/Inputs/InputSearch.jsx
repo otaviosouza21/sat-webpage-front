@@ -1,20 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import searchIcon from "../../../assets/icons/search.svg";
 import styles from "./InputSearch.module.css";
 
 const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens }) => {
-  
+  const selectInput = useRef();
+
   function handleEnter(e) {
-    setVisibleItens(visibleItens);
-    const { value } = e.target;
-    console.log(value);
+    const filterCampo = selectInput.current.value;
+
     const newVisible = visibleItens.filter((item) => {
-      // Verificar se o valor de alguma propriedade inclui a string 'value'
-      const contains = Object.values(item).some(
-        (val) => typeof val === "string" && val.includes(value)
-      );
-      return contains;
+      return item[filterCampo].includes(e.target.value);
     });
+  
     setVisibleItens(newVisible);
   }
 
@@ -32,6 +29,11 @@ const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens }) => {
         name={id}
         id={id}
       />
+
+      <select ref={selectInput} name="" id="">
+        <option value="nome_negocio">Serviço</option>
+        <option value="usuario_id">Prestador</option>
+      </select>
     </div>
   );
 };
