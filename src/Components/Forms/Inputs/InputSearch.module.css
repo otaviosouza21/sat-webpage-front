@@ -27,6 +27,21 @@
   transition: .5s;
 }
 
+.options{
+  border: none;
+  padding: 20px;
+  font-size: 1.3rem;
+  color: rgb(49, 49, 49);
+  background-color: #f3f3f3;
+  border-left: solid 1px rgb(182, 182, 182);
+}
+
+.options option{
+  color: rgb(49, 49, 49);
+  border-radius: 10px;
+}
+
+
 @media (max-width:450px) {
 
   .inputSearch input{
@@ -34,5 +49,9 @@
   }
   .inputSearch img {
     width: 20px;
+  }
+
+  .options{
+    font-size: 1rem;
   }
 }

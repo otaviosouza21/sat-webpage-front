@@ -10,6 +10,7 @@ import ModalServico from "../ModalServico/ModalServico";
 import useFetch from "../../Hooks/useFetch";
 import { GET_ALL } from "../../Api/api.js";
 import Loading from "../Utils/Loading/Loading.jsx";
+import Error from "../Utils/Error/Error.jsx";
 
 const Servicos = () => {
   const [visibleItens, setVisibleItens] = useState(null);
@@ -29,7 +30,7 @@ const Servicos = () => {
     new SimpleAnime();
   }, []);
   if (loading) return <Loading />;
-  if (error) return "Erro";
+  if (error) return <Error error={error} />;
   return (
     <main>
       <Header />

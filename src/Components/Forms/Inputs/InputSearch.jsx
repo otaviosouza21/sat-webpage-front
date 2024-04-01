@@ -30,7 +30,7 @@ const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens }) => {
         id={id}
       />
 
-      <select ref={selectInput} name="" id="">
+      <select ref={selectInput} className={styles.options} name="" id="">
         <option value="nome_negocio">Serviço</option>
         <option value="usuario_id">Prestador</option>
       </select>
