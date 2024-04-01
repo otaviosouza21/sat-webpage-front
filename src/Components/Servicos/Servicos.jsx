@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Title from "../Titles/Title";
-import InputSearch from "../Forms/Inputs/InputSearch";
+import InputSearch from "../Forms/InputSearch/InputSearch.jsx";
 import ServicoContainer from "../ServicoContainer/ServicoContainer";
 import styles from "./Servicos.module.css";
 import { SimpleAnime } from "../../plugins/simple-anime";

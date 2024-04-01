@@ -6,6 +6,7 @@ import menuBurguer from "../../assets/icons/menu-burgues.svg";
 import NavLinks from "./NavLinks/NavLinks";
 import { Link } from "react-router-dom";
 import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
+import ModalLogin from "../ModalLogin/ModalLogin";
 
 const navLinks = [
   {
@@ -24,6 +25,7 @@ const navLinks = [
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
+  const [modal, setModal] = useState(false);
   useEffect(() => {
     function handleResize() {
       setIsTelaPequena(window.innerWidth < 421);
@@ -36,6 +38,7 @@ export const Header = () => {
 
   return (
     <header className={styles.header}>
+      {modal && <ModalLogin setModal={setModal} modal={modal} />}
       <div className={styles.nav}>
         <Link to="/">
           <img className={styles.logoSat} src={logoSat} alt="logotipo" />
@@ -47,9 +50,14 @@ export const Header = () => {
           <NavLinks links={navLinks} />
         )}
       </div>
+      <div>
       <button>
         <Link to="cadastro-usuario">Cadastre-se</Link>
       </button>
+      <button onClick={()=>setModal(!modal)}>
+        <Link>Entrar</Link>
+      </button>
+      </div>
     </header>
   );
 };
