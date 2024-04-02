@@ -5,11 +5,12 @@
   padding: 10px 30px;
   box-shadow: 1px 1px 5px 1px rgb(209, 209, 209);
   flex-wrap: wrap;
+ 
 }
 
 .header button {
   border: none;
-  padding: 10px 30px;
+  padding: 10px 26px;
   border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
@@ -23,6 +24,11 @@
   border: solid 2px var(--primary2);
   color: var(--primary2);
   box-shadow: 0px 0px 1px 1px rgb(175, 175, 175);
+}
+
+.header button:first-child {
+  background-color: var(--primary2);
+  color: white;
 }
 
 .header button:hover {
@@ -43,6 +49,11 @@
   border: solid 2px var(--primary2);
 }
 
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+
 @media (max-width: 650px) {
   .header {
     justify-content: center;
@@ -52,6 +63,8 @@
   .header button {
     font-size: 1.2rem;
   }
+
+
 }
 
 @media (max-width: 420px) {
@@ -62,6 +75,10 @@
   .logoSat {
     display: none;
   }
+  .header button:last-child {
+    display: none;
+     }
+     
 }
 
 @media (max-width: 370px) {

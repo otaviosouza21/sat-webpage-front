@@ -25,6 +25,45 @@ export function GET_TO_ID(tableName, id) {
   };
 }
 
+export function POST_DATA_USER(tableName, data) {
+  return {
+    url: `${URL}:${PORT}/${tableName}/auth/register`,
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  };
+}
+
+export function POST_LOGIN(tableName, data) {
+  return {
+    url: `${URL}:${PORT}/${tableName}/auth/login`,
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  };
+}
+
+export function AUTH_LOGIN(tableName, token, data) {
+  return {
+    url: `${URL}:${PORT}/${tableName}/auth/${token}`,
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  };
+}
+
 export function POST_DATA(tableName, data) {
   return {
     url: `${URL}:${PORT}/${tableName}`,
@@ -52,10 +91,10 @@ export function UPDATE_DATA(tableName, updateData, id) {
 }
 
 export function DELETE_DATA(tableName, id) {
-    return {
-      url: `${URL}:${PORT}/${tableName}/${id}`,
-      options: {
-        method: "DELETE",
-      },
-    };
-  }
+  return {
+    url: `${URL}:${PORT}/${tableName}/${id}`,
+    options: {
+      method: "DELETE",
+    },
+  };
+}

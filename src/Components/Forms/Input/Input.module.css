@@ -13,11 +13,14 @@
     border: none;
     outline: none;
     color: #3a3a3a;
-    background-color: #e2e2e2;
+    background-color: #ececec;
     transition: 0.3s;
     width: 100%;
 }
 
+.inputContainer input[type='checkbox'] {
+   width: 20px;
+}
 
 .inputContainer input:focus{
     border: solid 1px var(--primary3);
@@ -27,4 +30,20 @@
 
 .inputContainer label{
     font-size: 1.2rem;
+}
+
+.inputContainer select{
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    font-size: 1rem;
+    background-color: #ececec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.error{
+    color: red;
 }

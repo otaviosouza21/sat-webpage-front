@@ -50,7 +50,7 @@ export const Header = () => {
           <NavLinks links={navLinks} />
         )}
       </div>
-      <div>
+      <div className={styles.buttons}>
       <button>
         <Link to="cadastro-usuario">Cadastre-se</Link>
       </button>
