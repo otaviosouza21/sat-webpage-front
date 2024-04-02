@@ -12,12 +12,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomeEmpreendedores />} />
-        <Route path="/servicos" element={<Servicos />} />
-        <Route path="/cadastro-usuario" element={<CadastroUsuario />} />
-        <Route path="/cadastro-servico" element={<CadastroServico />} />
-        <Route path="/sobre" element={<Sobre />} />
-        <Route path="/adm" element={<ListServicos />} />
+        <Route exact path="/" element={<HomeEmpreendedores />} />
+        <Route exact path="servicos" element={<Servicos />} />
+        <Route exact path="cadastro-usuario" element={<CadastroUsuario />} />
+        <Route exact path="cadastro-servico" element={<CadastroServico />} />
+        <Route exact path="sobre" element={<Sobre />} />
+        <Route exact path="adm" element={<ListServicos />} />
       </Routes>
     </BrowserRouter>
   );

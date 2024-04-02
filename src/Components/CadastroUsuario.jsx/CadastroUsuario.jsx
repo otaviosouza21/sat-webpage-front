@@ -10,9 +10,12 @@ import InputSelect from "../Forms/Input/InputSelect";
 import useForm from "../../Hooks/useForm";
 import useFetch from "../../Hooks/useFetch";
 import { GET_ALL, POST_DATA_USER } from "../../Api/api";
+import Loading from "../Utils/Loading/Loading";
+import Toast from "../Toast/Toast";
 
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
+  const [statusCadastro, setStatusCadastro] = useState(null);
   const formRef = useRef();
 
   const nameForm = useForm();
@@ -24,8 +27,8 @@ const CadastroUsuario = () => {
   const contatoN2Form = useForm();
   const morador = useForm();
   const socioSatForm = useForm();
-  const { request, data } = useFetch();
-
+  const { request, data, loading, error } = useFetch();
+  
   useEffect(() => {
     const { url, options } = GET_ALL("rules");
     async function getRules() {
@@ -34,9 +37,10 @@ const CadastroUsuario = () => {
     }
     getRules();
   }, []);
-
+  
   function handleSubmit(e) {
     e.preventDefault();
+
 
     if (
       nameForm.validate() &&
@@ -64,10 +68,16 @@ const CadastroUsuario = () => {
       async function postUser() {
         const { url, options } = POST_DATA_USER("usuarios", dataUsuario);
         const userRequest = await request(url, options);
+        if (userRequest.response.ok) {
+          setStatusCadastro(userRequest.json.message);
+        }
       }
       postUser();
     }
+
+   
   }
+
   if (rules)
     return (
       <section>
@@ -148,7 +158,12 @@ const CadastroUsuario = () => {
               id="socio_sat"
               {...socioSatForm}
             />
-            <Button handleSubmit={handleSubmit}>Cadastrar</Button>
+
+            <Button handleSubmit={handleSubmit}>
+              {loading ? "Cadastrando..." : "Cadastrar"}
+            </Button>
+            {error && <Toast message={error} color='text-bg-danger' />}
+            {statusCadastro && <Toast message={statusCadastro} color='text-bg-success' />}
           </form>
         </section>
 

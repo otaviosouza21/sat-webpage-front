@@ -52,7 +52,7 @@ export const Header = () => {
       </div>
       <div className={styles.buttons}>
       <button>
-        <Link to="cadastro-usuario">Cadastre-se</Link>
+        <Link to="/cadastro-usuario">Cadastre-se</Link>
       </button>
       <button onClick={()=>setModal(!modal)}>
         <Link>Entrar</Link>

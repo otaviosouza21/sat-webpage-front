@@ -10,16 +10,17 @@ import Title from "../Components/Titles/Title";
 import useFetch from "../Hooks/useFetch";
 import { GET_ALL, POST_DATA } from "../Api/api";
 import useForm from "../Hooks/useForm";
+import Loading from '../Components/Utils/Loading/Loading'
 
 const CadastroServico = () => {
   const [categorias, setCategorias] = useState();
-  const { request } = useFetch();
+  const { request, loading } = useFetch();
   const formRef = useRef();
 
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
-  const possuiNomeNegocioForm = useForm()
+  const possuiNomeNegocioForm = useForm();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,18 +35,18 @@ const CadastroServico = () => {
         tempo_negocio: +tempoNegocio.value,
         status: formRef.current["status"].value === "Ativo" ? true : false,
         categoria_id: +formRef.current["categoria"].value,
-        possui_nome_negocio: formRef.current["possui_nome_negocio"].checked ? true : false,
-        usuario_id: 7
+        possui_nome_negocio: formRef.current["possui_nome_negocio"].checked
+          ? true
+          : false,
+        usuario_id: 7,
       };
 
       async function postServico() {
         const { url, options } = POST_DATA("servico", dataServico);
         const servicoRequest = await request(url, options);
-        console.log(servicoRequest);
+    
       }
       postServico();
-  
-
     }
   }
 
@@ -61,7 +62,7 @@ const CadastroServico = () => {
 
     getCategorias();
   }, []);
-
+  if (loading) return <Loading />;
   if (categorias)
     return (
       <section>
@@ -107,11 +108,10 @@ const CadastroServico = () => {
               options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
               id="status"
             />
-              <InputText
+            <InputText
               label="Possui nome do Negócio?"
               type="checkbox"
               id="possui_nome_negocio"
-            
             />
             <Button handleSubmit={handleSubmit}>Cadastrar</Button>
           </form>

@@ -8,9 +8,21 @@
     margin-top: 20px;
     align-items: start;
     justify-content: center;
+    position: relative;
+}
+
+.cadastroUsuario input[type='checkbox']{
+    box-shadow: none;
+
 }
 
 .cadastroUsuario button{
-    grid-column: 1/5;
+    grid-column: 2/5;
     justify-self: end;
+}
+
+@media (max-width:600px) {
+    .cadastroUsuario{
+        grid-template-columns: 1fr 1fr ;
+    }
 }

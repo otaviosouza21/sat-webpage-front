@@ -57,7 +57,7 @@ export function AUTH_LOGIN(tableName, token, data) {
     options: {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        Autorization: `Bearer ${token} `
       },
       body: JSON.stringify(data),
     },
