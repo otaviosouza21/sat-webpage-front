@@ -6,6 +6,7 @@ import Sobre from "./Components/Sobre/Sobre";
 import CadastroUsuario from "./Components/CadastroUsuario.jsx/CadastroUsuario";
 import CadastroServico from "./CadastroServico/CadastroServico";
 import ListServicos from "./Components/Listagens/ListServicos";
+import Adm from "./Components/Adm/Adm";
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
         <Route exact path="cadastro-usuario" element={<CadastroUsuario />} />
         <Route exact path="cadastro-servico" element={<CadastroServico />} />
         <Route exact path="sobre" element={<Sobre />} />
-        <Route exact path="adm" element={<ListServicos />} />
+        <Route exact path="adm" element={<Adm />} />
       </Routes>
     </BrowserRouter>
   );

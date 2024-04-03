@@ -3,9 +3,11 @@ import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { GET_ALL } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
+import Loading from "../Utils/Loading/Loading";
+import FuncButton from "../Button/FuncButton";
 
 const ListServicos = () => {
-  const { request } = useFetch();
+  const { request,loading } = useFetch();
   const [servicos, setServicos] = useState(null);
 
   useEffect(() => {
@@ -27,8 +29,8 @@ const ListServicos = () => {
 if(servicos)
   return (
     <section>
-      <Header />
-      <table class="table table-hover container">
+      {loading ? <Loading /> :
+      <table className="table table-hover container">
         <thead>
           <tr>
             <th>ID</th>
@@ -38,10 +40,13 @@ if(servicos)
             <th>Status</th>
             <th>Tempo</th>
             <th>Usuario</th>
+            <th>Categoria</th>
           </tr>
         </thead>
         <tbody>
-        {servicos.map((servico, index) => {
+
+
+       {servicos.map((servico, index) => {
             return (
               <tr key={index}>
                 <td>{servico.id}</td>
@@ -51,18 +56,21 @@ if(servicos)
                 <td>{servico.status ? 'Ativo' : 'Inativo'}</td>
                 <td>{servico.tempo_negocio}</td>
                 <td>{servico.usuario_id}</td>
+                <td>{servico.categoria_id}</td>
                 <td>
-                    <button>Deletar</button>
+                  <FuncButton table='servico' id={servico.id} method='DELETE'>Deletar</FuncButton>
                 </td>
                 <td>
                     <button>Alterar</button>
                 </td>
               </tr>
             );
-          })} 
+          })
+        }
+
         </tbody>
       </table>
-      <Footer />
+}
     </section>
   );
 };
