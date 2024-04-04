@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
 import styles from "../CadastroUsuario.jsx/CadastroUsuario.module.css";
@@ -8,21 +8,40 @@ import InputSelect from "../Forms/Input/InputSelect";
 import Button from "../Button/Button";
 import Title from "../Titles/Title";
 import useFetch from "../../Hooks/useFetch";
-import { GET_ALL, POST_DATA } from "../../Api/api";
+import { GET_ALL, POST_DATA, UPDATE_DATA } from "../../Api/api";
 import useForm from "../../Hooks/useForm";
 import Loading from '../Utils/Loading/Loading'
 import Toast from "../Toast/Toast";
+import { GlobalContext } from "../../Hooks/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 const CadastroServico = () => {
   const [categorias, setCategorias] = useState();
-  const { data,request, loading,error } = useFetch();
+  const { request, loading,error } = useFetch();
+  const [dadosAtualizados,setDadosAtualizados] = useState({})
   const [statusCadastro, setStatusCadastro] = useState(null);
+  const {update,admAuth,dataUpdate,setDataUpdate} = useContext(GlobalContext)
   const formRef = useRef();
+  const navigate = useNavigate()
 
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
   const possuiNomeNegocioForm = useForm(false);
+ 
+
+  useEffect(() => {
+    if (update && dataUpdate) {
+      nomeNegocioForm.setValue(dataUpdate.nome_negocio);
+      descricaoForm.setValue(dataUpdate.descricao_servico);
+      tempoNegocio.setValue(dataUpdate.tempo_negocio);
+      setTimeout(() => {
+        formRef.current["possui_nome_negocio"].checked = dataUpdate.possui_nome_negocio;
+        formRef.current["categoria"].value = String(dataUpdate.categoria_id);
+      }, 1000);
+    } 
+  }, [update]);
+  
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -40,20 +59,20 @@ const CadastroServico = () => {
         possui_nome_negocio: formRef.current["possui_nome_negocio"].checked
           ? 'Sim'
           : 'Não',
-        usuario_id: 7,
+        usuario_id: 1,
       };
 
       async function postServico() {
-        const { url, options } = POST_DATA("servico", dataServico);
+        const { url, options } = update && dataUpdate ? UPDATE_DATA('servico',dataServico,dataUpdate.id) : POST_DATA("servico", dataServico) 
         const servicoRequest = await request(url, options);
-        console.log(servicoRequest);
         if (servicoRequest.response.ok) {
-          setStatusCadastro('Serviço Cadastrado com Sucesso');
+          setStatusCadastro(`Serviço ${dataUpdate ? 'Atualizado' : 'Cadastrado'} com Sucesso`);
           nomeNegocioForm.reset();
           descricaoForm.reset();
           tempoNegocio.reset();
-
+          
           setTimeout(()=>{
+            navigate('/adm')
             setStatusCadastro(null)
           },1000)
          
@@ -86,7 +105,7 @@ const CadastroServico = () => {
       <section>
         <Header />
         <section className={`${styles.cadastroContainer} container`}>
-          <Title text="Cadastro de Serviço" fontSize="3" />
+          <Title text={dataUpdate ? 'Atualizar Serviço' : 'Cadastrar Serviço'} fontSize="3" />
           <form
             onSubmit={handleSubmit}
             ref={formRef}
@@ -121,18 +140,20 @@ const CadastroServico = () => {
               options={categorias}
               id="categoria"
             />
-            <InputSelect
+           {admAuth && <InputSelect
               label="Status"
               options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
               id="status"
-            />
+            />}
             <InputText
               label="Possui nome do Negócio?"
               type="checkbox"
               id="possui_nome_negocio"
               {...possuiNomeNegocioForm}
             />
-            <Button handleSubmit={handleSubmit}>{loading ? "Cadastrando..." : "Cadastrar"}</Button>
+            <Button handleSubmit={handleSubmit}>
+              {loading ? "Salvando..." : "Salvar"}
+            </Button>
             {error && <Toast message={error} color="text-bg-danger" />}
             {statusCadastro && (
               <Toast message={statusCadastro} color="text-bg-success" />

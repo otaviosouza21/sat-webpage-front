@@ -43,7 +43,7 @@ const ListRules = () => {
                     <td>{rule.nome}</td>
                     <td>{rule.status ? "Ativo" : "Inativo"}</td>
                     <td>
-                      <FuncButton
+                     {/*  <FuncButton
                         table="rules"
                         id={rule.id}
                         method="DELETE"
@@ -60,7 +60,7 @@ const ListRules = () => {
                         style="btn btn-outline-dark"
                       >
                         Alterar
-                      </FuncButton>
+                      </FuncButton> */}
                     </td>
                   </tr>
                 );

@@ -12,11 +12,12 @@ import useFetch from "../../Hooks/useFetch";
 import { GET_ALL, POST_DATA_USER } from "../../Api/api";
 import Loading from "../Utils/Loading/Loading";
 import Toast from "../Toast/Toast";
+import { GlobalContext } from "../../Hooks/GlobalContext";
 
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const {update,setUpdate} = useContext(GlobalContext)
+  const {update,setUpdate,admAuth} = useContext(GlobalContext)
 
   const formRef = useRef();
 
@@ -159,18 +160,21 @@ const CadastroUsuario = () => {
               gridColumn="1/3"
               {...morador}
             />
-            <InputSelect label="Perfil" options={rules} id="rule" />
-            <InputSelect
+
+            {admAuth && <InputSelect label="Perfil" options={rules} id="rule" />}
+
+           {admAuth  &&<InputSelect
               label="Status"
               options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
               id="status"
-            />
-            <InputText
+            />}
+
+            {admAuth && <InputText
               label="Sócio Sat"
               type="checkbox"
               id="socio_sat"
               {...socioSatForm}
-            />
+            />}
 
             <Button handleSubmit={handleSubmit}>
               {loading ? "Cadastrando..." : "Cadastrar"}

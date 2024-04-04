@@ -3,13 +3,17 @@ import { DELETE_DATA } from '../../Api/api';
 import useFetch from '../../Hooks/useFetch';
  import Toast from '../Toast/Toast'; 
 import { GlobalContext } from '../../Hooks/GlobalContext';
+import { useHref, useLocation, useNavigate } from 'react-router-dom';
 
 
 
 const FuncButton = ({table,method,id,updateDate,children,style}) => {
     const {request, data} = useFetch()
     const [alert,SetAlert] = useState(false)
-    const {update,setUpdate} = useContext(GlobalContext)
+    const {update,setUpdate,setDataUpdate} = useContext(GlobalContext)
+    const navigate = useNavigate()
+   
+    
     
 
 
@@ -31,13 +35,15 @@ if(method === 'DELETE' && updateDate === undefined){
             console.log('Ocoreu um erro');
         }
     }
-
     deleteData()
+} else if(method === 'PUT' && updateDate !== undefined){
+    setDataUpdate(updateDate)
+    navigate('/cadastro-servico')
+    setUpdate(true)
 }
 
+
 }
-
-
     return (
         <>
           <button className={style} onClick={handleClick}>

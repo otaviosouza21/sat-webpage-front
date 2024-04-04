@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { GET_ALL, GET_TO_ID } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
+import { GlobalContext } from "../../Hooks/GlobalContext";
 
 const ListServicos = () => {
   const { request, loading } = useFetch();
+  const {update} = useContext(GlobalContext)
   const [servicos, setServicos] = useState(null);
   const [usuarios, setUsuarios] = useState(null);
 
@@ -23,7 +25,7 @@ const ListServicos = () => {
     }
 
     getServicos();
-  }, []);
+  }, [update]);
 
   if (servicos)
     return (
@@ -72,6 +74,7 @@ const ListServicos = () => {
                         id={servico.id}
                         method="PUT"
                         style="btn btn-outline-dark"
+                        updateDate={servico}
                       >
                         Alterar
                       </FuncButton>

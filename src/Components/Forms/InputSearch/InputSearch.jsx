@@ -61,7 +61,6 @@ const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens }) => {
         onChange={() => filterItems(searchTerm)}
       >
         <option value="nome_negocio">Serviço</option>
-        <option value="usuario_id">Prestador</option>
       </select>
     </div>
   );

@@ -48,7 +48,7 @@ const ListCategoriasServicos = () => {
                   <tr key={index}>
                     <td>{categoria.id}</td>
                     <td>{categoria.nome}</td>
-                    <td style={{backgroundColor: categoria.cor_categoria}}>{categoria.cor_categoria}</td>
+                    <td style={{backgroundColor: categoria.cor_categoria, color:'#fff'}}>{categoria.cor_categoria}</td>
                     <td>{categoria.status ? "Ativo" : "Inativo"}</td>
                     <td>
                       <FuncButton

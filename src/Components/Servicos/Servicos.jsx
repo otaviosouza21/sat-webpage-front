@@ -39,13 +39,13 @@ const Servicos = () => {
         <InputSearch
           visibleItens={visibleItens}
           setVisibleItens={setVisibleItens}
-          placeholder="Busque por nome, categoria ou descrição do serviço..."
+          placeholder="Busque um serviço"
         />
         <div className={styles.servicosGrid}>
           {visibleItens &&
             visibleItens.map((servico) => {
               return (
-                <ServicoContainer key={servico.id} servicosData={servico} />
+                servico.status ? <ServicoContainer key={servico.id} servicosData={servico} /> : null
               );
             })}
         </div>

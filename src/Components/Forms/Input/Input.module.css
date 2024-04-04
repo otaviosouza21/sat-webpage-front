@@ -7,12 +7,12 @@
 .inputContainer input {
     height: 40px;
     padding: 9px 5px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     border-radius: 10px;
     padding: 10px;
     border: none;
     outline: none;
-    color: #3a3a3a;
+    color: #242424;
     background-color: #ececec;
     transition: 0.3s;
     width: 100%;
@@ -30,6 +30,7 @@
 
 .inputContainer label{
     font-size: 1.2rem;
+    font-weight: 500;
 }
 
 .inputContainer select{
