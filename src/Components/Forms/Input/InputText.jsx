@@ -10,6 +10,7 @@ const InputText = ({
   onBlur,
   onChange,
   error,
+  value
 }) => {
   return (
     <div style={{ gridColumn: gridColumn }} className={styles.inputContainer}>
@@ -21,7 +22,7 @@ const InputText = ({
         onBlur={onBlur}
         onChange={onChange}
         name={id}
-       
+        value={value}
       />
       {error && <p className={styles.error}>{error}</p>}
     </div>

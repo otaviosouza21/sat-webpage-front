@@ -5,7 +5,7 @@ import useFetch from '../../Hooks/useFetch';
 
 
 
-const FuncButton = ({table,method,id,updateDate,children}) => {
+const FuncButton = ({table,method,id,updateDate,children,style}) => {
     const {request, data} = useFetch()
     const [alert,SetAlert] = useState(false)
     
@@ -30,7 +30,7 @@ if(method === 'DELETE' && updateDate === undefined){
 
     return (
         <>
-          <button onClick={handleClick}>
+          <button className={style} onClick={handleClick}>
            {children}
          </button>
        

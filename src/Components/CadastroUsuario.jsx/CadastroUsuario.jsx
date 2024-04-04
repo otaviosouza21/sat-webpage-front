@@ -21,14 +21,14 @@ const CadastroUsuario = () => {
   const nameForm = useForm();
   const emailForm = useForm("email");
   const senhaForm = useForm("senha");
-  const contatoP1Form = useForm();
-  const contatoP2Form = useForm();
-  const contatoN1Form = useForm();
-  const contatoN2Form = useForm();
+  const contatoP1Form = useForm("phone");
+  const contatoP2Form = useForm("phone");
+  const contatoN1Form = useForm("phone");
+  const contatoN2Form = useForm("phone");
   const morador = useForm();
-  const socioSatForm = useForm();
+  const socioSatForm = useForm(false);
   const { request, data, loading, error } = useFetch();
-  
+
   useEffect(() => {
     const { url, options } = GET_ALL("rules");
     async function getRules() {
@@ -37,10 +37,9 @@ const CadastroUsuario = () => {
     }
     getRules();
   }, []);
-  
+
   function handleSubmit(e) {
     e.preventDefault();
-
 
     if (
       nameForm.validate() &&
@@ -60,7 +59,7 @@ const CadastroUsuario = () => {
         contato_negocio_01: contatoN1Form.value,
         contato_negocio_02: contatoN2Form.value,
         tempo_reside: morador.value,
-        socio_sat: formRef.current["socio_sat"].checked ? true : false,
+        socio_sat: formRef.current["socio_sat"].checked ? "Sim" : "Não",
         status: formRef.current["status"].value === "Ativo" ? true : false,
         rule_id: +formRef.current["rule"].value,
       };
@@ -70,12 +69,21 @@ const CadastroUsuario = () => {
         const userRequest = await request(url, options);
         if (userRequest.response.ok) {
           setStatusCadastro(userRequest.json.message);
+          nameForm.reset();
+          emailForm.reset();
+          senhaForm.reset();
+          contatoN1Form.reset();
+          contatoN2Form.reset();
+          contatoP1Form.reset();
+          contatoP2Form.reset();
+          morador.reset();
+          formRef.current["socio_sat"].unchecked;
         }
       }
       postUser();
+    } else {
+      setStatusCadastro("Verifique se todos os campos estao preenchidos");
     }
-
-   
   }
 
   if (rules)
@@ -124,6 +132,7 @@ const CadastroUsuario = () => {
               type="text"
               id="contato_pessoal_02"
               placeholder="(xx) xxxxx-xxxx"
+              {...contatoP2Form}
             />
             <InputText
               label="Contato Negocio*"
@@ -137,6 +146,7 @@ const CadastroUsuario = () => {
               type="text"
               id="contato_negocio_02"
               placeholder="(xx) xxxxx-xxxx"
+              {...contatoN2Form}
             />
             <InputText
               label="Morador (Anos)"
@@ -162,8 +172,10 @@ const CadastroUsuario = () => {
             <Button handleSubmit={handleSubmit}>
               {loading ? "Cadastrando..." : "Cadastrar"}
             </Button>
-            {error && <Toast message={error} color='text-bg-danger' />}
-            {statusCadastro && <Toast message={statusCadastro} color='text-bg-success' />}
+            {error && <Toast message={error} color="text-bg-danger" />}
+            {statusCadastro && (
+              <Toast message={statusCadastro} color="text-bg-success" />
+            )}
           </form>
         </section>
 

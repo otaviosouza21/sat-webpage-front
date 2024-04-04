@@ -23,6 +23,12 @@
 
 @media (max-width:600px) {
     .cadastroUsuario{
-        grid-template-columns: 1fr 1fr ;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .cadastroUsuario input{
+        width: 100%;
     }
 }
