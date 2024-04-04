@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GET_ALL } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
+import { GlobalContext } from "../../Hooks/GlobalContext";
 
 const ListUsuarios = () => {
-  const { request, loading } = useFetch();
+  const { request, loading, data} =  useFetch();
   const [usuarios, setUsuarios] = useState(null);
+  const {update} = useContext(GlobalContext)
 
   useEffect(() => {
     async function getUsuarios() {
@@ -19,7 +21,7 @@ const ListUsuarios = () => {
     }
 
     getUsuarios();
-  }, []);
+  }, [update]);
 
   if (usuarios)
     return (

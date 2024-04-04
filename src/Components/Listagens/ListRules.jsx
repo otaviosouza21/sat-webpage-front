@@ -59,7 +59,7 @@ const ListRules = () => {
                         method="PUT"
                         style="btn btn-outline-dark"
                       >
-                        Deletar
+                        Alterar
                       </FuncButton>
                     </td>
                   </tr>

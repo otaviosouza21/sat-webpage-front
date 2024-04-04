@@ -4,13 +4,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Servicos from "./Components/Servicos/Servicos";
 import Sobre from "./Components/Sobre/Sobre";
 import CadastroUsuario from "./Components/CadastroUsuario.jsx/CadastroUsuario";
-import CadastroServico from "./CadastroServico/CadastroServico";
+import CadastroServico from "./Components/CadastroServico/CadastroServico";
 import ListServicos from "./Components/Listagens/ListServicos";
 import Adm from "./Components/Adm/Adm";
+import { GlobalStorage } from "./Hooks/GlobalContext";
 
 function App() {
 
   return (
+    <GlobalStorage>
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<HomeEmpreendedores />} />
@@ -21,6 +23,7 @@ function App() {
         <Route exact path="adm" element={<Adm />} />
       </Routes>
     </BrowserRouter>
+    </GlobalStorage>
   );
 }
 

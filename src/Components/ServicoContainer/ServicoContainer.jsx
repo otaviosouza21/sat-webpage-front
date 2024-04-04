@@ -64,7 +64,7 @@ const ServicoContainer = ({ servicosData }) => {
         )}
         <div className={styles.servico}>
           <h3>{nome_negocio}</h3>
-          <span>{categoriaData.nome}</span>
+          <span style={{background: categoriaData.cor_categoria}}>{categoriaData.nome}</span>
           <p>{usuarioData.nome}</p>
           <Button /* patch={wppAPI} */>
             <img src={wppIcon} alt="" />

@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../../Hooks/useFetch";
 import { GET_ALL } from "../../Api/api";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
+import CadastroCategoria from "../CadastroCategoria/CadastroCategoria";
+import { GlobalContext } from "../../Hooks/GlobalContext";
 
 const ListCategoriasServicos = () => {
   const { request, loading } = useFetch();
   const [categorias, setCategorias] = useState(null);
+  const { update } = useContext(GlobalContext);
+  
+ 
 
   useEffect(() => {
     async function getCategorias() {
@@ -19,11 +24,12 @@ const ListCategoriasServicos = () => {
     }
 
     getCategorias();
-  }, []);
+  }, [update]);
 
   if (categorias)
     return (
       <section>
+        <CadastroCategoria />
         {loading ? (
           <Loading />
         ) : (
@@ -32,6 +38,7 @@ const ListCategoriasServicos = () => {
               <tr>
                 <th>ID</th>
                 <th>Nome</th>
+                <th>Cor</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -41,6 +48,7 @@ const ListCategoriasServicos = () => {
                   <tr key={index}>
                     <td>{categoria.id}</td>
                     <td>{categoria.nome}</td>
+                    <td style={{backgroundColor: categoria.cor_categoria}}>{categoria.cor_categoria}</td>
                     <td>{categoria.status ? "Ativo" : "Inativo"}</td>
                     <td>
                       <FuncButton
@@ -59,7 +67,7 @@ const ListCategoriasServicos = () => {
                         method="PUT"
                         style="btn btn-outline-dark"
                       >
-                        Deletar
+                        Alterar
                       </FuncButton>
                     </td>
                   </tr>

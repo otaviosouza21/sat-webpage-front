@@ -1,26 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Header } from "../Components/Header/Header";
-import Footer from "../Components/Footer/Footer";
-import styles from "../Components/CadastroUsuario.jsx/CadastroUsuario.module.css";
-import EmConstrucao from "../Components/EmConstrucao/EmConstrucao";
-import InputText from "../Components/Forms/Input/InputText";
-import InputSelect from "../Components/Forms/Input/InputSelect";
-import Button from "../Components/Button/Button";
-import Title from "../Components/Titles/Title";
-import useFetch from "../Hooks/useFetch";
-import { GET_ALL, POST_DATA } from "../Api/api";
-import useForm from "../Hooks/useForm";
-import Loading from '../Components/Utils/Loading/Loading'
+import { Header } from "../Header/Header";
+import Footer from "../Footer/Footer";
+import styles from "../CadastroUsuario.jsx/CadastroUsuario.module.css";
+import EmConstrucao from "../EmConstrucao/EmConstrucao";
+import InputText from "../Forms/Input/InputText";
+import InputSelect from "../Forms/Input/InputSelect";
+import Button from "../Button/Button";
+import Title from "../Titles/Title";
+import useFetch from "../../Hooks/useFetch";
+import { GET_ALL, POST_DATA } from "../../Api/api";
+import useForm from "../../Hooks/useForm";
+import Loading from '../Utils/Loading/Loading'
+import Toast from "../Toast/Toast";
 
 const CadastroServico = () => {
   const [categorias, setCategorias] = useState();
-  const { request, loading } = useFetch();
+  const { data,request, loading,error } = useFetch();
+  const [statusCadastro, setStatusCadastro] = useState(null);
   const formRef = useRef();
 
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
-  const possuiNomeNegocioForm = useForm();
+  const possuiNomeNegocioForm = useForm(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -36,17 +38,33 @@ const CadastroServico = () => {
         status: formRef.current["status"].value === "Ativo" ? true : false,
         categoria_id: +formRef.current["categoria"].value,
         possui_nome_negocio: formRef.current["possui_nome_negocio"].checked
-          ? true
-          : false,
+          ? 'Sim'
+          : 'Não',
         usuario_id: 7,
       };
 
       async function postServico() {
         const { url, options } = POST_DATA("servico", dataServico);
         const servicoRequest = await request(url, options);
-    
+        console.log(servicoRequest);
+        if (servicoRequest.response.ok) {
+          setStatusCadastro('Serviço Cadastrado com Sucesso');
+          nomeNegocioForm.reset();
+          descricaoForm.reset();
+          tempoNegocio.reset();
+
+          setTimeout(()=>{
+            setStatusCadastro(null)
+          },1000)
+         
+        }
       }
       postServico();
+    } else {
+      setStatusCadastro('Por Favor, Preencha todos os Campos')
+      setTimeout(()=>{
+        setStatusCadastro(null)
+      },1000)
     }
   }
 
@@ -62,7 +80,7 @@ const CadastroServico = () => {
 
     getCategorias();
   }, []);
-  if (loading) return <Loading />;
+ 
   if (categorias)
     return (
       <section>
@@ -112,8 +130,13 @@ const CadastroServico = () => {
               label="Possui nome do Negócio?"
               type="checkbox"
               id="possui_nome_negocio"
+              {...possuiNomeNegocioForm}
             />
-            <Button handleSubmit={handleSubmit}>Cadastrar</Button>
+            <Button handleSubmit={handleSubmit}>{loading ? "Cadastrando..." : "Cadastrar"}</Button>
+            {error && <Toast message={error} color="text-bg-danger" />}
+            {statusCadastro && (
+              <Toast message={statusCadastro} color="text-bg-success" />
+            )}
           </form>
         </section>
         <Footer />

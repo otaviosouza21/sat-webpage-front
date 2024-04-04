@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
 import EmConstrucao from "../EmConstrucao/EmConstrucao";
@@ -16,6 +16,8 @@ import Toast from "../Toast/Toast";
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
+  const {update,setUpdate} = useContext(GlobalContext)
+
   const formRef = useRef();
 
   const nameForm = useForm();
@@ -78,6 +80,7 @@ const CadastroUsuario = () => {
           contatoP2Form.reset();
           morador.reset();
           formRef.current["socio_sat"].unchecked;
+          setUpdate(!update)
         }
       }
       postUser();
