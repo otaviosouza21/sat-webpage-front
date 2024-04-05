@@ -28,7 +28,6 @@ if(method === 'DELETE' && updateDate === undefined){
             SetAlert(true)
             setTimeout(()=>{
                 SetAlert(false)
-                console.log(data);
                },3000)
         }
         else {
@@ -38,7 +37,7 @@ if(method === 'DELETE' && updateDate === undefined){
     deleteData()
 } else if(method === 'PUT' && updateDate !== undefined){
     setDataUpdate(updateDate)
-    navigate('/cadastro-servico')
+    navigate(`/cadastro-${table}`)
     setUpdate(true)
 }
 

@@ -78,7 +78,7 @@ export function POST_DATA(tableName, data) {
 }
 
 export function UPDATE_DATA(tableName, updateData, id) {
-  console.log(updateData);
+
   return {
     url: `${URL}:${PORT}/${tableName}/${id}`,
     options: {

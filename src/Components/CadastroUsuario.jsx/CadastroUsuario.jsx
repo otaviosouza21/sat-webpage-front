@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
-import EmConstrucao from "../EmConstrucao/EmConstrucao";
 import InputText from "../Forms/Input/InputText";
 import styles from "./CadastroUsuario.module.css";
 import Button from "../Button/Button";
@@ -9,17 +8,18 @@ import Title from "../Titles/Title";
 import InputSelect from "../Forms/Input/InputSelect";
 import useForm from "../../Hooks/useForm";
 import useFetch from "../../Hooks/useFetch";
-import { GET_ALL, POST_DATA_USER } from "../../Api/api";
+import { GET_ALL, POST_DATA_USER, UPDATE_DATA } from "../../Api/api";
 import Loading from "../Utils/Loading/Loading";
 import Toast from "../Toast/Toast";
 import { GlobalContext } from "../../Hooks/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const {update,setUpdate,admAuth} = useContext(GlobalContext)
-
-  const formRef = useRef();
+  const { update, setUpdate, admAuth, dataUpdate } = useContext(GlobalContext);
+  const formRef = useRef(); // utilizado para acesso ao input options
+  const navigate = useNavigate();
 
   const nameForm = useForm();
   const emailForm = useForm("email");
@@ -32,6 +32,25 @@ const CadastroUsuario = () => {
   const socioSatForm = useForm(false);
   const { request, data, loading, error } = useFetch();
 
+  //================UPDATE=====================//
+  useEffect(() => {
+    if (update && dataUpdate) {
+      nameForm.setValue(dataUpdate.nome);
+      emailForm.setValue(dataUpdate.email);
+      senhaForm.setValue(dataUpdate.senha);
+      contatoP1Form.setValue(dataUpdate.contato_pessoal_01);
+      contatoP2Form.setValue(dataUpdate.contato_pessoal_02);
+      contatoN1Form.setValue(dataUpdate.contato_negocio_01);
+      contatoN2Form.setValue(dataUpdate.contato_negocio_02);
+      morador.setValue(dataUpdate.tempo_reside);
+      setTimeout(() => {
+        formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
+        formRef.current["rule"].value = String(dataUpdate.rule_id);
+      }, 1000);
+    }
+  }, [update]);
+
+  //==============Puxa rules da api=================//
   useEffect(() => {
     const { url, options } = GET_ALL("rules");
     async function getRules() {
@@ -44,6 +63,7 @@ const CadastroUsuario = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
+    //valida todos os campos
     if (
       nameForm.validate() &&
       emailForm.validate() &&
@@ -62,13 +82,18 @@ const CadastroUsuario = () => {
         contato_negocio_01: contatoN1Form.value,
         contato_negocio_02: contatoN2Form.value,
         tempo_reside: morador.value,
-        socio_sat: formRef.current["socio_sat"].checked ? "Sim" : "Não",
+        socio_sat: formRef.current["socio_sat"].checked ? true : false,
         status: formRef.current["status"].value === "Ativo" ? true : false,
         rule_id: +formRef.current["rule"].value,
       };
 
+      console.log(dataUsuario);
+
       async function postUser() {
-        const { url, options } = POST_DATA_USER("usuarios", dataUsuario);
+        const { url, options } =
+          update && dataUpdate
+            ? UPDATE_DATA("usuarios", dataUsuario, dataUpdate.id) // caso update true, Atualiza
+            : POST_DATA_USER("usuarios", dataUsuario); // caso false, novo cadastro
         const userRequest = await request(url, options);
         if (userRequest.response.ok) {
           setStatusCadastro(userRequest.json.message);
@@ -81,7 +106,12 @@ const CadastroUsuario = () => {
           contatoP2Form.reset();
           morador.reset();
           formRef.current["socio_sat"].unchecked;
-          setUpdate(!update)
+          setUpdate(!update);
+
+
+          setTimeout(() => {
+            navigate("/adm");
+          }, 1000);
         }
       }
       postUser();
@@ -95,7 +125,7 @@ const CadastroUsuario = () => {
       <section>
         <Header />
         <section className={`${styles.cadastroContainer} container`}>
-          <Title text="Novo Cadastro" fontSize="3" />
+          <Title text={`${dataUpdate ? 'Atualizar' : 'Novo'} Cadastro`} fontSize="3" />
           <form
             onSubmit={handleSubmit}
             ref={formRef}
@@ -161,23 +191,29 @@ const CadastroUsuario = () => {
               {...morador}
             />
 
-            {admAuth && <InputSelect label="Perfil" options={rules} id="rule" />}
+            {admAuth && (
+              <InputSelect label="Perfil" options={rules} id="rule" />
+            )}
 
-           {admAuth  &&<InputSelect
-              label="Status"
-              options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
-              id="status"
-            />}
+            {admAuth && (
+              <InputSelect
+                label="Status"
+                options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+                id="status"
+              />
+            )}
 
-            {admAuth && <InputText
-              label="Sócio Sat"
-              type="checkbox"
-              id="socio_sat"
-              {...socioSatForm}
-            />}
+            {admAuth && (
+              <InputText
+                label="Sócio Sat"
+                type="checkbox"
+                id="socio_sat"
+                {...socioSatForm}
+              />
+            )}
 
             <Button handleSubmit={handleSubmit}>
-              {loading ? "Cadastrando..." : "Cadastrar"}
+              {loading ? "Salvando..." : "Salvar"}
             </Button>
             {error && <Toast message={error} color="text-bg-danger" />}
             {statusCadastro && (

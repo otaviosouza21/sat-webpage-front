@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "../Button/Button";
 import styles from "./Header.module.css";
 import logoSat from "../../assets/icons/sat_logo.svg";
@@ -7,6 +7,7 @@ import NavLinks from "./NavLinks/NavLinks";
 import { Link } from "react-router-dom";
 import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
 import ModalLogin from "../ModalLogin/ModalLogin";
+import { GlobalContext } from "../../Hooks/GlobalContext";
 
 const navLinks = [
   {
@@ -26,6 +27,8 @@ const navLinks = [
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
   const [modal, setModal] = useState(false);
+  const {setDataUpdate} = useContext(GlobalContext)
+
   useEffect(() => {
     function handleResize() {
       setIsTelaPequena(window.innerWidth < 421);
@@ -52,7 +55,7 @@ export const Header = () => {
       </div>
       <div className={styles.buttons}>
       <button>
-        <Link to="/cadastro-usuario">Cadastre-se</Link>
+        <Link to="/cadastro-usuarios" onClick={()=>setDataUpdate(null)}>Cadastre-se</Link>
       </button>
       <button onClick={()=>setModal(!modal)}>
         <Link>Entrar</Link>

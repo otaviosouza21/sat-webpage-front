@@ -72,6 +72,7 @@ const ListUsuarios = () => {
                         id={usuario.id}
                         method="PUT"
                         style="btn btn-outline-dark"
+                        updateDate={usuario}
                       >
                         Alterar
                       </FuncButton>
