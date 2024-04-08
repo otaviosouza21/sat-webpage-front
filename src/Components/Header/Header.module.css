@@ -5,7 +5,6 @@
   padding: 10px 30px;
   box-shadow: 1px 1px 5px 1px rgb(209, 209, 209);
   flex-wrap: wrap;
- 
 }
 
 .header button {
@@ -54,15 +53,15 @@
   gap: 20px;
 }
 
-.welcome{
+.welcome {
   cursor: pointer;
   font-weight: bold;
   position: relative;
   color: var(--primary2);
 }
 
-.welcome::after{
-  content: '';
+.welcome::after {
+  content: "";
   display: block;
   width: 0;
   height: 0;
@@ -74,7 +73,7 @@
   border-top: 10px solid rgb(34, 34, 34); /* Cor da seta */
 }
 
-.usuarioLogado{
+.usuarioLogado {
   display: flex;
   justify-content: center;
   position: relative;
@@ -89,8 +88,6 @@
   .header button {
     font-size: 1.2rem;
   }
-
-
 }
 
 @media (max-width: 420px) {
@@ -103,8 +100,7 @@
   }
   .header button:last-child {
     display: none;
-     }
-     
+  }
 }
 
 @media (max-width: 370px) {

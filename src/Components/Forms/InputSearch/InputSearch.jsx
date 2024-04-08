@@ -24,22 +24,6 @@ const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens }) => {
     setVisibleItens(newVisible);
   }, [input]);
 
-  function filterItems(value) {
-    /*   const filterCampo = selectInput.current.value;
-    if (!value) {
-      console.log(visibleItens);
-      // Se o campo de pesquisa estiver vazio, mostre todos os itens
-      setVisibleItens(visibleItens);
-      return;
-    }
-
-    const newVisible = visibleItens.filter((item) => {
-      return String(item[filterCampo]).toLowerCase().includes(value.toLowerCase());
-    });
-
-    setVisibleItens(newVisible); */
-  }
-
   return (
     <div className={styles.inputSearch}>
       <img src={searchIcon} alt="" />

@@ -1,6 +1,6 @@
 const PORT = 3333;
 const URL = "http://localhost";
-import { jwtDecode } from "jwt-decode";
+
 
 export function GET_ALL(tableName) {
   return {
@@ -14,18 +14,17 @@ export function GET_ALL(tableName) {
   };
 }
 
-export function GET_ALL_USERS(tableName,token) {
+export function GET_ALL_USERS(tableName, token) {
   return {
     url: `${URL}:${PORT}/${tableName}`,
     options: {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token} `
-      }
+        Authorization: `Bearer ${token} `,
+      },
     },
   };
 }
-
 
 export function GET_TO_ID(tableName, id) {
   return {
@@ -65,14 +64,14 @@ export function POST_LOGIN(tableName, data) {
   };
 }
 
-export function GET_AUTH_USER(tableName, token,id) {
+export function GET_AUTH_USER(tableName, token, id) {
   return {
     url: `${URL}:${PORT}/${tableName}/${id}`,
     options: {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token} `
-      }
+        Authorization: `Bearer ${token} `,
+      },
     },
   };
 }
@@ -90,26 +89,29 @@ export function POST_DATA(tableName, data) {
   };
 }
 
-export function UPDATE_DATA(tableName, updateData, id,token) {
-
+export function UPDATE_DATA(tableName, updateData, id, token) {
   return {
     url: `${URL}:${PORT}/${tableName}/${id}`,
     options: {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token} `
+        Authorization: `Bearer ${token} `,
       },
       body: JSON.stringify(updateData),
     },
   };
 }
 
-export function DELETE_DATA(tableName, id) {
+export function DELETE_DATA(tableName, id, token) {
   return {
     url: `${URL}:${PORT}/${tableName}/${id}`,
     options: {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token} `,
+      },
     },
   };
 }

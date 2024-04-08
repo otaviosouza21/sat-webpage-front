@@ -17,34 +17,29 @@ import { jwtDecode } from "jwt-decode";
 
 const HomeEmpreendedores = () => {
   const { userAuth, setUserAuth } = useContext(GlobalContext);
-  const {request} = useFetch()
+  const { request } = useFetch();
   const gridLinks = useRef();
 
   useEffect(() => {
     new SimpleAnime();
   }, []);
 
-  useEffect(()=>{
-      const token = window.localStorage.getItem("token")
-      async function fetchValidaToken(){
-        if(token){
-          const {id,rule} = jwtDecode(token)
-          
-          console.log(rule);
-          const {url,options} = GET_AUTH_USER('usuarios',token,id)
-          const {response,json} = await request(url,options)
-          if(response.ok){
-            setUserAuth({ token, usuario: json, status: true, rule })
-            console.log(userAuth);
-          }
-          else{
-            setUserAuth()
-          }
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    async function fetchValidaToken() {
+      if (token) {
+        const { id, rule } = jwtDecode(token);
+        const { url, options } = GET_AUTH_USER("usuarios", token, id);
+        const { response, json } = await request(url, options);
+        if (response.ok) {
+          setUserAuth({ token, usuario: json, status: true, rule });
+        } else {
+          setUserAuth();
         }
       }
-      fetchValidaToken()
-  },[])
-
+    }
+    fetchValidaToken();
+  }, []);
 
   return (
     <main className={`${styles.main}`}>

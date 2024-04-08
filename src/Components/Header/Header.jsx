@@ -27,8 +27,8 @@ const navLinks = [
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
-  const { setDataUpdate,modal, setModal } = useContext(GlobalContext);
-  const [modalUsuario,setModalUsuario] = useState(false)
+  const { setDataUpdate, modal, setModal } = useContext(GlobalContext);
+  const [modalUsuario, setModalUsuario] = useState(false);
   const { userAuth } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -41,10 +41,9 @@ export const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  function handleClick(){
-   setModalUsuario(!modalUsuario)
+  function handleClick() {
+    setModalUsuario(!modalUsuario);
   }
-
 
   return (
     <header className={styles.header}>
@@ -61,11 +60,15 @@ export const Header = () => {
         )}
       </div>
       <div className={styles.buttons}>
-        {userAuth.status ? 
-         <div className={styles.usuarioLogado} onClick={handleClick}>
-         <p className={styles.welcome}> {`Bem Vindo, ${userAuth.usuario.nome}`}</p>
-         {modalUsuario && <ModalUsuario />} 
-         </div> : (
+        {userAuth.status ? (
+          <div className={styles.usuarioLogado} onClick={handleClick}>
+            <p className={styles.welcome}>
+              {" "}
+              {`Bem Vindo, ${userAuth.usuario.nome}`}
+            </p>
+            {modalUsuario && <ModalUsuario />}
+          </div>
+        ) : (
           <>
             <button>
               <Link to="/cadastro-usuarios" onClick={() => setDataUpdate(null)}>

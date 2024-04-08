@@ -17,7 +17,8 @@ import { useNavigate } from "react-router-dom";
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { update, setUpdate, admAuth, dataUpdate,userAuth } = useContext(GlobalContext);
+  const { update, setUpdate, admAuth, dataUpdate, userAuth } =
+    useContext(GlobalContext);
   const formRef = useRef(); // utilizado para acesso ao input options
   const navigate = useNavigate();
 
@@ -37,7 +38,7 @@ const CadastroUsuario = () => {
     if (update && dataUpdate) {
       nameForm.setValue(dataUpdate.nome);
       emailForm.setValue(dataUpdate.email);
-      senhaForm.setValue(dataUpdate.senha);
+      senhaForm.setValue(dataUpdate.senha); 
       contatoP1Form.setValue(dataUpdate.contato_pessoal_01);
       contatoP2Form.setValue(dataUpdate.contato_pessoal_02);
       contatoN1Form.setValue(dataUpdate.contato_negocio_01);
@@ -87,13 +88,11 @@ const CadastroUsuario = () => {
         rule_id: +formRef.current["rule"].value,
       };
 
-      console.log(dataUsuario);
-
       async function postUser() {
-        const token = window.localStorage.getItem('token')
+        const token = window.localStorage.getItem("token");
         const { url, options } =
           update && dataUpdate
-            ? UPDATE_DATA("usuarios", dataUsuario, dataUpdate.id,token) // caso update true, Atualiza
+            ? UPDATE_DATA("usuarios", dataUsuario, dataUpdate.id, token) // caso update true, Atualiza
             : POST_DATA_USER("usuarios", dataUsuario); // caso false, novo cadastro
         const userRequest = await request(url, options);
         if (userRequest.response.ok) {
@@ -108,7 +107,6 @@ const CadastroUsuario = () => {
           morador.reset();
           formRef.current["socio_sat"].unchecked;
           setUpdate(!update);
-
 
           setTimeout(() => {
             navigate("/adm");
@@ -126,7 +124,10 @@ const CadastroUsuario = () => {
       <section>
         <Header />
         <section className={`${styles.cadastroContainer} container`}>
-          <Title text={`${dataUpdate ? 'Atualizar' : 'Novo'} Cadastro`} fontSize="3" />
+          <Title
+            text={`${dataUpdate ? "Atualizar" : "Novo"} Cadastro`}
+            fontSize="3"
+          />
           <form
             onSubmit={handleSubmit}
             ref={formRef}
@@ -162,15 +163,16 @@ const CadastroUsuario = () => {
               placeholder="(xx) xxxxx-xxxx"
               {...contatoP1Form}
             />
-             {userAuth.status && userAuth.rule === 3 &&  (
-            <InputText
-              label="Contato Pessoal 2"
-              type="text"
-              id="contato_pessoal_02"
-              placeholder="(xx) xxxxx-xxxx"
-              {...contatoP2Form}
-            />
-             )}
+            {userAuth.status &&
+              userAuth.rule === 3 && ( //somente ADM
+                <InputText
+                  label="Contato Pessoal 2"
+                  type="text"
+                  id="contato_pessoal_02"
+                  placeholder="(xx) xxxxx-xxxx"
+                  {...contatoP2Form}
+                />
+              )}
             <InputText
               label="Contato Negocio*"
               type="text"
@@ -178,15 +180,16 @@ const CadastroUsuario = () => {
               placeholder="(xx) xxxxx-xxxx"
               {...contatoN1Form}
             />
-             {userAuth.status && userAuth.rule === 3 &&  (
-            <InputText
-              label="Contato Negocio 2"
-              type="text"
-              id="contato_negocio_02"
-              placeholder="(xx) xxxxx-xxxx"
-              {...contatoN2Form}
-            />
-             )}
+            {userAuth.status &&
+              userAuth.rule === 3 && ( //somente ADM
+                <InputText
+                  label="Contato Negocio 2"
+                  type="text"
+                  id="contato_negocio_02"
+                  placeholder="(xx) xxxxx-xxxx"
+                  {...contatoN2Form}
+                />
+              )}
             <InputText
               label="Morador (Anos)"
               type="number"
@@ -196,17 +199,19 @@ const CadastroUsuario = () => {
               {...morador}
             />
 
-            {userAuth.status && userAuth.rule === 3 &&  (
-              <InputSelect label="Perfil" options={rules} id="rule" />
-            )}
+            {userAuth.status &&
+              userAuth.rule === 3 && ( //somente ADM
+                <InputSelect label="Perfil" options={rules} id="rule" />
+              )}
 
-            {userAuth.status && userAuth.rule === 3 && (
-              <InputSelect
-                label="Status"
-                options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
-                id="status"
-              />
-            )}
+            {userAuth.status &&
+              userAuth.rule === 3 && ( //somente ADM
+                <InputSelect
+                  label="Status"
+                  options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+                  id="status"
+                />
+              )}
 
             {userAuth.status && userAuth.rule === 3 && (
               <InputText

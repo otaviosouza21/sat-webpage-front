@@ -43,7 +43,7 @@ const ModalLogin = ({ modal, setModal }) => {
       }
 
       async function authLogin(token) {
-        const {id} = jwtDecode(token)
+        const { id } = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
 
