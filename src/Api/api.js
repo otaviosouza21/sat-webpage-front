@@ -14,6 +14,19 @@ export function GET_ALL(tableName) {
   };
 }
 
+export function GET_ALL_USERS(tableName,token) {
+  return {
+    url: `${URL}:${PORT}/${tableName}`,
+    options: {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token} `
+      }
+    },
+  };
+}
+
+
 export function GET_TO_ID(tableName, id) {
   return {
     url: `${URL}:${PORT}/${tableName}/${id}`,
@@ -77,7 +90,7 @@ export function POST_DATA(tableName, data) {
   };
 }
 
-export function UPDATE_DATA(tableName, updateData, id) {
+export function UPDATE_DATA(tableName, updateData, id,token) {
 
   return {
     url: `${URL}:${PORT}/${tableName}/${id}`,
@@ -85,6 +98,7 @@ export function UPDATE_DATA(tableName, updateData, id) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token} `
       },
       body: JSON.stringify(updateData),
     },

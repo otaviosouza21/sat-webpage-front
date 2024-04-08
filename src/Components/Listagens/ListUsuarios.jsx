@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GET_ALL } from "../../Api/api";
+import { GET_ALL, GET_ALL_USERS } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
@@ -12,7 +12,8 @@ const ListUsuarios = () => {
 
   useEffect(() => {
     async function getUsuarios() {
-      const { url, options } = GET_ALL("usuarios");
+      const token = window.localStorage.getItem('token')
+      const { url, options } = GET_ALL_USERS("usuarios",token);
       const { response, json } = await request(url, options);
       if (!response.ok) {
         console.log("Ocorreu um erro ao buscar Servicos");

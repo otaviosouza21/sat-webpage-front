@@ -90,9 +90,10 @@ const CadastroUsuario = () => {
       console.log(dataUsuario);
 
       async function postUser() {
+        const token = window.localStorage.getItem('token')
         const { url, options } =
           update && dataUpdate
-            ? UPDATE_DATA("usuarios", dataUsuario, dataUpdate.id) // caso update true, Atualiza
+            ? UPDATE_DATA("usuarios", dataUsuario, dataUpdate.id,token) // caso update true, Atualiza
             : POST_DATA_USER("usuarios", dataUsuario); // caso false, novo cadastro
         const userRequest = await request(url, options);
         if (userRequest.response.ok) {

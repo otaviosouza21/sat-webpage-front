@@ -8,19 +8,20 @@ import InputSelect from "../Forms/Input/InputSelect";
 import Button from "../Button/Button";
 import Title from "../Titles/Title";
 import useFetch from "../../Hooks/useFetch";
-import { GET_ALL, POST_DATA, UPDATE_DATA } from "../../Api/api";
+import { GET_ALL, GET_AUTH_USER, POST_DATA, UPDATE_DATA } from "../../Api/api";
 import useForm from "../../Hooks/useForm";
 import Loading from '../Utils/Loading/Loading'
 import Toast from "../Toast/Toast";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const CadastroServico = () => {
   const [categorias, setCategorias] = useState();
   const { request, loading,error } = useFetch();
   const [dadosAtualizados,setDadosAtualizados] = useState({})
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const {update,admAuth,dataUpdate,setDataUpdate} = useContext(GlobalContext)
+  const {update,admAuth,dataUpdate,setDataUpdate,modal,setModal,setUserAuth,userAuth}= useContext(GlobalContext)
   const formRef = useRef();
   const navigate = useNavigate()
 
@@ -29,6 +30,27 @@ const CadastroServico = () => {
   const tempoNegocio = useForm();
   const possuiNomeNegocioForm = useForm(false);
  
+
+
+  useEffect(()=>{
+    const token = window.localStorage.getItem("token")
+    async function fetchValidaToken(){
+      if(token){
+        const {id,rule} = jwtDecode(token)
+        
+        const {url,options} = GET_AUTH_USER('usuarios',token,id)
+        const {response,json} = await request(url,options)
+        if(response.ok){
+          setUserAuth({ token, usuario: json, status: true, rule })
+        }
+        else{
+          setUserAuth()
+        }
+      }
+    }
+    fetchValidaToken()
+},[])
+
 
   useEffect(() => {
     if (update && dataUpdate) {
@@ -48,7 +70,8 @@ const CadastroServico = () => {
     if (
       nomeNegocioForm.validate() &&
       descricaoForm.validate() &&
-      tempoNegocio.validate()
+      tempoNegocio.validate() &&
+      userAuth.status
     ) {
       const dataServico = {
         nome_negocio: nomeNegocioForm.value,
@@ -59,7 +82,7 @@ const CadastroServico = () => {
         possui_nome_negocio: formRef.current["possui_nome_negocio"].checked
           ? 'Sim'
           : 'Não',
-        usuario_id: 1,
+        usuario_id: userAuth.usuario.id,
       };
 
       async function postServico() {
@@ -104,6 +127,7 @@ const CadastroServico = () => {
     return (
       <section>
         <Header />
+        {userAuth.status && userAuth.token ?
         <section className={`${styles.cadastroContainer} container`}>
           <Title text={dataUpdate ? 'Atualizar Serviço' : 'Cadastrar Serviço'} fontSize="3" />
           <form
@@ -160,6 +184,7 @@ const CadastroServico = () => {
             )}
           </form>
         </section>
+     : setModal(true)}
         <Footer />
       </section>
     );

@@ -26,8 +26,7 @@ const navLinks = [
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
-  const [modal, setModal] = useState(false);
-  const { setDataUpdate } = useContext(GlobalContext);
+  const { setDataUpdate,modal, setModal } = useContext(GlobalContext);
   const { userAuth } = useContext(GlobalContext);
 
   useEffect(() => {

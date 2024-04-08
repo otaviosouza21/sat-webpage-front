@@ -11,14 +11,40 @@ import figuras2 from "../../assets/img/figure2.svg";
 import Footer from "../Footer/Footer";
 import { SimpleAnime } from "../../plugins/simple-anime";
 import { GlobalContext } from "../../Hooks/GlobalContext";
+import { GET_AUTH_USER } from "../../Api/api";
+import useFetch from "../../Hooks/useFetch";
+import { jwtDecode } from "jwt-decode";
 
 const HomeEmpreendedores = () => {
-  const { userAuth } = useContext(GlobalContext);
+  const { userAuth, setUserAuth } = useContext(GlobalContext);
+  const {request} = useFetch()
   const gridLinks = useRef();
 
   useEffect(() => {
     new SimpleAnime();
   }, []);
+
+  useEffect(()=>{
+      const token = window.localStorage.getItem("token")
+      async function fetchValidaToken(){
+        if(token){
+          const {id,rule} = jwtDecode(token)
+          
+          console.log(rule);
+          const {url,options} = GET_AUTH_USER('usuarios',token,id)
+          const {response,json} = await request(url,options)
+          if(response.ok){
+            setUserAuth({ token, usuario: json, status: true, rule })
+            console.log(userAuth);
+          }
+          else{
+            setUserAuth()
+          }
+        }
+      }
+      fetchValidaToken()
+  },[])
+
 
   return (
     <main className={`${styles.main}`}>

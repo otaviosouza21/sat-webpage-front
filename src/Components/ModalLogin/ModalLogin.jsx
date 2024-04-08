@@ -8,6 +8,7 @@ import useFetch from "../../Hooks/useFetch";
 import { GET_AUTH_USER, POST_LOGIN } from "../../Api/api";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const ModalLogin = ({ modal, setModal }) => {
   const modalContainerPost = useRef(null);
@@ -32,7 +33,8 @@ const ModalLogin = ({ modal, setModal }) => {
         const { url, options } = POST_LOGIN("usuarios", dataLogin);
         const requestLogin = await request(url, options);
         if (requestLogin.response.ok) {
-          setToken(requestLogin.json.token);
+          const token = requestLogin.json.token;
+          setToken(token);
           window.localStorage.setItem("token", token);
           authLogin(token, requestLogin.json.id);
         } else {
@@ -40,7 +42,8 @@ const ModalLogin = ({ modal, setModal }) => {
         }
       }
 
-      async function authLogin(token, id) {
+      async function authLogin(token) {
+        const {id} = jwtDecode(token)
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
 

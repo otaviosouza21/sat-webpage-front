@@ -9,7 +9,9 @@ export const GlobalStorage = ({ children }) => {
     token: "",
     usuario: null,
     status: false,
+    rule: ''
   });
+  const [modal, setModal] = useState(false);
   const [dataUpdate, setDataUpdate] = useState(null);
 
   return (
@@ -23,6 +25,8 @@ export const GlobalStorage = ({ children }) => {
         setDataUpdate,
         userAuth,
         setUserAuth,
+        modal,
+        setModal
       }}
     >
       {children}

@@ -27,7 +27,7 @@ const ServicoContainer = ({ servicosData }) => {
   }, []);
 
   //Busca usuarios na API
-  useEffect(() => {
+ /*  useEffect(() => {
     const { url, options } = GET_TO_ID("usuarios", usuario_id);
 
     async function getUsuarios() {
@@ -38,20 +38,10 @@ const ServicoContainer = ({ servicosData }) => {
     }
 
     getUsuarios();
-  }, []);
+  }, []); */
 
- /*  function setNumber(contato) {
-    console.log(contato);
-      const contatoFormatado = contato.contato_pessoal_01
-        .trim()
-        .replace("-", "")
-        .replace(" ", "");
-      const API_WHATS = `https://api.whatsapp.com/send?phone=55${contatoFormatado}`;
-      setWppApi(API_WHATS);
-      console.log(wppAPI);
-  }
- */
-  if (categoriaData && servicosData && usuarioData)
+
+  if (categoriaData && servicosData/*  && usuarioData */)
     return (
       <div className={styles.servicosContainer}>
         {modal && (
@@ -65,8 +55,8 @@ const ServicoContainer = ({ servicosData }) => {
         <div className={styles.servico}>
           <h3>{nome_negocio}</h3>
           <span style={{background: categoriaData.cor_categoria}}>{categoriaData.nome}</span>
-          <p>{usuarioData.nome}</p>
-          <Button /* patch={wppAPI} */>
+          <p>{usuario_id}</p>
+          <Button>
             <img src={wppIcon} alt="" />
             Contato
           </Button>
