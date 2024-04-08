@@ -170,6 +170,20 @@ animation:forwards left-rigth .5s;
   }
 }
 
+.animation-up-button{
+  transition: .5s;
+  animation:forwards up-button .5s;
+  }
+  
+  @keyframes up-button {
+    0%{
+      transform: translateY(-20px);
+      transition: 5s;
+    }
+    100%{
+      transform: initial;
+    }
+  }
 
 .animation-opacity{
   transition: .5s;

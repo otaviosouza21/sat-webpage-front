@@ -21,7 +21,7 @@ const CadastroServico = () => {
   const { request, loading,error } = useFetch();
   const [dadosAtualizados,setDadosAtualizados] = useState({})
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const {update,admAuth,dataUpdate,setDataUpdate,modal,setModal,setUserAuth,userAuth}= useContext(GlobalContext)
+  const {update,dataUpdate,setDataUpdate,modal,setModal,setUserAuth,userAuth}= useContext(GlobalContext)
   const formRef = useRef();
   const navigate = useNavigate()
 
@@ -164,11 +164,13 @@ const CadastroServico = () => {
               options={categorias}
               id="categoria"
             />
-           {admAuth && <InputSelect
+            
+           {userAuth.status && userAuth.rule === 3 && (<InputSelect
               label="Status"
               options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
               id="status"
-            />}
+            />)}
+
             <InputText
               label="Possui nome do Negócio?"
               type="checkbox"

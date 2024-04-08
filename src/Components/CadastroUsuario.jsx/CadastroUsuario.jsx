@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { update, setUpdate, admAuth, dataUpdate } = useContext(GlobalContext);
+  const { update, setUpdate, admAuth, dataUpdate,userAuth } = useContext(GlobalContext);
   const formRef = useRef(); // utilizado para acesso ao input options
   const navigate = useNavigate();
 
@@ -162,6 +162,7 @@ const CadastroUsuario = () => {
               placeholder="(xx) xxxxx-xxxx"
               {...contatoP1Form}
             />
+             {userAuth.status && userAuth.rule === 3 &&  (
             <InputText
               label="Contato Pessoal 2"
               type="text"
@@ -169,6 +170,7 @@ const CadastroUsuario = () => {
               placeholder="(xx) xxxxx-xxxx"
               {...contatoP2Form}
             />
+             )}
             <InputText
               label="Contato Negocio*"
               type="text"
@@ -176,6 +178,7 @@ const CadastroUsuario = () => {
               placeholder="(xx) xxxxx-xxxx"
               {...contatoN1Form}
             />
+             {userAuth.status && userAuth.rule === 3 &&  (
             <InputText
               label="Contato Negocio 2"
               type="text"
@@ -183,6 +186,7 @@ const CadastroUsuario = () => {
               placeholder="(xx) xxxxx-xxxx"
               {...contatoN2Form}
             />
+             )}
             <InputText
               label="Morador (Anos)"
               type="number"
@@ -192,11 +196,11 @@ const CadastroUsuario = () => {
               {...morador}
             />
 
-            {admAuth && (
+            {userAuth.status && userAuth.rule === 3 &&  (
               <InputSelect label="Perfil" options={rules} id="rule" />
             )}
 
-            {admAuth && (
+            {userAuth.status && userAuth.rule === 3 && (
               <InputSelect
                 label="Status"
                 options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
@@ -204,7 +208,7 @@ const CadastroUsuario = () => {
               />
             )}
 
-            {admAuth && (
+            {userAuth.status && userAuth.rule === 3 && (
               <InputText
                 label="Sócio Sat"
                 type="checkbox"
