@@ -27,7 +27,8 @@ const navLinks = [
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
   const [modal, setModal] = useState(false);
-  const {setDataUpdate} = useContext(GlobalContext)
+  const { setDataUpdate } = useContext(GlobalContext);
+  const { userAuth } = useContext(GlobalContext);
 
   useEffect(() => {
     function handleResize() {
@@ -54,12 +55,20 @@ export const Header = () => {
         )}
       </div>
       <div className={styles.buttons}>
-      <button>
-        <Link to="/cadastro-usuarios" onClick={()=>setDataUpdate(null)}>Cadastre-se</Link>
-      </button>
-      <button onClick={()=>setModal(!modal)}>
-        <Link>Entrar</Link>
-      </button>
+        {userAuth.status ? (
+          `Bem Vindo, ${userAuth.usuario.nome}`
+        ) : (
+          <>
+            <button>
+              <Link to="/cadastro-usuarios" onClick={() => setDataUpdate(null)}>
+                Cadastre-se
+              </Link>
+            </button>
+            <button onClick={() => setModal(!modal)}>
+              <Link>Entrar</Link>
+            </button>
+          </>
+        )}
       </div>
     </header>
   );

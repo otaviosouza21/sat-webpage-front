@@ -1,5 +1,6 @@
 const PORT = 3333;
-const URL = "http://18.231.121.86";
+const URL = "http://localhost";
+import { jwtDecode } from "jwt-decode";
 
 export function GET_ALL(tableName) {
   return {
@@ -51,15 +52,14 @@ export function POST_LOGIN(tableName, data) {
   };
 }
 
-export function AUTH_LOGIN(tableName, token, data) {
+export function GET_AUTH_USER(tableName, token,id) {
   return {
-    url: `${URL}:${PORT}/${tableName}/auth/${token}`,
+    url: `${URL}:${PORT}/${tableName}/${id}`,
     options: {
-      method: "POST",
+      method: "GET",
       headers: {
-        Autorization: `Bearer ${token} `
-      },
-      body: JSON.stringify(data),
+        Authorization: `Bearer ${token} `
+      }
     },
   };
 }

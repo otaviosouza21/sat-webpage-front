@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./HomeEmpreendedores.module.css";
 import { Header } from "../Header/Header";
 import Title from "../Titles/Title";
@@ -10,8 +10,10 @@ import figuras1 from "../../assets/img/figure1.svg";
 import figuras2 from "../../assets/img/figure2.svg";
 import Footer from "../Footer/Footer";
 import { SimpleAnime } from "../../plugins/simple-anime";
+import { GlobalContext } from "../../Hooks/GlobalContext";
 
 const HomeEmpreendedores = () => {
+  const { userAuth } = useContext(GlobalContext);
   const gridLinks = useRef();
 
   useEffect(() => {
@@ -21,7 +23,6 @@ const HomeEmpreendedores = () => {
   return (
     <main className={`${styles.main}`}>
       <Header />
-
       <section className={`${styles.section} container`}>
         <div className={styles.titulo}>
           <img src={LogoSat} alt="" />

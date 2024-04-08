@@ -1,19 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./ModalLogin.module.css";
 import InputText from "../Forms/Input/InputText";
 import Button from "../Button/Button";
 import Title from "../Titles/Title";
 import useForm from "../../Hooks/useForm";
 import useFetch from "../../Hooks/useFetch";
-import { AUTH_LOGIN, POST_LOGIN } from "../../Api/api";
+import { GET_AUTH_USER, POST_LOGIN } from "../../Api/api";
+import { GlobalContext } from "../../Hooks/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 const ModalLogin = ({ modal, setModal }) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(null);
+  const [buttonState, setButtonState] = useState("Entrar");
   const emailForm = useForm("email");
-  const senhaForm = useForm("");
+  const senhaForm = useForm("senha");
   const { request, error, loading, data } = useFetch();
+  const { userAuth, setUserAuth } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,14 +34,26 @@ const ModalLogin = ({ modal, setModal }) => {
         if (requestLogin.response.ok) {
           setToken(requestLogin.json.token);
           window.localStorage.setItem("token", token);
-          authLogin(token, dataLogin);
+          authLogin(token, requestLogin.json.id);
+        } else {
+          setToken(null);
         }
       }
 
-      async function authLogin(token, data) {
-        const { url, options } = AUTH_LOGIN("usuarios", token, data);
+      async function authLogin(token, id) {
+        const { url, options } = GET_AUTH_USER("usuarios", token, id);
+        const { response, json } = await request(url, options);
 
-        const authLogin = await request(url, options);
+        if (!response.ok) {
+          console.log("Erro ao realizar Login");
+          setUserAuth({ token: "", usuario: null, status: false });
+        } else {
+          setUserAuth({ token: token, usuario: json, status: true });
+          setButtonState("Bem Vindo");
+          setTimeout(() => {
+            setModal(false);
+          }, 1000);
+        }
       }
 
       postLogin();
@@ -81,7 +98,7 @@ const ModalLogin = ({ modal, setModal }) => {
           <span>Me Cadastrar</span>
         </div>
         <button onClick={handleSubmit}>
-          {loading ? "carregando..." : "Entrar"}
+          {loading ? "Entrando..." : buttonState}
         </button>
       </form>
     </div>
