@@ -6,14 +6,20 @@ import useFetch from "../../Hooks/useFetch";
 import { GET_TO_ID } from "../../Api/api";
 import Loading from "../Utils/Loading/Loading";
 import ModalServico from "../ModalServico/ModalServico";
+import ModalContato from "./ModalContato/ModalContato";
+import btn from "../Button/Button.module.css";
+import { Link } from "react-router-dom";
 
 const ServicoContainer = ({ servicosData }) => {
   const [categoriaData, setCategoriaData] = useState();
   const [usuarioData, setUsuarioData] = useState();
   const [modal, setModal] = useState(false);
   const [wppAPI, setWppApi] = useState(null);
+  const [showContatos, setShowContatos] = useState(false);
   const { nome_negocio, categoria_id, usuario_id } = servicosData;
   const { request } = useFetch();
+  const { nome, contato_pessoal_01, contato_negocio_01 } = servicosData.Usuario;
+  const contatos = { contato_pessoal_01, contato_negocio_01 };
 
   //busca categorias na API
   useEffect(() => {
@@ -26,22 +32,12 @@ const ServicoContainer = ({ servicosData }) => {
     getCategorias();
   }, []);
 
-  //Busca usuarios na API
- /*  useEffect(() => {
-    const { url, options } = GET_TO_ID("usuarios", usuario_id);
+  function show() {
+    console.log("teste");
+    setShowContatos(!showContatos);
+  }
 
-    async function getUsuarios() {
-      const {response,json} = await request(url, options);
-      if(response.ok){
-        setUsuarioData(json);
-      }
-    }
-
-    getUsuarios();
-  }, []); */
-
-
-  if (categoriaData && servicosData/*  && usuarioData */)
+  if (categoriaData && servicosData /*  && usuarioData */)
     return (
       <div className={styles.servicosContainer}>
         {modal && (
@@ -54,12 +50,18 @@ const ServicoContainer = ({ servicosData }) => {
         )}
         <div className={styles.servico}>
           <h3>{nome_negocio}</h3>
-          <span style={{background: categoriaData.cor_categoria}}>{categoriaData.nome}</span>
-          <p>{usuario_id}</p>
-          <Button>
-            <img src={wppIcon} alt="" />
-            Contato
-          </Button>
+          <span style={{ background: categoriaData.cor_categoria }}>
+            {categoriaData.nome}
+          </span>
+          <p>{nome}</p>
+          <button className={btn.button} onClick={show}>
+            <Link>
+              <img src={wppIcon} alt="" />
+              Contato
+            </Link>
+          </button>
+
+          {showContatos && <ModalContato contato={contatos} />}
         </div>
         <button onClick={() => setModal(!modal)} className={styles.showMore}>
           +Ver Mais

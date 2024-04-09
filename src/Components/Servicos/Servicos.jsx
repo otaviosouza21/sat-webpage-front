@@ -8,7 +8,7 @@ import styles from "./Servicos.module.css";
 import { SimpleAnime } from "../../plugins/simple-anime";
 import ModalServico from "../ModalServico/ModalServico";
 import useFetch from "../../Hooks/useFetch";
-import { GET_ALL } from "../../Api/api.js";
+import { GET_ALL, GET_AUTH_USER, GET_INNER } from "../../Api/api.js";
 import Loading from "../Utils/Loading/Loading.jsx";
 import Error from "../Utils/Error/Error.jsx";
 
@@ -17,13 +17,14 @@ const Servicos = () => {
   const { error, loading, request } = useFetch();
 
   useEffect(() => {
-    const { url, options } = GET_ALL("servico");
-    const response = request(url, options);
-    async function ifFetch() {
-      setVisibleItens((await response).json);
+ 
+    const { url, options } = GET_INNER("servico","usuario");
+    async function getServicoUsuario() {
+      const response = await request(url, options);
+      setVisibleItens(response.json);
     }
 
-    ifFetch();
+    getServicoUsuario();
   }, []);
 
   useEffect(() => {

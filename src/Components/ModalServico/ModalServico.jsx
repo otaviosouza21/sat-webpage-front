@@ -10,6 +10,8 @@ import starIcon from "../../assets/icons/star.svg";
 const ModalServico = ({ modal, setModal, servicosData, usuario }) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
+  const {nome} = servicosData.Usuario
+ 
 
   function closeModal(event) {
     event.preventDefault();
@@ -42,7 +44,7 @@ const ModalServico = ({ modal, setModal, servicosData, usuario }) => {
             <Title text="Prestador" fontSize="2" />
             <img src={workserIcon} alt="" />
           </div>
-          <p>{usuario.nome}</p>
+          <p>{nome}</p>
         </div>
         <div>
           <div className={styles.containerTitle}>
