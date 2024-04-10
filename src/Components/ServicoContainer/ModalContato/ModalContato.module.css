@@ -1,0 +1,20 @@
+.modalContato{
+    display: flex;
+   flex-direction: column;
+   gap: 16px;
+   font-weight: bold;
+
+}
+
+.modalContato li{
+    cursor: pointer;
+    text-decoration: underline;
+    display: flex;
+    gap: 10px;
+   
+}
+
+.modalContato li img{
+    width: 16px;
+}
+

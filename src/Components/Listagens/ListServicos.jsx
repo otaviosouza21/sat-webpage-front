@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Header } from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { GET_ALL, GET_TO_ID } from "../../Api/api";
+import { GET_ALL, GET_INNER,GET_TO_ID } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
@@ -11,11 +11,12 @@ const ListServicos = () => {
   const { request, loading } = useFetch();
   const {update} = useContext(GlobalContext)
   const [servicos, setServicos] = useState(null);
+  const [categorias,setCategorias] = useState(null)
   const [usuarios, setUsuarios] = useState(null);
 
   useEffect(() => {
     async function getServicos() {
-      const { url, options } = GET_ALL("servico");
+      const { url, options } = GET_INNER("servico","usuario");
       const { response, json } = await request(url, options);
       if (response.ok) {
         setServicos(json);
@@ -26,6 +27,8 @@ const ListServicos = () => {
 
     getServicos();
   }, [update]);
+
+
 
   if (servicos)
     return (
@@ -48,6 +51,8 @@ const ListServicos = () => {
             </thead>
             <tbody>
               {servicos.map((servico, index) => {
+              
+  
                 return (
                   <tr key={index}>
                     <td>{servico.id}</td>
@@ -56,7 +61,7 @@ const ListServicos = () => {
                     <td>{servico.descricao_servico}</td>
                     <td>{servico.status ? "Ativo" : "Inativo"}</td>
                     <td>{servico.tempo_negocio}</td>
-                    <td>{servico.usuario_id}</td>
+                    <td>{servico.Usuario.nome}</td>
                     <td>{servico.categoria_id}</td>
                     <td>
                       <FuncButton

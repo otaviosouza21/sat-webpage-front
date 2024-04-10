@@ -14,7 +14,7 @@ export function GET_ALL(tableName) {
   };
 }
 
-export function GET_ALL_USERS(tableName, token) { // private
+ GET_ALL_USERS(tableName, token) {
   return {
     url: `${URL}:${PORT}/${tableName}`,
     options: {
