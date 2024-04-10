@@ -38,7 +38,6 @@ const CadastroUsuario = () => {
     if (update && dataUpdate) {
       nameForm.setValue(dataUpdate.nome);
       emailForm.setValue(dataUpdate.email);
-      senhaForm.setValue(dataUpdate.senha); 
       contatoP1Form.setValue(dataUpdate.contato_pessoal_01);
       contatoP2Form.setValue(dataUpdate.contato_pessoal_02);
       contatoN1Form.setValue(dataUpdate.contato_negocio_01);
@@ -47,6 +46,7 @@ const CadastroUsuario = () => {
       setTimeout(() => {
         formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
         formRef.current["rule"].value = String(dataUpdate.rule_id);
+        formRef.current["status"].value = dataUpdate.status ? 'Ativo' : 'Inativo';
       }, 1000);
     }
   }, [update]);
@@ -63,17 +63,17 @@ const CadastroUsuario = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     //valida todos os campos
     if (
       nameForm.validate() &&
       emailForm.validate() &&
-      senhaForm.validate() &&
+      update ? null : senhaForm.validate() &&
       contatoP1Form.validate() &&
       contatoN1Form.validate() &&
       morador.validate() &&
       rules
     ) {
+      console.log(formRef.current["status"]);
       const dataUsuario = {
         nome: nameForm.value,
         email: emailForm.value,
@@ -83,11 +83,13 @@ const CadastroUsuario = () => {
         contato_negocio_01: contatoN1Form.value,
         contato_negocio_02: contatoN2Form.value,
         tempo_reside: morador.value,
-        socio_sat: formRef.current["socio_sat"].checked ? true : false,
-        status: formRef.current["status"].value === "Ativo" ? true : false,
-        rule_id: +formRef.current["rule"].value,
+        socio_sat: userAuth.rule === 3 ? formRef.current["socio_sat"].checked ? "Sim" : "Não" : "False",
+        status: userAuth.rule === 3 ? (formRef.current["status"].value === "Ativo" ? true : false) : true,
+        rule_id: 1,
       };
 
+      console.log(dataUsuario);
+      
       async function postUser() {
         const token = window.localStorage.getItem("token");
         const { url, options } =

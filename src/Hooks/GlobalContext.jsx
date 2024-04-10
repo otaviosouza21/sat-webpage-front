@@ -4,7 +4,6 @@ export const GlobalContext = createContext();
 
 export const GlobalStorage = ({ children }) => {
   const [update, setUpdate] = useState(false);
-  const [admAuth, setAdmAuth] = useState(true);
   const [userAuth, setUserAuth] = useState({
     token: "",
     usuario: null,
@@ -19,8 +18,6 @@ export const GlobalStorage = ({ children }) => {
       value={{
         update,
         setUpdate,
-        setAdmAuth,
-        admAuth,
         dataUpdate,
         setDataUpdate,
         userAuth,

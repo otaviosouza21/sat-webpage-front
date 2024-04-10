@@ -1,5 +1,5 @@
 const PORT = 3333;
-const URL = "http://localhost";
+const URL = "http://18.231.121.86";
 
 
 export function GET_ALL(tableName) {
@@ -14,7 +14,7 @@ export function GET_ALL(tableName) {
   };
 }
 
-export function GET_ALL_USERS(tableName, token) {
+export function GET_ALL_USERS(tableName, token) { // private
   return {
     url: `${URL}:${PORT}/${tableName}`,
     options: {

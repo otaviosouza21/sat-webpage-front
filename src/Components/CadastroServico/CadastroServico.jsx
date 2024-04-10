@@ -55,7 +55,8 @@ const CadastroServico = () => {
         formRef.current["possui_nome_negocio"].checked =
         dataUpdate.possui_nome_negocio;
         formRef.current["categoria"].value = String(dataUpdate.categoria_id);
-        }, 1000);
+        formRef.current["status"].value = dataUpdate.status ? 'Ativo' : 'Inativo';
+        }, 500);
     }
   }, [update]);
 
@@ -74,10 +75,11 @@ const CadastroServico = () => {
         status: formRef.current["status"].value === "Ativo" ? true : false,
         categoria_id: +formRef.current["categoria"].value,
         possui_nome_negocio: formRef.current["possui_nome_negocio"].checked
-          ? "Sim"
-          : "Não",
+          ? true
+          : false,
         usuario_id: userAuth.usuario.id,
       };
+      console.log(dataServico);
 
       async function postServico() {
         const { url, options } = update && dataUpdate
