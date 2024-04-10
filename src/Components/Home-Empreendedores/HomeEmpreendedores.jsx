@@ -28,7 +28,8 @@ const HomeEmpreendedores = () => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
-        const { id, rule } = jwtDecode(token);
+        const global = jwtDecode(token);
+        console.log(global);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
         if (response.ok) {

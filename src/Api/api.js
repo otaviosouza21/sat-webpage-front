@@ -14,20 +14,7 @@ export function GET_ALL(tableName) {
   };
 }
 
-export function GET_INNER(tableName1,tableName2) {
-  return {
-    url: `${URL}:${PORT}/${tableName1}/${tableName2}`,
-    options: {
-      method: "GET",
-      Headers: {
-        Accept: "application/json",
-      },
-    },
-  };
-}
-
-
-export function GET_ALL_USERS(tableName, token) {
+ GET_ALL_USERS(tableName, token) {
   return {
     url: `${URL}:${PORT}/${tableName}`,
     options: {

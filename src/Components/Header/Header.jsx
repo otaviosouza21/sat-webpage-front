@@ -27,15 +27,14 @@ const navLinks = [
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
-  const { setDataUpdate, modal, setModal } = useContext(GlobalContext);
+  const { setDataUpdate, modal, setModal,userAuth } = useContext(GlobalContext);
   const [modalUsuario, setModalUsuario] = useState(false);
-  const { userAuth } = useContext(GlobalContext);
 
   useEffect(() => {
     function handleResize() {
       setIsTelaPequena(window.innerWidth < 421);
     }
-
+  
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
@@ -48,7 +47,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       {modal && <ModalLogin setModal={setModal} modal={modal} />}
-      <div className={styles.nav}>
+       <div className={styles.nav}>
         <Link to="/">
           <img className={styles.logoSat} src={logoSat} alt="logotipo" />
         </Link>
@@ -80,7 +79,7 @@ export const Header = () => {
             </button>
           </>
         )}
-      </div>
+      </div> 
     </header>
   );
 };
