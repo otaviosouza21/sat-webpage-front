@@ -11,6 +11,7 @@
     left: 0;
     background-color: #00000075;
     z-index: 200;
+  
  
 }
 
@@ -25,12 +26,15 @@
     box-shadow: 0 0 5px 1px rgba(5, 39, 0, 0.404);
     position: relative;
     border: solid 2px var(--primary3);
+    margin: 10px;
 
 }
 
 .options{
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .options span{
@@ -61,3 +65,7 @@
     cursor: pointer;
   }
   
+
+  @media (max-width:300px){
+
+  }

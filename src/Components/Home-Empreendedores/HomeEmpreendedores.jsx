@@ -28,14 +28,13 @@ const HomeEmpreendedores = () => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
-        const global = jwtDecode(token);
-        console.log(global);
+        const {id,rule} = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
         if (response.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
-          setUserAuth();
+          setUserAuth({});
         }
       }
     }
@@ -66,7 +65,7 @@ const HomeEmpreendedores = () => {
             subtitle="Cadastre-se e aumente a visibilidade do seu trabalho no bairro de Taiaçupeba"
             button="Quero me cadastrar"
             icon={toolsIcons}
-            patch="/cadastro-servico"
+            patch="/servico/cadastro"
           />
         </div>
       </section>

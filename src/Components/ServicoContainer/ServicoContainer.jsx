@@ -33,7 +33,6 @@ const ServicoContainer = ({ servicosData }) => {
   }, []);
 
   function show() {
-    console.log("teste");
     setShowContatos(!showContatos);
   }
 

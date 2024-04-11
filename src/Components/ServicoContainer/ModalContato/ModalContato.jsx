@@ -15,12 +15,12 @@ const ModalContato = ({ contato }) => {
   return (
     <ul className={styles.modalContato}>
       <li onClick={() => whatsAPI(contato.contato_negocio_01)}>
-        {contato.contato_negocio_01}
         <img src={phone} alt="" />
+        {contato.contato_negocio_01}
       </li>
       <li onClick={() => whatsAPI(contato.contato_pessoal_01)}>
-        {contato.contato_pessoal_01}
         <img src={phone} alt="" />
+        {contato.contato_pessoal_01}
       </li>
     </ul>
   );

@@ -32,7 +32,7 @@ const FuncButton = ({ table, method, id, updateDate, children, style }) => {
       deleteData();
     } else if (method === "PUT" && updateDate !== undefined) {
       setDataUpdate(updateDate);
-      navigate(`/cadastro-${table}`);
+      navigate(`/${table}/cadastro/atualiza`);
       setUpdate(true);
     }
   }

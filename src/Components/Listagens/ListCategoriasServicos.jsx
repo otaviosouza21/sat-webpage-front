@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import useFetch from "../../Hooks/useFetch";
+
 import { GET_ALL } from "../../Api/api";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
-import CadastroCategoria from "../CadastroCategoria/CadastroCategoria";
+import CadastroCategoria from "../Cadastros/CadastroCategoria/CadastroCategoria";
 import { GlobalContext } from "../../Hooks/GlobalContext";
+import useFetch from "../../Hooks/useFetch";
 
 const ListCategoriasServicos = () => {
   const { request, loading } = useFetch();

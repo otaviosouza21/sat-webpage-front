@@ -58,6 +58,7 @@
   font-weight: bold;
   position: relative;
   color: var(--primary2);
+  right: 20px;
 }
 
 .welcome::after {
@@ -98,7 +99,7 @@
   .logoSat {
     display: none;
   }
-  .header button:last-child {
+  .header button {
     display: none;
   }
 }

@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Header } from "../Header/Header";
-import Footer from "../Footer/Footer";
-import InputText from "../Forms/Input/InputText";
-import styles from "./CadastroUsuario.module.css";
-import Button from "../Button/Button";
-import Title from "../Titles/Title";
-import InputSelect from "../Forms/Input/InputSelect";
-import useForm from "../../Hooks/useForm";
-import useFetch from "../../Hooks/useFetch";
-import { GET_ALL, POST_DATA_USER, UPDATE_DATA } from "../../Api/api";
-import Loading from "../Utils/Loading/Loading";
-import Toast from "../Toast/Toast";
-import { GlobalContext } from "../../Hooks/GlobalContext";
+import { Header } from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import InputText from "../../Forms/Input/InputText";
+import styles from "../CadastroForm.module.css";
+import Button from "../../Button/Button";
+import Title from "../../Titles/Title";
+import InputSelect from "../../Forms/Input/InputSelect";
+import useForm from "../../../Hooks/useForm";
+import useFetch from "../../../Hooks/useFetch";
+import { GET_ALL, POST_DATA_USER, UPDATE_DATA } from "../../../Api/api";
+import Loading from "../../Utils/Loading/Loading";
+import Toast from "../../Toast/Toast";
+import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
 
 const CadastroUsuario = () => {

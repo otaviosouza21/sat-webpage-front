@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Header } from "../Header/Header";
-import Footer from "../Footer/Footer";
-import styles from "../CadastroUsuario.jsx/CadastroUsuario.module.css";
-import InputText from "../Forms/Input/InputText";
-import InputSelect from "../Forms/Input/InputSelect";
-import Button from "../Button/Button";
-import Title from "../Titles/Title";
-import useFetch from "../../Hooks/useFetch";
-import { GET_ALL, GET_AUTH_USER, POST_DATA, UPDATE_DATA } from "../../Api/api";
-import useForm from "../../Hooks/useForm";
-import Loading from "../Utils/Loading/Loading";
-import Toast from "../Toast/Toast";
-import { GlobalContext } from "../../Hooks/GlobalContext";
+import { Header } from "../../Header/Header";
+import Footer from "../../Footer/Footer";
+import styles from "../CadastroForm.module.css";
+import InputText from "../../Forms/Input/InputText";
+import InputSelect from "../../Forms/Input/InputSelect";
+import Button from "../../Button/Button";
+import Title from "../../Titles/Title";
+import useFetch from "../../../Hooks/useFetch";
+import { GET_ALL, GET_AUTH_USER, POST_DATA, UPDATE_DATA } from "../../../Api/api";
+import useForm from "../../../Hooks/useForm";
+import Loading from "../../Utils/Loading/Loading";
+import Toast from "../../Toast/Toast";
+import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
@@ -25,7 +25,7 @@ const CadastroServico = () => {
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
-  const possuiNomeNegocioForm = useForm(false);
+
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -72,14 +72,12 @@ const CadastroServico = () => {
         nome_negocio: nomeNegocioForm.value,
         descricao_servico: descricaoForm.value,
         tempo_negocio: +tempoNegocio.value,
-        status: formRef.current["status"].value === "Ativo" ? true : false,
+        status:  true,
         categoria_id: +formRef.current["categoria"].value,
-        possui_nome_negocio: formRef.current["possui_nome_negocio"].checked
-          ? true
-          : false,
         usuario_id: userAuth.usuario.id,
+        possui_nome_negocio: true
       };
-      console.log(dataServico);
+     
 
       async function postServico() {
         const { url, options } = update && dataUpdate
@@ -93,7 +91,7 @@ const CadastroServico = () => {
           descricaoForm.reset();
           tempoNegocio.reset();
           setTimeout(() => {
-            navigate("/adm");
+            navigate("/servicos");
             setStatusCadastro(null);
           }, 1000);
         }
@@ -172,13 +170,6 @@ const CadastroServico = () => {
                   id="status"
                 />
               )}
-
-              <InputText
-                label="Possui nome do Negócio?"
-                type="checkbox"
-                id="possui_nome_negocio"
-                {...possuiNomeNegocioForm}
-              />
               <Button handleSubmit={handleSubmit}>
                 {loading ? "Salvando..." : "Salvar"}
               </Button>

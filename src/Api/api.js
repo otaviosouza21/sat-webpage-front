@@ -14,7 +14,7 @@ export function GET_ALL(tableName) {
   };
 }
 
- GET_ALL_USERS(tableName, token) {
+ export function GET_ALL_USERS(tableName, token) {
   return {
     url: `${URL}:${PORT}/${tableName}`,
     options: {
@@ -72,6 +72,15 @@ export function GET_AUTH_USER(tableName, token, id) {
       headers: {
         Authorization: `Bearer ${token} `,
       },
+    },
+  };
+}
+
+export function GET_INNER(tableName1, tableName2) {
+  return {
+    url: `${URL}:${PORT}/${tableName1}/${tableName2}`,
+    options: {
+      method: "GET"
     },
   };
 }

@@ -1,16 +1,16 @@
 import React, { useContext, useRef, useState } from "react";
-import useFetch from "../../Hooks/useFetch";
-import useForm from "../../Hooks/useForm";
-import styles from "../CadastroUsuario.jsx/CadastroUsuario.module.css";
-import InputSelect from "../Forms/Input/InputSelect";
-import Toast from "../Toast/Toast";
-import Footer from "../Footer/Footer";
-import { Header } from "../Header/Header";
-import Title from "../Titles/Title";
-import InputText from "../Forms/Input/InputText";
-import Button from "../Button/Button";
-import { POST_DATA } from "../../Api/api";
-import { GlobalContext } from "../../Hooks/GlobalContext";
+import useForm from "../../../Hooks/useForm";
+import styles from "../CadastroForm.module.css";
+import InputSelect from "../../Forms/Input/InputSelect";
+import Toast from "../../Toast/Toast";
+import Footer from "../../Footer/Footer";
+import { Header } from "../../Header/Header";
+import Title from "../../Titles/Title";
+import InputText from "../../Forms/Input/InputText";
+import Button from "../../Button/Button";
+import { POST_DATA } from "../../../Api/api";
+import { GlobalContext } from "../../../Hooks/GlobalContext";
+import useFetch from "../../../Hooks/useFetch";
 
 const CadastroCategoria = () => {
   const { data, request, loading, error } = useFetch();

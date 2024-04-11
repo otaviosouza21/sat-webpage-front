@@ -10,31 +10,32 @@ import ModalLogin from "../ModalLogin/ModalLogin";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario";
 
-const navLinks = [
-  {
-    nome: "Inicio",
-    patch: "/",
-  },
-  {
-    nome: "Serviços",
-    patch: "/servicos",
-  },
-  {
-    nome: "Sobre",
-    patch: "/sobre",
-  },
-];
-
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
-  const { setDataUpdate, modal, setModal,userAuth } = useContext(GlobalContext);
+  const { setDataUpdate, modal, setModal, userAuth } =
+    useContext(GlobalContext);
   const [modalUsuario, setModalUsuario] = useState(false);
+
+  const navLinks = [
+    {
+      nome: "Inicio",
+      patch: "/",
+    },
+    {
+      nome: "Serviços",
+      patch: "/servicos",
+    },
+    {
+      nome: "Sobre",
+      patch: "/sobre",
+    },
+  ];
 
   useEffect(() => {
     function handleResize() {
       setIsTelaPequena(window.innerWidth < 421);
     }
-  
+
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
@@ -47,7 +48,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       {modal && <ModalLogin setModal={setModal} modal={modal} />}
-       <div className={styles.nav}>
+      <div className={styles.nav}>
         <Link to="/">
           <img className={styles.logoSat} src={logoSat} alt="logotipo" />
         </Link>
@@ -70,7 +71,7 @@ export const Header = () => {
         ) : (
           <>
             <button>
-              <Link to="/cadastro-usuarios" onClick={() => setDataUpdate(null)}>
+              <Link to="/usuario/cadastro" onClick={() => setDataUpdate(null)}>
                 Cadastre-se
               </Link>
             </button>
@@ -79,7 +80,7 @@ export const Header = () => {
             </button>
           </>
         )}
-      </div> 
+      </div>
     </header>
   );
 };
