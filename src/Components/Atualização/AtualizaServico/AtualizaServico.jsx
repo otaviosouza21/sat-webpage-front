@@ -46,6 +46,7 @@ const AtualizaServico = () => {
   }, []);
 
   useEffect(() => {
+    if(dataUpdate){
       nomeNegocioForm.setValue(dataUpdate.nome_negocio);
       descricaoForm.setValue(dataUpdate.descricao_servico);
       tempoNegocio.setValue(dataUpdate.tempo_negocio);
@@ -53,6 +54,7 @@ const AtualizaServico = () => {
         formRef.current["categoria"].value = String(dataUpdate.categoria_id);
         formRef.current["status"].value = dataUpdate.status ? 'Ativo' : 'Inativo';
         }, 500);
+      }
   }, []);
 
   function handleSubmit(e) {
