@@ -19,14 +19,14 @@ const AtualizaServico = () => {
   const [categorias, setCategorias] = useState();
   const { request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const {update,dataUpdate,setDataUpdate,modal,setModal,setUserAuth,userAuth} = useContext(GlobalContext);
+  const {dataUpdate,setModal,setUserAuth,userAuth} = useContext(GlobalContext);
   const formRef = useRef();
   const navigate = useNavigate();
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
 
-
+//validação acesso
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
@@ -34,7 +34,6 @@ const AtualizaServico = () => {
         const { id, rule } = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
-
         if (response.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
@@ -47,18 +46,14 @@ const AtualizaServico = () => {
   }, []);
 
   useEffect(() => {
-    if (update && dataUpdate) {
       nomeNegocioForm.setValue(dataUpdate.nome_negocio);
       descricaoForm.setValue(dataUpdate.descricao_servico);
       tempoNegocio.setValue(dataUpdate.tempo_negocio);
       setTimeout(() => {
-        formRef.current["possui_nome_negocio"].checked =
-        dataUpdate.possui_nome_negocio;
         formRef.current["categoria"].value = String(dataUpdate.categoria_id);
         formRef.current["status"].value = dataUpdate.status ? 'Ativo' : 'Inativo';
         }, 500);
-    }
-  }, [update]);
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -72,7 +67,7 @@ const AtualizaServico = () => {
         nome_negocio: nomeNegocioForm.value,
         descricao_servico: descricaoForm.value,
         tempo_negocio: +tempoNegocio.value,
-        status:  true,
+        status: formRef.current["status"].value === "Ativo" ? true : false,
         categoria_id: +formRef.current["categoria"].value,
         usuario_id: userAuth.usuario.id,
         possui_nome_negocio: true
@@ -80,13 +75,10 @@ const AtualizaServico = () => {
      
 
       async function postServico() {
-        const { url, options } = update && dataUpdate
-            ? UPDATE_DATA("servico", dataServico, dataUpdate.id)
-            : POST_DATA("servico", dataServico);
-
+        const { url, options } = UPDATE_DATA("servico", dataServico, dataUpdate.id)
         const servicoRequest = await request(url, options);
         if (servicoRequest.response.ok) {
-          setStatusCadastro(`Serviço ${dataUpdate ? "Atualizado" : "Cadastrado"} com Sucesso`);
+          setStatusCadastro("Serviço Atualizado com Sucesso");
           nomeNegocioForm.reset(); //limpa campos
           descricaoForm.reset();
           tempoNegocio.reset();
@@ -125,7 +117,7 @@ const AtualizaServico = () => {
         {userAuth.status && userAuth.token ? (
           <section className={`${styles.cadastroContainer} container`}>
             <Title
-              text={dataUpdate ? "Atualizar Serviço" : "Cadastrar Serviço"}
+              text="Atualizar Serviço"
               fontSize="3"
             />
             <form

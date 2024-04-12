@@ -23,7 +23,6 @@ const AtualizaUsuario = () => {
 
   const nameForm = useForm();
   const emailForm = useForm("email");
-  const senhaForm = useForm("senha");
   const contatoP1Form = useForm("phone");
   const contatoP2Form = useForm("phone");
   const contatoN1Form = useForm("phone");
@@ -45,7 +44,7 @@ const AtualizaUsuario = () => {
       setTimeout(() => {
         formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
         formRef.current["rule"].value = String(dataUpdate.rule_id);
-        formRef.current["status"].value = dataUpdate.status
+        formRef.current["status"].value = dataUpdate.status === "Ativo"
           ? "Ativo"
           : "Inativo";
       }, 1000);
@@ -64,12 +63,11 @@ const AtualizaUsuario = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(formRef.current["rule"].value);
     //valida todos os campos
-    console.log(dataUpdate);
     if (
       nameForm.validate() &&
       emailForm.validate() &&
-      senhaForm.validate() &&
       contatoP1Form.validate() &&
       contatoN1Form.validate() &&
       morador.validate() &&
@@ -79,26 +77,20 @@ const AtualizaUsuario = () => {
       const dataUsuario = {
         nome: nameForm.value,
         email: emailForm.value,
-        senha: senhaForm.value,
         contato_pessoal_01: contatoP1Form.value,
         contato_pessoal_02: contatoP2Form.value,
         contato_negocio_01: contatoN1Form.value,
         contato_negocio_02: contatoN2Form.value,
         tempo_reside: morador.value,
-        socio_sat:
-          userAuth.rule === 3
-            ? formRef.current["socio_sat"].checked
-              ? "Sim"
-              : "Não"
-            : "False",
-        status:
-          userAuth.rule === 3
-            ? formRef.current["status"].value === "Ativo"
-              ? true
-              : false
-            : true,
-        rule_id: 1,
+        socio_sat: userAuth.rule === 3 ? (formRef.current["socio_sat"].checked ? "Sim" : "Não") : "False",
+        status: userAuth.rule === 3 ? (formRef.current["status"].value === "Ativo" ? "1" : "3") : "1",
+        rule_id: +formRef.current["rule"].value 
       };
+
+      console.log(dataUsuario);
+
+
+
 
       async function postUser() {
         const token = window.localStorage.getItem("token");
@@ -115,7 +107,6 @@ const AtualizaUsuario = () => {
           setStatusCadastro(userRequest.json.message);
           nameForm.reset();
           emailForm.reset();
-          senhaForm.reset();
           contatoN1Form.reset();
           contatoN2Form.reset();
           contatoP1Form.reset();
@@ -123,9 +114,6 @@ const AtualizaUsuario = () => {
           morador.reset();
           formRef.current["socio_sat"].unchecked;
 
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
         }
       }
       postUser();
@@ -161,13 +149,7 @@ const AtualizaUsuario = () => {
               gridColumn="1/3"
               {...emailForm}
             />
-            <InputText
-              label="Senha*"
-              type="password"
-              id="password"
-              gridColumn="3/5"
-              {...senhaForm}
-            />
+        
             <InputText
               label="Contato Pessoal*"
               type="text"

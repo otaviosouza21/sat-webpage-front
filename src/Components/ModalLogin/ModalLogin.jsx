@@ -7,7 +7,6 @@ import useForm from "../../Hooks/useForm";
 import useFetch from "../../Hooks/useFetch";
 import { GET_AUTH_USER, POST_LOGIN } from "../../Api/api";
 import { GlobalContext } from "../../Hooks/GlobalContext";
-import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 const ModalLogin = ({ modal, setModal }) => {
@@ -19,7 +18,6 @@ const ModalLogin = ({ modal, setModal }) => {
   const senhaForm = useForm("senha");
   const { request, error, loading, data } = useFetch();
   const { userAuth, setUserAuth } = useContext(GlobalContext);
-  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -80,13 +78,13 @@ const ModalLogin = ({ modal, setModal }) => {
       className={styles.modalContainer}
     >
       <form
-        onSubmit={handleSubmit}
         className={`${styles.modalLogin} animation-opacity`}
       >
         <button
           ref={CloseContainerPost}
           onClick={closeModal}
           className={styles.close}
+          type="button"
         >
           X
         </button>

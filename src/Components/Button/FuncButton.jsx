@@ -38,9 +38,23 @@ const FuncButton = ({ table, method, id, updateDate, children, style }) => {
   }
   return (
     <>
-      <button className={style} onClick={handleClick}>
-        {children}
-      </button>
+      {method === "DELETE" ? (
+        <button
+          data-bs-toggle="modal"
+          data-bs-target="#showConfirm"
+          className={style}
+          onClick={handleClick}
+        >
+          {children}
+        </button>
+      ) : (
+        <button
+          className={style}
+          onClick={handleClick}
+        >
+          {children}
+        </button>
+      )}
     </>
   );
 };

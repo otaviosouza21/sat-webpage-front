@@ -12,6 +12,7 @@ import { GlobalContext } from "../../Hooks/GlobalContext";
 import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import AcessDenied from '../Utils/AcessDenied/AcessDenied'
+import Confirm from "../Utils/Confirm/Confirm";
 
 
 const Adm = () => {

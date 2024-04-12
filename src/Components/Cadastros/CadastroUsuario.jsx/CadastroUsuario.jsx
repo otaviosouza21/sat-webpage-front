@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { update, setUpdate, admAuth, dataUpdate, userAuth } =
+  const { userAuth } =
     useContext(GlobalContext);
   const formRef = useRef(); // utilizado para acesso ao input options
   const navigate = useNavigate();
@@ -33,23 +33,6 @@ const CadastroUsuario = () => {
   const socioSatForm = useForm(false);
   const { request, data, loading, error } = useFetch();
 
-  //================UPDATE=====================//
-  useEffect(() => {
-    if (update && dataUpdate) {
-      nameForm.setValue(dataUpdate.nome);
-      emailForm.setValue(dataUpdate.email);
-      contatoP1Form.setValue(dataUpdate.contato_pessoal_01);
-      contatoP2Form.setValue(dataUpdate.contato_pessoal_02);
-      contatoN1Form.setValue(dataUpdate.contato_negocio_01);
-      contatoN2Form.setValue(dataUpdate.contato_negocio_02);
-      morador.setValue(dataUpdate.tempo_reside);
-      setTimeout(() => {
-        formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
-        formRef.current["rule"].value = String(dataUpdate.rule_id);
-        formRef.current["status"].value = dataUpdate.status ? 'Ativo' : 'Inativo';
-      }, 1000);
-    }
-  }, [update]);
 
   //==============Puxa rules da api=================//
   useEffect(() => {
@@ -67,13 +50,13 @@ const CadastroUsuario = () => {
     if (
       nameForm.validate() &&
       emailForm.validate() &&
-      update ? null : senhaForm.validate() &&
+      senhaForm.validate() &&
       contatoP1Form.validate() &&
       contatoN1Form.validate() &&
       morador.validate() &&
       rules
     ) {
-      console.log(formRef.current["status"]);
+
       const dataUsuario = {
         nome: nameForm.value,
         email: emailForm.value,
@@ -83,19 +66,14 @@ const CadastroUsuario = () => {
         contato_negocio_01: contatoN1Form.value,
         contato_negocio_02: contatoN2Form.value,
         tempo_reside: morador.value,
-        socio_sat: userAuth.rule === 3 ? formRef.current["socio_sat"].checked ? "Sim" : "Não" : "False",
-        status: userAuth.rule === 3 ? (formRef.current["status"].value === "Ativo" ? true : false) : true,
+        socio_sat: "false",
+        status: true,
         rule_id: 1,
       };
 
-      console.log(dataUsuario);
       
       async function postUser() {
-        const token = window.localStorage.getItem("token");
-        const { url, options } =
-          update && dataUpdate
-            ? UPDATE_DATA("usuarios", dataUsuario, dataUpdate.id, token) // caso update true, Atualiza
-            : POST_DATA_USER("usuarios", dataUsuario); // caso false, novo cadastro
+        const { url, options } = POST_DATA_USER("usuarios", dataUsuario); // caso false, novo cadastro
         const userRequest = await request(url, options);
         if (userRequest.response.ok) {
           setStatusCadastro(userRequest.json.message);
@@ -107,11 +85,9 @@ const CadastroUsuario = () => {
           contatoP1Form.reset();
           contatoP2Form.reset();
           morador.reset();
-          formRef.current["socio_sat"].unchecked;
-          setUpdate(!update);
-
+          setStatusCadastro("Cadastro Realizado com Sucesso")
           setTimeout(() => {
-            navigate("/adm");
+            navigate("/");
           }, 1000);
         }
       }
@@ -120,14 +96,16 @@ const CadastroUsuario = () => {
       setStatusCadastro("Verifique se todos os campos estao preenchidos");
     }
   }
-
+  
+  if(error) return <Error error={error} />
+  if(loading) return <Loading />
   if (rules)
     return (
       <section>
         <Header />
         <section className={`${styles.cadastroContainer} container`}>
           <Title
-            text={`${dataUpdate ? "Atualizar" : "Novo"} Cadastro`}
+            text="Novo Cadastro"
             fontSize="3"
           />
           <form

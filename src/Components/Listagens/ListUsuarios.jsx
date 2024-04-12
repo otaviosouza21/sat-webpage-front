@@ -56,7 +56,7 @@ const ListUsuarios = () => {
                     <td>{usuario.socio_sat ? "Sim" : "Não"}</td>
                     <td>{usuario.tempo_reside}</td>
                     <td>{usuario.rule_id}</td>
-                    <td>{usuario.status ? "Ativo" : "Inativo"}</td>
+                    <td>{usuario.status === "1" ? "Ativo" : "Inativo"}</td>
                     <td>
                       <FuncButton
                         table="usuarios"

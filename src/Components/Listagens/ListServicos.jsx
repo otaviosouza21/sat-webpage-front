@@ -6,6 +6,7 @@ import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
 import { GlobalContext } from "../../Hooks/GlobalContext";
+import Confirm from "../Utils/Confirm/Confirm";
 
 const ListServicos = () => {
   const { request, loading } = useFetch();
@@ -41,7 +42,6 @@ const ListServicos = () => {
               <tr>
                 <th>ID</th>
                 <th>Nome Do Negocio</th>
-                <th>Possui Nome</th>
                 <th>Descrição</th>
                 <th>Status</th>
                 <th>Tempo</th>
@@ -51,13 +51,12 @@ const ListServicos = () => {
             </thead>
             <tbody>
               {servicos.map((servico, index) => {
-              
+              <Confirm mensagem="Deseja Deletar?" id={servico.id}/>
   
                 return (
                   <tr key={index}>
                     <td>{servico.id}</td>
                     <td>{servico.nome_negocio}</td>
-                    <td>{servico.possui_nome_negocio ? "Sim" : "Não"}</td>
                     <td>{servico.descricao_servico}</td>
                     <td>{servico.status ? "Ativo" : "Inativo"}</td>
                     <td>{servico.tempo_negocio}</td>
@@ -69,6 +68,7 @@ const ListServicos = () => {
                         id={servico.id}
                         method="DELETE"
                         style="btn btn-outline-danger"
+                        
                       >
                         Deletar
                       </FuncButton>

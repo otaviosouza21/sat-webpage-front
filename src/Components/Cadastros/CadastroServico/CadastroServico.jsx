@@ -19,46 +19,28 @@ const CadastroServico = () => {
   const [categorias, setCategorias] = useState();
   const { request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const {update,dataUpdate,setDataUpdate,modal,setModal,setUserAuth,userAuth} = useContext(GlobalContext);
+  const {setModal,setUserAuth,userAuth} = useContext(GlobalContext);
   const formRef = useRef();
   const navigate = useNavigate();
+  //
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
 
-
+//check de login na transição para pagina de cadastro/ verifica se está locado
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
         const { id, rule } = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
-        const { response, json } = await request(url, options);
-
-        if (response.ok) {
-          setUserAuth({ token, usuario: json, status: true, rule });
-        } else {
-          setUserAuth();
-        }
-
-      }
-    }
+        const { response, json } = await request(url, options)
+        if (response.ok) {setUserAuth({ token, usuario: json, status: true, rule })} 
+        else {setUserAuth({})}
+      }}
     fetchValidaToken();
   }, []);
 
-  useEffect(() => {
-    if (update && dataUpdate) {
-      nomeNegocioForm.setValue(dataUpdate.nome_negocio);
-      descricaoForm.setValue(dataUpdate.descricao_servico);
-      tempoNegocio.setValue(dataUpdate.tempo_negocio);
-      setTimeout(() => {
-        formRef.current["possui_nome_negocio"].checked =
-        dataUpdate.possui_nome_negocio;
-        formRef.current["categoria"].value = String(dataUpdate.categoria_id);
-        formRef.current["status"].value = dataUpdate.status ? 'Ativo' : 'Inativo';
-        }, 500);
-    }
-  }, [update]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -66,13 +48,13 @@ const CadastroServico = () => {
       nomeNegocioForm.validate() &&
       descricaoForm.validate() &&
       tempoNegocio.validate() &&
-      userAuth.status
+      userAuth.status // apenas cadastrar com usuario logado/autenticado
     ) {
       const dataServico = {
         nome_negocio: nomeNegocioForm.value,
         descricao_servico: descricaoForm.value,
         tempo_negocio: +tempoNegocio.value,
-        status:  true,
+        status:  false,
         categoria_id: +formRef.current["categoria"].value,
         usuario_id: userAuth.usuario.id,
         possui_nome_negocio: true
@@ -80,18 +62,16 @@ const CadastroServico = () => {
      
 
       async function postServico() {
-        const { url, options } = update && dataUpdate
-            ? UPDATE_DATA("servico", dataServico, dataUpdate.id)
-            : POST_DATA("servico", dataServico);
-
+        const { url, options } = POST_DATA("servico", dataServico);
         const servicoRequest = await request(url, options);
         if (servicoRequest.response.ok) {
-          setStatusCadastro(`Serviço ${dataUpdate ? "Atualizado" : "Cadastrado"} com Sucesso`);
-          nomeNegocioForm.reset(); //limpa campos
+          //limpa campos
+          nomeNegocioForm.reset(); 
           descricaoForm.reset();
           tempoNegocio.reset();
+          setStatusCadastro("Serviço Cadastrado! Enviado para analise");
           setTimeout(() => {
-            navigate("/servicos");
+            navigate("/servicos"); //red para serviços
             setStatusCadastro(null);
           }, 1000);
         }
@@ -105,7 +85,6 @@ const CadastroServico = () => {
     }
   }
 
-
   // pega as categorias e salva no estado 
   useEffect(() => {
     async function getCategorias() {
@@ -117,6 +96,7 @@ const CadastroServico = () => {
     getCategorias();
   }, []);
 
+  if(error) return <Error error={error} />
   if (loading) return <Loading />
   if (categorias)
     return (
@@ -125,7 +105,7 @@ const CadastroServico = () => {
         {userAuth.status && userAuth.token ? (
           <section className={`${styles.cadastroContainer} container`}>
             <Title
-              text={dataUpdate ? "Atualizar Serviço" : "Cadastrar Serviço"}
+              text="Cadastrar Serviço"
               fontSize="3"
             />
             <form
@@ -163,13 +143,7 @@ const CadastroServico = () => {
                 id="categoria"
               />
 
-              {userAuth.status && userAuth.rule === 3 && (// Acesso ADM
-                <InputSelect
-                  label="Status"
-                  options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
-                  id="status"
-                />
-              )}
+
               <Button handleSubmit={handleSubmit}>
                 {loading ? "Salvando..." : "Salvar"}
               </Button>
