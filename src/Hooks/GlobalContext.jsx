@@ -10,7 +10,7 @@ export const GlobalStorage = ({ children }) => {
     status: false,
     rule: ''
   });
-  const [modal, setModal] = useState(false);
+  const [modal,setModal] = useState('')
   const [dataUpdate, setDataUpdate] = useState(null);
 
   return (

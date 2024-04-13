@@ -51,8 +51,7 @@ const ListServicos = () => {
             </thead>
             <tbody>
               {servicos.map((servico, index) => {
-              <Confirm mensagem="Deseja Deletar?" id={servico.id}/>
-  
+            
                 return (
                   <tr key={index}>
                     <td>{servico.id}</td>

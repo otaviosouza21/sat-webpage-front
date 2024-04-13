@@ -12,8 +12,7 @@ import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario";
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
-  const { setDataUpdate, modal, setModal, userAuth } =
-    useContext(GlobalContext);
+  const { setDataUpdate, modal, setModal, userAuth } = useContext(GlobalContext);
   const [modalUsuario, setModalUsuario] = useState(false);
 
   const navLinks = [
@@ -47,7 +46,7 @@ export const Header = () => {
 
   return (
     <header className={styles.header}>
-      {modal && <ModalLogin setModal={setModal} modal={modal} />}
+      {modal === 'modalLogin' && <ModalLogin setModal={setModal} modal={modal} />}
       <div className={styles.nav}>
         <Link to="/">
           <img className={styles.logoSat} src={logoSat} alt="logotipo" />
@@ -75,7 +74,7 @@ export const Header = () => {
                 Cadastre-se
               </Link>
             </button>
-            <button onClick={() => setModal(!modal)}>
+            <button onClick={() => setModal('modalLogin')}>
               <Link>Entrar</Link>
             </button>
           </>

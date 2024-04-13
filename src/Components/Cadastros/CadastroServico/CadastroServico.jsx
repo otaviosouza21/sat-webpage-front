@@ -71,7 +71,7 @@ const CadastroServico = () => {
           tempoNegocio.reset();
           setStatusCadastro("Serviço Cadastrado! Enviado para analise");
           setTimeout(() => {
-            navigate("/servicos"); //red para serviços
+            navigate("/servicos"); //redirect para serviços
             setStatusCadastro(null);
           }, 1000);
         }

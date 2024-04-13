@@ -1,25 +1,32 @@
-import React from 'react'
+import React from "react";
+import modalStyle from "../../ModalLogin/ModalLogin.module.css";
+import Title from "../../Titles/Title";
 
-const Confirm = ({mensagem,id}) => {
+const Confirm = ({ mensagem, id }) => {
   return (
-    <div class="modal fade" id="showConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">{mensagem}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ID: {id} teste
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-          <button type="button" class="btn btn-danger">Deletar</button>
+    <div className={modalStyle.modalContainer}>
+      <div className={modalStyle.modalLogin}>
+        <Title text='Deseja mesmo deletar ?'/>
+        <p>Registro ID: {id}</p>
+        <div>
+          <button
+            style={{ fontSize: "1rem", marginRight: "6px" }}
+            type="button"
+            className="btn btn-outline-secondary btn-sm"
+          >
+            Voltar
+          </button>
+          <button
+            style={{ fontSize: "1rem" }}
+            type="button"
+            className="btn btn-danger btn-sm"
+          >
+            Deletar
+          </button>
         </div>
       </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default Confirm
+export default Confirm;

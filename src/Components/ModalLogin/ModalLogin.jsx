@@ -8,16 +8,19 @@ import useFetch from "../../Hooks/useFetch";
 import { GET_AUTH_USER, POST_LOGIN } from "../../Api/api";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 const ModalLogin = ({ modal, setModal }) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
   const [token, setToken] = useState(null);
   const [buttonState, setButtonState] = useState("Entrar");
-  const emailForm = useForm("email");
-  const senhaForm = useForm("senha");
   const { request, error, loading, data } = useFetch();
   const { userAuth, setUserAuth } = useContext(GlobalContext);
+  const navigate = useNavigate()
+  const emailForm = useForm("email");
+  const senhaForm = useForm("senha");
+  
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -67,7 +70,7 @@ const ModalLogin = ({ modal, setModal }) => {
       event.target === modalContainerPost.current ||
       event.target === CloseContainerPost.current
     ) {
-      setModal(!modal);
+      setModal('');
     }
   }
 
@@ -96,7 +99,10 @@ const ModalLogin = ({ modal, setModal }) => {
         </div>
         <div className={styles.options}>
           <span>Esqueci a Senha</span>
-          <span>Me Cadastrar</span>
+          <span onClick={()=>{
+            navigate('/usuario/cadastro')
+            setModal(false)
+          }}>Me Cadastrar</span>
         </div>
         <button onClick={handleSubmit}>
           {loading ? "Entrando..." : buttonState}

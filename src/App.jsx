@@ -10,6 +10,7 @@ import Adm from "./Components/Adm/Adm";
 import { GlobalStorage } from "./Hooks/GlobalContext";
 import AtualizaUsuario from "./Components/Atualização/AtualizaUsuario.jsx/AtualizaUsuario";
 import AtualizaServico from "./Components/Atualização/AtualizaServico/AtualizaServico";
+import MinhaConta from "./Components/PerfilUsuario/MinhaConta/MinhaConta";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="servicos" element={<Servicos />} />
         <Route exact path="usuario/cadastro" element={<CadastroUsuario />} />
         <Route exact path="usuarios/cadastro/atualiza" element={<AtualizaUsuario />} />
+        <Route exact path="usuarios/perfil" element={<MinhaConta />} />
         <Route exact path="servico/cadastro" element={<CadastroServico />} />
         <Route exact path="servico/cadastro/atualiza" element={<AtualizaServico />} />
         <Route exact path="sobre" element={<Sobre />} />

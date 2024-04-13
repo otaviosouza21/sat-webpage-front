@@ -39,7 +39,7 @@ const ServicoContainer = ({ servicosData }) => {
   if (categoriaData && servicosData /*  && usuarioData */)
     return (
       <div className={styles.servicosContainer}>
-        {modal && (
+        {modal === 'servicoDetalhes' && (
           <ModalServico
             setModal={setModal}
             modal={modal}
@@ -62,7 +62,7 @@ const ServicoContainer = ({ servicosData }) => {
 
           {showContatos && <ModalContato contato={contatos} />}
         </div>
-        <button onClick={() => setModal(!modal)} className={styles.showMore}>
+        <button onClick={() => setModal('servicoDetalhes')} className={styles.showMore}>
           +Ver Mais
         </button>
       </div>

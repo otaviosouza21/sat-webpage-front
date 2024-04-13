@@ -85,6 +85,15 @@ export function GET_INNER(tableName1, tableName2) {
   };
 }
 
+export function GET_INNER_ID(tableName1, tableName2,id) {
+  return {
+    url: `${URL}:${PORT}/${tableName1}/${tableName2}/${id}`,
+    options: {
+      method: "GET"
+    },
+  };
+}
+
 export function POST_DATA(tableName, data) {
   return {
     url: `${URL}:${PORT}/${tableName}`,
