@@ -71,7 +71,6 @@ const AtualizaServico = () => {
         tempo_negocio: +tempoNegocio.value,
         status: formRef.current["status"].value === "Ativo" ? true : false,
         categoria_id: +formRef.current["categoria"].value,
-        usuario_id: userAuth.usuario.id,
         possui_nome_negocio: true
       };
      
