@@ -30,5 +30,12 @@
 .navLinksMobile li{
     padding-bottom: 20px;
     border-bottom: solid 1px rgb(231, 231, 231);
+    gap: 3px;
 }
+
+.butonsMobile {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
 

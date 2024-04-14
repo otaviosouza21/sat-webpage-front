@@ -59,6 +59,7 @@
   position: relative;
   color: var(--primary2);
   right: 20px;
+  justify-self: center;
 }
 
 .welcome::after {
@@ -80,13 +81,18 @@
   position: relative;
 }
 
+.headerButtons{
+  display: flex;
+  gap: 10px;
+}
+
 @media (max-width: 650px) {
   .header {
     justify-content: center;
     gap: 20px;
   }
 
-  .header button {
+  .headerButtons {
     font-size: 1.2rem;
   }
 }
@@ -99,7 +105,7 @@
   .logoSat {
     display: none;
   }
-  .header button {
+  .headerButtons {
     display: none;
   }
 }
@@ -110,7 +116,7 @@
     gap: 10px;
   }
 
-  .header button {
+  .headerButtons {
     font-size: 0.9rem;
   }
 }

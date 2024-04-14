@@ -68,7 +68,7 @@ export const Header = () => {
             {modalUsuario && <ModalUsuario />}
           </div>
         ) : (
-          <>
+          <div className={styles.headerButtons}>
             <button>
               <Link to="/usuario/cadastro" onClick={() => setDataUpdate(null)}>
                 Cadastre-se
@@ -77,7 +77,7 @@ export const Header = () => {
             <button onClick={() => setModal('modalLogin')}>
               <Link>Entrar</Link>
             </button>
-          </>
+          </div>
         )}
       </div>
     </header>

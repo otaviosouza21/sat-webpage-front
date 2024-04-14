@@ -17,3 +17,17 @@
 .infosPerfil li button{
   align-self: self-end;
 }
+
+@media (max-width: 530px) {
+    .infosPerfil h1{
+        font-size: 1.5rem !important;
+    }
+
+    .infosPerfil{
+        grid-template-columns: 1fr;
+    }
+
+    .infosPerfil li p{
+        font-size: 1.3rem;
+    }
+}
