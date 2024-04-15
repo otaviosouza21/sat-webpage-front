@@ -160,6 +160,26 @@ a {
   animation: forwards left-rigth 0.5s;
 }
 
+.animation-rigth-left{
+  transition: 0.5s;
+  animation: forwards rigth-left 0.5s;
+
+  background-color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  left: 0;
+  top: 0;
+  padding: 20px 10px;
+  height: 100vh;
+  width: 60%;
+  gap: 20px;
+}
+
+
 @keyframes left-rigth {
   0% {
     transform: translateX(-150px);
@@ -167,6 +187,17 @@ a {
   }
   100% {
     transform: initial;
+    display: fixed;
+  }
+}
+
+@keyframes rigth-left {
+  0% {
+    transform: initial;
+  }
+  100% {
+    transform: translateX(-300px);
+    transition: 5s;
   }
 }
 
@@ -174,6 +205,9 @@ a {
   transition: 0.5s;
   animation: forwards up-button 0.5s;
 }
+
+
+
 
 @keyframes up-button {
   0% {

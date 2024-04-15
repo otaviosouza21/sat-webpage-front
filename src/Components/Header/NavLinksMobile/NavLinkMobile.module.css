@@ -1,7 +1,5 @@
 .containerMenuMobile{
     background-color: white;
-   
-
 }
 
 .menuBurguer,.closeMenu{
@@ -15,7 +13,7 @@
     background-color: white;
     font-size: 1.2rem;
     font-weight: 600;
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     z-index: 200;
