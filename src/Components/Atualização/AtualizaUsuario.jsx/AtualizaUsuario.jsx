@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Header } from "../../Header/Header";
-import Footer from "../../Footer/Footer";
 import InputText from "../../Forms/Input/InputText";
 import styles from "../CadastroForm.module.css";
 import Button from "../../Button/Button";
@@ -120,7 +118,6 @@ const AtualizaUsuario = () => {
   if (rules)
     return (
       <section>
-        <Header />
         <section className={`${styles.cadastroContainer} container`}>
           <Title text="Atualizar Cadastro" fontSize="3" />
           <form
@@ -220,8 +217,6 @@ const AtualizaUsuario = () => {
             )}
           </form>
         </section>
-
-        <Footer />
       </section>
     );
 };

@@ -12,12 +12,15 @@ import AtualizaUsuario from "./Components/Atualização/AtualizaUsuario.jsx/Atua
 import AtualizaServico from "./Components/Atualização/AtualizaServico/AtualizaServico";
 import MinhaConta from "./Components/PerfilUsuario/MinhaConta/MinhaConta";
 import ServicosUsuario from "./Components/PerfilUsuario/ServicosUsuario/ServicosUsuario";
+import { Header } from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
 
   return (
     <GlobalStorage>
     <BrowserRouter>
+    <Header />
       <Routes>
         <Route exact path="/" element={<HomeEmpreendedores />} />
         <Route exact path="servicos" element={<Servicos />} />
@@ -30,6 +33,7 @@ function App() {
         <Route exact path="sobre" element={<Sobre />} />
         <Route exact path="adm" element={<Adm />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
     </GlobalStorage>
   );

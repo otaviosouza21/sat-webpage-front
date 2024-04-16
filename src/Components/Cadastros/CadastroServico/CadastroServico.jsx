@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Header } from "../../Header/Header";
-import Footer from "../../Footer/Footer";
 import styles from "../CadastroForm.module.css";
 import InputText from "../../Forms/Input/InputText";
 import InputSelect from "../../Forms/Input/InputSelect";
@@ -109,7 +107,6 @@ const CadastroServico = () => {
   if (categorias)
     return (
       <section>
-        <Header />
         {userAuth.status && userAuth.token ? (
           <section className={`${styles.cadastroContainer} container`}>
             <Title text="Cadastrar Serviço" fontSize="3" />
@@ -162,7 +159,6 @@ const CadastroServico = () => {
         ) : (
           setModal(true)
         )}
-        <Footer />
       </section>
     );
 };

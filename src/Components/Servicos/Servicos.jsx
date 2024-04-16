@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Header } from "../Header/Header";
-import Footer from "../Footer/Footer";
 import Title from "../Titles/Title";
 import InputSearch from "../Forms/InputSearch/InputSearch.jsx";
 import ServicoContainer from "../ServicoContainer/ServicoContainer";
@@ -53,7 +51,6 @@ const Servicos = () => {
   if (error) return <Error error={error} />;
   return (
     <main>
-      <Header />
       <section className={`container ${styles.servicosContainer}`}>
         <Title text="Buscar Profissionais" fontSize="3" />
         <InputSearch
@@ -70,7 +67,6 @@ const Servicos = () => {
             })}
         </div>
       </section>
-      <Footer />
     </main>
   );
 };

@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Footer from "../Footer/Footer";
-import { Header } from "../Header/Header";
 import ListServicos from "../Listagens/ListServicos";
 import ListUsuarios from "../Listagens/ListUsuarios";
 import ListCategoriasServicos from "../Listagens/ListCategoriasServicos";
@@ -44,7 +42,7 @@ const Adm = () => {
   if (loading) return <Loading />
   return (
     <>
-      <Header />
+
       {userAuth.status && userAuth.rule === 3 ? (
         <main className={`${styles.containerAdm}`}>
           <ul className={styles.nav}>
@@ -89,7 +87,6 @@ const Adm = () => {
       ) : (
         <AcessDenied />
       )}
-      <Footer />
     </>
   );
 };

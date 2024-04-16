@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Title from "../../Titles/Title";
 import style from "./MinhaConta.module.css";
-import { Header } from "../../Header/Header";
-import Footer from "../../Footer/Footer";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
@@ -36,7 +34,6 @@ const MinhaConta = () => {
   if (currentUser)
     return (
       <>
-        <Header />
         <section className={`container ${style.containerPerfil}`}>
           <Title text="Meu Perfil" fontSize="3" className='container'/>
           <ul className={style.infosPerfil}>
@@ -81,7 +78,6 @@ const MinhaConta = () => {
             </li>
           </ul>
         </section>
-        <Footer />
       </>
     );
 };

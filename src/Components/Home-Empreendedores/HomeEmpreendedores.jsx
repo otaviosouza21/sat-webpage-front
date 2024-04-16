@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./HomeEmpreendedores.module.css";
-import { Header } from "../Header/Header";
 import Title from "../Titles/Title";
 import LogoSat from "../../assets/icons/sat_logo.svg";
 import LinkHomeContainer from "../LinkHomeContainer/LinkHomeContainer";
@@ -8,7 +7,6 @@ import contratarIcon from "../../assets/icons/worker.svg";
 import toolsIcons from "../../assets/icons/tools.svg";
 import figuras1 from "../../assets/img/figure1.svg";
 import figuras2 from "../../assets/img/figure2.svg";
-import Footer from "../Footer/Footer";
 import { SimpleAnime } from "../../plugins/simple-anime";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { GET_AUTH_USER } from "../../Api/api";
@@ -43,7 +41,6 @@ const HomeEmpreendedores = () => {
 
   return (
     <main className={`${styles.main}`}>
-      <Header />
       <section className={`${styles.section} container`}>
         <div className={styles.titulo}>
           <img src={LogoSat} alt="" />
@@ -69,7 +66,6 @@ const HomeEmpreendedores = () => {
           />
         </div>
       </section>
-      <Footer />
     </main>
   );
 };

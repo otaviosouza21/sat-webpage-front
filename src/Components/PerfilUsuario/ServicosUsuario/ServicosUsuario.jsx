@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import style from './ServicoUsuario.module.css'
-import { Header } from "../../Header/Header";
 import { jwtDecode } from 'jwt-decode';
 import { GET_AUTH_USER, GET_INNER_ID } from '../../../Api/api';
 import useFetch from '../../../Hooks/useFetch';
@@ -54,7 +53,6 @@ const ServicosUsuario = () => {
 
     return (
     <div>
-        <Header />
 
         <Title text="Meus servicos cadastrados" fontSize="3" className='container'/>
         <section className={`container ${style.containerServico}`}>
