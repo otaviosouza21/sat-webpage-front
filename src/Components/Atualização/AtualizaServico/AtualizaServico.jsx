@@ -84,7 +84,7 @@ const AtualizaServico = () => {
           descricaoForm.reset();
           tempoNegocio.reset();
           setTimeout(() => {
-            navigate("/servicos");
+            navigate("/adm");
             setStatusCadastro(null);
           }, 1000);
         }

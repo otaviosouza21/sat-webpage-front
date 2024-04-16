@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import phone from "../../../assets/icons/phone.svg";
 
 const ModalContato = ({ contato }) => {
-  const navigate = useNavigate();
-
   function whatsAPI(number) {
     const cleanedNumber = number.replace(/\D/g, "");
     const whatsappLink = `https://api.whatsapp.com/send?phone=55${cleanedNumber}`;
