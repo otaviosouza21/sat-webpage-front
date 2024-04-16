@@ -24,3 +24,12 @@
     background-color: rgb(168, 168, 168);
     border-radius: 5px;
 }
+
+
+@media(max-width:750px){
+    .menuLateral{
+        height: auto;
+        width: 70vw;
+        margin: 0 auto;
+    }
+}
