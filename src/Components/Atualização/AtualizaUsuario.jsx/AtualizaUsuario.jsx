@@ -63,7 +63,6 @@ const AtualizaUsuario = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(formRef.current["rule"].value);
     //valida todos os campos
     if (
       nameForm.validate() &&
@@ -86,10 +85,6 @@ const AtualizaUsuario = () => {
         status: userAuth.rule === 3 ? (formRef.current["status"].value === "Ativo" ? "1" : "3") : "1",
         rule_id: +formRef.current["rule"].value 
       };
-
-      console.log(dataUsuario);
-
-
 
 
       async function postUser() {

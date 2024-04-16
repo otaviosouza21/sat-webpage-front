@@ -9,7 +9,7 @@
     padding: 0;
     top: 0;
     left: 0;
-    background-color: #00000075;
+    background-color: #0000003a;
     z-index: 200;
   
  
@@ -27,6 +27,7 @@
     box-shadow: 0 0 5px 1px rgba(5, 39, 0, 0.404);
     position: relative;
     border: solid 2px var(--primary3);
+    color: var(--primary3);
 }
 
 .options{

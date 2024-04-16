@@ -51,7 +51,6 @@ const ListServicos = () => {
             </thead>
             <tbody>
               {servicos.map((servico, index) => {
-            
                 return (
                   <tr key={index}>
                     <td>{servico.id}</td>
@@ -82,6 +81,7 @@ const ListServicos = () => {
                       >
                         Alterar
                       </FuncButton>
+                     
                     </td>
                   </tr>
                 );

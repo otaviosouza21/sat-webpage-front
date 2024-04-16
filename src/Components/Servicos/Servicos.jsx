@@ -17,7 +17,7 @@ import { GlobalContext } from "../../Hooks/GlobalContext.jsx";
 const Servicos = () => {
   const [visibleItens, setVisibleItens] = useState(null);
   const { error, loading, request } = useFetch();
-  const {userAuth,setUserAuth} = useContext(GlobalContext)
+  const { userAuth, setUserAuth } = useContext(GlobalContext);
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -36,7 +36,6 @@ const Servicos = () => {
     fetchValidaToken();
   }, []);
 
-
   useEffect(() => {
     const { url, options } = GET_INNER("servico", "usuario");
     async function getServicoUsuario() {
@@ -49,7 +48,6 @@ const Servicos = () => {
   useEffect(() => {
     new SimpleAnime();
   }, []);
-
 
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;

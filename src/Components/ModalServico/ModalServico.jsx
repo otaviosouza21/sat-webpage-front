@@ -6,12 +6,21 @@ import wppIcon from "../../assets/icons/wathsapp.svg";
 import workserIcon from "../../assets/icons/person.svg";
 import toolsIcon from "../../assets/icons/tools.svg";
 import starIcon from "../../assets/icons/star.svg";
+import ModalContato from "../ServicoContainer/ModalContato/ModalContato";
+import phone from '../../assets/icons/phone2.svg'
 
-const ModalServico = ({ modal, setModal, servicosData, usuario }) => {
+const ModalServico = ({
+  modal,
+  setModal,
+  servicosData,
+  contato,
+  usuario,
+  setShowContatos,
+  showContatos,
+}) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
-  const {nome} = servicosData.Usuario
- 
+  const { nome } = servicosData.Usuario;
 
   function closeModal(event) {
     event.preventDefault();
@@ -54,16 +63,19 @@ const ModalServico = ({ modal, setModal, servicosData, usuario }) => {
           <p>{servicosData.nome_negocio}</p>
           <span>{servicosData.descricao_servico}</span>
         </div>
+        <div>
+          <div className={styles.containerTitle}>
+            <Title text="Contatos" fontSize="2" />
+            <img src={phone} alt="" />
+          </div>
+          <ModalContato contato={contato}/>
+        </div>
         <div className={styles.avaliacao}>
           <div className={styles.containerTitle}>
             <Title text="O Que Dizem os Clientes" fontSize="2" />
             <img src={starIcon} alt="" />
           </div>
         </div>
-        <Button>
-          <img src={wppIcon} alt="" />
-          Contato
-        </Button>
       </section>
     </div>
   );
