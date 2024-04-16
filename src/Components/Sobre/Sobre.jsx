@@ -6,7 +6,6 @@ import EmConstrucao from "../EmConstrucao/EmConstrucao";
 const Sobre = () => {
   return (
     <main>
-      <Header />
       <EmConstrucao />
       <Footer />
     </main>

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Header } from "../../Header/Header";
+
 import Footer from "../../Footer/Footer";
 import InputText from "../../Forms/Input/InputText";
 import styles from "../CadastroForm.module.css";
@@ -102,7 +102,6 @@ const CadastroUsuario = () => {
   if (rules)
     return (
       <section>
-        <Header />
         <section className={`${styles.cadastroContainer} container`}>
           <Title
             text="Novo Cadastro"

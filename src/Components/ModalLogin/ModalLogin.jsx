@@ -38,6 +38,7 @@ const ModalLogin = ({ modal, setModal }) => {
           setToken(token);
           window.localStorage.setItem("token", token);
           authLogin(token, requestLogin.json.id);
+          navigate('/usuario/perfil')
         } else {
           setToken(null);
         }

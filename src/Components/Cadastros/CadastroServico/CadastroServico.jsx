@@ -28,7 +28,7 @@ const CadastroServico = () => {
     mensagem: '',
     status: false
   });
-  const { setModal, setUserAuth, userAuth } = useContext(GlobalContext);
+  const { setModal, setUserAuth, userAuth,logout } = useContext(GlobalContext);
   const formRef = useRef();
   const navigate = useNavigate();
   //
@@ -48,6 +48,7 @@ const CadastroServico = () => {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
           setUserAuth({});
+          logout()
         }
       }
     }
@@ -109,7 +110,6 @@ const CadastroServico = () => {
   if (categorias)
     return (
       <section>
-        <Header />
         {userAuth.status && userAuth.token ? (
           <section className={`${styles.cadastroContainer} container`}>
             <Title text="Cadastrar Serviço" fontSize="3" />

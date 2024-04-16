@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./HomeEmpreendedores.module.css";
-import { Header } from "../Header/Header";
 import Title from "../Titles/Title";
 import LogoSat from "../../assets/icons/sat_logo.svg";
 import LinkHomeContainer from "../LinkHomeContainer/LinkHomeContainer";
@@ -16,7 +15,7 @@ import useFetch from "../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 
 const HomeEmpreendedores = () => {
-  const { userAuth, setUserAuth } = useContext(GlobalContext);
+  const { userAuth, setUserAuth, logout } = useContext(GlobalContext);
   const { request } = useFetch();
   const gridLinks = useRef();
 
@@ -31,10 +30,12 @@ const HomeEmpreendedores = () => {
         const {id,rule} = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
+        console.log(options);
         if (response.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
           setUserAuth({});
+          logout()
         }
       }
     }
@@ -43,7 +44,6 @@ const HomeEmpreendedores = () => {
 
   return (
     <main className={`${styles.main}`}>
-      <Header />
       <section className={`${styles.section} container`}>
         <div className={styles.titulo}>
           <img src={LogoSat} alt="" />

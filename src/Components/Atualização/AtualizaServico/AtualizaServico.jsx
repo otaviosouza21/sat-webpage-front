@@ -19,7 +19,7 @@ const AtualizaServico = () => {
   const [categorias, setCategorias] = useState();
   const { request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const {dataUpdate,setModal,setUserAuth,userAuth} = useContext(GlobalContext);
+  const {dataUpdate,setModal,setUserAuth,userAuth, logout} = useContext(GlobalContext);
   const formRef = useRef();
   const navigate = useNavigate();
   const nomeNegocioForm = useForm();
@@ -38,6 +38,7 @@ const AtualizaServico = () => {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
           setUserAuth();
+          logout()
         }
 
       }
@@ -114,7 +115,6 @@ const AtualizaServico = () => {
   if (categorias)
     return (
       <section>
-        <Header />
         {userAuth.status && userAuth.token ? (
           <section className={`${styles.cadastroContainer} container`}>
             <Title

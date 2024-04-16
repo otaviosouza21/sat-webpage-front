@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import style from './ServicoUsuario.module.css'
-import { Header } from "../../Header/Header";
 import { jwtDecode } from 'jwt-decode';
 import { GET_AUTH_USER, GET_INNER_ID } from '../../../Api/api';
 import useFetch from '../../../Hooks/useFetch';
@@ -8,13 +7,16 @@ import { GlobalContext } from "../../../Hooks/GlobalContext";
 import Loading from "../../Utils/Loading/Loading.jsx";
 import Error from "../../Utils/Error/Error.jsx";
 import Title from '../../Titles/Title.jsx';
+import MenuLateral from '../../MenuLateral/MenuLateral.jsx';
 
 
 const ServicosUsuario = () => {
-    const { userAuth, setUserAuth } = useContext(GlobalContext);
+    const { userAuth, setUserAuth, logout } = useContext(GlobalContext);
     const [currentUser, setCurrentUser] = useState(null);
     const { request, loading, error } = useFetch();
     const [servicosUser, setServicoUser] = useState(null)
+  const [btnAtivo, setBtnAtivo]=useState(false);
+
 
     useEffect(()=>{
         const token = window.localStorage.getItem("token");
@@ -26,7 +28,10 @@ const ServicosUsuario = () => {
                 if (response.ok) {
                     setUserAuth({ token, usuario: json, status: true, rule });
                     setCurrentUser(json);
-                   
+                }else{
+                    setUserAuth({})
+                    setCurrentUser({})
+                    logout();
                 }
             }
         }
@@ -41,27 +46,34 @@ const ServicosUsuario = () => {
                 const { response, json, loading } = await request(url, options);
                 if (response.ok) {
                     setServicoUser(json.Servicos)
-                    console.log(servicosUser);
                 }
             }
         }
         fetchValidaServicos();
     },[userAuth]) 
 
-    if (loading) return <Loading />;
+    //if (loading) return <Loading />;
     if (error) return <Error error={error} />;
     if(currentUser && userAuth)
 
     return (
     <div>
-        <Header />
-
         <Title text="Meus servicos cadastrados" fontSize="3" className='container'/>
         <section className={`container ${style.containerServico}`}>
+            <MenuLateral
+            link1={'/usuario/perfil'} 
+            link2={'/usuario/servicos'} 
+            text1={'Meu Perfil'} 
+            text2={'Meus Serviços'}
+            setBtnAtivo={setBtnAtivo}
+            />
             <ul>
-                {}
+                {loading&& (<Loading />)}
                 {servicosUser && (
-                    servicosUser.length == 0 ?<h2 className={style.notServico}>Não existem Serviços cadastrados</h2>:
+                    !loading && servicosUser.length == 0 ? 
+                    <li className={style.modalServico}>
+                        <h2 className={style.notServico}>Não existem Serviços cadastrados</h2>
+                    </li>:
                     servicosUser.map((servico)=>(
                         <li key={servico.id} className={style.modalServico}>
                             <div>
