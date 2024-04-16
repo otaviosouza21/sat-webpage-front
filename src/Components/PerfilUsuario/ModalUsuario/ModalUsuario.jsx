@@ -18,8 +18,8 @@ const ModalUsuario = () => {
   return (
     <nav className={`${styles.containerModal} animation-up-button`}>
       <ul className={styles.options}>
-        <li><Link to='/usuario/perfil'>Minha Conta</Link></li>
-        <li><Link to='/usuario/servicos'> Meus Serviços</Link></li>
+        <li><Link to='meu_perfil/'>Minha Conta</Link></li>
+        <li><Link to='/servicos'> Meus Serviços</Link></li>
         {userAuth.rule === 3 && <li onClick={()=>navigate('/adm')}>Painel de Controle</li>}
         <li onClick={logout}>Sair</li>
       </ul>

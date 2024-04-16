@@ -1,7 +1,7 @@
 .menuLateral{
     display: grid;
     grid-template-rows: 50px 50px;
-    margin: 30px 0;
+    height:400px ;
     gap: 10px;
     padding: 30px;
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);

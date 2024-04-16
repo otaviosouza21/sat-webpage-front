@@ -57,51 +57,37 @@ const ServicosUsuario = () => {
     if(currentUser && userAuth)
 
     return (
-    <div>
-        <Title text="Meus servicos cadastrados" fontSize="3" className='container'/>
-        <section className={`container ${style.containerServico}`}>
-            <MenuLateral
-            link1={'/usuario/perfil'} 
-            link2={'/usuario/servicos'} 
-            text1={'Meu Perfil'} 
-            text2={'Meus Serviços'}
-            setBtnAtivo={setBtnAtivo}
-            />
-            <ul>
-                {loading&& (<Loading />)}
-                {servicosUser && (
-                    !loading && servicosUser.length == 0 ? 
-                    <li className={style.modalServico}>
-                        <h2 className={style.notServico}>Não existem Serviços cadastrados</h2>
-                    </li>:
-                    servicosUser.map((servico)=>(
-                        <li key={servico.id} className={style.modalServico}>
-                            <div>
-                                <h3>Serviço</h3>
-                                <h2>{servico.nome_negocio}</h2>
-                            </div>
-                            <div>
-                                <h3>Situação</h3>
-                                <h2>{servico.status?'Publicado':'Aguardando Analise'}</h2>
-                            </div>
-                            <div>
-                                <h3>Opções</h3>
-                                <button className={style.btnOption}>Visualizar</button>
-                                <button className={style.btnOption}>Editar</button>
-                                <button className={style.btnOption}>Excluir</button>
-                            </div>
-                            <div>
-                                <h3>Descrição</h3>
-                                <h2>{servico.descricao_servico}</h2>
-                            </div>
-                        </li>
-                    )
-                ))}
-            </ul>
-        </section>
-
-      
-    </div>
+    <ul>
+        {loading&& (<Loading />)}
+        {servicosUser && (
+            !loading && servicosUser.length == 0 ? 
+            <li className={style.modalServico}>
+                <h2 className={style.notServico}>Não existem Serviços cadastrados</h2>
+            </li>:
+            servicosUser.map((servico)=>(
+                <li key={servico.id} className={style.modalServico}>
+                    <div>
+                        <h3>Serviço</h3>
+                        <h2>{servico.nome_negocio}</h2>
+                    </div>
+                    <div>
+                        <h3>Situação</h3>
+                        <h2>{servico.status?'Publicado':'Aguardando Analise'}</h2>
+                    </div>
+                    <div>
+                        <h3>Opções</h3>
+                        <button className={style.btnOption}>Visualizar</button>
+                        <button className={style.btnOption}>Editar</button>
+                        <button className={style.btnOption}>Excluir</button>
+                    </div>
+                    <div>
+                        <h3>Descrição</h3>
+                        <h2>{servico.descricao_servico}</h2>
+                    </div>
+                </li>
+            )
+        ))}
+    </ul>
   )
 }
 

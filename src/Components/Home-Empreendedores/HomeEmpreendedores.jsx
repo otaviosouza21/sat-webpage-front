@@ -29,7 +29,6 @@ const HomeEmpreendedores = () => {
         const {id,rule} = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
-        console.log(options);
         if (response.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {

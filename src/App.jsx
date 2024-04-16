@@ -13,28 +13,22 @@ import AtualizaServico from "./Components/Atualização/AtualizaServico/Atualiza
 import MinhaConta from "./Components/PerfilUsuario/MinhaConta/MinhaConta";
 import ServicosUsuario from "./Components/PerfilUsuario/ServicosUsuario/ServicosUsuario";
 import { Header } from "./Components/Header/Header";
-<<<<<<< HEAD
-=======
 import Footer from "./Components/Footer/Footer";
->>>>>>> fdbcd457ba53fbcc64724164c518ad1f79ba7ba0
+import PerfilUsuario from "./Components/PerfilUsuario/PerfilUsuario";
 
 function App() {
 
   return (
     <GlobalStorage>
     <BrowserRouter>
-<<<<<<< HEAD
     <Header/>
-=======
-    <Header />
->>>>>>> fdbcd457ba53fbcc64724164c518ad1f79ba7ba0
       <Routes>
         <Route exact path="/" element={<HomeEmpreendedores />} />
         <Route exact path="servicos" element={<Servicos />} />
         <Route exact path="usuario/cadastro" element={<CadastroUsuario />} />
         <Route exact path="usuarios/cadastro/atualiza" element={<AtualizaUsuario />} />
-        <Route exact path="usuario/perfil" element={<MinhaConta />} />
-        <Route exact path="usuario/servicos" element={<ServicosUsuario />} />
+        <Route exact path="meu_perfil/*" element={<PerfilUsuario />} />
+
         <Route exact path="servico/cadastro" element={<CadastroServico />} />
         <Route exact path="servico/cadastro/atualiza" element={<AtualizaServico />} />
         <Route exact path="sobre" element={<Sobre />} />

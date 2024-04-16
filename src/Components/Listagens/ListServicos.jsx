@@ -28,8 +28,6 @@ const ListServicos = () => {
     getServicos();
   }, [update]);
 
-
-console.log(servicos);
   if (servicos)
     return (
       <section>
