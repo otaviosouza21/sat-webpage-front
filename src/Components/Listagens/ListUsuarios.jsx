@@ -4,6 +4,7 @@ import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
 import { GlobalContext } from "../../Hooks/GlobalContext";
+import { convertData } from "../../plugins/convertData";
 
 const ListUsuarios = () => {
   const { request, loading, data} =  useFetch();
@@ -42,6 +43,7 @@ const ListUsuarios = () => {
                 <th>Residente</th>
                 <th>rule</th>
                 <th>Status</th>
+                <th>Criação</th>
               </tr>
             </thead>
             <tbody>
@@ -57,6 +59,7 @@ const ListUsuarios = () => {
                     <td>{usuario.tempo_reside}</td>
                     <td>{usuario.rule_id}</td>
                     <td>{usuario.status === "1" ? "Ativo" : "Inativo"}</td>
+                    <td>{convertData(usuario.createdAt)}</td>
                     <td>
                       <FuncButton
                         table="usuarios"

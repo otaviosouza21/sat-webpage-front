@@ -6,8 +6,7 @@ import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import FuncButton from "../Button/FuncButton";
 import { GlobalContext } from "../../Hooks/GlobalContext";
-import Confirm from "../Utils/Confirm/Confirm";
-
+import { convertData } from "../../plugins/convertData";
 const ListServicos = () => {
   const { request, loading } = useFetch();
   const {update} = useContext(GlobalContext)
@@ -30,7 +29,7 @@ const ListServicos = () => {
   }, [update]);
 
 
-
+console.log(servicos);
   if (servicos)
     return (
       <section>
@@ -47,6 +46,7 @@ const ListServicos = () => {
                 <th>Tempo</th>
                 <th>Usuario</th>
                 <th>Categoria</th>
+                <th>Criação</th>
               </tr>
             </thead>
             <tbody>
@@ -60,6 +60,7 @@ const ListServicos = () => {
                     <td>{servico.tempo_negocio}</td>
                     <td>{servico.Usuario.nome}</td>
                     <td>{servico.categoria_id}</td>
+                    <td>{convertData(servico.createdAt)}</td>
                     <td>
                       <FuncButton
                         table="servico"
