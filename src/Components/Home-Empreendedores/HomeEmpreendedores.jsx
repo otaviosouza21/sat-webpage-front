@@ -7,7 +7,6 @@ import contratarIcon from "../../assets/icons/worker.svg";
 import toolsIcons from "../../assets/icons/tools.svg";
 import figuras1 from "../../assets/img/figure1.svg";
 import figuras2 from "../../assets/img/figure2.svg";
-import Footer from "../Footer/Footer";
 import { SimpleAnime } from "../../plugins/simple-anime";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { GET_AUTH_USER } from "../../Api/api";
@@ -69,7 +68,6 @@ const HomeEmpreendedores = () => {
           />
         </div>
       </section>
-      <Footer />
     </main>
   );
 };

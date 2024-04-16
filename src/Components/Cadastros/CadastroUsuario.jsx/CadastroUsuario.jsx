@@ -211,7 +211,6 @@ const CadastroUsuario = () => {
           </form>
         </section>
 
-        <Footer />
       </section>
     );
 };

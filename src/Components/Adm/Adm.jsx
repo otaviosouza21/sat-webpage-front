@@ -89,7 +89,6 @@ const Adm = () => {
       ) : (
         <AcessDenied />
       )}
-      <Footer />
     </>
   );
 };

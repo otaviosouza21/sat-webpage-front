@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Header } from "../../Header/Header";
-import Footer from "../../Footer/Footer";
 import styles from "../CadastroForm.module.css";
 import InputText from "../../Forms/Input/InputText";
 import InputSelect from "../../Forms/Input/InputSelect";
@@ -175,7 +173,6 @@ const AtualizaServico = () => {
         ) : (
           setModal(true)
         )}
-        <Footer />
       </section>
     );
 };

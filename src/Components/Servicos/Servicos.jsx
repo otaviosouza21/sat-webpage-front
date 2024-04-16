@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Header } from "../Header/Header";
-import Footer from "../Footer/Footer";
 import Title from "../Titles/Title";
 import InputSearch from "../Forms/InputSearch/InputSearch.jsx";
 import ServicoContainer from "../ServicoContainer/ServicoContainer";
@@ -71,7 +69,6 @@ const Servicos = () => {
             })}
         </div>
       </section>
-      <Footer />
     </main>
   );
 };

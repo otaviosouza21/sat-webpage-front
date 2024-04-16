@@ -14,7 +14,6 @@ const MinhaConta = () => {
   const { userAuth, setUserAuth,logout } = useContext(GlobalContext);
   const [currentUser, setCurrentUser] = useState(null);
   const { request, loading } = useFetch();
-
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
@@ -39,7 +38,7 @@ const MinhaConta = () => {
   if (currentUser)
     return (
       <>
-        <Title text="Meu Perfil" fontSize="3" className='container'/>
+                <Title text="Meu Perfil" fontSize="3" className='container'/>
         <div className={`container ${style.containerUsuario}`}>
         <MenuLateral 
           link1={'/usuario/perfil'} 

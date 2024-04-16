@@ -13,13 +13,21 @@ import AtualizaServico from "./Components/Atualização/AtualizaServico/Atualiza
 import MinhaConta from "./Components/PerfilUsuario/MinhaConta/MinhaConta";
 import ServicosUsuario from "./Components/PerfilUsuario/ServicosUsuario/ServicosUsuario";
 import { Header } from "./Components/Header/Header";
+<<<<<<< HEAD
+=======
+import Footer from "./Components/Footer/Footer";
+>>>>>>> fdbcd457ba53fbcc64724164c518ad1f79ba7ba0
 
 function App() {
 
   return (
     <GlobalStorage>
     <BrowserRouter>
+<<<<<<< HEAD
     <Header/>
+=======
+    <Header />
+>>>>>>> fdbcd457ba53fbcc64724164c518ad1f79ba7ba0
       <Routes>
         <Route exact path="/" element={<HomeEmpreendedores />} />
         <Route exact path="servicos" element={<Servicos />} />
@@ -32,6 +40,7 @@ function App() {
         <Route exact path="sobre" element={<Sobre />} />
         <Route exact path="adm" element={<Adm />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
     </GlobalStorage>
   );
