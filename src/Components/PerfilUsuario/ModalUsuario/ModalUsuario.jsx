@@ -3,6 +3,7 @@ import styles from "./ModalUsuario.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 
+
 const ModalUsuario = () => {
   const {userAuth} = useContext(GlobalContext)
   const navigate = useNavigate()
@@ -10,13 +11,15 @@ const ModalUsuario = () => {
   function logout() {
     window.localStorage.removeItem('token')
     window.location.reload();
+    navigate('/')
   }
+
 
   return (
     <nav className={`${styles.containerModal} animation-up-button`}>
       <ul className={styles.options}>
-        <li><Link to='/usuarios/perfil'>Minha Conta</Link></li>
-        <li>Meus Serviços</li>
+        <li><Link to='/usuario/perfil'>Minha Conta</Link></li>
+        <li><Link to='/usuario/servicos'> Meus Serviços</Link></li>
         {userAuth.rule === 3 && <li onClick={()=>navigate('/adm')}>Painel de Controle</li>}
         <li onClick={logout}>Sair</li>
       </ul>

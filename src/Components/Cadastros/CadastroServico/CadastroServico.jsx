@@ -38,8 +38,8 @@ const CadastroServico = () => {
 
   //check de login na transição para pagina de cadastro/ verifica se está locado
   useEffect(() => {
-    const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
+      const token = window.localStorage.getItem("token");
       if (token) {
         const { id, rule } = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);

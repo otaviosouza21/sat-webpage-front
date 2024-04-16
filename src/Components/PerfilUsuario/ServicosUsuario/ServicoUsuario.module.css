@@ -1,0 +1,51 @@
+.containerServico{
+    display: grid;
+    
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);
+    border-radius: 10px;
+    padding: 40px;
+}
+
+h3{
+    font-size: 1.6rem;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-bottom: 5px;
+    color: var(--primary4);
+}
+h2{
+    font-size: 1.4rem;
+    font-weight: bold;
+    transition: 0.3s;
+    color: var(--primary2);
+}
+
+.containerPerfil ul{
+    display: block;
+    max-width: 1000px;
+   
+}
+.break{
+    flex-basis: 100%;
+    height: 0;
+}
+.modalServico{
+    display: grid;
+    margin-bottom: 20px;
+    grid-template-columns: auto 1fr 1fr;
+    max-width: 800px;
+    background-color: var(--gray2);
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    color: var(--primary3);
+    gap: 15px;
+    justify-content: start;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.btnOption{
+
+}

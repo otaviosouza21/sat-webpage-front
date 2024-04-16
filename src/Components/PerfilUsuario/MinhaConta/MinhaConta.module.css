@@ -1,5 +1,5 @@
 .infosPerfil{
-   margin: 30px 0;
+    margin: 30px 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 40px;
