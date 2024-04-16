@@ -42,7 +42,6 @@ const Adm = () => {
   if (loading) return <Loading />
   return (
     <>
-
       {userAuth.status && userAuth.rule === 3 ? (
         <main className={`${styles.containerAdm}`}>
           <ul className={styles.nav}>
