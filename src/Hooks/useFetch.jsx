@@ -18,7 +18,9 @@ const useFetch = () => {
       setError(err.message);
     } finally {
       setData(json);
-      setLoading(false);
+      setTimeout(()=>{
+        setLoading(false);
+      },1000)
       return { response, json };
     }
   }, []);

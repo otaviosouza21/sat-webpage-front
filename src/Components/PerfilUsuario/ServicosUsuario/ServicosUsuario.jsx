@@ -6,8 +6,8 @@ import useFetch from '../../../Hooks/useFetch';
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import Loading from "../../Utils/Loading/Loading.jsx";
 import Error from "../../Utils/Error/Error.jsx";
-import Title from '../../Titles/Title.jsx';
-import MenuLateral from '../../MenuLateral/MenuLateral.jsx';
+import LoadingCenterComponent from '../../Utils/LoadingCenterComponent/LoadingCenterComponent.jsx';
+import { Link } from 'react-router-dom';
 
 
 const ServicosUsuario = () => {
@@ -15,7 +15,6 @@ const ServicosUsuario = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const { request, loading, error } = useFetch();
     const [servicosUser, setServicoUser] = useState(null)
-  const [btnAtivo, setBtnAtivo]=useState(false);
 
 
     useEffect(()=>{
@@ -52,42 +51,43 @@ const ServicosUsuario = () => {
         fetchValidaServicos();
     },[userAuth]) 
 
-    //if (loading) return <Loading />;
-    if (error) return <Error error={error} />;
-    if(currentUser && userAuth)
-
+    
     return (
-    <ul>
-        {loading&& (<Loading />)}
-        {servicosUser && (
-            !loading && servicosUser.length == 0 ? 
-            <li className={style.modalServico}>
-                <h2 className={style.notServico}>Não existem Serviços cadastrados</h2>
-            </li>:
-            servicosUser.map((servico)=>(
-                <li key={servico.id} className={style.modalServico}>
-                    <div>
-                        <h3>Serviço</h3>
-                        <h2>{servico.nome_negocio}</h2>
-                    </div>
-                    <div>
-                        <h3>Situação</h3>
-                        <h2>{servico.status?'Publicado':'Aguardando Analise'}</h2>
-                    </div>
-                    <div>
-                        <h3>Opções</h3>
-                        <button className={style.btnOption}>Visualizar</button>
-                        <button className={style.btnOption}>Editar</button>
-                        <button className={style.btnOption}>Excluir</button>
-                    </div>
-                    <div>
-                        <h3>Descrição</h3>
-                        <h2>{servico.descricao_servico}</h2>
-                    </div>
-                </li>
-            )
-        ))}
-    </ul>
+    <>
+        <ul className={style.containerServico}>
+            {loading&& (<LoadingCenterComponent />)}
+            {currentUser && userAuth && servicosUser && !loading && (
+                
+                servicosUser.length == 0 ? 
+                <li className={style.modalServico}>
+                    <h2 className={style.notServico}>Não existem Serviços cadastrados</h2>
+                </li>:
+                servicosUser.map((servico)=>(
+                    <li key={servico.id} className={style.modalServico}>
+                        <div>
+                            <h3>Serviço</h3>
+                            <h2>{servico.nome_negocio}</h2>
+                        </div>
+                        <div>
+                            <h3>Situação</h3>
+                            <h2>{servico.status?'Publicado':'Aguardando Analise'}</h2>
+                        </div>
+                        <div>
+                            <h3>Opções</h3>
+                            <button className={style.btnOption}>Visualizar</button>
+                            <button className={style.btnOption}>Editar</button>
+                            <button className={style.btnOption}>Excluir</button>
+                        </div>
+                        <div>
+                            <h3>Descrição</h3>
+                            <h2>{servico.descricao_servico}</h2>
+                        </div>
+                    </li>
+                )
+            ))}
+            {!loading&& <Link to={'/servico/cadastro'} className={style.button}>+Novo Serviço</Link>}
+        </ul>
+    </>
   )
 }
 
