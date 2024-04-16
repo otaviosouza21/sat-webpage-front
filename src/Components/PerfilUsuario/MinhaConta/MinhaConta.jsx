@@ -38,7 +38,7 @@ const MinhaConta = () => {
       <>
         <Header />
         <section className={`container ${style.containerPerfil}`}>
-          <Title text="Meu Perfil" fontSize="3" />
+          <Title text="Meu Perfil" fontSize="3" className='container'/>
           <ul className={style.infosPerfil}>
             <li>
               <Title text="Nome" fontSize="2" />

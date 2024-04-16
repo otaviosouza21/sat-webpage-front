@@ -19,7 +19,8 @@
     background-color: white;
     border-radius: 10px;
     display: flex;
-    width: 90%;
+    max-width : 1200px;
+    margin: 20px;
     flex-direction: column;
     gap: 20px;
     padding: 30px;
@@ -30,9 +31,8 @@
 
 .options{
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
+    justify-content: space-between;  
+    gap: 80px;
 }
 
 .options span{
@@ -62,4 +62,16 @@
     left: 90%;
     cursor: pointer;
   }
-  
+
+  @media (max-width:450px){
+    .options{
+        display: grid;
+        width: 100%;
+        gap: 15px;
+        
+    }
+
+    .modalLogin{
+        width: 400px;
+    }
+  }
