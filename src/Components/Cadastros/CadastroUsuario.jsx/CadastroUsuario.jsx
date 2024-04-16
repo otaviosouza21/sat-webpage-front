@@ -13,12 +13,13 @@ import Loading from "../../Utils/Loading/Loading";
 import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
 
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { userAuth } =
-    useContext(GlobalContext);
+  const [cadastroRealizado, setCadastroRealizado] = useState(false);
+  const { userAuth } = useContext(GlobalContext);
   const formRef = useRef(); // utilizado para acesso ao input options
   const navigate = useNavigate();
 
@@ -32,7 +33,6 @@ const CadastroUsuario = () => {
   const morador = useForm();
   const socioSatForm = useForm(false);
   const { request, data, loading, error } = useFetch();
-
 
   //==============Puxa rules da api=================//
   useEffect(() => {
@@ -56,7 +56,6 @@ const CadastroUsuario = () => {
       morador.validate() &&
       rules
     ) {
-
       const dataUsuario = {
         nome: nameForm.value,
         email: emailForm.value,
@@ -71,9 +70,8 @@ const CadastroUsuario = () => {
         rule_id: 1,
       };
 
-      
       async function postUser() {
-        const { url, options } = POST_DATA_USER("usuarios", dataUsuario); // caso false, novo cadastro
+        const { url, options } = POST_DATA_USER("usuarios", dataUsuario);
         const userRequest = await request(url, options);
         if (userRequest.response.ok) {
           setStatusCadastro(userRequest.json.message);
@@ -85,10 +83,11 @@ const CadastroUsuario = () => {
           contatoP1Form.reset();
           contatoP2Form.reset();
           morador.reset();
-          setStatusCadastro("Cadastro Realizado com Sucesso")
-          setTimeout(() => {
+          setStatusCadastro("Cadastro Realizado com Sucesso");
+          setCadastroRealizado(true);
+          /*   setTimeout(() => {
             navigate("/");
-          }, 1000);
+          }, 1000); */
         }
       }
       postUser();
@@ -96,17 +95,14 @@ const CadastroUsuario = () => {
       setStatusCadastro("Verifique se todos os campos estao preenchidos");
     }
   }
-  
-  if(error) return <Error error={error} />
-  if(loading) return <Loading />
+
+  if (error) return <Error error={error} />;
+  if (loading) return <Loading />;
   if (rules)
     return (
       <section>
         <section className={`${styles.cadastroContainer} container`}>
-          <Title
-            text="Novo Cadastro"
-            fontSize="3"
-          />
+          <Title text="Novo Cadastro" fontSize="3" />
           <form
             onSubmit={handleSubmit}
             ref={formRef}
@@ -209,8 +205,13 @@ const CadastroUsuario = () => {
               <Toast message={statusCadastro} color="text-bg-success" />
             )}
           </form>
+          {cadastroRealizado && (
+            <ModalAlert
+              title="Cadastro Realizado"
+              mensagem="Cadastrar serviço?"
+            />
+          )}
         </section>
-
       </section>
     );
 };
