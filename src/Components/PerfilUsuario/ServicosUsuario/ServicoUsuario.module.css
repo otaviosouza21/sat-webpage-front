@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 20px;
+    
 }
 
 h3{
@@ -26,10 +27,9 @@ h2{
     height: 0;
 }
 .modalServico{
-    display: grid;
-    margin-bottom: 20px;
-    grid-template-columns: auto 1fr 1fr;
-    max-width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    align-self: start;
     background-color: var(--gray2);
     padding: 20px;
     border-radius: 10px 10px 0 0;
@@ -40,6 +40,52 @@ h2{
     transition: 0.3s;
 }
 
-.btnOption{
-
+.containerServico{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    gap: 30px;
+    min-height: 500px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);
+    border-radius: 10px;
+    padding: 30px;
 }
+
+
+.button {
+    justify-self: end;
+    align-self: flex-end;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.3rem;
+    background-color: #014622;
+    color: white;
+    box-shadow: 0px 0px 1px 1px rgb(175, 175, 175);
+  }
+  
+
+  .button a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 25px;
+  }
+  
+  .button img {
+    width: 25px;
+  }
+  
+  .button:hover {
+    transform: scale(1.05);
+    background-color: #005529;
+  }
+  
+  .button:active {
+    transform: scale(1);
+  }
+  
