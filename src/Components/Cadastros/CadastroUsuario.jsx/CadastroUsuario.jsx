@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+
+import Footer from "../../Footer/Footer";
 import InputText from "../../Forms/Input/InputText";
 import styles from "../CadastroForm.module.css";
 import Button from "../../Button/Button";

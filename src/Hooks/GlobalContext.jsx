@@ -10,8 +10,16 @@ export const GlobalStorage = ({ children }) => {
     status: false,
     rule: ''
   });
+  
   const [modal,setModal] = useState('')
   const [dataUpdate, setDataUpdate] = useState(null);
+
+
+  function logout() {
+    window.localStorage.removeItem('token')
+    window.location.reload();
+    navigate('/')
+  }
 
   return (
     <GlobalContext.Provider
@@ -23,7 +31,8 @@ export const GlobalStorage = ({ children }) => {
         userAuth,
         setUserAuth,
         modal,
-        setModal
+        setModal,
+        logout,
       }}
     >
       {children}

@@ -1,0 +1,26 @@
+.menuLateral{
+    display: grid;
+    grid-template-rows: 50px 50px;
+    margin: 30px 0;
+    gap: 10px;
+    padding: 30px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);
+    border-radius: 10px;
+    background-color: rgb(244, 245, 247);
+}
+.btnAtivo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(94, 94, 94);
+    color: white;
+    border-radius: 5px;
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(168, 168, 168);
+    border-radius: 5px;
+}

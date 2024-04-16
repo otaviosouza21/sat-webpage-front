@@ -15,7 +15,7 @@ import { GlobalContext } from "../../Hooks/GlobalContext.jsx";
 const Servicos = () => {
   const [visibleItens, setVisibleItens] = useState(null);
   const { error, loading, request } = useFetch();
-  const { userAuth, setUserAuth } = useContext(GlobalContext);
+  const { userAuth, setUserAuth,logout  } = useContext(GlobalContext);
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -28,6 +28,7 @@ const Servicos = () => {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
           setUserAuth({});
+          logout();
         }
       }
     }
@@ -49,6 +50,7 @@ const Servicos = () => {
 
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
+  if(visibleItens)
   return (
     <main>
       <section className={`container ${styles.servicosContainer}`}>

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Footer from "../Footer/Footer";
 import ListServicos from "../Listagens/ListServicos";
 import ListUsuarios from "../Listagens/ListUsuarios";
 import ListCategoriasServicos from "../Listagens/ListCategoriasServicos";
@@ -15,7 +16,7 @@ import Confirm from "../Utils/Confirm/Confirm";
 
 const Adm = () => {
   const [activeView, setActiveView] = useState("servicos");
-  const { userAuth, setUserAuth } = useContext(GlobalContext);
+  const { userAuth, setUserAuth, logout } = useContext(GlobalContext);
   const { request,loading } = useFetch();
 
   useEffect(() => {
@@ -28,7 +29,9 @@ const Adm = () => {
         if (response.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
-          setUserAuth();
+          setUserAuth({});
+          setCurrentUser({})
+          logout();
         }
       }
     }
