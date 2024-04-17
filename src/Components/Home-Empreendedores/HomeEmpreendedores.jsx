@@ -12,12 +12,13 @@ import { GlobalContext } from "../../Hooks/GlobalContext";
 import { GET_AUTH_USER } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
+import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
 
 const HomeEmpreendedores = () => {
-  const { userAuth, setUserAuth, logout } = useContext(GlobalContext);
+  const { userAuth, setUserAuth, logout, modal,  setModal } = useContext(GlobalContext);
+
   const { request } = useFetch();
   const gridLinks = useRef();
-
   useEffect(() => {
     new SimpleAnime();
   }, []);
@@ -63,10 +64,12 @@ const HomeEmpreendedores = () => {
             subtitle="Cadastre-se e aumente a visibilidade do seu trabalho no bairro de Taiaçupeba"
             button="Quero me cadastrar"
             icon={toolsIcons}
-            patch="/servico/cadastro"
+            setModal={setModal}
           />
         </div>
+      {modal === 'cadUsuario' && <CadastroUsuario/>}
       </section>
+
     </main>
   );
 };

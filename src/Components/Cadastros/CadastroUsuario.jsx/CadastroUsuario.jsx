@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import Footer from "../../Footer/Footer";
 import InputText from "../../Forms/Input/InputText";
 import styles from "../CadastroForm.module.css";
 import Button from "../../Button/Button";
@@ -14,6 +13,7 @@ import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
+import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
@@ -96,123 +96,127 @@ const CadastroUsuario = () => {
     }
   }
 
-  if (error) return <Error error={error} />;
-  if (loading) return <Loading />;
-  if (rules)
     return (
-      <section>
-        <section className={`${styles.cadastroContainer} container`}>
-          <Title text="Novo Cadastro" fontSize="3" />
+      <section className={styles.containerModal}>
           <form
             onSubmit={handleSubmit}
             ref={formRef}
-            className={styles.cadastroUsuario}
+            className={styles.containerForm}
           >
-            <InputText
+            
+            {loading ?  <LoadingCenterComponent />:(
+              <>
+            <div className={styles.cadastroUsuario}>
+              <Title text="Novo Cadastro" fontSize="3" />
+              <InputText
               label="Nome Completo*"
               type="text"
               id="nome"
               placeholder="João de Souza"
-              gridColumn="1/5"
+              gridColumn="1/4"
               {...nameForm}
-            />
-            <InputText
+              />
+              <InputText
               label="Email*"
               type="email"
               id="email"
               placeholder="joao@email.com"
-              gridColumn="1/3"
+              gridColumn="1/2"
               {...emailForm}
-            />
-            <InputText
+              />
+              <InputText
               label="Senha*"
               type="password"
               id="password"
-              gridColumn="3/5"
+              gridColumn="2/4"
               {...senhaForm}
-            />
-            <InputText
+              />
+              <InputText
               label="Contato Pessoal*"
               type="text"
               id="contato_pessoal_01"
+              gridColumn="1/2"
               placeholder="(xx) xxxxx-xxxx"
               {...contatoP1Form}
-            />
-            {userAuth.status &&
-              userAuth.rule === 3 && ( //somente ADM
+              />
+              {userAuth.status &&
+                userAuth.rule === 3 && ( //somente ADM
                 <InputText
-                  label="Contato Pessoal 2"
-                  type="text"
-                  id="contato_pessoal_02"
-                  placeholder="(xx) xxxxx-xxxx"
-                  {...contatoP2Form}
+                label="Contato Pessoal 2"
+                type="text"
+                id="contato_pessoal_02"
+                placeholder="(xx) xxxxx-xxxx"
+                {...contatoP2Form}
                 />
               )}
-            <InputText
+              <InputText
               label="Contato Negocio*"
               type="text"
               id="contato_negocio_01 "
               placeholder="(xx) xxxxx-xxxx"
+              gridColumn="2/4"
               {...contatoN1Form}
-            />
-            {userAuth.status &&
-              userAuth.rule === 3 && ( //somente ADM
+              />
+              {userAuth.status &&
+                userAuth.rule === 3 && ( //somente ADM
                 <InputText
-                  label="Contato Negocio 2"
-                  type="text"
-                  id="contato_negocio_02"
-                  placeholder="(xx) xxxxx-xxxx"
-                  {...contatoN2Form}
+                label="Contato Negocio 2"
+                type="text"
+                id="contato_negocio_02"
+                placeholder="(xx) xxxxx-xxxx"
+                {...contatoN2Form}
                 />
               )}
-            <InputText
+              <InputText
               label="Morador (Anos)"
               type="number"
               id="tempo_reside"
               placeholder="Tempo que reside em Taiaçupeba"
-              gridColumn="1/3"
+              gridColumn="1/2"
               {...morador}
-            />
+              />
 
-            {userAuth.status &&
-              userAuth.rule === 3 && ( //somente ADM
+              {userAuth.status &&
+                userAuth.rule === 3 && ( //somente ADM
                 <InputSelect label="Perfil" options={rules} id="rule" />
               )}
 
-            {userAuth.status &&
-              userAuth.rule === 3 && ( //somente ADM
+              {userAuth.status &&
+                userAuth.rule === 3 && ( //somente ADM
                 <InputSelect
-                  label="Status"
-                  options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
-                  id="status"
+                label="Status"
+                options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+                id="status"
                 />
               )}
 
-            {userAuth.status && userAuth.rule === 3 && (
-              <InputText
+              {userAuth.status && userAuth.rule === 3 && (
+                <InputText
                 label="Sócio Sat"
                 type="checkbox"
                 id="socio_sat"
                 {...socioSatForm}
-              />
-            )}
+                />
+              )}
 
-            <Button handleSubmit={handleSubmit}>
-              {loading ? "Salvando..." : "Salvar"}
-            </Button>
-            {error && <Toast message={error} color="text-bg-danger" />}
-            {statusCadastro && (
-              <Toast message={statusCadastro} color="text-bg-success" />
-            )}
+              {error && <Toast message={error} color="text-bg-danger" />}
+              {statusCadastro && (
+                <Toast message={statusCadastro} color="text-bg-success" />
+              )}
+            </div>
+          </>
+          )}
+              {!loading &&<Button handleSubmit={handleSubmit}>
+                {loading ? "Salvando..." : "Salvar"}
+              </Button>}
           </form>
           {cadastroRealizado && (
             <ModalAlert
-              title="Cadastro Realizado"
-              mensagem="Cadastrar serviço?"
+            title="Cadastro Realizado"
+            mensagem="Cadastrar serviço?"
             />
           )}
         </section>
-      </section>
     );
 };
 

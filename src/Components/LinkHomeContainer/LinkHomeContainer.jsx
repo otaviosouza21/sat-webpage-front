@@ -5,7 +5,7 @@ import Title from "../Titles/Title";
 import { Link } from "react-router-dom";
 
 
-const LinkHomeContainer = ({ icon, title, subtitle, button,patch }) => {
+const LinkHomeContainer = ({ icon, title, subtitle, button,patch,setModal }) => {
   return (
     <div className={styles.containerLinkHome}>
       <img src={icon} alt="" />
@@ -13,7 +13,7 @@ const LinkHomeContainer = ({ icon, title, subtitle, button,patch }) => {
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
-     <Button patch={patch}>{button}</Button>
+     <Button patch={patch} modalParam={'cadUsuario'}>{button}</Button>
     </div>
   );
 };

@@ -70,7 +70,7 @@ export const Header = () => {
         ) : (
           <div className={styles.headerButtons}>
             <button>
-              <Link to="/usuario/cadastro" onClick={() => setDataUpdate(null)}>
+              <Link onClick={() => setModal('cadUsuario')}>
                 Cadastre-se
               </Link>
             </button>
