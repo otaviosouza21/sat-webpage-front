@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-
 import InputText from "../../Forms/Input/InputText";
 import styles from "../CadastroForm.module.css";
 import Button from "../../Button/Button";
@@ -8,10 +7,8 @@ import InputSelect from "../../Forms/Input/InputSelect";
 import useForm from "../../../Hooks/useForm";
 import useFetch from "../../../Hooks/useFetch";
 import { GET_ALL, POST_DATA_USER, UPDATE_DATA } from "../../../Api/api";
-import Loading from "../../Utils/Loading/Loading";
 import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
-import { useNavigate } from "react-router-dom";
 import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
@@ -19,10 +16,10 @@ const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
   const [cadastroRealizado, setCadastroRealizado] = useState(false);
-  const { userAuth } = useContext(GlobalContext);
+  const { userAuth, setModal } = useContext(GlobalContext);
   const formRef = useRef(); // utilizado para acesso ao input options
-  const navigate = useNavigate();
-
+  const modalContainerPost = useRef(null);
+  const CloseContainerPost = useRef(null);
   const nameForm = useForm();
   const emailForm = useForm("email");
   const senhaForm = useForm("senha");
@@ -34,6 +31,16 @@ const CadastroUsuario = () => {
   const socioSatForm = useForm(false);
   const { request, data, loading, error } = useFetch();
 
+  function closeModal(event) {
+    event.preventDefault();
+    if (
+      event.target === modalContainerPost.current ||
+      event.target === CloseContainerPost.current
+    ) {
+      setModal('');
+    }
+  }
+
   //==============Puxa rules da api=================//
   useEffect(() => {
     const { url, options } = GET_ALL("rules");
@@ -44,8 +51,8 @@ const CadastroUsuario = () => {
     getRules();
   }, []);
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
     //valida todos os campos
     if (
       nameForm.validate() &&
@@ -54,7 +61,7 @@ const CadastroUsuario = () => {
       contatoP1Form.validate() &&
       contatoN1Form.validate() &&
       morador.validate() &&
-      rules
+      rules === true
     ) {
       const dataUsuario = {
         nome: nameForm.value,
@@ -97,13 +104,23 @@ const CadastroUsuario = () => {
   }
 
     return (
-      <section className={styles.containerModal}>
+      <section 
+        onClick={closeModal}
+        ref={modalContainerPost}
+        className={styles.containerModal}
+      >
           <form
-            onSubmit={handleSubmit}
             ref={formRef}
-            className={styles.containerForm}
+            className={`${styles.containerForm} animation-opacity`}
           >
-            
+            <button
+          ref={CloseContainerPost}
+          onClick={closeModal}
+          className={styles.close}
+          type="button"
+        >
+          X
+        </button>
             {loading ?  <LoadingCenterComponent />:(
               <>
             <div className={styles.cadastroUsuario}>
@@ -204,6 +221,10 @@ const CadastroUsuario = () => {
                 <Toast message={statusCadastro} color="text-bg-success" />
               )}
             </div>
+            <span className={styles.possuiConta} onClick={()=>{
+                  setModal(false)
+                  setModal('modalLogin')
+              }}>Ja possuo uma conta</span>
           </>
           )}
               {!loading &&<Button handleSubmit={handleSubmit}>

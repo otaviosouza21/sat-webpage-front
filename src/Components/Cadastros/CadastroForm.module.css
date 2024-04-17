@@ -11,6 +11,29 @@
     width: 100vw;
 }
 
+.close{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    border: solid 2px white;
+    color: white;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50% !important;
+    background-color: var(--primary3);
+    cursor: pointer;
+    top: -20px;
+    left: 93%;
+    cursor: pointer;
+}
+
+.close:hover{
+    scale: 1.1;
+    transition: 0.2s;
+}
+
 .containerForm{
     display: flex;
     justify-content: center;
@@ -42,9 +65,11 @@
     box-shadow: none;
 }
 
+.possuiConta{
+    cursor: pointer;
+}
 
-
-@media (max-width:600px) {
+@media (max-width:750px) {
     .cadastroUsuario{
         display: flex;
         flex-direction: column;
@@ -53,5 +78,9 @@
 
     .cadastroUsuario input{
         width: 100%;
+    }
+
+    .containerForm{
+        width: 90vw;
     }
 }

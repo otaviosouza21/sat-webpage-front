@@ -9,10 +9,12 @@ const Button = ({ color, children, patch, handleSubmit, modalParam}) => {
 
   return (
     <button className={style.button} style={{ background: color && color }}>
-      <Link onClick={(e) =>{
-        handleSubmit && handleSubmit(e)
+      <Link onClick={(event) =>{
+        handleSubmit && handleSubmit(event)
         setDataUpdate(null)
-        setModal(modalParam)
+        if(modalParam){
+          setModal(modalParam)
+        }
     
       }} to={patch}>
         {children}

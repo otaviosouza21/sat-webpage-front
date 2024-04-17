@@ -100,8 +100,8 @@ const ModalLogin = ({ modal, setModal }) => {
         <div className={styles.options}>
           <span>Esqueci a Senha</span>
           <span onClick={()=>{
-            navigate('/usuario/cadastro')
             setModal(false)
+            setModal('cadUsuario')
           }}>Me Cadastrar</span>
         </div>
         <button onClick={handleSubmit}>
