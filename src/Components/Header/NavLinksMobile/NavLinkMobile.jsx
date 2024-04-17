@@ -72,7 +72,7 @@ function closeMenuMobile(){
           )}
           {links.map((link, index) => {
             return (
-              <li key={index}>
+              <li key={index} onClick={closeMenuMobile}>
                 <Link to={link.patch}>{link.nome}</Link>
               </li>
             );
