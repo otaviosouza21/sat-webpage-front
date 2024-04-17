@@ -65,9 +65,10 @@ const HomeEmpreendedores = () => {
             button="Quero me cadastrar"
             icon={toolsIcons}
             setModal={setModal}
+            patch="/servico/cadastro"
           />
         </div>
-      {modal === 'cadUsuario' && <CadastroUsuario/>}
+      {modal == 'cadUsuario' && <CadastroUsuario/>}
       </section>
 
     </main>

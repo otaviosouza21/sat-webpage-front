@@ -1,26 +1,36 @@
-.containerUsuario{
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 20px;
+.containerPerfil{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+    min-height: 500px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);
+
 }
 
 .infosPerfil{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    
     gap: 20px;
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);
     border-radius: 10px;
     padding: 20px;
 }
 
-
+.infosPerfil li{
+    flex-basis: 250px;
+    flex-grow: 1;
+    
+}
 .infosPerfil li p{
     font-size: 1.5rem;
     color: var(--primary2);
 }
 
-.infosPerfil li button{
-  align-self: self-end;
+.infosPerfil button{
+    align-self: flex-end;
 }
 
 @media (max-width: 530px) {

@@ -32,56 +32,45 @@ const MinhaConta = () => {
     fetchValidaToken();
   }, []);
 
-
-    if(currentUser)
     return (
-      <section className="">
-        <ul className={style.infosPerfil}>
+      <section className={style.containerPerfil}>
         {loading ? <LoadingCenterComponent />:
-          <>
-            <li>
-              <Title text="Nome" fontSize="2" />
-              <p>{currentUser.nome}</p>
-            </li>
-            <li>
-              <Title text="Email" fontSize="2" />
-              <p>{currentUser.email}</p>
-            </li>
-            <li>
-              <Title text="Contato 1" fontSize="2" />
-              <p>{currentUser.contato_negocio_01}</p>
-            </li>
-            <li>
-              <Title text="Contato 2" fontSize="2" />
-              <p>{currentUser.contato_pessoal_01}</p>
-
-            </li>
-
-            <li>
-              <Title text="Residente de Taiaçupeba há" fontSize="2" />
-              <p>{currentUser.tempo_reside} Anos</p>
-            </li>
-            <li>
-              <Title text="Sócio da SAT" fontSize="2" />
-              <p>
-                {currentUser.socio_sat ? (
-                  "Sim"
-                ) : (
-                  <span>Não, quero me tornar</span>
-                )}
-              </p>
-            </li>
-            <li>
-              <Title text="Serviços Publicados" fontSize="2" />
-              <p>2</p>
-            </li>
-            <li></li>
-            <li>
-              <Button>Editar</Button>
-            </li>
-          </>
-        }
+        <ul className={style.infosPerfil}>
+          {currentUser &&(
+            <>
+              <li>
+                <Title text="Nome" fontSize="2" />
+                <p>{currentUser.nome}</p>
+              </li>
+              <li>
+                <Title text="Email" fontSize="2" />
+                <p>{currentUser.email}</p>
+              </li>
+              <li>
+                <Title text="Contato 1" fontSize="2" />
+                <p>{currentUser.contato_negocio_01}</p>
+              </li>
+              <li>
+                <Title text="Contato 2" fontSize="2" />
+                <p>{currentUser.contato_pessoal_01}</p>
+              </li>
+              <li>
+                <Title text="Residente de Taiaçupeba há" fontSize="2" />
+                <p>{currentUser.tempo_reside} Anos</p>
+              </li>
+              <li>
+                <Title text="Sócio da SAT" fontSize="2" />
+                <p>{currentUser.socio_sat ? ("Sim") : (<span>Não, quero me tornar</span>)}</p>
+              </li>
+              <li>
+                <Title text="Serviços Publicados" fontSize="2" />
+                <p>2</p>
+              </li>
+                <Button>Editar</Button>
+            </>)
+          }
         </ul>
+        }
       </section>
     );
 };

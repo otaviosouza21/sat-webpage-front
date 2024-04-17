@@ -1,9 +1,14 @@
 .containerServico{
     display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 20px;
-    
+    grid-template-columns: 1fr;
+    justify-content: center;
+    gap: 30px;
+    min-height: 500px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);
+    border-radius: 10px;
+    padding: 30px;
 }
+
 
 h3{
     font-size: 1.6rem;
@@ -18,7 +23,13 @@ h2{
     transition: 0.3s;
     color: var(--primary2);
 }
-
+.tituloModal{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: baseline;
+}
 .containerServico ul{
     margin-top: 30px;   
 }
@@ -40,16 +51,6 @@ h2{
     transition: 0.3s;
 }
 
-.containerServico{
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-content: center;
-    gap: 30px;
-    min-height: 500px;
-    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);
-    border-radius: 10px;
-    padding: 30px;
-}
 
 
 .button {

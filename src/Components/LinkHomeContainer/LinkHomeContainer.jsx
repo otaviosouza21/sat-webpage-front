@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "../Button/Button";
 import styles from "./LinkHomeContainer.module.css";
-import Title from "../Titles/Title";
-import { Link } from "react-router-dom";
+import { GlobalContext } from "../../Hooks/GlobalContext";
+
+
 
 
 const LinkHomeContainer = ({ icon, title, subtitle, button,patch,setModal }) => {
+  const { userAuth } = useContext(GlobalContext);
   return (
     <div className={styles.containerLinkHome}>
       <img src={icon} alt="" />
@@ -13,7 +15,7 @@ const LinkHomeContainer = ({ icon, title, subtitle, button,patch,setModal }) => 
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
-     <Button patch={patch} modalParam={'cadUsuario'}>{button}</Button>
+     <Button patch={`${userAuth.status ? patch :''}`} modalParam={`${!userAuth.status ? 'cadUsuario':'false'}`}>{button}</Button>
     </div>
   );
 };

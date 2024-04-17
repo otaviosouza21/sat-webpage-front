@@ -8,6 +8,7 @@ import Loading from "../../Utils/Loading/Loading.jsx";
 import Error from "../../Utils/Error/Error.jsx";
 import LoadingCenterComponent from '../../Utils/LoadingCenterComponent/LoadingCenterComponent.jsx';
 import { Link } from 'react-router-dom';
+import Title from '../../Titles/Title.jsx';
 
 
 const ServicosUsuario = () => {
@@ -56,12 +57,21 @@ const ServicosUsuario = () => {
     <>
         <ul className={style.containerServico}>
             {loading&& (<LoadingCenterComponent />)}
+            {!loading&& (
+                <div className={style.tituloModal}>
+                    <Title text="Meus servicos" fontSize="2"/>
+                    <Link to={'/servico/cadastro'} className={style.button}>+Novo Serviço</Link>
+
+                </div>
+
+            )}
             {currentUser && userAuth && servicosUser && !loading && (
                 
                 servicosUser.length == 0 ? 
                 <li className={style.modalServico}>
                     <h2 className={style.notServico}>Não existem Serviços cadastrados</h2>
                 </li>:
+
                 servicosUser.map((servico)=>(
                     <li key={servico.id} className={style.modalServico}>
                         <div>
@@ -85,7 +95,6 @@ const ServicosUsuario = () => {
                     </li>
                 )
             ))}
-            {!loading&& <Link to={'/servico/cadastro'} className={style.button}>+Novo Serviço</Link>}
         </ul>
     </>
   )
