@@ -15,7 +15,12 @@ const LinkHomeContainer = ({ icon, title, subtitle, button,patch,setModal }) => 
         <h2>{title}</h2>
         <p>{subtitle}</p>
       </div>
-     <Button patch={`${userAuth.status ? patch :''}`} modalParam={`${!userAuth.status ? 'cadUsuario':'false'}`}>{button}</Button>
+      {patch === '/servicos'?(
+
+        <Button patch={patch} >{button}</Button>  
+      ):
+        <Button patch={`${userAuth.status ? patch :''}`} modalParam={`${!userAuth.status ? 'cadUsuario':'false'}`}>{button}</Button>
+      }
     </div>
   );
 };

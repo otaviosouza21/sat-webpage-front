@@ -9,6 +9,7 @@ import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
 import ModalLogin from "../ModalLogin/ModalLogin";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario";
+import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
@@ -47,6 +48,7 @@ export const Header = () => {
   return (
     <header className={styles.header}>
       {modal === 'modalLogin' && <ModalLogin setModal={setModal} modal={modal} />}
+      {modal == 'cadUsuario' && <CadastroUsuario/>}
       <div className={styles.nav}>
         <Link to="/">
           <img className={styles.logoSat} src={logoSat} alt="logotipo" />

@@ -12,7 +12,6 @@ import { GlobalContext } from "../../Hooks/GlobalContext";
 import { GET_AUTH_USER } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
-import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
 
 const HomeEmpreendedores = () => {
   const { userAuth, setUserAuth, logout, modal,  setModal } = useContext(GlobalContext);
@@ -68,7 +67,6 @@ const HomeEmpreendedores = () => {
             patch="/servico/cadastro"
           />
         </div>
-      {modal == 'cadUsuario' && <CadastroUsuario/>}
       </section>
 
     </main>

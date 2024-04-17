@@ -53,14 +53,18 @@ function closeMenuMobile(){
                 className="btn btn-outline-success"
                 onClick={() => {
                   setModal("modalLogin");
-                  setMenuMobile(false);
+                  closeMenuMobile();
                 }}
               >
                 Entrar
               </p>
               <p
                 className="btn btn-success"
-                onClick={() => navigate("/usuario/cadastro")}
+                onClick={() => {
+                    setModal("cadUsuario")
+                    closeMenuMobile();
+
+                  }}
               >
                 Cadastre-se
               </p>
