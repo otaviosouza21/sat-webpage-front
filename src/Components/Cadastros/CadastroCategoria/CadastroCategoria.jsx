@@ -15,11 +15,25 @@ import useFetch from "../../../Hooks/useFetch";
 const CadastroCategoria = () => {
   const { data, request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { setUpdate, update } = useContext(GlobalContext);
+  const { setUpdate, update,setModal } = useContext(GlobalContext);
+  const modalContainerPost = useRef(null);
+  const CloseContainerPost = useRef(null);
 
   const formRef = useRef();
   const nomeForm = useForm();
   const corForm = useForm();
+
+  function closeModal(event) {
+    event.preventDefault();
+    if (
+      event.target === modalContainerPost.current ||
+      event.target === CloseContainerPost.current
+    ) {
+      setModal('');
+    }
+  }
+
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -52,12 +66,20 @@ const CadastroCategoria = () => {
   }
 
   return (
-    <section className={`${styles.containerModal} container`}>
+    <section className={`${styles.containerModal} container`}  ref={modalContainerPost}>
       <form
         onSubmit={handleSubmit}
         ref={formRef}
         className={styles.containerForm}
       >
+       <button
+          ref={CloseContainerPost}
+          onClick={closeModal}
+          className={styles.close}
+          type="button"
+        >
+          X
+        </button>
         <Title text="Cadastro de Categoria (Adm)" fontSize="3" />
         <InputText
           label="Nome"

@@ -59,6 +59,7 @@ const Servicos = () => {
           visibleItens={visibleItens}
           setVisibleItens={setVisibleItens}
           placeholder="Busque um serviço"
+          option='nome_negocio'
         />
         <div className={styles.servicosGrid}>
           {visibleItens &&

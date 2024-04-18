@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import searchIcon from "../../../assets/icons/search.svg";
 import styles from "./InputSearch.module.css";
 
-const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens }) => {
+const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens,option }) => {
   const selectInput = useRef();
   const [searchTerm, setSearchTerm] = useState("");
   const [input, setInput] = useState("");
@@ -44,7 +44,7 @@ const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens }) => {
         id=""
         onChange={() => filterItems(searchTerm)}
       >
-        <option value="nome_negocio">Serviço</option>
+        <option value={option}></option>
       </select>
     </div>
   );
