@@ -52,6 +52,7 @@ const CadastroUsuario = () => {
   }, []);
 
   function handleSubmit(event) {
+    console.log(rules.validate());
     event.preventDefault();
     //valida todos os campos
     if (
@@ -60,8 +61,7 @@ const CadastroUsuario = () => {
       senhaForm.validate() &&
       contatoP1Form.validate() &&
       contatoN1Form.validate() &&
-      morador.validate() &&
-      rules === true
+      morador.validate() 
     ) {
       const dataUsuario = {
         nome: nameForm.value,
@@ -77,6 +77,7 @@ const CadastroUsuario = () => {
         rule_id: 1,
       };
 
+      console.log(dataUsuario);
       async function postUser() {
         const { url, options } = POST_DATA_USER("usuarios", dataUsuario);
         const userRequest = await request(url, options);

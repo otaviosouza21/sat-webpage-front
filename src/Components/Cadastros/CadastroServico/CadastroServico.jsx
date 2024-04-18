@@ -114,7 +114,7 @@ const CadastroServico = () => {
             <form
               onSubmit={handleSubmit}
               ref={formRef}
-              className={styles.cadastroUsuario}
+              className={styles.containerForm}
             >
               <InputText
                 label="Nome do Negocio"

@@ -12,7 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(94, 94, 94);
+    background-color: var(--primary3);
     color: white;
     border-radius: 5px;
 }
@@ -21,7 +21,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(168, 168, 168);
+    background-color: rgb(148, 148, 148);
+    color: white;
     border-radius: 5px;
 }
 

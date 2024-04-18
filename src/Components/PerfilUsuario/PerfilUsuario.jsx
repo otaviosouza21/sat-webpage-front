@@ -8,7 +8,7 @@ import Title from '../Titles/Title'
 const PerfilUsuario = () => {
   return (
     <>
-        <Title text="Meus servicos cadastrados" fontSize="3" className='container'/>
+        <Title text="Meu Perfil" fontSize="3" className='container'/>
         <section className={`${styles.containerMeuPerfil} container`}>
             <MenuLateral
                 link1={'perfil'} 

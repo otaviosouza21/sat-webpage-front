@@ -1,8 +1,8 @@
 .containerServico{
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-content: center;
-    gap: 30px;
+    display: flex;
+flex-direction: column;
+
+    gap: 20px;
     min-height: 500px;
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.212);
     border-radius: 10px;
@@ -11,17 +11,23 @@
 
 
 h3{
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     font-weight: bold;
     transition: 0.3s;
     margin-bottom: 5px;
-    color: var(--primary4);
+    color: var(--primary1);
 }
 h2{
-    font-size: 1.4rem;
-    font-weight: bold;
+    font-size: 1.1rem;
     transition: 0.3s;
     color: var(--primary2);
+    display: flex;
+}
+
+h2 span{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .tituloModal{
   display: flex;
@@ -38,7 +44,8 @@ h2{
     height: 0;
 }
 .modalServico{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.2fr;
     flex-wrap: wrap;
     align-self: start;
     background-color: var(--gray2);
@@ -55,7 +62,6 @@ h2{
 
 .button {
     justify-self: end;
-    align-self: flex-end;
     padding: 10px 15px;
     border: none;
     border-radius: 10px;
@@ -89,4 +95,63 @@ h2{
   .button:active {
     transform: scale(1);
   }
+
+  .options{
+    display: flex;
+    gap: 16px;
+   
+  }
+
+  .options img{
+    width: 30px;
+  }
+
+  .status_on{
+    display: block;
+    background-color: rgba(0, 90, 0, 0.911);
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    animation:alternate infinite status-on .5s;
+  }
   
+  @keyframes status-on {
+    0%{
+      box-shadow: 1px 1px 5px 0px green;
+    }
+
+    100%{
+      box-shadow: 1px 1px 5px 2px green;
+    }
+  }
+
+  .status_aguardando{
+    display: block;
+    background-color: rgba(235, 252, 0, 0.911);
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    animation:alternate infinite status .5s;
+  }
+  
+  @keyframes status {
+    0%{
+      box-shadow: 1px 1px 5px 0px rgb(231, 208, 1);
+    }
+
+    100%{
+      box-shadow: 1px 1px 5px 2px rgb(231, 208, 1);
+    }
+  }
+
+
+  @media (max-width: 400px) {
+    .modalServico{
+      grid-template-columns: 1fr;
+    }
+
+    .options{
+      grid-row: 4;
+      justify-content: space-around;
+    }
+  }
