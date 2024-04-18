@@ -2,15 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { GET_ALL } from "../../Api/api";
 import Loading from "../Utils/Loading/Loading";
-import FuncButton from "../Button/FuncButton";
 import CadastroCategoria from "../Cadastros/CadastroCategoria/CadastroCategoria";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import useFetch from "../../Hooks/useFetch";
+import trash from "../../assets/icons/trash2.svg";
+import pen from "../../assets/icons/pen.svg";
+import styles from "./Listas.module.css";
+import Confirm from "../Utils/Confirm/Confirm";
 
 const ListCategoriasServicos = () => {
-  const { request, loading } = useFetch();
   const [categorias, setCategorias] = useState(null);
-  const { update } = useContext(GlobalContext);
+  const [idTodelete, setIdToDelete] = useState(null);
+  const { request, loading } = useFetch();
+  const { setUpdate, update, modal, setModal, setDataUpdate } =
+  useContext(GlobalContext);
   
  
 
@@ -26,6 +31,16 @@ const ListCategoriasServicos = () => {
 
     getCategorias();
   }, [update]);
+
+  const confirmDelete = (id) => {
+    setIdToDelete(id);
+    setModal("confirmDelete");
+  };
+
+  const atualizaDados = (currentData) => {
+    setDataUpdate(currentData);
+    navigate("/servico/cadastro/atualiza");
+  };
 
   if (categorias)
     return (
@@ -51,31 +66,28 @@ const ListCategoriasServicos = () => {
                     <td>{categoria.nome}</td>
                     <td style={{backgroundColor: categoria.cor_categoria, color:'#fff'}}>{categoria.cor_categoria}</td>
                     <td>{categoria.status ? "Ativo" : "Inativo"}</td>
-                    <td>
-                      <FuncButton
-                        table="categoria_servico"
-                        id={categoria.id}
-                        method="DELETE"
-                        style="btn btn-outline-danger"
-                      >
-                        Deletar
-                      </FuncButton>
+                    <td className={styles.buttons}>
+                      <img src={trash} onClick={() => confirmDelete(categoria.id)}
+                      />
                     </td>
-                    <td>
-                      <FuncButton
-                        table="categoria_servico"
-                        id={categoria.id}
-                        method="PUT"
-                        style="btn btn-outline-dark"
-                      >
-                        Alterar
-                      </FuncButton>
+                    <td className={styles.buttons}>
+                      <img src={pen} onClick={() => atualizaDados(categoria)} />
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+        )}
+            {modal === "confirmDelete" && (
+          <Confirm
+            mensagem={"Deseja mesmo deletar?"}
+            id={idTodelete}
+            setModal={setModal}
+            setUpdate={setUpdate}
+            update={update}
+            table="categoria_servico"
+          />
         )}
       </section>
     );

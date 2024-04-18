@@ -11,8 +11,7 @@
     left: 0;
     background-color: #0000003a;
     z-index: 200;
-  
- 
+    position: fixed;
 }
 
 .modalLogin{

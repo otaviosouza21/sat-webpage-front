@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useFetch from "../../Hooks/useFetch";
 import { GET_ALL } from "../../Api/api";
 import Loading from "../Utils/Loading/Loading";
-import FuncButton from "../Button/FuncButton";
+
 
 const ListRules = () => {
   const { request, loading } = useFetch();
@@ -43,24 +43,7 @@ const ListRules = () => {
                     <td>{rule.nome}</td>
                     <td>{rule.status ? "Ativo" : "Inativo"}</td>
                     <td>
-                     {/*  <FuncButton
-                        table="rules"
-                        id={rule.id}
-                        method="DELETE"
-                        style="btn btn-outline-danger"
-                      >
-                        Deletar
-                      </FuncButton>
-                    </td>
-                    <td>
-                      <FuncButton
-                        table="rules"
-                        id={rule.id}
-                        method="PUT"
-                        style="btn btn-outline-dark"
-                      >
-                        Alterar
-                      </FuncButton> */}
+                   
                     </td>
                   </tr>
                 );

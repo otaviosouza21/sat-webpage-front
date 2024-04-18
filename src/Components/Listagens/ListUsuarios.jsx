@@ -1,20 +1,28 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GET_ALL, GET_ALL_USERS } from "../../Api/api";
+import { GET_ALL_USERS } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
-import FuncButton from "../Button/FuncButton";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { convertData } from "../../plugins/convertData";
+import trash from "../../assets/icons/trash2.svg";
+import pen from "../../assets/icons/pen.svg";
+import styles from "./Listas.module.css";
+import { useNavigate } from "react-router-dom";
+import Confirm from "../Utils/Confirm/Confirm";
 
 const ListUsuarios = () => {
-  const { request, loading, data} =  useFetch();
+  const { request, loading, data } = useFetch();
+  const [idTodelete, setIdToDelete] = useState(null);
   const [usuarios, setUsuarios] = useState(null);
-  const {update} = useContext(GlobalContext)
+  const navigate = useNavigate();
+  const { setUpdate, update, modal, setModal, setDataUpdate } =
+    useContext(GlobalContext);
+
 
   useEffect(() => {
     async function getUsuarios() {
-      const token = window.localStorage.getItem('token')
-      const { url, options } = GET_ALL_USERS("usuarios",token);
+      const token = window.localStorage.getItem("token");
+      const { url, options } = GET_ALL_USERS("usuarios", token);
       const { response, json } = await request(url, options);
       if (!response.ok) {
         console.log("Ocorreu um erro ao buscar Servicos");
@@ -24,6 +32,16 @@ const ListUsuarios = () => {
 
     getUsuarios();
   }, [update]);
+
+  const confirmDelete = (id) => {
+    setIdToDelete(id);
+    setModal("confirmDelete");
+  };
+
+  const atualizaDados = (currentData) => {
+    setDataUpdate(currentData);
+    navigate("/usuarios/cadastro/atualiza");
+  };
 
   if (usuarios)
     return (
@@ -60,32 +78,30 @@ const ListUsuarios = () => {
                     <td>{usuario.rule_id}</td>
                     <td>{usuario.status === "1" ? "Ativo" : "Inativo"}</td>
                     <td>{convertData(usuario.createdAt)}</td>
-                    <td>
-                      <FuncButton
-                        table="usuarios"
-                        id={usuario.id}
-                        method="DELETE"
-                        style="btn btn-outline-danger"
-                      >
-                        Deletar
-                      </FuncButton>
+                    <td className={styles.buttons}>
+                      <img
+                        src={trash}
+                        onClick={() => confirmDelete(usuario.id)}
+                      />
                     </td>
-                    <td>
-                      <FuncButton
-                        table="usuarios"
-                        id={usuario.id}
-                        method="PUT"
-                        style="btn btn-outline-dark"
-                        updateDate={usuario}
-                      >
-                        Alterar
-                      </FuncButton>
+                    <td className={styles.buttons}>
+                      <img src={pen} onClick={() => atualizaDados(usuario)} />
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
+        )}
+           {modal === "confirmDelete" && (
+          <Confirm
+            mensagem={"Deseja mesmo deletar?"}
+            id={idTodelete}
+            setModal={setModal}
+            setUpdate={setUpdate}
+            update={update}
+            table="usuarios"
+          />
         )}
       </section>
     );

@@ -52,42 +52,40 @@ const CadastroCategoria = () => {
   }
 
   return (
-    <section>
-      <section className={`${styles.cadastroContainer} container`}>
+    <section className={`${styles.containerModal} container`}>
+      <form
+        onSubmit={handleSubmit}
+        ref={formRef}
+        className={styles.containerForm}
+      >
         <Title text="Cadastro de Categoria (Adm)" fontSize="3" />
-        <form
-          onSubmit={handleSubmit}
-          ref={formRef}
-          className={styles.cadastroUsuario}
-        >
-          <InputText
-            label="Nome"
-            type="text"
-            placeholder="Restaurantes"
-            id="nome"
-            {...nomeForm}
-          />
-          <InputText
-            label="Cor Categoria"
-            type="color"
-            id="cor_categoria"
-            {...corForm}
-          />
+        <InputText
+          label="Nome"
+          type="text"
+          placeholder="Restaurantes"
+          id="nome"
+          {...nomeForm}
+        />
+        <InputText
+          label="Cor Categoria"
+          type="color"
+          id="cor_categoria"
+          {...corForm}
+        />
 
-          <InputSelect
-            label="Status"
-            options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
-            id="status"
-          />
-          <Button handleSubmit={handleSubmit}>
-            {loading ? "Cadastrando..." : "Cadastrar"}
-          </Button>
-          {error && <Toast message={error} color="text-bg-danger" />}
-          {statusCadastro && (
-            <Toast message={statusCadastro} color="text-bg-success" />
-          )}
-        </form>
-      </section>
+        <InputSelect
+          label="Status"
+          options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+          id="status"
+        />
+        <Button handleSubmit={handleSubmit}>
+          {loading ? "Cadastrando..." : "Cadastrar"}
+        </Button>
+        {error && <Toast message={error} color="text-bg-danger" />}
+        {statusCadastro && (
+          <Toast message={statusCadastro} color="text-bg-success" />
+        )}
+      </form>
     </section>
   );
 };
