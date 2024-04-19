@@ -50,7 +50,7 @@ const ServicoContainer = ({ servicosData }) => {
             contato={contatos}
           />
         )}
-        <div className={`${styles.servico}`}>
+        <div className={`${styles.servico}` }>
           <h3>{nome_negocio}</h3>
           <span style={{ background: categoriaData.cor_categoria }}>
             {categoriaData.nome}

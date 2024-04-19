@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./ModalContato.module.css";
-import { useNavigate } from "react-router-dom";
 import phone from "../../../assets/icons/phone.svg";
 
 const ModalContato = ({ contato }) => {
@@ -11,7 +10,7 @@ const ModalContato = ({ contato }) => {
   }
 
   return (
-    <ul className={styles.modalContato}>
+    <ul className={`${styles.modalContato}`}>
       <li onClick={() => whatsAPI(contato.contato_negocio_01)}>
         <img src={phone} alt="" />
         {contato.contato_negocio_01}

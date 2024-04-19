@@ -4,6 +4,9 @@
    gap: 16px;
    font-weight: bold;
    
+   transition: 0.3s;
+   animation: animeDown .3s ease-in-out .3s;
+   -webkit-animation: animeDown .5s ease-in-out .3s backwards;
 
 }
 
@@ -18,3 +21,20 @@
     width: 16px;
 }
 
+
+.animeDown{
+
+}
+
+@keyframes animeDown{
+0%{
+    transform: translateY(-50px);
+    -webkit-transform: translateY(-50px);
+    opacity: 0;
+}
+100%{
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    opacity: 1;
+}
+}

@@ -3,9 +3,9 @@ import styles from './LoadingCenterComponent.module.css'
 
 const LoadingCenterComponent = () => {
   return (
-    <div className={styles.loaderContainer}>
+    <section className={styles.loaderContainer}>
         <span className={styles.loader}></span>
-    </div>
+    </section>
   )
 }
 
