@@ -241,3 +241,60 @@ a {
     transform: initial;
   }
 }
+
+.animeDown{
+  transition: 0.5s;
+  animation: animeDown .7s ease-in-out .4s;
+  -webkit-animation: animeDown .7s ease-in-out .4s backwards;
+}
+
+
+@keyframes animeDown{
+  0%{
+    transform: translateY(-50px);
+    -webkit-transform: translateY(-50px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.animeUp{
+  animation: animeUp .7s ease-in-out .4s backwards;
+  -webkit-animation: animeUp .7s ease-in-out .4s backwards;
+}
+
+
+@keyframes animeUp{
+  0%{
+    transform: translateY(50px);
+    -webkit-transform: translateY(50px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.animeLeft{
+  animation: animeLeft .7s ease-in-out .4s backwards;
+  -webkit-animation: animeLeft .7s ease-in-out .4s backwards;
+}
+
+@keyframes animeLeft{
+  0%{
+    transform: translateX(-50px);
+    -webkit-transform: translateX(-50px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    opacity: 1;
+  }
+}

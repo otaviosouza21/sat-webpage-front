@@ -54,13 +54,15 @@ const Servicos = () => {
   return (
     <main>
       <section className={`container ${styles.servicosContainer}`}>
-        <Title text="Buscar Profissionais" fontSize="3" />
-        <InputSearch
-          visibleItens={visibleItens}
-          setVisibleItens={setVisibleItens}
-          placeholder="Busque um serviço"
-          option='nome_negocio'
-        />
+        <div className="animeDown">
+          <Title text="Buscar Profissionais" fontSize="3" />
+          <InputSearch
+            visibleItens={visibleItens}
+            setVisibleItens={setVisibleItens}
+            placeholder="Busque um serviço"
+            option='nome_negocio'
+          />
+        </div>
         <div className={styles.servicosGrid}>
           {visibleItens &&
             visibleItens.map((servico) => {

@@ -43,12 +43,12 @@ const HomeEmpreendedores = () => {
   return (
     <main className={`${styles.main}`}>
       <section className={`${styles.section} container`}>
-        <div className={styles.titulo}>
+        <div className={`${styles.titulo} animeDown`}>
           <img src={LogoSat} alt="" />
           <Title text="Portal do Empreendedor" fontSize="1" />
         </div>
 
-        <div className={`${styles.gridLinks}`} ref={gridLinks}>
+        <div className={`${styles.gridLinks} animeUp`} ref={gridLinks}>
           <LinkHomeContainer
             title="Preciso contratar um serviço"
             subtitle="Encontre os melhores prestadores de serviços na região de Taiaçupeba, de qulquer seguimento."
