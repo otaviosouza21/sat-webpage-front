@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import Button from "../Button/Button";
+
 import styles from "./Header.module.css";
 import logoSat from "../../assets/icons/sat_logo.svg";
-import menuBurguer from "../../assets/icons/menu-burgues.svg";
 import NavLinks from "./NavLinks/NavLinks";
 import { Link } from "react-router-dom";
 import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
@@ -10,11 +9,16 @@ import ModalLogin from "../ModalLogin/ModalLogin";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario";
 import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
+import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
   const { setDataUpdate, modal, setModal, userAuth } = useContext(GlobalContext);
   const [modalUsuario, setModalUsuario] = useState(false);
+  const [ loading, setLoading ] = useState(false)
+  
+
+  
 
   const navLinks = [
     {
@@ -31,13 +35,20 @@ export const Header = () => {
     },
   ];
 
+  useEffect(()=>{
+    setLoading(false)
+  },[userAuth])
+
+  useEffect(()=>{
+    
+  },[loading])
   useEffect(() => {
     function handleResize() {
       setIsTelaPequena(window.innerWidth < 421);
     }
-
     window.addEventListener("resize", handleResize);
     handleResize();
+    setLoading(true)
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -61,15 +72,22 @@ export const Header = () => {
         )}
       </div>
       <div className={styles.buttons}>
-        {userAuth.status ? (
-          <div className={styles.usuarioLogado} onClick={handleClick}>
-            <p className={styles.welcome}>
-              {" "}
-              {`Bem Vindo, ${userAuth.usuario.nome}`}
-            </p>
-            {modalUsuario && <ModalUsuario />}
-          </div>
-        ) : (
+        <div className={styles.loading}>
+          {loading&& <LoadingCenterComponent />}
+        </div>
+        {userAuth.status && !loading&& (
+          <>
+              <div className={styles.usuarioLogado} onClick={handleClick}>
+              <p className={styles.welcome}>
+                {" "}
+                {`Bem Vindo, ${userAuth.usuario.nome}`}
+              </p>
+              {modalUsuario && <ModalUsuario />}
+            </div>
+            
+          </>
+        )}
+          {!userAuth.status&& !modalUsuario&& !loading&&
           <div className={styles.headerButtons}>
             <button>
               <Link onClick={() => setModal('cadUsuario')}>
@@ -80,7 +98,7 @@ export const Header = () => {
               <Link>Entrar</Link>
             </button>
           </div>
-        )}
+          }
       </div>
     </header>
   );

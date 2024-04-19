@@ -48,6 +48,12 @@
   border: solid 2px var(--primary2);
 }
 
+
+.loading{
+  display: flex;
+  justify-content: center;
+  width: 200px;
+}
 .buttons {
   display: flex;
   gap: 20px;
@@ -89,9 +95,11 @@
 @media (max-width: 650px) {
   .header {
     justify-content: center;
-    gap: 20px;
+    
   }
-
+  .loading{
+    width: 50px;
+  }
   .headerButtons {
     font-size: 1.2rem;
   }

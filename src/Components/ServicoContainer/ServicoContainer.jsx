@@ -4,7 +4,6 @@ import wppIcon from "../../assets/icons/wathsapp.svg";
 import styles from "./ServicoContainer.module.css";
 import useFetch from "../../Hooks/useFetch";
 import { GET_TO_ID } from "../../Api/api";
-import Loading from "../Utils/Loading/Loading";
 import ModalServico from "../ModalServico/ModalServico";
 import ModalContato from "./ModalContato/ModalContato";
 import btn from "../Button/Button.module.css";

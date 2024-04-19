@@ -29,6 +29,7 @@ const useFetch = () => {
     loading,
     error,
     request,
+    setLoading
   };
 };
 
