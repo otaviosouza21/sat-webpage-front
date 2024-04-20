@@ -25,7 +25,6 @@ const SendRequest = () => {
     if (email.validate()) {
       const requestEmail = { email: email.value };
       async function sendEmail() {
-        
         const {url,options} = RECOVER_PASSWORD('recover-password',requestEmail)
         const {response,json} = await request(url,options)
 
@@ -42,7 +41,6 @@ const SendRequest = () => {
       sendEmail();
     }
   }
-if(error) return <Error error='erro' />
   return (
     <section className={`container ${styles.containerForm}`}>
       <Title text="Recuperação de senha" fontSize="3" />

@@ -32,7 +32,8 @@ const ResetPassword = () => {
     e.preventDefault();
 
     if (senha.value !== confirmSenha.value) {
-      console.log("senhas diferentes");
+      confirmSenha.setError('Senha não confere')
+
       return;
     }
 
@@ -76,6 +77,7 @@ const ResetPassword = () => {
               type="password"
               id="confirmSenha"
               label="Confirme a senha"
+              errorConfere={confirmSenha.error}
             />
             <Button handleSubmit={handleSubmit}>Salvar</Button>
           </div>
