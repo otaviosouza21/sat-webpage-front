@@ -90,7 +90,7 @@ export const Header = () => {
             
           </>
         )}
-          {!userAuth.status&& !modalUsuario&& loading&&
+          {!userAuth.status&& !modalUsuario&& !loading&&
           <div className={styles.headerButtons}>
             <button>
               <Link onClick={() => setModal('cadUsuario')}>
