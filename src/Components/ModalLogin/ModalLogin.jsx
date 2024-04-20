@@ -20,6 +20,7 @@ const ModalLogin = ({ modal, setModal }) => {
   const emailForm = useForm("email");
   const senhaForm = useForm("senha");
   
+  
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -98,7 +99,7 @@ const ModalLogin = ({ modal, setModal }) => {
           <p>{error}</p>
         </div>
         <div className={styles.options}>
-          <span>Esqueci a Senha</span>
+          <span onClick={()=>navigate('/send-request')}>Esqueci a Senha</span>
           <span onClick={()=>{
             setModal(false)
             setModal('cadUsuario')

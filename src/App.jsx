@@ -13,6 +13,7 @@ import { Header } from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import PerfilUsuario from "./Components/PerfilUsuario/PerfilUsuario";
 import ResetPassword from "./Components/PerfilUsuario/ResetPassword/ResetPassword";
+import SendRequest from "./Components/PerfilUsuario/ResetPassword/SendRequest";
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="sobre" element={<Sobre />} />
         <Route exact path="adm" element={<Adm />} />
         <Route exact path="reset-password" element={<ResetPassword />} />
+        <Route exact path="send-request" element={<SendRequest />} />
       </Routes>
       <Footer />
     </BrowserRouter>
