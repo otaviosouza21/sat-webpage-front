@@ -7,8 +7,11 @@ import useFetch from "../../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 import Button from "../../Button/Button";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
+import { useNavigate } from "react-router-dom";
 
 const MinhaConta = () => {
+  
+  const navigate = useNavigate();
   const { userAuth, setUserAuth,logout } = useContext(GlobalContext);
   const [currentUser, setCurrentUser] = useState(null);
   const { request, loading } = useFetch();
@@ -27,6 +30,8 @@ const MinhaConta = () => {
           setCurrentUser(null)
           logout();
         }
+      }else{
+        navigate('/')
       }
     }
     fetchValidaToken();

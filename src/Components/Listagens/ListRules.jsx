@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../../Hooks/useFetch";
 import { GET_ALL } from "../../Api/api";
-import Loading from "../Utils/Loading/Loading";
+import styles from "./Listas.module.css";
+import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 
 const ListRules = () => {
@@ -23,11 +24,11 @@ const ListRules = () => {
 
   if (rules)
     return (
-      <section>
+      <section className={styles.container}>
         {loading ? (
-          <Loading />
+          <LoadingCenterComponent />
         ) : (
-          <table className="table table-striped table-hover">
+          <table className={`${styles.lista} table table-striped table-hover`}>
             <thead>
               <tr>
                 <th>ID</th>

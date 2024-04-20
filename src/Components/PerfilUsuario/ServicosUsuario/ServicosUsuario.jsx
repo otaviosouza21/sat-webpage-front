@@ -7,7 +7,7 @@ import { GlobalContext } from "../../../Hooks/GlobalContext";
 import Loading from "../../Utils/Loading/Loading.jsx";
 import Error from "../../Utils/Error/Error.jsx";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Title from "../../Titles/Title.jsx";
 import trash from "../../../assets/icons/trash2.svg";
 import pen from "../../../assets/icons/pen.svg";
@@ -18,7 +18,8 @@ const ServicosUsuario = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const { request, loading, error } = useFetch();
   const [servicosUser, setServicoUser] = useState(null);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
@@ -34,6 +35,8 @@ const ServicosUsuario = () => {
           setCurrentUser({});
           logout();
         }
+      }else{
+        navigate('/')
       }
     }
     fetchValidaToken();

@@ -9,6 +9,7 @@ import pen from "../../assets/icons/pen.svg";
 import styles from "./Listas.module.css";
 import { useNavigate } from "react-router-dom";
 import Confirm from "../Utils/Confirm/Confirm";
+import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 const ListUsuarios = () => {
   const { request, loading, data } = useFetch();
@@ -45,9 +46,9 @@ const ListUsuarios = () => {
 
   if (usuarios)
     return (
-      <section>
+      <section className={styles.container}>
         {loading ? (
-          <Loading />
+          <LoadingCenterComponent />
         ) : (
           <table className="table table-striped table-hover">
             <thead>

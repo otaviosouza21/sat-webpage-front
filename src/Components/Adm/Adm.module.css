@@ -1,3 +1,5 @@
+
+
 .containerAdm {
   padding: 40px;
 }
@@ -6,7 +8,8 @@
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.192);
   border-radius: 0 0 10px 10px;
   padding: 20px;
-  overflow: auto
+  overflow: auto;
+  min-height: 700px;
 }
 
 .nav {

@@ -1,9 +1,11 @@
 import React, { createContext, useState } from "react";
+import {  useNavigate } from "react-router-dom";
 
 export const GlobalContext = createContext();
 
 export const GlobalStorage = ({ children }) => {
   const [update, setUpdate] = useState(false);
+  //const navigate = useNavigate()
   const [userAuth, setUserAuth] = useState({
     token: "",
     usuario: null,
@@ -18,7 +20,7 @@ export const GlobalStorage = ({ children }) => {
   function logout() {
     window.localStorage.removeItem('token')
     window.location.reload();
-    navigate('/')
+    //navigate('/')
   }
 
   return (

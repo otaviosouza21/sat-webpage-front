@@ -1,4 +1,12 @@
+.container{
+    display: flex;
+    justify-content: center;
+    min-height: 700px;
+}
 
+.lista{
+    align-self: flex-start;
+}
 .buttons img{
     width: 29px;
     cursor: pointer;

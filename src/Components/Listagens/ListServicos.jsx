@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GET_INNER } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
-import Loading from "../Utils/Loading/Loading";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { convertData } from "../../plugins/convertData";
 import Confirm from "../Utils/Confirm/Confirm";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import trash from "../../assets/icons/trash2.svg";
 import pen from "../../assets/icons/pen.svg";
 import styles from "./Listas.module.css";
+import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 const ListServicos = () => {
   const [idTodelete, setIdToDelete] = useState(null);
@@ -43,9 +43,9 @@ const ListServicos = () => {
 
   if (servicos)
     return (
-      <section>
+      <section className={styles.container}>
         {loading ? (
-          <Loading />
+          <LoadingCenterComponent />
         ) : (
           <table className="table table-striped table-hover">
             <thead>
