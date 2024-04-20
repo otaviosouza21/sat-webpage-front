@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Title from "../Titles/Title";
 import styles from "../ModalServico/ModalServico.module.css";
 import Button from "../Button/Button";
@@ -8,6 +8,7 @@ import toolsIcon from "../../assets/icons/tools.svg";
 import starIcon from "../../assets/icons/star.svg";
 import ModalContato from "../ServicoContainer/ModalContato/ModalContato";
 import phone from '../../assets/icons/phone2.svg'
+import { GET_TO_ID } from "../../Api/api";
 
 const ModalServico = ({
   modal,

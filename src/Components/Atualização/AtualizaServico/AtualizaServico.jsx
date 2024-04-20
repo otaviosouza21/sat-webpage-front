@@ -23,7 +23,7 @@ const AtualizaServico = () => {
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
-
+;
 //validação acesso
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -46,13 +46,17 @@ const AtualizaServico = () => {
 
   useEffect(() => {
     if(dataUpdate){
-      nomeNegocioForm.setValue(dataUpdate.nome_negocio);
-      descricaoForm.setValue(dataUpdate.descricao_servico);
-      tempoNegocio.setValue(dataUpdate.tempo_negocio);
+      window.localStorage.setItem('updateData',JSON.stringify(dataUpdate))
+    }
+    const dadosAtualizados = JSON.parse(window.localStorage.getItem('updateData'))
+    if(dadosAtualizados){
+      nomeNegocioForm.setValue(dadosAtualizados.nome_negocio);
+      descricaoForm.setValue(dadosAtualizados.descricao_servico);
+      tempoNegocio.setValue(dadosAtualizados.tempo_negocio);
       setTimeout(() => {
-        formRef.current["categoria"].value = String(dataUpdate.categoria_id);
-        formRef.current["status"].value = dataUpdate.status ? 'Ativo' : 'Inativo';
-        }, 500);
+        formRef.current["categoria"].value = String(dadosAtualizados.categoria_id);
+        formRef.current["status"].value = dadosAtualizados.status ? 'Ativo' : 'Inativo';
+        }, 2000);
       }
   }, []);
 

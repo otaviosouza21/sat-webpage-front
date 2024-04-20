@@ -78,7 +78,7 @@ const CadastroServico = () => {
           nomeNegocioForm.reset();
           descricaoForm.reset();
           tempoNegocio.reset();
-          setStatusCadastro({mensagem: 'Serviço envidado para analise', status: true});
+          setStatusCadastro({mensagem: 'Serviço enviado para analise', status: true});
         }
       }
       postServico();
@@ -141,7 +141,7 @@ const CadastroServico = () => {
                 {...tempoNegocio}
               />
               <InputSelect
-                label="Categoria*"
+                label="Categoria do serviço*"
                 options={categorias}
                 id="categoria"
               />

@@ -44,7 +44,7 @@ h2 span{
 .modalServico{
     display: grid;
     grid-template-columns: 1fr 1fr 0.2fr;
-    flex-wrap: wrap;
+    width: 100%;
     align-self: start;
     background-color: var(--gray2);
     padding: 20px;
@@ -162,7 +162,7 @@ h2 span{
 
     .options img{
       
-      background-color: #c5c5c569;
+      background-color: #c5c5c53b;
       width: 45px;
       padding: 5px;
       border-radius: 5px;

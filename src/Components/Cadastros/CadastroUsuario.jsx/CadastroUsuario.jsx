@@ -52,7 +52,6 @@ const CadastroUsuario = () => {
   }, []);
 
   function handleSubmit(event) {
-    console.log(rules.validate());
     event.preventDefault();
     //valida todos os campos
     if (

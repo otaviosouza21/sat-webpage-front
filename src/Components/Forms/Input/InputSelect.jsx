@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Input.module.css";
 
 const InputSelect = ({ label, id, options, placeholder, gridColumn }) => {
+
   return (
     <div className={styles.inputContainer}>
       <label htmlFor={id}>{label}</label>
@@ -11,6 +12,7 @@ const InputSelect = ({ label, id, options, placeholder, gridColumn }) => {
         id={id}
         name={id}
       >
+        {id === 'categoria' && <option value={26}>Outros</option>}
         {options && options.map((option,index) => {
           return <option key={index} value={option.id}>{option.nome}</option>;
         })}
