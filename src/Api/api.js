@@ -1,5 +1,5 @@
 const PORT = 3333;
-const URL = "http://18.231.121.86";
+const URL = "http://localhost";
 
 
 export function GET_ALL(tableName) {
@@ -133,6 +133,20 @@ export function DELETE_DATA(tableName, id, token) {
     },
   };
 }
+
+export function RECOVER_PASSWORD(tableName,email) {
+  return {
+    url: `${URL}:${PORT}/${tableName}/`,
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(email),
+    },
+  };
+}
+
 
 export function UPDATE_PASSWORD(tableName,newPassword,token) {
   return {
