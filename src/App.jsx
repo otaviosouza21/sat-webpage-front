@@ -12,6 +12,7 @@ import AtualizaServico from "./Components/Atualização/AtualizaServico/Atualiza
 import { Header } from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import PerfilUsuario from "./Components/PerfilUsuario/PerfilUsuario";
+import ResetPassword from "./Components/PerfilUsuario/ResetPassword/ResetPassword";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="servico/cadastro/atualiza" element={<AtualizaServico />} />
         <Route exact path="sobre" element={<Sobre />} />
         <Route exact path="adm" element={<Adm />} />
+        <Route exact path="reset-password" element={<ResetPassword />} />
       </Routes>
       <Footer />
     </BrowserRouter>

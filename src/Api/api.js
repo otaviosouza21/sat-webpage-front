@@ -133,3 +133,16 @@ export function DELETE_DATA(tableName, id, token) {
     },
   };
 }
+
+export function UPDATE_PASSWORD(tableName,newPassword,token) {
+  return {
+    url: `${URL}:${PORT}/${tableName}/${token}`,
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPassword),
+    },
+  };
+}
