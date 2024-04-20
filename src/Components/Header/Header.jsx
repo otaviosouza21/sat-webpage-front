@@ -10,6 +10,7 @@ import { GlobalContext } from "../../Hooks/GlobalContext";
 import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario";
 import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
 import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
+import LoadingDots from "../Utils/LoadingDots/LoadingDots";
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
@@ -35,22 +36,24 @@ export const Header = () => {
     },
   ];
 
-  useEffect(()=>{
-    setLoading(false)
-  },[userAuth])
-
-  useEffect(()=>{
-    
-  },[loading])
   useEffect(() => {
+    setLoading(true)
     function handleResize() {
       setIsTelaPequena(window.innerWidth < 421);
     }
     window.addEventListener("resize", handleResize);
     handleResize();
-    setLoading(true)
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(()=>{
+    if(loading){
+      setTimeout(() => {
+        setLoading(false)
+      }, 1000);
+    }
+
+  },[loading])
 
   function handleClick() {
     setModalUsuario(!modalUsuario);
@@ -73,7 +76,7 @@ export const Header = () => {
       </div>
       <div className={styles.buttons}>
         <div className={styles.loading}>
-          {loading&& <LoadingCenterComponent />}
+          {loading&& <LoadingDots />}
         </div>
         {userAuth.status && !loading&& (
           <>
