@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "../../Cadastros/CadastroForm.module.css";
 import useForm from "../../../Hooks/useForm";
 import Title from "../../Titles/Title";
@@ -9,53 +9,65 @@ import { RECOVER_PASSWORD } from "../../../Api/api";
 import Toast from "../../Toast/Toast";
 import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
-
+import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 const SendRequest = () => {
   const email = useForm("email");
-  const { request, loading,error } = useFetch();
-  const [alert,setAlert] = useState(false)
+  const { data,request, loading,error } = useFetch();
+  const [alert, setAlert] = useState(null);
+  const [errorAlert,setErrorAlert] = useState(null)
   const { setModal } = useContext(GlobalContext);
 
-  setModal('')
+
+  useEffect(()=>{
+    setModal('')
+    setAlert(null)
+    setErrorAlert(null)
+  },[])
+
   function handleSubmit(e) {
     e.preventDefault();
-
 
     if (email.validate()) {
       const requestEmail = { email: email.value };
       async function sendEmail() {
-        const {url,options} = RECOVER_PASSWORD('recover-password',requestEmail)
-        const {response,json} = await request(url,options)
-
-        if(!response.ok){
-            console.log('Erro ao enviar email');
-            return
+        const { url, options } = RECOVER_PASSWORD("recover-password", requestEmail);
+        const { response, json } = await request(url, options);
+        if (!response.ok) {
+          setErrorAlert(error);
+          return;
+        } else {
+          setAlert(`${json.mensagem} para ${json.email}`);
+          email.reset();
         }
-        else{
-            email.reset()
-            setAlert(true)
-        }
-        
       }
       sendEmail();
     }
   }
   return (
     <section className={`container ${styles.containerForm}`}>
-      <Title text="Recuperação de senha" fontSize="3" />
-      <form onSubmit={handleSubmit}>
-        <div className={styles.cadastroUsuario}>
-          <InputText
-            {...email}
-            type="email"
-            id="email"
-            label="Insira seu Email"
-          />
-          <Button handleSubmit={handleSubmit}>Recuperar Senha</Button>
-        </div>
-      {alert && <ModalAlert mensagem={`Um email de recuperação foi enviado para o email ${email.value}`}/>}
-      </form>
+      {loading ? (
+        <LoadingCenterComponent />
+      ) : (
+        <>
+          <Title text="Recuperação de senha" fontSize="3" />
+          <form onSubmit={handleSubmit} className={styles.cadastroUsuario}>
+            <InputText
+              {...email}
+              type="email"
+              id="email"
+              label="Insira seu Email"
+            />
+            <Button handleSubmit={handleSubmit}>Recuperar Senha</Button>
+            {alert && (
+              <ModalAlert
+                mensagem={`${alert}`}
+              />
+            )}
+            {errorAlert && <Toast color="text-bg-danger" message={errorAlert}/>}
+          </form>
+        </>
+      )}
     </section>
   );
 };

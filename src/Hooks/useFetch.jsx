@@ -12,12 +12,12 @@ const useFetch = () => {
       setLoading(true);
       response = await fetch(url, options);
       json = await response.json();
-      if (response.ok === false) throw new Error(json.message);
+      setData(json)
+      if (response.ok === false) throw new Error(json.mensagem);
     } catch (err) {
       json = null;
       setError(err.message);
     } finally {
-      setData(json);
       setTimeout(()=>{
         setLoading(false);
       },1000)

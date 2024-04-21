@@ -1,5 +1,5 @@
 const PORT = 3333;
-const URL = "http://18.231.121.86";
+const URL = "http://localhost";
 
 
 export function GET_ALL(tableName) {
