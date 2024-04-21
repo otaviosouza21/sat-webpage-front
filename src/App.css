@@ -283,7 +283,7 @@ a {
 }
 
 .animeLeft{
-  animation: animeLeft .7s ease-in-out .4s backwards;
+  animation: animeLeft .4s ease-in-out .4s backwards;
   -webkit-animation: animeLeft .7s ease-in-out .4s backwards;
 }
 

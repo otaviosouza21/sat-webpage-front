@@ -12,12 +12,14 @@ import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
 import AcessDenied from '../Utils/AcessDenied/AcessDenied'
 import Confirm from "../Utils/Confirm/Confirm";
+import { useNavigate } from "react-router-dom";
 
 
 const Adm = () => {
   const [activeView, setActiveView] = useState("servicos");
   const { userAuth, setUserAuth, logout } = useContext(GlobalContext);
   const { request,loading } = useFetch();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -33,6 +35,9 @@ const Adm = () => {
           setCurrentUser({})
           logout();
         }
+      }else{
+        navigate('/')
+
       }
     }
     fetchValidaToken();
@@ -42,10 +47,9 @@ const Adm = () => {
     setActiveView(view);
   };
 
-  if (loading) return <Loading />
   return (
     <>
-      {userAuth.status && userAuth.rule === 3 ? (
+      {userAuth.status && userAuth.rule === 3 && (
         <main className={`${styles.containerAdm}`}>
           <ul className={styles.nav}>
             <li
@@ -86,8 +90,6 @@ const Adm = () => {
             {activeView === "rules" && <ListRules />}
           </div>
         </main>
-      ) : (
-        <AcessDenied />
       )}
     </>
   );

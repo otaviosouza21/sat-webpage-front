@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { GET_ALL } from "../../Api/api";
-import Loading from "../Utils/Loading/Loading";
 import CadastroCategoria from "../Cadastros/CadastroCategoria/CadastroCategoria";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import useFetch from "../../Hooks/useFetch";
@@ -11,6 +10,7 @@ import styles from "./Listas.module.css";
 import Confirm from "../Utils/Confirm/Confirm";
 import Button from "../Button/Button";
 import InputSearch from "../Forms/InputSearch/InputSearch";
+import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 const ListCategoriasServicos = () => {
   const [categorias, setCategorias] = useState(null);
@@ -49,17 +49,19 @@ const ListCategoriasServicos = () => {
       <section
         style={{ display: "flex", flexDirection: "column", gap: "20px" }}
       >
-        <Button modalParam="cadastroCategoria">+ Novo</Button>
         <InputSearch
           placeholder="Nome da Categoria"
           option="nome" // campo que será buscado o filtro
           setVisibleItens={setVisibleItens}
           visibleItens={visibleItens}
         />
+        <Button modalParam="cadastroCategoria">+ Novo</Button>
 
         {modal === "cadastroCategoria" && <CadastroCategoria />}
         {loading ? (
-          <Loading />
+          <div className={styles.container}>
+            <LoadingCenterComponent />
+          </div>
         ) : (
           <table className="table table-striped table-hover">
             <thead>
