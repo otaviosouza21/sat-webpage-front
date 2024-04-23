@@ -5,63 +5,76 @@ import Title from "../../Titles/Title";
 import Button from "../../Button/Button";
 import useForm from "../../../Hooks/useForm";
 import styles from "../../Cadastros/CadastroForm.module.css";
-import { UPDATE_PASSWORD } from "../../../Api/api";
+import { GET_AUTH_USER, UPDATE_PASSWORD } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
+import { jwtDecode } from "jwt-decode";
+import Toast from "../../Toast/Toast";
+import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
 
 const ResetPassword = () => {
   const location = useLocation();
-  const [isToken, setIsToken] = useState(false);
-  const [updateOK,setUpdateOK]= useState(false)
-  const {request,loading} = useFetch()
-  const navigate = useNavigate('/')
+  const [isToken, setIsToken] = useState(null);
+  const [updateOK, setUpdateOK] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const { request, loading, data } = useFetch();
+  const navigate = useNavigate("/");
   const senha = useForm("senha");
   const confirmSenha = useForm("senha");
 
+  
+
   useEffect(() => {
     const token = new URLSearchParams(location.search).get("token");
-    if (token) {
-      window.localStorage.setItem("token", token);
-      setIsToken(true);
-    } else {
-      setIsToken(null);
-      window.localStorage.removeItem('token')
+    async function fetchValidaToken() {
+      if (token) {
+        const { id } = jwtDecode(token);
+        const { url, options } = GET_AUTH_USER("usuarios", token, id);
+        const { response, json } = await request(url, options);
+        if(response.ok){
+          setIsToken(token);
+        }
+      } else {
+        setIsToken(null);
+      }
     }
+    fetchValidaToken();
   }, []);
+
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (senha.value !== confirmSenha.value) {
-      confirmSenha.setError('Senha não confere')
-
-      return;
+      confirmSenha.setError("Senha não confere");
+      return false;
     }
 
-    if (senha.validate()) {
-      const newPassword = {newPassword: senha.value};
+    if (senha.validate() && isToken) {
+      const newPassword = { newPassword: senha.value };
       async function updatePassword() {
-        const token = window.localStorage.getItem("token")
-        const { url, options } = UPDATE_PASSWORD("reset-password",newPassword,token);
-        const {response,json} = await request(url,options)
-        if(!response.ok){
-            throw new Error('Ocorreu um erro ao cadastrar')
-        } 
-        else{
-           window.localStorage.removeItem('token')
-           senha.reset()
-           confirmSenha.reset()
-           setUpdateOK(true)
+        const { url, options } = UPDATE_PASSWORD(
+          "reset-password",
+          newPassword,
+          isToken
+        );
+        const { response, json } = await request(url, options);
+        if (!response.ok) {
+          throw new Error("Ocorreu um erro ao cadastrar");
+        } else {
+          senha.reset();
+          confirmSenha.reset();
+          setUpdateOK(true);
         }
       }
       updatePassword();
-    }
-    else{
-        console.log('Verifique se todos os campos estão preenchidos')
+    } else {
+      setAlert("Verifique se todos os campos estão preenchidos");
     }
   }
 
   return (
     <section className={`container ${styles.containerForm}`}>
+      {updateOK && <ModalAlert mensagem='Senha Alterada com Sucesso'/>}
       <Title text="Recuperação de senha" fontSize="3" />
       {isToken ? (
         <form onSubmit={handleSubmit}>
@@ -81,9 +94,10 @@ const ResetPassword = () => {
             />
             <Button handleSubmit={handleSubmit}>Salvar</Button>
           </div>
+          {alert && <Toast message={alert}/>}
         </form>
       ) : (
-        <Title text="Token invalido ou inspirado" fontSize="4" />
+        <Title text="Link invalido ou inspirado" fontSize="4" />
       )}
     </section>
   );

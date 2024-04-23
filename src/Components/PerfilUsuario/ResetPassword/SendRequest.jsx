@@ -34,7 +34,6 @@ const SendRequest = () => {
         const { url, options } = RECOVER_PASSWORD("recover-password", requestEmail);
         const { response, json } = await request(url, options);
         if (!response.ok) {
-          setErrorAlert(error);
           return;
         } else {
           setAlert(`${json.mensagem} para ${json.email}`);
@@ -59,12 +58,8 @@ const SendRequest = () => {
               label="Insira seu Email"
             />
             <Button handleSubmit={handleSubmit}>Recuperar Senha</Button>
-            {alert && (
-              <ModalAlert
-                mensagem={`${alert}`}
-              />
-            )}
-            {errorAlert && <Toast color="text-bg-danger" message={errorAlert}/>}
+            {alert && (<ModalAlert  mensagem={`${alert}`} />)} 
+            {data && !data.status && <Toast color="text-bg-danger" message={data.mensagem}/>}
           </form>
         </>
       )}
