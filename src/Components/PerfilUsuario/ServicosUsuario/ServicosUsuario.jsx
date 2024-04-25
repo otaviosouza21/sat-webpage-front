@@ -10,12 +10,13 @@ import Title from "../../Titles/Title.jsx";
 import ServicoUsuario from "./ServicoUsuario.jsx";
 
 const ServicosUsuario = () => {
-  const { userAuth, setUserAuth, logout, modal, setModal } =
+  const { userAuth, setUserAuth, logout, modal, setModal,update} =
     useContext(GlobalContext);
   const [currentUser, setCurrentUser] = useState(null);
   const { request, loading, error } = useFetch();
   const [servicosUser, setServicoUser] = useState(null);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -51,7 +52,7 @@ const ServicosUsuario = () => {
       }
     }
     fetchValidaServicos();
-  }, [userAuth]);
+  }, [userAuth,update]);
 
   return (
     <>
@@ -81,14 +82,6 @@ const ServicosUsuario = () => {
             ))
           ))}
       </ul>
-     {/*  {modal === "servicoDetalhes" && (
-        <ServicoContainer
-          setModal={setModal}
-          modal={modal}
-          servicosData={servicosUser}
-          contato={contatos}
-        />
-      )} */}
     </>
   );
 };

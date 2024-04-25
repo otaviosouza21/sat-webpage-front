@@ -11,11 +11,13 @@ import Confirm from "../../Utils/Confirm/Confirm";
 const ServicoUsuario = ({ servico }) => {
   const [idTodelete, setIdToDelete] = useState(null);
   const navigate = useNavigate();
-  const { setDataUpdate, setModal,modal } = useContext(GlobalContext);
+  const { setDataUpdate, setModal,modal,setUpdate,update } = useContext(GlobalContext);
 
   const confirmDelete = (id) => {
-    setIdToDelete(id);
-    setModal("confirmDelete");
+    if(id){
+      setIdToDelete(id);
+      setModal("confirmDelete");
+    }
   };
 
   const atualizarServico = () => {
@@ -23,6 +25,7 @@ const ServicoUsuario = ({ servico }) => {
     navigate("/servico/cadastro/atualiza");
   };
 
+  
   return (
     <>
       <li className={style.modalServico}>
@@ -54,11 +57,13 @@ const ServicoUsuario = ({ servico }) => {
           <h2>{servico.descricao_servico}</h2>
         </div>
       </li>
-      {modal === 'confirmDelete' && <Confirm
+      {modal === 'confirmDelete' && idTodelete && <Confirm
         mensagem="Deseja deletar este serviço?"
         id={idTodelete}
         setModal={setModal}
-        table='servicos'
+        table='servico'
+        setUpdate={setUpdate}
+        update={update}
       />}
     </>
   );

@@ -11,7 +11,7 @@ const Confirm = ({ mensagem, id, setModal, table, update, setUpdate }) => {
   function handleDelete() {
     const token = window.localStorage.getItem("token");
     async function deleteData() {
-      if (token) {
+      if (token && id) {
         const { url, options } = DELETE_DATA(table, id, token);
         const { response } = await request(url, options);
         if (response.ok) {
