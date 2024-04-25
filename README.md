@@ -1,6 +1,6 @@
 # Sat Empreendedores
 
-**Acesse o site:** [www.taiacupeba.com.br](http://www.taiacupeba.com.br)
+**Acesse o site:** [http://taiacupeba.com.br](http://www.taiacupeba.com.br)
 
 Bem-vindo ao repositório do projeto **Sat Empreendedores**! Este é um aplicativo desenvolvido em React, destinado a reunir prestadores de serviços da região de Taiaçupeba. O objetivo é fornecer uma plataforma onde os prestadores de serviço podem se cadastrar, promover seus serviços e buscar oportunidades de trabalho.
 
