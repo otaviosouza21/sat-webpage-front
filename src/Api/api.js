@@ -1,5 +1,5 @@
 const PORT = 3333;
-const URL = "http://54.232.149.20";
+const URL = "https://taiacupeba.com.br";
 
 
 export function GET_ALL(tableName) {
