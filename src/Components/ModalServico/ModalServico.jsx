@@ -8,20 +8,18 @@ import toolsIcon from "../../assets/icons/tools.svg";
 import starIcon from "../../assets/icons/star.svg";
 import ModalContato from "../ServicoContainer/ModalContato/ModalContato";
 import phone from '../../assets/icons/phone2.svg'
-import { GET_TO_ID } from "../../Api/api";
+
 
 const ModalServico = ({
   modal,
   setModal,
-  servicosData,
-  contato,
-  usuario,
-  setShowContatos,
-  showContatos,
+  servicoUsuario
 }) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
-  const { nome } = servicosData.Usuario;
+  const { nome,contato_pessoal_01,contato_negocio_01 } = servicoUsuario.Usuario;
+  const contato = {contato_pessoal_01,contato_negocio_01}
+  console.log(servicoUsuario);
 
   function closeModal(event) {
     event.preventDefault();
@@ -61,8 +59,8 @@ const ModalServico = ({
             <Title text="Serviço" fontSize="2" />
             <img src={toolsIcon} alt="" />
           </div>
-          <p>{servicosData.nome_negocio}</p>
-          <span>{servicosData.descricao_servico}</span>
+          <p>{servicoUsuario.nome_negocio}</p>
+          <span>{servicoUsuario.descricao_servico}</span>
         </div>
         <div>
           <div className={styles.containerTitle}>

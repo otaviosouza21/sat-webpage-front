@@ -11,9 +11,7 @@ import { Link } from "react-router-dom";
 
 const ServicoContainer = ({ servicosData }) => {
   const [categoriaData, setCategoriaData] = useState();
-  const [usuarioData, setUsuarioData] = useState();
   const [modal, setModal] = useState(false);
-  const [wppAPI, setWppApi] = useState(null);
   const [showContatos, setShowContatos] = useState(false);
   const { nome_negocio, categoria_id, usuario_id } = servicosData;
   const { request } = useFetch();
@@ -42,11 +40,7 @@ const ServicoContainer = ({ servicosData }) => {
           <ModalServico
             setModal={setModal}
             modal={modal}
-            servicosData={servicosData}
-            usuario={usuarioData}
-            setShowContatos={setShowContatos}
-            showContatos={showContatos}
-            contato={contatos}
+            servicoUsuario={servicosData}
           />
         )}
         <div className={`${styles.servico}` }>

@@ -55,7 +55,7 @@ const AtualizaServico = () => {
       tempoNegocio.setValue(dadosAtualizados.tempo_negocio);
       setTimeout(() => {
         formRef.current["categoria"].value = String(dadosAtualizados.categoria_id);
-        formRef.current["status"].value = dadosAtualizados.status ? 'Ativo' : 'Inativo';
+        if(formRef.current["status"]) formRef.current["status"].value = dadosAtualizados.status ? 'Ativo' : 'Inativo';
         }, 2000);
       }
   }, []);
@@ -72,24 +72,26 @@ const AtualizaServico = () => {
         nome_negocio: nomeNegocioForm.value,
         descricao_servico: descricaoForm.value,
         tempo_negocio: +tempoNegocio.value,
-        status: formRef.current["status"].value === "Ativo" ? true : false,
+        status: formRef.current["status"] && formRef.current["status"].value === "Ativo" ? true : false,
         categoria_id: +formRef.current["categoria"].value,
         possui_nome_negocio: true
       };
      
 
       async function postServico() {
-        const { url, options } = UPDATE_DATA("servico", dataServico, dataUpdate.id)
-        const servicoRequest = await request(url, options);
-        if (servicoRequest.response.ok) {
-          setStatusCadastro("Serviço Atualizado com Sucesso");
-          nomeNegocioForm.reset(); //limpa campos
-          descricaoForm.reset();
-          tempoNegocio.reset();
-          setTimeout(() => {
-            navigate("/adm");
-            setStatusCadastro(null);
-          }, 1000);
+        if(dataUpdate){
+          const { url, options } = UPDATE_DATA("servico", dataServico, dataUpdate.id)
+          const servicoRequest = await request(url, options);
+          if (servicoRequest.response.ok) {
+            setStatusCadastro("Serviço Atualizado com Sucesso");
+            nomeNegocioForm.reset(); //limpa campos
+            descricaoForm.reset();
+            tempoNegocio.reset();
+            setTimeout(() => {
+              navigate(-1);
+              setStatusCadastro(null);
+            }, 1000);
+          }
         }
       }
       postServico();
@@ -175,7 +177,7 @@ const AtualizaServico = () => {
             </form>
           </section>
         ) : (
-          setModal(true)
+          navigate('/')
         )}
       </section>
     );
