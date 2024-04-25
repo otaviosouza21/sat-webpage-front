@@ -4,22 +4,19 @@ import { jwtDecode } from "jwt-decode";
 import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
-import Loading from "../../Utils/Loading/Loading.jsx";
-import Error from "../../Utils/Error/Error.jsx";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import Title from "../../Titles/Title.jsx";
-import trash from "../../../assets/icons/trash2.svg";
-import pen from "../../../assets/icons/pen.svg";
-import view from "../../../assets/icons/view.svg";
+import ServicoUsuario from "./ServicoUsuario.jsx";
 
 const ServicosUsuario = () => {
-  const { userAuth, setUserAuth, logout } = useContext(GlobalContext);
+  const { userAuth, setUserAuth, logout, modal, setModal } =
+    useContext(GlobalContext);
   const [currentUser, setCurrentUser] = useState(null);
   const { request, loading, error } = useFetch();
   const [servicosUser, setServicoUser] = useState(null);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
@@ -35,8 +32,8 @@ const ServicosUsuario = () => {
           setCurrentUser({});
           logout();
         }
-      }else{
-        navigate('/')
+      } else {
+        navigate("/");
       }
     }
     fetchValidaToken();
@@ -47,7 +44,7 @@ const ServicosUsuario = () => {
       if (userAuth.status) {
         const { id } = userAuth.usuario;
         const { url, options } = GET_INNER_ID("servico", "usuario", id);
-        const { response, json, loading } = await request(url, options);
+        const { response, json } = await request(url, options);
         if (response.ok) {
           setServicoUser(json.Servicos);
         }
@@ -56,7 +53,6 @@ const ServicosUsuario = () => {
     fetchValidaServicos();
   }, [userAuth]);
 
-  
   return (
     <>
       <ul className={style.containerServico}>
@@ -80,40 +76,19 @@ const ServicosUsuario = () => {
               </h2>
             </li>
           ) : (
-            servicosUser.map((servico) => (
-              <li key={servico.id} className={style.modalServico}>
-                <div>
-                  <h3>Serviço</h3>
-                  <h2>{servico.nome_negocio}</h2>
-                </div>
-                <div>
-                  <h3>Situação</h3>
-                  <h2>
-                    {servico.status ? (
-                      <span>
-                        Publicado<span className={style.status_on}></span>
-                      </span>
-                    ) : (
-                      <span>
-                        Aguardando Aprovação
-                        <span className={style.status_aguardando}></span>
-                      </span>
-                    )}
-                  </h2>
-                </div>
-                <div className={style.options}>
-                  <img src={view} alt="" />
-                  <img src={pen} alt="" />
-                  <img src={trash} alt="" />
-                </div>
-                <div>
-                  <h3>Descrição</h3>
-                  <h2>{servico.descricao_servico}</h2>
-                </div>
-              </li>
+            servicosUser && servicosUser.map((servico) => (
+              <ServicoUsuario key={servico.id} servico={servico}/>
             ))
           ))}
       </ul>
+     {/*  {modal === "servicoDetalhes" && (
+        <ServicoContainer
+          setModal={setModal}
+          modal={modal}
+          servicosData={servicosUser}
+          contato={contatos}
+        />
+      )} */}
     </>
   );
 };

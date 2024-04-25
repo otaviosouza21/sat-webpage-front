@@ -15,7 +15,7 @@ import { GlobalContext } from "../../Hooks/GlobalContext.jsx";
 const Servicos = () => {
   const [visibleItens, setVisibleItens] = useState(null);
   const { error, loading, request } = useFetch();
-  const { userAuth, setUserAuth,logout  } = useContext(GlobalContext);
+  const { userAuth, setUserAuth,logout } = useContext(GlobalContext);
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
