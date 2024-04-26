@@ -4,7 +4,7 @@ const URL = "https://taiacupeba.com.br";
 
 export function GET_ALL(tableName) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}`,
+    url: `${URL}/api/${tableName}`,
     options: {
       method: "GET",
       Headers: {
@@ -16,7 +16,7 @@ export function GET_ALL(tableName) {
 
  export function GET_ALL_USERS(tableName, token) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}`,
+    url: `${URL}/api/${tableName}`,
     options: {
       method: "GET",
       headers: {
@@ -28,7 +28,7 @@ export function GET_ALL(tableName) {
 
 export function GET_TO_ID(tableName, id) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}/${id}`,
+    url: `${URL}/api/${tableName}/${id}`,
     options: {
       method: "GET",
       Headers: {
@@ -40,7 +40,7 @@ export function GET_TO_ID(tableName, id) {
 
 export function POST_DATA_USER(tableName, data) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}/auth/register`,
+    url: `${URL}/api/${tableName}/auth/register`,
     options: {
       method: "POST",
       headers: {
@@ -53,7 +53,7 @@ export function POST_DATA_USER(tableName, data) {
 
 export function POST_LOGIN(tableName, data) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}/auth/login`,
+    url: `${URL}/api/${tableName}/auth/login`,
     options: {
       method: "POST",
       headers: {
@@ -66,7 +66,7 @@ export function POST_LOGIN(tableName, data) {
 
 export function GET_AUTH_USER(tableName, token, id) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}/${id}`,
+    url: `${URL}/api/${tableName}/${id}`,
     options: {
       method: "GET",
       headers: {
@@ -78,7 +78,7 @@ export function GET_AUTH_USER(tableName, token, id) {
 
 export function GET_INNER(tableName1, tableName2) {
   return {
-    url: `${URL}:${PORT}/api/${tableName1}/${tableName2}`,
+    url: `${URL}/api/${tableName1}/${tableName2}`,
     options: {
       method: "GET"
     },
@@ -87,7 +87,7 @@ export function GET_INNER(tableName1, tableName2) {
 
 export function GET_INNER_ID(tableName1, tableName2,id) {
   return {
-    url: `${URL}:${PORT}/api/${tableName1}/${tableName2}/${id}`,
+    url: `${URL}/api/${tableName1}/${tableName2}/${id}`,
     options: {
       method: "GET"
     },
@@ -96,7 +96,7 @@ export function GET_INNER_ID(tableName1, tableName2,id) {
 
 export function POST_DATA(tableName, data) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}`,
+    url: `${URL}/api/${tableName}`,
     options: {
       method: "POST",
       headers: {
@@ -109,7 +109,7 @@ export function POST_DATA(tableName, data) {
 
 export function UPDATE_DATA(tableName, updateData, id, token) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}/${id}`,
+    url: `${URL}/api/${tableName}/${id}`,
     options: {
       method: "PUT",
       headers: {
@@ -123,7 +123,7 @@ export function UPDATE_DATA(tableName, updateData, id, token) {
 
 export function DELETE_DATA(tableName, id, token) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}/${id}`,
+    url: `${URL}/api/${tableName}/${id}`,
     options: {
       method: "DELETE",
       headers: {
@@ -136,7 +136,7 @@ export function DELETE_DATA(tableName, id, token) {
 
 export function RECOVER_PASSWORD(tableName,email) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}/`,
+    url: `${URL}/api/${tableName}/`,
     options: {
       method: "POST",
       headers: {
@@ -150,7 +150,7 @@ export function RECOVER_PASSWORD(tableName,email) {
 
 export function UPDATE_PASSWORD(tableName,newPassword,token) {
   return {
-    url: `${URL}:${PORT}/api/${tableName}/${token}`,
+    url: `${URL}/api/${tableName}/${token}`,
     options: {
       method: "POST",
       headers: {
