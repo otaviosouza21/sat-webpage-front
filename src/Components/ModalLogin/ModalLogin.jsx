@@ -55,9 +55,8 @@ const ModalLogin = ({ modal, setModal }) => {
         } else {
           setUserAuth({ token: token, usuario: json, status: true });
           setButtonState("Bem Vindo");
-          setTimeout(() => {
-            setModal(false);
-          }, 1000);
+          setModal(false);
+   
         }
       }
 
@@ -75,6 +74,7 @@ const ModalLogin = ({ modal, setModal }) => {
     }
   }
 
+  
   return (
     <div
       onClick={closeModal}
@@ -95,8 +95,11 @@ const ModalLogin = ({ modal, setModal }) => {
         <Title text="Faça Login" fontSize="3" />
         <InputText {...emailForm} label="Email" id="email" type="email" />
         <InputText {...senhaForm} label="Senha" id="password" type="password" />
-        <div className={styles.error}>
-          <p>{error}</p>
+        <div>
+          <p className={data && !loading ? styles.error : ''}>
+            {data && !loading ? data.message : ''}
+          </p>
+
         </div>
         <div className={styles.options}>
           <span onClick={()=>navigate('/send-request')}>Esqueci a Senha</span>
