@@ -1,4 +1,4 @@
-main {
+.main {
   color: var(--primary1);
 }
 
@@ -60,6 +60,10 @@ main {
 }
 
 @media (max-width: 730px) {
+  .main {
+    color: var(--primary1);
+  }
+
   .titulo {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -80,6 +84,7 @@ main {
 }
 
 @media (max-width: 420px) {
+  
   .titulo {
     margin-top: 0px;
     align-items: center;

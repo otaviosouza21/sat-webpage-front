@@ -1,0 +1,24 @@
+.close{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    border: none !important;
+    color: white !important;
+    border-radius: 10px;
+    z-index: 400;
+    height: 3rem;
+    width: 3rem;
+    cursor: pointer;
+    background-color: var(--primary3) !important;
+}
+
+.close:hover{
+    scale: 1.1;
+    transition: 0.2s;
+}
+
+.close:active{
+    scale: 0.9;
+    transition: 0.2s;
+}

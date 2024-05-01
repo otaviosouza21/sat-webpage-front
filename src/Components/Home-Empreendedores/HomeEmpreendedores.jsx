@@ -7,33 +7,28 @@ import contratarIcon from "../../assets/icons/worker.svg";
 import toolsIcons from "../../assets/icons/tools.svg";
 import figuras1 from "../../assets/img/figure1.svg";
 import figuras2 from "../../assets/img/figure2.svg";
-import { SimpleAnime } from "../../plugins/simple-anime";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { GET_AUTH_USER } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 
 const HomeEmpreendedores = () => {
-  const { userAuth, setUserAuth, logout, modal,  setModal } = useContext(GlobalContext);
-
+  const { setUserAuth, logout, setModal } = useContext(GlobalContext);
   const { request } = useFetch();
   const gridLinks = useRef();
-  useEffect(() => {
-    new SimpleAnime();
-  }, []);
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
-        const {id,rule} = jwtDecode(token);
+        const { id, rule } = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
         if (response.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
           setUserAuth({});
-          logout()
+          logout();
         }
       }
     }
@@ -47,7 +42,6 @@ const HomeEmpreendedores = () => {
           <img src={LogoSat} alt="" />
           <Title text="Portal do Empreendedor" fontSize="1" />
         </div>
-
         <div className={`${styles.gridLinks} animeUp`} ref={gridLinks}>
           <LinkHomeContainer
             title="Preciso contratar um serviço"
@@ -68,7 +62,6 @@ const HomeEmpreendedores = () => {
           />
         </div>
       </section>
-
     </main>
   );
 };
