@@ -18,6 +18,8 @@ const HomeEmpreendedores = () => {
   const gridLinks = useRef();
 
   useEffect(() => {
+    const overflow = document.querySelector("body");
+    overflow.classList.remove("overFlow");
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {

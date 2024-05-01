@@ -84,6 +84,7 @@ const ResetPassword = () => {
               type="password"
               id="senha"
               label="Nova Senha"
+              gridColumn='1'
             />
             <InputText
               {...confirmSenha}
