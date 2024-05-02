@@ -92,7 +92,8 @@ const AtualizaServico = () => {
         categoria_id: +formRef.current["categoria"].value,
         possui_nome_negocio: true,
       };
-
+      
+      const statusDiferente = dataUpdate.status !== dataServico.status
       async function postServico() {
         if (dataUpdate) {
           const { url, options } = UPDATE_DATA(
@@ -106,7 +107,7 @@ const AtualizaServico = () => {
             nomeNegocioForm.reset(); //limpa campos
             descricaoForm.reset();
             tempoNegocio.reset();
-            sendEmail()
+            statusDiferente && sendEmail()
             setTimeout(() => {
               navigate(-1);
               setStatusCadastro(null);
