@@ -55,7 +55,7 @@ const ListCategoriasServicos = () => {
           setVisibleItens={setVisibleItens}
           visibleItens={visibleItens}
         />
-        <Button modalParam="cadastroCategoria">+ Novo</Button>
+    {/*     <Button modalParam="cadastroCategoria">+ Novo</Button> */}
 
         {modal === "cadastroCategoria" && <CadastroCategoria />}
         {loading ? (

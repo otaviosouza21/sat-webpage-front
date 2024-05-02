@@ -11,10 +11,11 @@ const InputText = ({
   onChange,
   error,
   value,
-  errorConfere
+  errorConfere,
+  opacity
 }) => {
   return (
-    <div style={{ gridColumn: gridColumn }} className={styles.inputContainer}>
+    <div style={{ gridColumn: gridColumn, opacity: opacity }} className={styles.inputContainer}>
       <label htmlFor={id}>{label}</label>
       <input
         placeholder={placeholder}

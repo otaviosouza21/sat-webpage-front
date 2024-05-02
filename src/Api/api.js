@@ -2,6 +2,7 @@ const PORT = 3333;
 const URL = "https://taiacupeba.com.br";
 
 
+//=================Retorna lista de dados====================//
 export function GET_ALL(tableName) {
   return {
     url: `${URL}/api/${tableName}`,
@@ -14,6 +15,7 @@ export function GET_ALL(tableName) {
   };
 }
 
+//=================[autenticado] Retorna lista de usuarios====================//
  export function GET_ALL_USERS(tableName, token) {
   return {
     url: `${URL}/api/${tableName}`,
@@ -26,6 +28,7 @@ export function GET_ALL(tableName) {
   };
 }
 
+//=================Retorna registro unico por ID====================//
 export function GET_TO_ID(tableName, id) {
   return {
     url: `${URL}/api/${tableName}/${id}`,
@@ -38,6 +41,7 @@ export function GET_TO_ID(tableName, id) {
   };
 }
 
+//=================Cria novo usuario====================//
 export function POST_DATA_USER(tableName, data) {
   return {
     url: `${URL}/api/${tableName}/auth/register`,
@@ -51,6 +55,7 @@ export function POST_DATA_USER(tableName, data) {
   };
 }
 
+//=================Volta dados de acesso no login====================//
 export function POST_LOGIN(tableName, data) {
   return {
     url: `${URL}/api/${tableName}/auth/login`,
@@ -64,6 +69,7 @@ export function POST_LOGIN(tableName, data) {
   };
 }
 
+//=================[autenticado] Retorna usuario unico====================//
 export function GET_AUTH_USER(tableName, token, id) {
   return {
     url: `${URL}/api/${tableName}/${id}`,
@@ -76,6 +82,8 @@ export function GET_AUTH_USER(tableName, token, id) {
   };
 }
 
+
+//=================Retorna lista de join entre duas entidades====================//
 export function GET_INNER(tableName1, tableName2) {
   return {
     url: `${URL}/api/${tableName1}/${tableName2}`,
@@ -85,6 +93,7 @@ export function GET_INNER(tableName1, tableName2) {
   };
 }
 
+//=================Retorna dado unico com inner join====================//
 export function GET_INNER_ID(tableName1, tableName2,id) {
   return {
     url: `${URL}/api/${tableName1}/${tableName2}/${id}`,
@@ -94,6 +103,7 @@ export function GET_INNER_ID(tableName1, tableName2,id) {
   };
 }
 
+//=================Cria novo registro====================//
 export function POST_DATA(tableName, data) {
   return {
     url: `${URL}/api/${tableName}`,
@@ -107,6 +117,7 @@ export function POST_DATA(tableName, data) {
   };
 }
 
+//=================[autenticado] Atualiza registro====================//
 export function UPDATE_DATA(tableName, updateData, id, token) {
   return {
     url: `${URL}/api/${tableName}/${id}`,
@@ -121,6 +132,7 @@ export function UPDATE_DATA(tableName, updateData, id, token) {
   };
 }
 
+//=================[autenticado] Deleta registro====================//
 export function DELETE_DATA(tableName, id, token) {
   return {
     url: `${URL}/api/${tableName}/${id}`,
@@ -134,6 +146,7 @@ export function DELETE_DATA(tableName, id, token) {
   };
 }
 
+//=================Envia email para reset de senha====================//
 export function RECOVER_PASSWORD(tableName,email) {
   return {
     url: `${URL}/api/${tableName}/`,
@@ -147,7 +160,7 @@ export function RECOVER_PASSWORD(tableName,email) {
   };
 }
 
-
+//=================[autenticado] definir nova senha====================//
 export function UPDATE_PASSWORD(tableName,newPassword,token) {
   return {
     url: `${URL}/api/${tableName}/${token}`,
@@ -157,6 +170,19 @@ export function UPDATE_PASSWORD(tableName,newPassword,token) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newPassword),
+    },
+  };
+}
+//=================Envio de email====================//
+export function SEND_EMAIL(emailBody) {
+  return {
+    url: `${URL}/api/send-email`,
+    options: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(emailBody),
     },
   };
 }
