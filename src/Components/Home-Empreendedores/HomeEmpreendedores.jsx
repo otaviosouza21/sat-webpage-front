@@ -18,6 +18,7 @@ const HomeEmpreendedores = () => {
   const gridLinks = useRef();
 
   useEffect(() => {
+    document.title = 'SAT | Portal do Empreendedor'
     const overflow = document.querySelector("body");
     overflow.classList.remove("overFlow");
     const token = window.localStorage.getItem("token");
