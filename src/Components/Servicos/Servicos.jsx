@@ -18,6 +18,7 @@ const Servicos = () => {
   const { userAuth, setUserAuth,logout } = useContext(GlobalContext);
 
   useEffect(() => {
+    document.title = 'SAT | Serviços'
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
@@ -45,7 +46,7 @@ const Servicos = () => {
   }, []);
 
   useEffect(() => {
-    new SimpleAnime();
+
   }, []);
 
   if (loading) return <Loading />;

@@ -2,19 +2,23 @@ import React, { useContext, useEffect, useState } from "react";
 import Title from "../../Titles/Title";
 import style from "./MinhaConta.module.css";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
-import { GET_AUTH_USER } from "../../../Api/api";
+import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 import Button from "../../Button/Button";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import styleButton from "../../Button/Button.module.css";
 
 const MinhaConta = () => {
-  
   const navigate = useNavigate();
-  const { userAuth, setUserAuth,logout } = useContext(GlobalContext);
+  const { userAuth, setUserAuth, logout, setDataUpdate } =
+    useContext(GlobalContext);
   const [currentUser, setCurrentUser] = useState(null);
+  const [servicosAtivos, setServicosAtivos] = useState(null);
+  const [servicosInativos, setServicosInativos] = useState(null);
   const { request, loading } = useFetch();
+
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
@@ -27,21 +31,45 @@ const MinhaConta = () => {
           setCurrentUser(json);
         } else {
           setUserAuth({});
-          setCurrentUser(null)
+          setCurrentUser(null);
           logout();
         }
-      }else{
-        navigate('/')
+      } else {
+        navigate("/");
       }
     }
     fetchValidaToken();
   }, []);
 
-    return (
-      <section className={style.containerPerfil}>
-        {loading ? <LoadingCenterComponent />:
+  useEffect(() => {
+    async function fetchValidaServicos() {
+      if (userAuth.status) {
+        const { id } = userAuth.usuario;
+        const { url, options } = GET_INNER_ID("servico", "usuario", id);
+        const { response, json } = await request(url, options);
+        if (response.ok) {
+          const ativos = json.Servicos.filter((servico) => servico.status);
+          const inativos = json.Servicos.filter((servico) => !servico.status);
+          setServicosAtivos(ativos.length)
+          setServicosInativos(inativos.length)
+        }
+      }
+    }
+    fetchValidaServicos();
+  }, [userAuth]);
+
+  function handleEdit() {
+    navigate("/usuarios/cadastro/atualiza");
+    setDataUpdate(currentUser);
+  }
+
+  return (
+    <section className={style.containerPerfil}>
+      {loading ? (
+        <LoadingCenterComponent />
+      ) : (
         <ul className={style.infosPerfil}>
-          {currentUser &&(
+          {currentUser && (
             <>
               <li>
                 <Title text="Nome" fontSize="2" />
@@ -65,19 +93,31 @@ const MinhaConta = () => {
               </li>
               <li>
                 <Title text="Sócio da SAT" fontSize="2" />
-                <p>{currentUser.socio_sat ? ("Sim") : (<span>Não, quero me tornar</span>)}</p>
+                <p>
+                  {currentUser.socio_sat ? (
+                    "Sim"
+                  ) : (
+                    <span>Não, quero me tornar</span>
+                  )}
+                </p>
               </li>
               <li>
-                <Title text="Serviços Publicados" fontSize="2" />
-                <p>2</p>
+                <Title text="Serviços em análise" fontSize="2" />
+                <p>{servicosInativos}</p>
               </li>
-                <Button>Editar</Button>
-            </>)
-          }
+              <li>
+                <Title text="Serviços publicados" fontSize="2" />
+                <p>{servicosAtivos}</p>
+              </li>
+              <button onClick={handleEdit} className={styleButton.button}>
+                <Link>Editar</Link>
+              </button>
+            </>
+          )}
         </ul>
-        }
-      </section>
-    );
+      )}
+    </section>
+  );
 };
 
 export default MinhaConta;

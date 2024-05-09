@@ -5,7 +5,13 @@ import InputSelect from "../../Forms/Input/InputSelect";
 import Button from "../../Button/Button";
 import Title from "../../Titles/Title";
 import useFetch from "../../../Hooks/useFetch";
-import { GET_ALL, GET_AUTH_USER, POST_DATA, UPDATE_DATA } from "../../../Api/api";
+import {
+  GET_ALL,
+  GET_AUTH_USER,
+  POST_DATA,
+  SEND_EMAIL,
+  UPDATE_DATA,
+} from "../../../Api/api";
 import useForm from "../../../Hooks/useForm";
 import Loading from "../../Utils/Loading/Loading";
 import Toast from "../../Toast/Toast";
@@ -17,14 +23,14 @@ const AtualizaServico = () => {
   const [categorias, setCategorias] = useState();
   const { request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const {dataUpdate,setModal,setUserAuth,userAuth, logout} = useContext(GlobalContext);
+  const { dataUpdate, setModal, setUserAuth, userAuth, logout } =
+    useContext(GlobalContext);
   const formRef = useRef();
   const navigate = useNavigate();
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
-;
-//validação acesso
+  //validação acesso
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
@@ -36,28 +42,34 @@ const AtualizaServico = () => {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
           setUserAuth();
-          logout()
+          logout();
         }
-
       }
     }
     fetchValidaToken();
   }, []);
 
   useEffect(() => {
-    if(dataUpdate){
-      window.localStorage.setItem('updateData',JSON.stringify(dataUpdate))
+    if (dataUpdate) {
+      window.localStorage.setItem("updateData", JSON.stringify(dataUpdate));
     }
-    const dadosAtualizados = JSON.parse(window.localStorage.getItem('updateData'))
-    if(dadosAtualizados){
+    const dadosAtualizados = JSON.parse(
+      window.localStorage.getItem("updateData")
+    );
+    if (dadosAtualizados) {
       nomeNegocioForm.setValue(dadosAtualizados.nome_negocio);
       descricaoForm.setValue(dadosAtualizados.descricao_servico);
       tempoNegocio.setValue(dadosAtualizados.tempo_negocio);
       setTimeout(() => {
-        formRef.current["categoria"].value = String(dadosAtualizados.categoria_id);
-        if(formRef.current["status"]) formRef.current["status"].value = dadosAtualizados.status ? 'Ativo' : 'Inativo';
-        }, 2000);
-      }
+        formRef.current["categoria"].value = String(
+          dadosAtualizados.categoria_id
+        );
+        if (formRef.current["status"])
+          formRef.current["status"].value = dadosAtualizados.status
+            ? "Ativo"
+            : "Inativo";
+      }, 2000);
+    }
   }, []);
 
   function handleSubmit(e) {
@@ -72,21 +84,30 @@ const AtualizaServico = () => {
         nome_negocio: nomeNegocioForm.value,
         descricao_servico: descricaoForm.value,
         tempo_negocio: +tempoNegocio.value,
-        status: formRef.current["status"] && formRef.current["status"].value === "Ativo" ? true : false,
+        status:
+          formRef.current["status"] &&
+          formRef.current["status"].value === "Ativo"
+            ? true
+            : false,
         categoria_id: +formRef.current["categoria"].value,
-        possui_nome_negocio: true
+        possui_nome_negocio: true,
       };
-     
-
+      
+      const statusDiferente = dataUpdate.status !== dataServico.status
       async function postServico() {
-        if(dataUpdate){
-          const { url, options } = UPDATE_DATA("servico", dataServico, dataUpdate.id)
+        if (dataUpdate) {
+          const { url, options } = UPDATE_DATA(
+            "servico",
+            dataServico,
+            dataUpdate.id
+          );
           const servicoRequest = await request(url, options);
           if (servicoRequest.response.ok) {
             setStatusCadastro("Serviço Atualizado com Sucesso");
             nomeNegocioForm.reset(); //limpa campos
             descricaoForm.reset();
             tempoNegocio.reset();
+            statusDiferente && sendEmail()
             setTimeout(() => {
               navigate(-1);
               setStatusCadastro(null);
@@ -98,33 +119,42 @@ const AtualizaServico = () => {
     } else {
       setStatusCadastro("Por Favor, Preencha todos os Campos");
       setTimeout(() => {
-      setStatusCadastro(null);
+        setStatusCadastro(null);
       }, 1000);
     }
   }
 
+  async function sendEmail() {
+    const emailBody = {
+      to: dataUpdate.Usuario.email,
+      subject: "Alteração de status do seu Serviço",
+      text: "O status do seu serviço foi atualizado no portal do Empreendedor de Taiaçupeba",
+    };
+    const { url, options } = SEND_EMAIL(emailBody);
+    const { response, json } = request(url, options);
+    
+  }
 
-  // pega as categorias e salva no estado 
+  // pega as categorias e salva no estado
   useEffect(() => {
     async function getCategorias() {
       const { url, options } = GET_ALL("categoria_servico");
       const { response, json } = await request(url, options);
-      if (!response.ok) {console.log("Falha ao buscar Categorias")}
+      if (!response.ok) {
+        console.log("Falha ao buscar Categorias");
+      }
       setCategorias(json);
     }
     getCategorias();
   }, []);
 
-  if (loading) return <Loading />
+  if (loading) return <Loading />;
   if (categorias)
     return (
       <section>
         {userAuth.status && userAuth.token ? (
           <section className={`${styles.cadastroContainer} container`}>
-            <Title
-              text="Atualizar Serviço"
-              fontSize="3"
-            />
+            <Title text="Atualizar Serviço" fontSize="3" />
             <form
               onSubmit={handleSubmit}
               ref={formRef}
@@ -160,13 +190,14 @@ const AtualizaServico = () => {
                 id="categoria"
               />
 
-              {userAuth.status && userAuth.rule === 3 && (// Acesso ADM
-                <InputSelect
-                  label="Status"
-                  options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
-                  id="status"
-                />
-              )}
+              {userAuth.status &&
+                userAuth.rule === 3 && ( // Acesso ADM
+                  <InputSelect
+                    label="Status"
+                    options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+                    id="status"
+                  />
+                )}
               <Button handleSubmit={handleSubmit}>
                 {loading ? "Salvando..." : "Salvar"}
               </Button>
@@ -177,7 +208,7 @@ const AtualizaServico = () => {
             </form>
           </section>
         ) : (
-          navigate('/')
+          navigate("/")
         )}
       </section>
     );

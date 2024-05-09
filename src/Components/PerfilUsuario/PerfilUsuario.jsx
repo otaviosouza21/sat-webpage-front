@@ -19,6 +19,7 @@ const PerfilUsuario = () => {
   const { setUserAuth,logout } = useContext(GlobalContext);
   const {request} =useFetch()
   useEffect(() => {
+    document.title = 'SAT | Meu Perfil'
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {

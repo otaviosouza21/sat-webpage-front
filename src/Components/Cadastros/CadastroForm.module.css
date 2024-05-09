@@ -47,6 +47,7 @@
   grid-column: 3;
   grid-row: 6;
 }
+
 .cadastroUsuario {
   display: grid;
   gap: 20px;
@@ -62,13 +63,20 @@
 }
 
 @media (max-width: 750px) {
-  .containerForm {
-    height: 100%;
+ .containerForm {
+    max-height: 100%;
+
+  }
+
+  .containerForm button {
+    padding: 10px;
+   
   }
 
   .cadastroUsuario {
     display: flex;
     flex-direction: column;
+    min-height: 100%;
     gap: 20px;
   }
 
@@ -78,5 +86,5 @@
 
   .containerForm {
     width: 100vw;
-  }
+  } 
 }

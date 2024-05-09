@@ -6,16 +6,17 @@ import Title from "../../Titles/Title";
 import InputSelect from "../../Forms/Input/InputSelect";
 import useForm from "../../../Hooks/useForm";
 import useFetch from "../../../Hooks/useFetch";
-import { GET_ALL, UPDATE_DATA } from "../../../Api/api";
+import { GET_ALL, GET_AUTH_USER, UPDATE_DATA } from "../../../Api/api";
 import Loading from "../../Utils/Loading/Loading";
 import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const AtualizaUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { dataUpdate, userAuth } = useContext(GlobalContext);
+  const { dataUpdate, userAuth,setUserAuth } = useContext(GlobalContext);
   const formRef = useRef(); // utilizado para acesso ao input options
   const navigate = useNavigate();
 
@@ -29,6 +30,26 @@ const AtualizaUsuario = () => {
   const socioSatForm = useForm(false);
   const { request, data, loading, error } = useFetch();
 
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    async function fetchValidaToken() {
+      if (token) {
+        const { id, rule } = jwtDecode(token);
+        const { url, options } = GET_AUTH_USER("usuarios", token, id);
+        const { response, json } = await request(url, options);
+        if (response.ok) {
+          setUserAuth({ token, usuario: json, status: true, rule });
+        } else {
+          setUserAuth({});
+          logout();
+        }
+      } else {
+        navigate("/");
+      }
+    }
+    fetchValidaToken();
+  }, []);
+
   //================UPDATE=====================//
   useEffect(() => {
     if (dataUpdate) {
@@ -40,11 +61,10 @@ const AtualizaUsuario = () => {
       contatoN2Form.setValue(dataUpdate.contato_negocio_02);
       morador.setValue(dataUpdate.tempo_reside);
       setTimeout(() => {
-        formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
-        formRef.current["rule"].value = String(dataUpdate.rule_id);
-        formRef.current["status"].value = dataUpdate.status === "Ativo"
-          ? "Ativo"
-          : "Inativo";
+          formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
+          formRef.current["rule"].value = String(dataUpdate.rule_id);
+          formRef.current["status"].value =
+            dataUpdate.status === "Ativo" ? "Ativo" : "Inativo";
       }, 1000);
     }
   }, []);
@@ -79,21 +99,29 @@ const AtualizaUsuario = () => {
         contato_negocio_01: contatoN1Form.value,
         contato_negocio_02: contatoN2Form.value,
         tempo_reside: morador.value,
-        socio_sat: userAuth.rule === 3 ? (formRef.current["socio_sat"].checked ? "Sim" : "Não") : "False",
-        status: userAuth.rule === 3 ? (formRef.current["status"].value === "Ativo" ? "1" : "3") : "1",
-        rule_id: +formRef.current["rule"].value 
+        socio_sat:
+          userAuth.rule === 3
+            ? formRef.current["socio_sat"].checked
+              ? "Sim"
+              : "Não"
+            : "False",
+        status:
+          userAuth.rule === 3
+            ? formRef.current["status"].value === "Ativo"
+              ? "1"
+              : "3"
+            : "1",
+        rule_id: +formRef.current["rule"].value,
       };
-
 
       async function postUser() {
         const token = window.localStorage.getItem("token");
-          const { url, options } = UPDATE_DATA(
-            "usuarios",
-            dataUsuario,
-            dataUpdate.id,
-            token
-          );
-        
+        const { url, options } = UPDATE_DATA(
+          "usuarios",
+          dataUsuario,
+          dataUpdate.id,
+          token
+        );
 
         const userRequest = await request(url, options);
         if (userRequest.response.ok) {
@@ -106,7 +134,9 @@ const AtualizaUsuario = () => {
           contatoP2Form.reset();
           morador.reset();
           formRef.current["socio_sat"].unchecked;
-
+          setTimeout(() => {
+            navigate(-1);
+          }, 1000);
         }
       }
       postUser();
@@ -141,7 +171,7 @@ const AtualizaUsuario = () => {
               gridColumn="1/3"
               {...emailForm}
             />
-        
+
             <InputText
               label="Contato Pessoal*"
               type="text"
@@ -185,28 +215,27 @@ const AtualizaUsuario = () => {
               {...morador}
             />
 
-            {userAuth.status &&
-              userAuth.rule === 3 && ( //somente ADM
-                <InputSelect label="Perfil" options={rules} id="rule" />
-              )}
+            <InputSelect
+              label="Perfil"
+              options={rules}
+              id="rule"
+              opacity={userAuth.rule === 3 ? null : 0}
+            />
 
-            {userAuth.status &&
-              userAuth.rule === 3 && ( //somente ADM
-                <InputSelect
-                  label="Status"
-                  options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
-                  id="status"
-                />
-              )}
+            <InputSelect
+              label="Status"
+              options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+              id="status"
+              opacity={userAuth.rule === 3 ? null : 0}
+            />
 
-            {userAuth.status && userAuth.rule === 3 && (
-              <InputText
-                label="Sócio Sat"
-                type="checkbox"
-                id="socio_sat"
-                {...socioSatForm}
-              />
-            )}
+            <InputText
+              label="Sócio Sat"
+              type="checkbox"
+              id="socio_sat"
+              {...socioSatForm}
+              opacity={userAuth.rule === 3 ? null : 0}
+            />
 
             <Button handleSubmit={handleSubmit}>
               {loading ? "Salvando..." : "Salvar"}
