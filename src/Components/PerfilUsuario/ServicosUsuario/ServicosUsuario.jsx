@@ -60,7 +60,6 @@ const ServicosUsuario = () => {
         {loading && <LoadingCenterComponent />}
         {!loading && (
           <div className={style.tituloModal}>
-            <Title text="Meus serviços" fontSize="2" />
             <Link to={"/servico/cadastro"} className={style.button}>
               +Novo Serviço
             </Link>

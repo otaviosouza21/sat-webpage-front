@@ -7,27 +7,25 @@ import workserIcon from "../../assets/icons/person.svg";
 import toolsIcon from "../../assets/icons/tools.svg";
 import starIcon from "../../assets/icons/star.svg";
 import ModalContato from "../ServicoContainer/ModalContato/ModalContato";
-import phone from '../../assets/icons/phone2.svg'
+import phone from "../../assets/icons/phone2.svg";
+import CloseButton from "../CloseButton/CloseButton";
 
-
-const ModalServico = ({
-  modal,
-  setModal,
-  servicoUsuario
-}) => {
+const ModalServico = ({ modal, setModal, servicoUsuario }) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
-  const { nome,contato_pessoal_01,contato_negocio_01 } = servicoUsuario.Usuario;
-  const contato = {contato_pessoal_01,contato_negocio_01}
-  console.log(servicoUsuario);
+  const { nome, contato_pessoal_01, contato_negocio_01 } =
+    servicoUsuario.Usuario;
+  const contato = { contato_pessoal_01, contato_negocio_01 };
 
   function closeModal(event) {
-    event.preventDefault();
+ 
     if (
       event.target === modalContainerPost.current ||
       event.target === CloseContainerPost.current
     ) {
       setModal(!modal);
+      const overflow = document.querySelector("body");
+      overflow.classList.remove("overFlow");
     }
   }
 
@@ -40,17 +38,17 @@ const ModalServico = ({
       <section
         className={`${styles.modalServico} container animation-opacity `}
       >
-        <button
-          ref={CloseContainerPost}
-          onClick={closeModal}
-          className={styles.close}
-        >
-          X
-        </button>
         <div>
-          <div className={styles.containerTitle}>
-            <Title text="Prestador" fontSize="2" />
-            <img src={workserIcon} alt="" />
+          <div className={styles.header}>
+            <div className={styles.containerTitle}>
+              <Title text="Prestador" fontSize="2" />
+              <img src={workserIcon} alt="" />
+            </div>
+            <CloseButton
+              closeModal={closeModal}
+              modalContainer={modalContainerPost}
+              CloseContainerPost={CloseContainerPost}
+            />
           </div>
           <p>{nome}</p>
         </div>
@@ -67,7 +65,7 @@ const ModalServico = ({
             <Title text="Contatos" fontSize="2" />
             <img src={phone} alt="" />
           </div>
-          <ModalContato contato={contato}/>
+          <ModalContato contato={contato} />
         </div>
         <div className={styles.avaliacao}>
           <div className={styles.containerTitle}>

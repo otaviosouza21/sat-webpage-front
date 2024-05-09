@@ -1,23 +1,22 @@
-.servicosContainer{
-    display: flex;
-    flex-direction: column;
-    min-height: 1000px;
-    
-    gap: 30px;
-    position: relative;
-}
-
-.servicosGrid{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-
+.servicosContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 1000px;
+  gap: 30px;
+  position: relative;
 
 }
 
-@media (max-width: 850px) {
-    .servicosGrid{
-        grid-template-columns: 1fr;
-    }
-
+.servicosGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
 }
+
+@media (max-width: 970px) {
+  .servicosGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+  

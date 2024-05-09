@@ -158,7 +158,7 @@ const CadastroServico = () => {
             </form>
           </section>
         ) : (
-          setModal(true)
+          navigate('/')
         )}
       </section>
     );

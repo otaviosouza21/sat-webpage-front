@@ -32,6 +32,11 @@ const ServicoContainer = ({ servicosData }) => {
   function show() {
     setShowContatos(!showContatos);
   }
+  function showModal() {
+    setModal("servicoDetalhes");
+    const overflow = document.querySelector("body");
+    overflow.classList.add("overFlow");
+  }
 
   if (categoriaData && servicosData /*  && usuarioData */)
     return (
@@ -43,7 +48,7 @@ const ServicoContainer = ({ servicosData }) => {
             servicoUsuario={servicosData}
           />
         )}
-        <div className={`${styles.servico}` }>
+        <div className={`${styles.servico}`}>
           <h3>{nome_negocio}</h3>
           <span style={{ background: categoriaData.cor_categoria }}>
             {categoriaData.nome}
@@ -55,13 +60,9 @@ const ServicoContainer = ({ servicosData }) => {
               Contato
             </Link>
           </button>
-
           {showContatos && <ModalContato contato={contatos} />}
         </div>
-        <button
-          onClick={() => setModal("servicoDetalhes")}
-          className={styles.showMore}
-        >
+        <button onClick={showModal} className={styles.showMore}>
           +Ver Mais
         </button>
       </div>

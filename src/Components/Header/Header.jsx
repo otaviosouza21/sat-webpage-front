@@ -16,10 +16,8 @@ export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
   const { setDataUpdate, modal, setModal, userAuth } = useContext(GlobalContext);
   const [modalUsuario, setModalUsuario] = useState(false);
-  const [ loading, setLoading ] = useState(false)
-  
-
-  
+  const [loading, setLoading] = useState(false);
+ 
 
   const navLinks = [
     {
@@ -37,7 +35,7 @@ export const Header = () => {
   ];
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     function handleResize() {
       setIsTelaPequena(window.innerWidth < 421);
     }
@@ -46,14 +44,13 @@ export const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(()=>{
-    if(loading){
+  useEffect(() => {
+    if (loading) {
       setTimeout(() => {
-        setLoading(false)
+        setLoading(false);
       }, 1000);
     }
-
-  },[loading])
+  }, [loading]);
 
   function handleClick() {
     setModalUsuario(!modalUsuario);
@@ -61,8 +58,10 @@ export const Header = () => {
 
   return (
     <header className={styles.header}>
-      {modal === 'modalLogin' && <ModalLogin setModal={setModal} modal={modal} />}
-      {modal == 'cadUsuario' && <CadastroUsuario/>}
+      {modal === "modalLogin" && (
+        <ModalLogin setModal={setModal} modal={modal} />
+      )}
+      {modal == "cadUsuario" && <CadastroUsuario />}
       <div className={styles.nav}>
         <Link to="/">
           <img className={styles.logoSat} src={logoSat} alt="logotipo" />
@@ -75,33 +74,31 @@ export const Header = () => {
         )}
       </div>
       <div className={styles.buttons}>
-        <div className={styles.loading}>
-          {loading&& <LoadingDots />}
-        </div>
-        {userAuth.status && !loading&& (
+        {loading && (
+          <div className={styles.loading}>
+            <LoadingDots />
+          </div>
+        )}
+        {userAuth.status && !loading && (
           <>
-              <div className={styles.usuarioLogado} onClick={handleClick}>
+            <div className={styles.usuarioLogado} onClick={handleClick}>
               <p className={styles.welcome}>
-                {" "}
-                {`Bem Vindo, ${userAuth.usuario.nome}`}
+                {`Bem Vindo, ${userAuth.usuario.nome.split(' ')[0]}`} 
               </p>
               {modalUsuario && <ModalUsuario />}
             </div>
-            
           </>
         )}
-          {!userAuth.status&& !modalUsuario&& !loading&&
+        {!userAuth.status && !modalUsuario && !loading && (
           <div className={styles.headerButtons}>
             <button>
-              <Link onClick={() => setModal('cadUsuario')}>
-                Cadastre-se
-              </Link>
+              <Link onClick={() => setModal("cadUsuario")}>Cadastre-se</Link>
             </button>
-            <button onClick={() => setModal('modalLogin')}>
+            <button onClick={() => setModal("modalLogin")}>
               <Link>Entrar</Link>
             </button>
           </div>
-          }
+        )}
       </div>
     </header>
   );

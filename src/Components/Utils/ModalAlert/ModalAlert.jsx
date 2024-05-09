@@ -37,7 +37,7 @@ const ModalAlert = ({ title, mensagem }) => {
               }}
               className="btn btn-success"
             >
-              Fazer Login
+             Login
             </button>
           )}
         </div>

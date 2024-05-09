@@ -5,6 +5,12 @@
   padding: 10px 30px;
   box-shadow: 1px 1px 5px 1px rgb(209, 209, 209);
   flex-wrap: wrap;
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  width: 100%;
+  background-color: white;
+
 }
 
 .header button {
@@ -92,11 +98,19 @@
   gap: 10px;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 720px) {
   .header {
     justify-content: center;
-    
+    gap: 20px;
   }
+}
+
+
+@media (max-width: 650px) {
+  .header {
+    justify-content: center;    
+  }
+
   .loading{
     width: 50px;
   }
@@ -105,7 +119,7 @@
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 425px) {
   .header {
     justify-content: space-between;
     padding: 10px 10px;

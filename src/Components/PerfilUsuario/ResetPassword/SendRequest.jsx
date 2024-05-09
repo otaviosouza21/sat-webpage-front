@@ -56,6 +56,7 @@ const SendRequest = () => {
               type="email"
               id="email"
               label="Insira seu Email"
+              gridColumn='1/4'
             />
             <Button handleSubmit={handleSubmit}>Recuperar Senha</Button>
             {alert && (<ModalAlert  mensagem={`${alert}`} />)} 

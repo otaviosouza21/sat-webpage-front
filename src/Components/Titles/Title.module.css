@@ -15,21 +15,11 @@
     font-size: 2rem;
 }
 
-@media (max-width: 950px ) {
-    .titleContainer h1{
-        font-size: 3rem !important;
-    }
-}
 
-@media (max-width: 830px ) {
-    .titleContainer h1{
-        font-size: 3rem !important;
-    }
-}
 
-@media (max-width: 530px ) {
+@media (max-width: 960px ) {
     .titleContainer h1{
-        font-size: 2rem !important;
+        font-size: 1.8rem !important;
     }
 }
 

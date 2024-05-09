@@ -153,7 +153,7 @@ a {
 .container {
   max-width: 1000px;
   padding: 0 1rem;
-  margin: 2rem auto;
+  margin: 6rem auto 2rem auto !important;
 }
 
 @media (max-width: 750px) {
@@ -211,16 +211,15 @@ a {
 
 .animation-up-button {
   transition: 0.5s;
-  animation: forwards up-button 0.5s;
+  animation: forwards up-button 0.3s;
 }
-
-
 
 
 @keyframes up-button {
   0% {
     transform: translateY(-20px);
     transition: 5s;
+    opacity: 0;
   }
   100% {
     transform: initial;
@@ -287,6 +286,12 @@ a {
   -webkit-animation: animeLeft .7s ease-in-out .4s backwards;
 }
 
+.overFlow{
+  overflow: hidden;
+}
+
+
+
 @keyframes animeLeft{
   0%{
     transform: translateX(-50px);
@@ -299,3 +304,22 @@ a {
     opacity: 1;
   }
 }
+
+@media (max-width: 950px) {
+  .container {
+    margin-top: 100px !important;
+  }
+}
+
+@media (max-width: 750px) {
+    .container {
+      margin-top: 150px !important;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .container {
+      margin-top: 80px !important;
+    }
+  }
+

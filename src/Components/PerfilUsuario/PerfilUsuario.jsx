@@ -43,9 +43,9 @@ const PerfilUsuario = () => {
   }, []);
 
   return (
-    <>
-        <Title text="Meu Perfil" fontSize="3" className='container'/>
-        <section className={`${styles.containerMeuPerfil} container`}>
+    <div className='container'>
+        <Title text="Meu Perfil" fontSize="3" />
+        <section className={`${styles.containerMeuPerfil} `}>
             <MenuLateral
                 link1={'perfil'} 
                 link2={'servicos'} 
@@ -58,7 +58,7 @@ const PerfilUsuario = () => {
             </Routes>
         
         </section>
-    </>
+    </div>
   )
 }
 
