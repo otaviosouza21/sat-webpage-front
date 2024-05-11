@@ -9,7 +9,6 @@ import ModalLogin from "../ModalLogin/ModalLogin";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario";
 import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
-import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import LoadingDots from "../Utils/LoadingDots/LoadingDots";
 
 export const Header = () => {
@@ -91,8 +90,8 @@ export const Header = () => {
         )}
         {!userAuth.status && !modalUsuario && !loading && (
           <div className={styles.headerButtons}>
-            <button>
-              <Link onClick={() => setModal("cadUsuario")}>Cadastre-se</Link>
+            <button onClick={() => setModal("cadUsuario")}>
+              <Link >Cadastre-se</Link>
             </button>
             <button onClick={() => setModal("modalLogin")}>
               <Link>Entrar</Link>
