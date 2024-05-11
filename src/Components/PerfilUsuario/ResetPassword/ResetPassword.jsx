@@ -95,7 +95,7 @@ const ResetPassword = () => {
             />
             <Button handleSubmit={handleSubmit}>Salvar</Button>
           </div>
-          {alert && <Toast message={alert}/>}
+          {alert && <Toast message={alert} color='gold'/>}
         </form>
       ) : (
         <Title text="Link invalido ou inspirado" fontSize="4" />

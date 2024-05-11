@@ -60,7 +60,7 @@ const SendRequest = () => {
             />
             <Button handleSubmit={handleSubmit}>Recuperar Senha</Button>
             {alert && (<ModalAlert  mensagem={`${alert}`} />)} 
-            {data && !data.status && <Toast color="text-bg-danger" message={data.mensagem}/>}
+            {data && !data.status && <Toast color="tomato" message={data.mensagem}/>}
           </form>
         </>
       )}

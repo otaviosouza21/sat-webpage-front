@@ -15,6 +15,7 @@ import CloseButton from "../../CloseButton/CloseButton";
 
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
+  const [alert,setAlert] = useState(null)
   const [statusCadastro, setStatusCadastro] = useState(null);
   const [cadastroRealizado, setCadastroRealizado] = useState(false);
   const { userAuth, setModal } = useContext(GlobalContext);
@@ -79,7 +80,6 @@ const CadastroUsuario = () => {
         rule_id: 1,
       };
 
-      console.log(dataUsuario);
       async function postUser() {
         const { url, options } = POST_DATA_USER("usuarios", dataUsuario);
         const userRequest = await request(url, options);
@@ -93,7 +93,7 @@ const CadastroUsuario = () => {
           contatoP1Form.reset();
           contatoP2Form.reset();
           morador.reset();
-          setStatusCadastro("Cadastro Realizado com Sucesso");
+          setAlert('Cadastro realizado com sucesso')
           setCadastroRealizado(true);
           /*   setTimeout(() => {
             navigate("/");
@@ -112,15 +112,8 @@ const CadastroUsuario = () => {
       ref={modalContainerPost}
       className={styles.containerModal}
     >
-      <form
-        ref={formRef}
-        className={`${styles.containerForm} animation-opacity`}
-      >
-        {loading ? (
-          <LoadingCenterComponent />
-        ) : (
-          
-            <div className={styles.cadastroUsuario}>
+      <form ref={formRef} className={`${styles.containerForm} animation-opacity`}>
+        {loading ? (<LoadingCenterComponent />) : (<div className={styles.cadastroUsuario}>
               <div className={styles.header}>
                 <Title text="Novo Cadastro" fontSize="3" />
                 <CloseButton
@@ -128,6 +121,7 @@ const CadastroUsuario = () => {
                   CloseContainerPost={CloseContainerPost}
                 />
               </div>
+
               <InputText
                 label="Nome Completo*"
                 type="text"
@@ -196,29 +190,6 @@ const CadastroUsuario = () => {
                 {...morador}
               />
 
-              {userAuth.status &&
-                userAuth.rule === 3 && ( //somente ADM
-                  <InputSelect label="Perfil" options={rules} id="rule" />
-                )}
-
-              {userAuth.status &&
-                userAuth.rule === 3 && ( //somente ADM
-                  <InputSelect
-                    label="Status"
-                    options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
-                    id="status"
-                  />
-                )}
-
-              {userAuth.status && userAuth.rule === 3 && (
-                <InputText
-                  label="Sócio Sat"
-                  type="checkbox"
-                  id="socio_sat"
-                  {...socioSatForm}
-                />
-              )}
-
               <span
                 className={styles.possuiConta}
                 onClick={() => {
@@ -235,9 +206,9 @@ const CadastroUsuario = () => {
           
         )}
       </form>
-      {error && <Toast message={error} color="text-bg-danger" />}
+      {error && <Toast message={error} color="tomato" />}
               {statusCadastro && (
-                <Toast message={statusCadastro} color="text-bg-success" />
+                <Toast message={statusCadastro} color="green" />
               )}
       {cadastroRealizado && (
         <ModalAlert title="Cadastro Realizado" mensagem="Cadastrar serviço?" />

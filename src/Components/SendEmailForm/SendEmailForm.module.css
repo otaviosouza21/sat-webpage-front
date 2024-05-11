@@ -1,0 +1,87 @@
+.containerForm{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+
+.title h1{
+    font-size: 4rem;
+    font-weight: bold;
+    color: #E8E8E8;
+    margin-bottom: 20px;
+}
+
+.title p{
+    font-size: 2rem;
+    color: rgb(211, 211, 211);
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 16px;
+}
+
+.form button{
+    align-self: flex-end;
+    padding: 16px 26px;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: #014622;
+    color: #E8E8E8;
+    border: solid 1px #E8E8E8;
+}
+
+.form button:hover{
+background-color: #E8E8E8;
+color: #014622;
+transition: .5s;
+}
+.form button:focus{
+    transform: scale(.9);
+}
+
+@media (max-width:1000px) {
+    .containerForm{
+        padding: 50px 20px;
+    }
+
+    .title h1{
+        font-size: 4rem;
+    }
+}
+
+@media (max-width:830px) {
+
+    .title h1{
+        font-size: 3rem;
+    }
+
+    .title p{
+        font-size: 1.5rem;
+    }
+
+    .form{
+        gap: 10px;
+    }
+}
+
+@media (max-width:830px) {
+    .title h1{
+        font-size: 2rem;
+    }
+
+    
+    .title p{
+        font-size: 1rem;
+    }
+
+
+  .containerForm{
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
