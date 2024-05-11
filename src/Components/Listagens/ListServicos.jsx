@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { GET_INNER } from "../../Api/api";
+import { GET_INNER, GET_INNER_ALL } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import { convertData } from "../../plugins/convertData";
@@ -9,6 +9,7 @@ import trash from "../../assets/icons/trash2.svg";
 import pen from "../../assets/icons/pen.svg";
 import styles from "./Listas.module.css";
 import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
+import Paginacao from "../Paginação/Paginacao";
 
 const ListServicos = () => {
   const [idTodelete, setIdToDelete] = useState(null);
@@ -17,13 +18,16 @@ const ListServicos = () => {
   const { setUpdate, update, modal, setModal, setDataUpdate } =
     useContext(GlobalContext);
   const { request, loading } = useFetch();
+  const [page, setPage] = useState(1)
+  const [lastPage,setLastPage] = useState(0)
 
   useEffect(() => {
     async function getServicos() {
-      const { url, options } = GET_INNER("servico", "usuario");
+      const { url, options } = GET_INNER_ALL("servico", "usuario",page);
       const { response, json } = await request(url, options);
       if (response.ok) {
-        setServicos(json);
+        setServicos(json.servicos.retorno);
+        setLastPage(json.paginacao.total_Pages)
       } else {
         console.log("Ocorreu um erro ao buscar Servicos");
       }
@@ -40,6 +44,19 @@ const ListServicos = () => {
     setDataUpdate(currentData);
     navigate("/servico/cadastro/atualiza");
   };
+
+  async function paginacao(page){
+    //setLoading(true)
+    setPage(page)
+    const { url, options } = GET_INNER_ALL("servico", "usuario",page);
+    const { response, json } = await request(url, options);
+    if(response.ok){
+      setServicos(json.servicos.retorno);
+      setLastPage(json.paginacao.total_Pages)
+    }
+    
+  }
+
 
   if (servicos)
     return (
@@ -85,6 +102,9 @@ const ListServicos = () => {
             </tbody>
           </table>
         )}
+
+        {!loading && <Paginacao paginacao={paginacao} page={page} lastPage={lastPage} />}
+       
         {modal === "confirmDelete" && (
           <Confirm
             mensagem={"Deseja mesmo deletar?"}

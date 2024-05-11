@@ -11,6 +11,7 @@ import Loading from "../Utils/Loading/Loading.jsx";
 import Error from "../Utils/Error/Error.jsx";
 import { jwtDecode } from "jwt-decode";
 import { GlobalContext } from "../../Hooks/GlobalContext.jsx";
+import Paginacao from '../Paginação/Paginacao.jsx'
 
 const Servicos = () => {
   const [servicos, setServicos] = useState(null);
@@ -86,15 +87,7 @@ const Servicos = () => {
             })}
         </div>
 
-        {!loading&& <div className={styles.navegacao}>
-            {page !==1 ? <button type='button' onClick={()=> paginacao(1)}>primeira</button>: <button type='button' disabled>primeira</button>}
-            {page !==1 && page !==2? <button type='button' onClick={()=> paginacao(page -2)}>{page -2}</button>:''}
-            {page !==1 ? <button type='button' onClick={()=> paginacao(page -1)}>{page -1}</button>:''}
-            <button type='button' disabled>{page}</button>
-            {page + 1 <= lastPage ? <button type='button' onClick={()=> paginacao(page + 1)}>{page +1}</button>:''}
-            {page + 2 <= lastPage ? <button type='button' onClick={()=> paginacao(page + 2)}>{page +2}</button>:''}
-            {page !== lastPage ?<button type='button' onClick={()=> paginacao(lastPage)}>ultima</button>: <button type='button' disabled>ultima</button>}
-          </div>}
+        <Paginacao paginacao={paginacao} page={page} lastPage={lastPage}/>
 
       </section>
     </main>

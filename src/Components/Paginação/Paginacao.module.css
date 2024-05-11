@@ -1,0 +1,28 @@
+.paginacao {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.paginacao button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+ 
+  color: black;
+}
+
+
+
+
+@media (max-width:370px){
+
+  .paginacao button{
+    padding: 6px 16px;
+  }
+
+  .paginacao{
+    gap: 5px;
+  }
+}
