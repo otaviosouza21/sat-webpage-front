@@ -1,5 +1,6 @@
 const PORT = 3333;
-const URL = "https://taiacupeba.com.br";
+//const URL = "https://taiacupeba.com.br";
+const URL = "http://localhost:3333";
 
 
 //=================Retorna lista de dados====================//
@@ -84,9 +85,9 @@ export function GET_AUTH_USER(tableName, token, id) {
 
 
 //=================Retorna lista de join entre duas entidades====================//
-export function GET_INNER(tableName1, tableName2) {
+export function GET_INNER(tableName1, tableName2,page) {
   return {
-    url: `${URL}/api/${tableName1}/${tableName2}`,
+    url: `${URL}/api/${tableName1}/${tableName2}/?page=${page}`,
     options: {
       method: "GET"
     },
