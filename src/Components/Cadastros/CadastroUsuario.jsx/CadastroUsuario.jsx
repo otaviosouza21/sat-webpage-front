@@ -79,7 +79,6 @@ const CadastroUsuario = () => {
         rule_id: 1,
       };
 
-      console.log(dataUsuario);
       async function postUser() {
         const { url, options } = POST_DATA_USER("usuarios", dataUsuario);
         const userRequest = await request(url, options);

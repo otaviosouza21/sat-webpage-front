@@ -87,7 +87,7 @@ const Servicos = () => {
             })}
         </div>
 
-        <Paginacao paginacao={paginacao} page={page} lastPage={lastPage}/>
+        {!loading&& <Paginacao paginacao={paginacao} page={page} lastPage={lastPage}/>}
 
       </section>
     </main>

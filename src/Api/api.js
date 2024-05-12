@@ -1,6 +1,5 @@
 const PORT = 3333;
-//const URL = "https://taiacupeba.com.br";
-const URL = "http://localhost:3333";
+const URL = "https://taiacupeba.com.br";
 
 
 //=================Retorna lista de dados====================//

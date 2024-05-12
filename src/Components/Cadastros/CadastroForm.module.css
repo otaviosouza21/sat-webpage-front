@@ -11,6 +11,38 @@
   width: 100vw;
 }
 
+
+.containerForm {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 50vw;
+  max-width: 1200px;
+  min-height: 50vh;
+  margin: 20px;
+  padding: 30px;
+  gap: 30px;
+  border-radius: 10px;
+  overflow-y: auto !important;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.13);
+  background-color: rgba(255, 255, 255, 0.979);
+  
+}
+
+.containerForm span{
+  grid-row: 6;
+  grid-column: 1/4;
+  align-self: center;
+}
+
+.containerForm button {
+  justify-self: end;
+  align-self: end;
+  margin-bottom: 10px;
+  grid-column: 3;
+  grid-row: 6;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -18,36 +50,9 @@
   grid-column: 1/4;
 }
 
-.containerForm {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.979);
-  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.13);
-  min-height: 40vh;
-  min-width: 50vw;
-  gap: 30px;
-  border-radius: 10px;
-  max-width: 1200px;
-  padding: 30px;
-  margin-top: 20px;
-  overflow-y: auto !important;
- 
+.containerForm section{
+  align-content: center;
 }
-
-.containerForm span{
-    grid-row: 6;
-    grid-column: 1/4;
-    align-self: center;
-}
-
-.containerForm button {
-  justify-self: flex-end;
-  align-self: flex-end;
-  grid-column: 3;
-  grid-row: 6;
-}
-
 .cadastroUsuario {
   display: grid;
   gap: 20px;
@@ -64,19 +69,19 @@
 
 @media (max-width: 750px) {
  .containerForm {
-    max-height: 100%;
-
+    height: 90%;
+    justify-content: start;
+    margin: 10px;
   }
 
-  .containerForm button {
-    padding: 10px;
-   
+  .header {
+    display: flex;
+    align-items: center;
   }
 
   .cadastroUsuario {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
     gap: 20px;
   }
 
@@ -86,5 +91,6 @@
 
   .containerForm {
     width: 100vw;
+    min-height: 50vh ;
   } 
 }
