@@ -241,9 +241,9 @@ const AtualizaUsuario = () => {
             <Button handleSubmit={handleSubmit}>
               {loading ? "Salvando..." : "Salvar"}
             </Button>
-            {error && <Toast message={error} color="text-bg-danger" />}
+            {error && <Toast message={error} color="tomato" />}
             {statusCadastro && (
-              <Toast message={statusCadastro} color="text-bg-success" />
+              <Toast message={statusCadastro} color="green" />
             )}
           </form>
         </section>

@@ -1,4 +1,6 @@
 import "./App.css";
+import 'aos/dist/aos.css'; 
+import AOS from 'aos'
 import HomeEmpreendedores from "./Components/Home-Empreendedores/HomeEmpreendedores";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Servicos from "./Components/Servicos/Servicos";
@@ -16,7 +18,7 @@ import ResetPassword from "./Components/PerfilUsuario/ResetPassword/ResetPasswor
 import SendRequest from "./Components/PerfilUsuario/ResetPassword/SendRequest";
 
 function App() {
-
+AOS.init()
 
   return (
     <GlobalStorage>

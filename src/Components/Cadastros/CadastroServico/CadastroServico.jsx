@@ -149,7 +149,7 @@ const CadastroServico = () => {
               <Button handleSubmit={handleSubmit}>
                 {loading ? "Salvando..." : "Salvar"}
               </Button>
-              {error && <Toast message={error} color="text-bg-danger" />}
+              {error && <Toast message={error} color="tomato" />}
               {statusCadastro.status && (
                 <>
                   <ModalAlert title={statusCadastro.mensagem} mensagem='Você será avisado quando seu serviço for aprovado. Qualquer duvida entre em contato'  />

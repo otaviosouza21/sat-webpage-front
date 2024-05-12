@@ -14,14 +14,20 @@ const ModalAlert = ({ title, mensagem }) => {
         <p>{mensagem}</p>
         <div style={{ display: "flex", gap: "10px" }}>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => {
+              navigate("/");
+              setModal(null);
+            }}
             className="btn btn-outline-success "
           >
             Sair
           </button>
           {mensagem === "Cadastrar serviço?" && (
             <button
-              onClick={() => navigate("/servico/cadastro")}
+              onClick={() => {
+                navigate("/servico/cadastro");
+                setModal(null);
+              }}
               className="btn btn-success"
             >
               Cadastrar Serviço
@@ -30,14 +36,14 @@ const ModalAlert = ({ title, mensagem }) => {
           {mensagem === "Senha Alterada com Sucesso" && (
             <button
               onClick={() => {
-                navigate('/')
+                navigate("/");
                 setTimeout(() => {
                   setModal("modalLogin");
-                },500);
+                }, 500);
               }}
               className="btn btn-success"
             >
-             Login
+              Login
             </button>
           )}
         </div>

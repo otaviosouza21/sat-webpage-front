@@ -1,12 +1,11 @@
 .footer {
   background-color: var(--primary2);
-
   width: 100%;
   bottom: 0;
-  margin-top: 100px;
   display: flex;
   flex-direction: column;
   color: #e8e8e8;
+  padding: 20px 0 0 0;
 }
 
 .top {
@@ -127,6 +126,13 @@
       display: none;
     }
 
+    .redes{
+      align-items: center;
+    }
+
+    .lista {
+      gap: 5px;
+    }
 
     .botton{
         text-align: center;

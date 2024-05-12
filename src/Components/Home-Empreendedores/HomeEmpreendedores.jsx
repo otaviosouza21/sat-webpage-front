@@ -11,6 +11,7 @@ import { GlobalContext } from "../../Hooks/GlobalContext";
 import { GET_AUTH_USER } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
+import SendEmailForm from "../SendEmailForm/SendEmailForm";
 
 const HomeEmpreendedores = () => {
   const { setUserAuth, logout, setModal } = useContext(GlobalContext);
@@ -65,6 +66,7 @@ const HomeEmpreendedores = () => {
           />
         </div>
       </section>
+        <SendEmailForm />
     </main>
   );
 };
