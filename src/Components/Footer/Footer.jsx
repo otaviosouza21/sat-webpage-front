@@ -13,10 +13,10 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.top}>
         <div className={styles.left}>
-          <div className={styles.logotipo}>
+          <NavLink to='/' className={styles.logotipo}>
             <img src={logo} alt="logotipo" />
             <h1>SAT</h1>
-          </div>
+          </NavLink>
           <div className={styles.redes}>
             <p>Siga nas redes</p>
             <div>
@@ -29,19 +29,33 @@ const Footer = () => {
         <div className={styles.listas}>
           <ul className={styles.lista}>
             <li>Empresa</li>
-            <li><NavLink to='/sobre'>Sobre</NavLink></li>
-            <li><NavLink>SAT</NavLink></li>
-            <li><NavLink>Ajuda</NavLink></li>
+            <li>
+              <NavLink to="/sobre">Sobre</NavLink>
+            </li>
+            <li>
+              <NavLink>SAT</NavLink>
+            </li>
+            <li>
+              <NavLink>Ajuda</NavLink>
+            </li>
           </ul>
           <ul className={styles.lista}>
             <li>Serviços</li>
-            <li><NavLink to='/servicos'>Serviços</NavLink></li>
-            <li><NavLink>Cadastre-se</NavLink></li>
+            <li>
+              <NavLink to="/servicos">Serviços</NavLink>
+            </li>
+            <li>
+              <NavLink>Cadastre-se</NavLink>
+            </li>
           </ul>
           <ul className={styles.lista}>
             <li>Usuario</li>
-            <li><NavLink>Meu Perfil</NavLink></li>
-            <li><NavLink to='/'>Inicio</NavLink></li>
+            <li>
+              <NavLink>Meu Perfil</NavLink>
+            </li>
+            <li>
+              <NavLink to="/">Inicio</NavLink>
+            </li>
           </ul>
           <ul className={styles.lista}>
             <li>

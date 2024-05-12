@@ -1,7 +1,7 @@
 .servicosContainer {
   display: flex;
   flex-direction: column;
-  min-height: 1000px;
+  min-height: 600px;
   gap: 30px;
   position: relative;
 
@@ -10,6 +10,8 @@
 .servicosGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  min-height: 450px;
+  
   gap: 30px;
 }
 

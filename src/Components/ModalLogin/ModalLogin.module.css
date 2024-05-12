@@ -18,7 +18,7 @@
     background-color: white;
     border-radius: 10px;
     display: flex;
-    max-width : 1200px;
+    width : 450px;
     margin: 20px;
     flex-direction: column;
     gap: 20px;

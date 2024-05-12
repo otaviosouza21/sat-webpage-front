@@ -1,13 +1,29 @@
-.container{
-    display: flex;
-    justify-content: center;
-    min-height: 700px;
+.container {
+  display: flex;
+  min-height: 700px;
+  flex-direction: column;
 }
 
-.lista{
-    align-self: flex-start;
+.container table {
+  justify-self: start;
 }
-.buttons img{
-    width: 29px;
-    cursor: pointer;
+
+.lista {
+  align-self: flex-start;
+}
+.buttons img {
+  width: 29px;
+  cursor: pointer;
+}
+
+.status{
+display: flex;
+}
+
+.status::after {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: yellow !important;
 }

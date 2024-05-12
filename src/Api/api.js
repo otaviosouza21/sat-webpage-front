@@ -83,10 +83,20 @@ export function GET_AUTH_USER(tableName, token, id) {
 }
 
 
-//=================Retorna lista de join entre duas entidades====================//
-export function GET_INNER(tableName1, tableName2) {
+//=================Retorna lista de join ATIVOS com relação entre tabelas====================//
+export function GET_INNER(tableName1, tableName2,page) {
   return {
-    url: `${URL}/api/${tableName1}/${tableName2}`,
+    url: `${URL}/api/${tableName1}/${tableName2}/?page=${page}`,
+    options: {
+      method: "GET"
+    },
+  };
+}
+
+//=================Retorna lista de join TOTAL entre duas entidades====================//
+export function GET_INNER_ALL(tableName1, tableName2,page) {
+  return {
+    url: `${URL}/api/${tableName1}/?page=${page}`,
     options: {
       method: "GET"
     },

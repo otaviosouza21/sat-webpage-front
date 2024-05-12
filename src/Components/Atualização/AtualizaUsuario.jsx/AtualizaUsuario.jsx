@@ -60,11 +60,12 @@ const AtualizaUsuario = () => {
       contatoN1Form.setValue(dataUpdate.contato_negocio_01);
       contatoN2Form.setValue(dataUpdate.contato_negocio_02);
       morador.setValue(dataUpdate.tempo_reside);
+      console.log(dataUpdate);
       setTimeout(() => {
           formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
           formRef.current["rule"].value = String(dataUpdate.rule_id);
           formRef.current["status"].value =
-            dataUpdate.status === "Ativo" ? "Ativo" : "Inativo";
+            dataUpdate.status === "1" ? "Ativo" : "Inativo";
       }, 1000);
     }
   }, []);
