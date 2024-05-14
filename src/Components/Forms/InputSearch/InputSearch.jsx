@@ -22,7 +22,6 @@ const InputSearch = ({ id, placeholder, option }) => {
         const { url, options } = GET_INNER_SEARCH("servico", "usuario",page,input);
         const {json,response} = await request(url, options);
         if(response.ok){
-          console.log('a');
           setServicos(json.servicos.retorno);
           setLastPage(json.paginacao.total_Pages)
         }else{

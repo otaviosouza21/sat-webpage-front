@@ -42,7 +42,6 @@ const Servicos = () => {
     const { url, options } = GET_INNER("servico", "usuario",page);
     async function getServicoUsuario() {
       const {json,response, error} = await request(url, options);
-      console.log(json);
       setServicos(json.servicos.retorno);
       setLastPage(json.paginacao.total_Pages)
     }
