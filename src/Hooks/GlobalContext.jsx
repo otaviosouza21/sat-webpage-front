@@ -12,6 +12,11 @@ export const GlobalStorage = ({ children }) => {
     status: false,
     rule: ''
   });
+  //necessario para paginacao
+  const [servicos, setServicos] = useState(null);
+  const [lastPage,setLastPage] = useState(0)
+  const [notFind, setnotFind] = useState(null)
+
   
   const [modal,setModal] = useState('')
   const [dataUpdate, setDataUpdate] = useState(null);
@@ -35,6 +40,12 @@ export const GlobalStorage = ({ children }) => {
         modal,
         setModal,
         logout,
+        servicos,
+        setServicos,
+        lastPage,
+        setLastPage,
+        notFind,
+        setnotFind
       }}
     >
       {children}

@@ -103,6 +103,17 @@ export function GET_INNER_ALL(tableName1, tableName2,page) {
   };
 }
 
+//=================Retorna lista de join entre duas entidades baseado no nome do servico====================//
+
+export function GET_INNER_SEARCH(tableName1, tableName2,page,nomeServico) {
+  return {
+    url: `${URL}/api/${tableName1}/${tableName2}/?page=${page}&nome_negocio=${nomeServico}`,
+    options: {
+      method: "GET"
+    },
+  };
+}
+
 //=================Retorna dado unico com inner join====================//
 export function GET_INNER_ID(tableName1, tableName2,id) {
   return {

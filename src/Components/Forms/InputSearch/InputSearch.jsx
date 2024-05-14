@@ -1,36 +1,46 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import searchIcon from "../../../assets/icons/search.svg";
 import styles from "./InputSearch.module.css";
+import { GET_INNER_SEARCH } from "../../../Api/api";
+import useFetch from "../../../Hooks/useFetch";
+import { GlobalContext } from "../../../Hooks/GlobalContext";
 
-const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens,option }) => {
+const InputSearch = ({ id, placeholder, option }) => {
   const selectInput = useRef();
   const [searchTerm, setSearchTerm] = useState("");
   const [input, setInput] = useState("");
-  const [noFilter, setNoFilter] = useState(visibleItens);
+  const [page, setPage] = useState(1);
+  const { error, loading, request } = useFetch();
+  const {servicos, setServicos,lastPage,setLastPage,notFind, setnotFind } = useContext(GlobalContext);
 
-  useEffect(() => {
-    const filterCampo = selectInput.current.value;
-    if (!input) {
-      setVisibleItens(noFilter);
-      return;
+
+  
+  useEffect(()=>{
+    if(input.length >0){
+
+      async function handleSearch(){
+        const { url, options } = GET_INNER_SEARCH("servico", "usuario",page,input);
+        const {json,response} = await request(url, options);
+        if(response.ok){
+          console.log('a');
+          setServicos(json.servicos.retorno);
+          setLastPage(json.paginacao.total_Pages)
+        }else{
+          setServicos(null);
+          setLastPage(1)
+          setnotFind(error)    
+        }
+      }
+      handleSearch();
     }
-
-    const newVisible = visibleItens.filter((item) => {
-      return String(item[filterCampo])
-        .toLowerCase()
-        .includes(input.toLowerCase());
-    });
-
-    setVisibleItens(newVisible);
-  }, [input]);
+  },[input])
+ 
 
   return (
     <div className={styles.inputSearch}>
       <img src={searchIcon} alt="" />
       <input
-        onChange={(e) => {
-          setInput(e.target.value);
-        }}
+        onChange={({target})=>setInput(target.value)}
         value={input}
         placeholder={placeholder}
         type="text"
@@ -49,5 +59,6 @@ const InputSearch = ({ id, placeholder, setVisibleItens, visibleItens,option }) 
     </div>
   );
 };
+
 
 export default InputSearch;

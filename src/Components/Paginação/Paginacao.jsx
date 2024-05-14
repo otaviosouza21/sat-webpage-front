@@ -3,7 +3,7 @@ import styles from './Paginacao.module.css'
 
 const Paginacao = ({paginacao,page,lastPage}) => {
   return (
-    <div className={styles.paginacao}>
+    <div className={`${styles.paginacao} animeLeft`}>
       {page !==1 ? <button type='button' onClick={()=> paginacao(1)}>primeira</button>: <button type='button' disabled>primeira</button>}
       {page !==1 && page !==2? <button type='button' onClick={()=> paginacao(page -2)}>{page -2}</button>:''}
       {page !==1 ? <button type='button' onClick={()=> paginacao(page -1)}>{page -1}</button>:''}
