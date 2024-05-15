@@ -1,7 +1,6 @@
 const PORT = 3333;
 const URL = "https://taiacupeba.com.br";
 
-
 //=================Retorna lista de dados====================//
 export function GET_ALL(tableName) {
   return {
@@ -16,7 +15,7 @@ export function GET_ALL(tableName) {
 }
 
 //=================[autenticado] Retorna lista de usuarios====================//
- export function GET_ALL_USERS(tableName, token) {
+export function GET_ALL_USERS(tableName, token) {
   return {
     url: `${URL}/api/${tableName}`,
     options: {
@@ -82,44 +81,43 @@ export function GET_AUTH_USER(tableName, token, id) {
   };
 }
 
-
 //=================Retorna lista de join ATIVOS com relação entre tabelas====================//
-export function GET_INNER(tableName1, tableName2,page) {
+export function GET_INNER(tableName1, tableName2, page) {
   return {
     url: `${URL}/api/${tableName1}/${tableName2}/?page=${page}`,
     options: {
-      method: "GET"
+      method: "GET",
     },
   };
 }
 
 //=================Retorna lista de join TOTAL entre duas entidades====================//
-export function GET_INNER_ALL(tableName1, tableName2,page) {
+export function GET_INNER_ALL(tableName1, tableName2, page) {
   return {
     url: `${URL}/api/${tableName1}/?page=${page}`,
     options: {
-      method: "GET"
+      method: "GET",
     },
   };
 }
 
 //=================Retorna lista de join entre duas entidades baseado no nome do servico====================//
 
-export function GET_INNER_SEARCH(tableName1, tableName2,page,nomeServico) {
+export function GET_INNER_SEARCH(tableName1, tableName2, page, nomeServico) {
   return {
     url: `${URL}/api/${tableName1}/${tableName2}/?page=${page}&nome_negocio=${nomeServico}`,
     options: {
-      method: "GET"
+      method: "GET",
     },
   };
 }
 
 //=================Retorna dado unico com inner join====================//
-export function GET_INNER_ID(tableName1, tableName2,id) {
+export function GET_INNER_ID(tableName1, tableName2, id) {
   return {
     url: `${URL}/api/${tableName1}/${tableName2}/${id}`,
     options: {
-      method: "GET"
+      method: "GET",
     },
   };
 }
@@ -168,7 +166,7 @@ export function DELETE_DATA(tableName, id, token) {
 }
 
 //=================Envia email para reset de senha====================//
-export function RECOVER_PASSWORD(tableName,email) {
+export function RECOVER_PASSWORD(tableName, email) {
   return {
     url: `${URL}/api/${tableName}/`,
     options: {
@@ -182,7 +180,7 @@ export function RECOVER_PASSWORD(tableName,email) {
 }
 
 //=================[autenticado] definir nova senha====================//
-export function UPDATE_PASSWORD(tableName,newPassword,token) {
+export function UPDATE_PASSWORD(tableName, newPassword, token) {
   return {
     url: `${URL}/api/${tableName}/${token}`,
     options: {

@@ -71,6 +71,8 @@ const ModalLogin = ({ modal, setModal }) => {
       event.target === CloseContainerPost.current
     ) {
       setModal('');
+      const overflow = document.querySelector("body");
+      overflow.classList.remove("overFlow");
     }
   }
 

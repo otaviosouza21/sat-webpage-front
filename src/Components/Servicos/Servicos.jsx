@@ -42,21 +42,25 @@ const Servicos = () => {
     const { url, options } = GET_INNER("servico", "usuario",page);
     async function getServicoUsuario() {
       const {json,response, error} = await request(url, options);
-      setServicos(json.servicos.retorno);
-      setLastPage(json.paginacao.total_Pages)
+      if(response.ok){
+        setServicos(json.servicos.retorno);
+        setLastPage(json.paginacao.total_Pages)
+        setnotFind(null)
+      } 
     }
     getServicoUsuario();
   }, []);
 
   
   async function paginacao(page){
-    //setLoading(true)
     setPage(page)
     const { url, options } = GET_INNER("servico", "usuario",page);
     const { response, json } = await request(url, options);
-    console.log(json.servicos);
-    setServicos(json.servicos.retorno);
-    setLastPage(json.paginacao.total_Pages)
+    if(response.ok){
+      setServicos(json.servicos.retorno);
+      setLastPage(json.paginacao.total_Pages)
+      setnotFind(null)
+    }
   }
 
 
@@ -82,7 +86,6 @@ const Servicos = () => {
         </div>
         <div>{notFind&& <p>{notFind}</p>}</div>
         {!loading&& <Paginacao paginacao={paginacao} page={page} lastPage={lastPage}/>}
-
       </section>
     </main>
   );

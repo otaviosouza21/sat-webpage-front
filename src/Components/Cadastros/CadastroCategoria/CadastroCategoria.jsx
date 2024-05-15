@@ -11,6 +11,7 @@ import Button from "../../Button/Button";
 import { POST_DATA } from "../../../Api/api";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import useFetch from "../../../Hooks/useFetch";
+import CloseButton from "../../CloseButton/CloseButton";
 
 const CadastroCategoria = () => {
   const { data, request, loading, error } = useFetch();
@@ -30,9 +31,10 @@ const CadastroCategoria = () => {
       event.target === CloseContainerPost.current
     ) {
       setModal('');
+      const overflow = document.querySelector("body");
+      overflow.classList.remove("overFlow");
     }
   }
-
 
 
   function handleSubmit(e) {
@@ -66,20 +68,13 @@ const CadastroCategoria = () => {
   }
 
   return (
-    <section className={`${styles.containerModal} container`}  ref={modalContainerPost}>
+    <section className={`${styles.containerModal}`} onClick={closeModal}  ref={modalContainerPost}>
       <form
         onSubmit={handleSubmit}
         ref={formRef}
         className={styles.containerForm}
       >
-       <button
-          ref={CloseContainerPost}
-          onClick={closeModal}
-          className={styles.close}
-          type="button"
-        >
-          X
-        </button>
+        <CloseButton closeModal={closeModal} CloseContainerPost={CloseContainerPost} />
         <Title text="Cadastro de Categoria (Adm)" fontSize="3" />
         <InputText
           label="Nome"

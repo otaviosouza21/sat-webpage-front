@@ -17,7 +17,6 @@ const InputSearch = ({ id, placeholder, option }) => {
   
   useEffect(()=>{
     if(input.length >0){
-
       async function handleSearch(){
         const { url, options } = GET_INNER_SEARCH("servico", "usuario",page,input);
         const {json,response} = await request(url, options);

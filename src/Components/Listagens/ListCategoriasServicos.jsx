@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import { GET_ALL } from "../../Api/api";
 import CadastroCategoria from "../Cadastros/CadastroCategoria/CadastroCategoria";
 import { GlobalContext } from "../../Hooks/GlobalContext";
@@ -49,13 +48,15 @@ const ListCategoriasServicos = () => {
       <section
         style={{ display: "flex", flexDirection: "column", gap: "20px" }}
       >
-        <InputSearch
-          placeholder="Nome da Categoria"
-          option="nome" // campo que será buscado o filtro
-          setVisibleItens={setVisibleItens}
-          visibleItens={visibleItens}
-        />
-    {/*     <Button modalParam="cadastroCategoria">+ Novo</Button> */}
+        <div className={styles.input}>
+          <InputSearch
+            placeholder="Nome da Categoria"
+            option="nome" // campo que será buscado o filtro
+            setVisibleItens={setVisibleItens}
+            visibleItens={visibleItens}
+          />
+        <Button modalParam="cadastroCategoria">+ Novo</Button>
+        </div>
 
         {modal === "cadastroCategoria" && <CadastroCategoria />}
         {loading ? (
