@@ -22,7 +22,7 @@ const SendEmailForm = () => {
       mensagemForm.validate()
     ) {
       const emailBody = {
-        to: "otaviosouzalu@gmail.com",
+        to: "amigosdetaiacupeba@gmail.com",
         subject: `Mensagem de ${nomeForm.value} pelo portal do empreendedor SAT`,
         text: `
         Ola! 
