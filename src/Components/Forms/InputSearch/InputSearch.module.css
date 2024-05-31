@@ -7,6 +7,7 @@
   gap: 10px;
   border-radius: 10px;
   transition: .3s;
+  width: 100%;
 }
 
 .inputSearch img {

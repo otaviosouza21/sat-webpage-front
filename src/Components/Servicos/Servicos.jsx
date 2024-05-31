@@ -37,11 +37,12 @@ const Servicos = () => {
     }
     fetchValidaToken();
   }, []);
-
+  
+  console.log(lastPage);
   useEffect(() => {
     const { url, options } = GET_INNER("servico", "usuario",page);
     async function getServicoUsuario() {
-      const {json,response, error} = await request(url, options);
+      const {json,response} = await request(url, options);
       if(response.ok){
         setServicos(json.servicos.retorno);
         setLastPage(json.paginacao.total_Pages)

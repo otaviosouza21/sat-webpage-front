@@ -12,6 +12,7 @@ import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 const AtualizaUsuario = () => {
   const [rules, setRules] = useState(null);
@@ -145,7 +146,8 @@ const AtualizaUsuario = () => {
       setStatusCadastro("Verifique se todos os campos estao preenchidos");
     }
   }
-
+  console.log(loading);
+  if(loading) return '<LoadingCenterComponent />'
   if (rules)
     return (
       <section>

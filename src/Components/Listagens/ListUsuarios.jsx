@@ -10,6 +10,8 @@ import styles from "./Listas.module.css";
 import { useNavigate } from "react-router-dom";
 import Confirm from "../Utils/Confirm/Confirm";
 import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
+import InputSearch from "../Forms/InputSearch/InputSearch";
+import ExportToExcel from "./ExportToExcel/ExportToExcel";
 
 const ListUsuarios = () => {
   const { request, loading, data } = useFetch();
@@ -18,7 +20,6 @@ const ListUsuarios = () => {
   const navigate = useNavigate();
   const { setUpdate, update, modal, setModal, setDataUpdate } =
     useContext(GlobalContext);
-
 
   useEffect(() => {
     async function getUsuarios() {
@@ -44,9 +45,15 @@ const ListUsuarios = () => {
     navigate("/usuarios/cadastro/atualiza");
   };
 
+  const extractToExcel = () => {};
+
   if (usuarios)
     return (
       <section className={styles.container}>
+        <div className={styles.headerLista}>
+          <InputSearch placeholder="Busque um usuario" />
+          <ExportToExcel data={usuarios} fileName="Usuarios" />
+        </div>
         {loading ? (
           <LoadingCenterComponent />
         ) : (
@@ -94,7 +101,7 @@ const ListUsuarios = () => {
             </tbody>
           </table>
         )}
-           {modal === "confirmDelete" && (
+        {modal === "confirmDelete" && (
           <Confirm
             mensagem={"Deseja mesmo deletar?"}
             id={idTodelete}

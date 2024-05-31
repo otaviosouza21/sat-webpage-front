@@ -10,6 +10,8 @@ import pen from "../../assets/icons/pen.svg";
 import styles from "./Listas.module.css";
 import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import Paginacao from "../Paginação/Paginacao";
+import ExportToExcel from '../Listagens/ExportToExcel/ExportToExcel'
+import InputSearch from '../Forms/InputSearch/InputSearch'
 
 const ListServicos = () => {
   const [idTodelete, setIdToDelete] = useState(null);
@@ -61,6 +63,10 @@ const ListServicos = () => {
   if (servicos)
     return (
       <section className={styles.container}>
+        <div className={styles.headerLista}>
+          <InputSearch placeholder='Busque um serviço' />
+          <ExportToExcel data={servicos} fileName="Serviços"  />
+        </div>
         {loading ? (
           <LoadingCenterComponent />
         ) : (

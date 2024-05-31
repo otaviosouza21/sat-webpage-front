@@ -10,6 +10,7 @@ import Confirm from "../Utils/Confirm/Confirm";
 import Button from "../Button/Button";
 import InputSearch from "../Forms/InputSearch/InputSearch";
 import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
+import ExportToExcel from "./ExportToExcel/ExportToExcel";
 
 const ListCategoriasServicos = () => {
   const [categorias, setCategorias] = useState(null);
@@ -48,14 +49,9 @@ const ListCategoriasServicos = () => {
       <section
         style={{ display: "flex", flexDirection: "column", gap: "20px" }}
       >
-        <div className={styles.input}>
-          <InputSearch
-            placeholder="Nome da Categoria"
-            option="nome" // campo que será buscado o filtro
-            setVisibleItens={setVisibleItens}
-            visibleItens={visibleItens}
-          />
-        <Button modalParam="cadastroCategoria">+ Novo</Button>
+        <div className={styles.headerLista}>
+          <InputSearch placeholder="Busque uma categoria" />
+          <ExportToExcel data={categorias} fileName="Categorias" />
         </div>
 
         {modal === "cadastroCategoria" && <CadastroCategoria />}

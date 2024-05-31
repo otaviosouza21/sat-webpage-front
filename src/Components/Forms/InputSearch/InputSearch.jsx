@@ -5,7 +5,8 @@ import { GET_INNER_SEARCH } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 
-const InputSearch = ({ id, placeholder, option }) => {
+const 
+ InputSearch = ({ id, placeholder, option }) => {
   const selectInput = useRef();
   const [searchTerm, setSearchTerm] = useState("");
   const [input, setInput] = useState("");
@@ -30,6 +31,8 @@ const InputSearch = ({ id, placeholder, option }) => {
         }
       }
       handleSearch();
+    } else {
+      setServicos(servicos)
     }
   },[input])
  
