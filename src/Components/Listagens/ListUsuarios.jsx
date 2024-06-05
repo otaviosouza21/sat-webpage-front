@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
 import { GET_ALL_USERS } from "../../Api/api";
+import React, { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../../Hooks/GlobalContext";
 import useFetch from "../../Hooks/useFetch";
 import Loading from "../Utils/Loading/Loading";
-import { GlobalContext } from "../../Hooks/GlobalContext";
 import { convertData } from "../../plugins/convertData";
 import trash from "../../assets/icons/trash2.svg";
 import pen from "../../assets/icons/pen.svg";
@@ -12,11 +12,13 @@ import Confirm from "../Utils/Confirm/Confirm";
 import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import InputSearch from "../Forms/InputSearch/InputSearch";
 import ExportToExcel from "./ExportToExcel/ExportToExcel";
+import FilterInput from "./FilterInput/FilterInput";
 
 const ListUsuarios = () => {
   const { request, loading, data } = useFetch();
   const [idTodelete, setIdToDelete] = useState(null);
   const [usuarios, setUsuarios] = useState(null);
+  const [listaFiltrada, setListaFiltrada] = useState(usuarios);
   const navigate = useNavigate();
   const { setUpdate, update, modal, setModal, setDataUpdate } =
     useContext(GlobalContext);
@@ -45,13 +47,19 @@ const ListUsuarios = () => {
     navigate("/usuarios/cadastro/atualiza");
   };
 
-  const extractToExcel = () => {};
+  const extrairColunas = (tabela) => {
+    if (tabela) return tabela.map(Object.keys)[0];
+  };
 
   if (usuarios)
     return (
       <section className={styles.container}>
         <div className={styles.headerLista}>
-          <InputSearch placeholder="Busque um usuario" />
+          <FilterInput
+            colunas={extrairColunas(usuarios)}
+            setListaFiltrada={setListaFiltrada}
+            listaFiltrada={listaFiltrada}
+          />
           <ExportToExcel data={usuarios} fileName="Usuarios" />
         </div>
         {loading ? (
@@ -73,7 +81,7 @@ const ListUsuarios = () => {
               </tr>
             </thead>
             <tbody>
-              {usuarios.map((usuario, index) => {
+              {listaFiltrada && listaFiltrada.map((usuario, index) => {
                 return (
                   <tr key={index}>
                     <td>{usuario.id}</td>
