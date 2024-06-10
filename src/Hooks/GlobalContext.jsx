@@ -13,9 +13,12 @@ export const GlobalStorage = ({ children }) => {
     rule: ''
   });
   //necessario para paginacao
+  const [pageServicos, setPageServicos] = useState(1)
   const [servicos, setServicos] = useState(null);
   const [lastPage,setLastPage] = useState(0)
   const [notFind, setnotFind] = useState(null)
+  
+  const [inputPesquisa, setInputPesquisa] = useState("");
 
   
   const [modal,setModal] = useState('')
@@ -31,21 +34,16 @@ export const GlobalStorage = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        update,
-        setUpdate,
-        dataUpdate,
-        setDataUpdate,
-        userAuth,
-        setUserAuth,
-        modal,
-        setModal,
+        update, setUpdate,
+        dataUpdate, setDataUpdate,
+        userAuth, setUserAuth,
+        modal, setModal,
         logout,
-        servicos,
-        setServicos,
-        lastPage,
-        setLastPage,
-        notFind,
-        setnotFind
+        pageServicos, setPageServicos,
+        servicos, setServicos,
+        lastPage, setLastPage,
+        inputPesquisa, setInputPesquisa,
+        notFind, setnotFind,
       }}
     >
       {children}
