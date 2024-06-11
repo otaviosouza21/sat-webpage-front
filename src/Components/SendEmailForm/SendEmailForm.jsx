@@ -54,7 +54,7 @@ const SendEmailForm = () => {
   }
 
   return (
-    <section style={{ background: "#014622" }}>
+    <section style={{ background: "var(--primary2)" }}>
       <div className={`container ${styles.containerForm}`}>
         <div className={styles.title}>
           <h1>Envie uma mensagem.</h1>
