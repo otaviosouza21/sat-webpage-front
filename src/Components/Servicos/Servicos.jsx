@@ -6,7 +6,7 @@ import styles from "./Servicos.module.css";
 import { SimpleAnime } from "../../plugins/simple-anime";
 import ModalServico from "../ModalServico/ModalServico";
 import useFetch from "../../Hooks/useFetch";
-import { GET_ALL, GET_AUTH_USER, GET_INNER } from "../../Api/api.js";
+import { GET_ALL, GET_AUTH_USER, GET_INNER, GET_INNER_SEARCH } from "../../Api/api.js";
 import Loading from "../Utils/Loading/Loading.jsx";
 import Error from "../Utils/Error/Error.jsx";
 import { jwtDecode } from "jwt-decode";
@@ -15,8 +15,7 @@ import Paginacao from '../Paginação/Paginacao.jsx'
 
 const Servicos = () => {
   const { error, loading, request } = useFetch();
-  const { userAuth, setUserAuth,logout,servicos, setServicos,lastPage,setLastPage,notFind, setnotFind } = useContext(GlobalContext);
-  const [page, setPage] = useState(1)
+  const { userAuth, setUserAuth,logout,servicos, setServicos,lastPage,setLastPage,notFind, setnotFind, pageServicos, setPageServicos,pesquisaPaginacao, inputPesquisa, setInputPesquisa  } = useContext(GlobalContext);
   
 
   useEffect(() => {
@@ -39,7 +38,7 @@ const Servicos = () => {
   }, []);
 
   useEffect(() => {
-    const { url, options } = GET_INNER("servico", "usuario",page);
+    const { url, options } = GET_INNER("servico", "usuario",pageServicos);
     async function getServicoUsuario() {
       const {json,response, error} = await request(url, options);
       if(response.ok){
@@ -53,7 +52,7 @@ const Servicos = () => {
 
   
   async function paginacao(page){
-    setPage(page)
+    setPageServicos(page)
     const { url, options } = GET_INNER("servico", "usuario",page);
     const { response, json } = await request(url, options);
     if(response.ok){
@@ -62,7 +61,14 @@ const Servicos = () => {
       setnotFind(null)
     }
   }
-
+  async function paginacao2(page){
+    setPageServicos(page)
+    const { url, options } = GET_INNER_SEARCH("servico", "usuario",page,inputPesquisa);
+    const {json,response} = await request(url, options);
+    setServicos(json.servicos.retorno);
+    setLastPage(json.paginacao.total_Pages)
+    setnotFind(null)
+  }
 
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
@@ -84,8 +90,8 @@ const Servicos = () => {
               ) : null;
             })}
         </div>
-        <div>{notFind&& <p>{notFind}</p>}</div>
-        {!loading&& <Paginacao paginacao={paginacao} page={page} lastPage={lastPage}/>}
+        {inputPesquisa.length === 0 && <Paginacao paginacao={paginacao} page={pageServicos} lastPage={lastPage}/>}
+        {inputPesquisa.length > 0 && <Paginacao paginacao={paginacao2} page={pageServicos} lastPage={lastPage}/>}
       </section>
     </main>
   );
