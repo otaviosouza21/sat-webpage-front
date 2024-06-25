@@ -8,8 +8,9 @@
   border-radius: 10px;
   border: none;
   font-weight: bold;
-  background-color: var(--primary3);
+  background-color: var(--primary2);
   box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.247);
+  font-size: .80rem;
 }
 
 .buttonExport:hover {
@@ -18,5 +19,5 @@
 }
 
 .buttonExport img {
-  width: 40px;
+  width: 25px;
 }

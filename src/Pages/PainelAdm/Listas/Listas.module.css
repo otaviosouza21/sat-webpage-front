@@ -42,3 +42,18 @@ display: flex;
   margin-bottom: 20px;
 
 }
+
+.row img{
+  width: 29px;
+  cursor: pointer;
+}
+
+.cabecalho{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+
+
+

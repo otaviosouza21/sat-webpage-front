@@ -1,13 +1,26 @@
 const PORT = 3333;
 const URL = "https://taiacupeba.com.br";
 
+export interface PropsApiReturn {
+  url: string;
+  options?: { 
+    method: string; 
+    headers?: { 
+      Accept?: string;
+      Authorization?: string;
+      "Content-Type"?: string;
+    }; 
+    body?: string | Record<string, unknown>; // Tipo para o corpo da requisição
+  }
+}
+
 //=================Retorna lista de dados====================//
-export function GET_ALL(tableName) {
+export function GET_ALL(tableName: string) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}`,
     options: {
       method: "GET",
-      Headers: {
+      headers: {
         Accept: "application/json",
       },
     },
@@ -15,25 +28,26 @@ export function GET_ALL(tableName) {
 }
 
 //=================[autenticado] Retorna lista de usuarios====================//
-export function GET_ALL_USERS(tableName, token) {
+export function GET_ALL_USERS(tableName: string, token: string) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}`,
     options: {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token} `,
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
     },
   };
 }
 
 //=================Retorna registro unico por ID====================//
-export function GET_TO_ID(tableName, id) {
+export function GET_TO_ID(tableName: string, id: string) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/${id}`,
     options: {
       method: "GET",
-      Headers: {
+      headers: {
         Accept: "application/json",
       },
     },
@@ -41,7 +55,7 @@ export function GET_TO_ID(tableName, id) {
 }
 
 //=================Cria novo usuario====================//
-export function POST_DATA_USER(tableName, data) {
+export function POST_DATA_USER(tableName: string, data: Record<string, unknown>) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/auth/register`,
     options: {
@@ -55,7 +69,7 @@ export function POST_DATA_USER(tableName, data) {
 }
 
 //=================Volta dados de acesso no login====================//
-export function POST_LOGIN(tableName, data) {
+export function POST_LOGIN(tableName: string, data: Record<string, unknown>) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/auth/login`,
     options: {
@@ -69,20 +83,25 @@ export function POST_LOGIN(tableName, data) {
 }
 
 //=================[autenticado] Retorna usuario unico====================//
-export function GET_AUTH_USER(tableName, token, id) {
+export function GET_AUTH_USER(tableName: string, token: string, id: number) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/${id}`,
     options: {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token} `,
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
     },
   };
 }
 
 //=================Retorna lista de join ATIVOS com relação entre tabelas====================//
-export function GET_INNER(tableName1, tableName2, page) {
+export function GET_INNER(
+  tableName1: string,
+  tableName2: string,
+  page: number
+) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName1}/${tableName2}/?page=${page}`,
     options: {
@@ -92,7 +111,11 @@ export function GET_INNER(tableName1, tableName2, page) {
 }
 
 //=================Retorna lista de join TOTAL entre duas entidades====================//
-export function GET_INNER_ALL(tableName1, tableName2, page) {
+export function GET_INNER_ALL(
+  tableName1: string,
+  tableName2: string,
+  page: number
+) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName1}/?page=${page}`,
     options: {
@@ -103,7 +126,12 @@ export function GET_INNER_ALL(tableName1, tableName2, page) {
 
 //=================Retorna lista de join entre duas entidades baseado no nome do servico====================//
 
-export function GET_INNER_SEARCH(tableName1, tableName2, page, nomeServico) {
+export function GET_INNER_SEARCH(
+  tableName1: string,
+  tableName2: string,
+  page: number,
+  nomeServico: string
+) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName1}/${tableName2}/?page=${page}&nome_negocio=${nomeServico}`,
     options: {
@@ -113,7 +141,11 @@ export function GET_INNER_SEARCH(tableName1, tableName2, page, nomeServico) {
 }
 
 //=================Retorna dado unico com inner join====================//
-export function GET_INNER_ID(tableName1, tableName2, id) {
+export function GET_INNER_ID(
+  tableName1: string,
+  tableName2: string,
+  id: number
+) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName1}/${tableName2}/${id}`,
     options: {
@@ -123,7 +155,7 @@ export function GET_INNER_ID(tableName1, tableName2, id) {
 }
 
 //=================Cria novo registro====================//
-export function POST_DATA(tableName, data) {
+export function POST_DATA(tableName: string, data: Record<string, unknown>) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}`,
     options: {
@@ -137,14 +169,19 @@ export function POST_DATA(tableName, data) {
 }
 
 //=================[autenticado] Atualiza registro====================//
-export function UPDATE_DATA(tableName, updateData, id, token) {
+export function UPDATE_DATA(
+  tableName: string,
+  updateData: Record<string, unknown>,
+  id: number,
+  token: string
+) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/${id}`,
     options: {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token} `,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(updateData),
     },
@@ -152,21 +189,21 @@ export function UPDATE_DATA(tableName, updateData, id, token) {
 }
 
 //=================[autenticado] Deleta registro====================//
-export function DELETE_DATA(tableName, id, token) {
+export function DELETE_DATA(tableName: string, id: number, token: string) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/${id}`,
     options: {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token} `,
+        Authorization: `Bearer ${token}`,
       },
     },
   };
 }
 
 //=================Envia email para reset de senha====================//
-export function RECOVER_PASSWORD(tableName, email) {
+export function RECOVER_PASSWORD(tableName: string, email: string) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/`,
     options: {
@@ -180,7 +217,11 @@ export function RECOVER_PASSWORD(tableName, email) {
 }
 
 //=================[autenticado] definir nova senha====================//
-export function UPDATE_PASSWORD(tableName, newPassword, token) {
+export function UPDATE_PASSWORD(
+  tableName: string,
+  newPassword: string,
+  token: string
+) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/${token}`,
     options: {
@@ -193,7 +234,7 @@ export function UPDATE_PASSWORD(tableName, newPassword, token) {
   };
 }
 //=================Envio de email====================//
-export function SEND_EMAIL(emailBody) {
+export function SEND_EMAIL(emailBody: string) : PropsApiReturn {
   return {
     url: `${URL}/api/send-email`,
     options: {

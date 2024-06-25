@@ -1,0 +1,26 @@
+.container{
+    display: flex;
+    gap: 5px;
+}
+
+.container input{
+    border:solid 2px var(--primary2);
+    border-radius:  0 10px 10px 0;
+    outline: none;
+    width: 300px;
+    box-shadow: 0 0 2px .5px var(--primary2);
+}
+
+.container input:focus{
+    box-shadow: 0 0 2px 1.5px var(--primary2);
+}
+
+.container select{
+    box-shadow: 0 0 2px .5px var(--primary2);
+    border-radius:  10px 0 0 10px;
+    border:solid 2px var(--primary2);
+}
+
+.container select:focus{
+    box-shadow: 0 0 2px 1.5px var(--primary2);
+}

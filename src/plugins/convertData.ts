@@ -1,6 +1,6 @@
-export function convertData(dataISO){
+export function convertData(dataISO : string){
 const data = new Date(dataISO);
-function formatarData(data) {
+function formatarData(data : Date) {
   // Obter o dia, mês e ano da data
   const dia = data.getDate().toString().padStart(2, '0');
   const mes = (data.getMonth() + 1).toString().padStart(2, '0'); // getMonth() retorna mês de 0-11

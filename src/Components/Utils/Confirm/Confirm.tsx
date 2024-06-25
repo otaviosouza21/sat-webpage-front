@@ -4,9 +4,19 @@ import Title from "../../Titles/Title";
 import { DELETE_DATA } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
 
-const Confirm = ({ mensagem, id, setModal, table, update, setUpdate }) => {
+interface ConfirmTypes{
+  mensagem:string;
+  id:number | null;
+  setModal:React.Dispatch<React.SetStateAction<string | boolean>>;
+  table:string;
+  update: boolean;
+  setUpdate: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Confirm = ({ mensagem, id, setModal, table, update, setUpdate }:ConfirmTypes) => {
+
   const { request } = useFetch();
-  const [alert, SetAlert] = useState(false);
+  const [alert, SetAlert] = useState<boolean | string>(false);
 
   function handleDelete() {
     const token = window.localStorage.getItem("token");
@@ -14,7 +24,7 @@ const Confirm = ({ mensagem, id, setModal, table, update, setUpdate }) => {
       if (token && id) {
         const { url, options } = DELETE_DATA(table, id, token);
         const { response } = await request(url, options);
-        if (response.ok) {
+        if (response?.ok) {
           setUpdate(!update);
           SetAlert("Registro Deletado");
           setModal(false);

@@ -1,21 +1,32 @@
 import React from 'react';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import xlsxIcon from '../../../assets/icons/xlsx.svg'
-import style from './ExportToExcel.module.css'
+import xlsxIcon from '../../../assets/icons/xlsx.svg';
+import style from './ExportToExcel.module.css';
 
+interface exportExcelType<T> {
+  data: T[];
+  fileName: string;
+  fetchAllData?: () => Promise<T[]>;
+}
 
-const ExportToExcel = ({ data, fileName }) => {
-  const exportToExcel = () => {
+const ExportToExcel = <T,>({ data, fileName, fetchAllData }: exportExcelType<T>) => {
+  const handleExport = async () => {
+    let exportData = data;
+    if (fetchAllData) {
+      exportData = await fetchAllData();
+    }
+
     try {
-      if (!data || !Array.isArray(data) || data.length === 0) {
+      if (!exportData || !Array.isArray(exportData) || exportData.length === 0) {
         throw new Error('Dados inválidos. Certifique-se de que os dados são uma array não vazia.');
       }
 
       // Cria uma nova planilha do Excel
-      const worksheet = XLSX.utils.json_to_sheet(data);
+      const worksheet = XLSX.utils.json_to_sheet(exportData);
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
       // Gera um arquivo Excel
       const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
       const dataBlob = new Blob([excelBuffer], { type: 'application/octet-stream' });
@@ -29,9 +40,9 @@ const ExportToExcel = ({ data, fileName }) => {
   };
 
   return (
-    <button className={style.buttonExport} onClick={exportToExcel}>
-        <img src={xlsxIcon} alt="" />
-        Exportar
+    <button className={style.buttonExport} onClick={handleExport}>
+      <img src={xlsxIcon} alt="" />
+      Exportar
     </button>
   );
 };

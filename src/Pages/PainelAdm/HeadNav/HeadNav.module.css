@@ -1,0 +1,20 @@
+.nav {
+    display: flex;
+    gap: 20px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    background-color: rgb(231, 231, 231);
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.192);
+    flex-wrap: wrap;
+  
+  }
+  
+  .nav li {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--primary2);
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  

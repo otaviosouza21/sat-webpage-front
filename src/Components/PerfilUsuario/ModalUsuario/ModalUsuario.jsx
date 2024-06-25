@@ -20,7 +20,7 @@ const ModalUsuario = () => {
       <ul className={styles.options}>
         <li><Link to='meu_perfil/perfil'>Minha Conta</Link></li>
         <li><Link to='meu_perfil/servicos'> Meus Serviços</Link></li>
-        {userAuth.rule === 3 && <li onClick={()=>navigate('/adm')}>Painel de Controle</li>}
+        {userAuth.rule === 1 && <li onClick={()=>navigate('/adm')}>Painel de Controle</li>}
         <li onClick={logout}>Sair</li>
       </ul>
     </nav>

@@ -146,7 +146,7 @@ const AtualizaUsuario = () => {
       setStatusCadastro("Verifique se todos os campos estao preenchidos");
     }
   }
-  console.log(loading);
+
   if(loading) return '<LoadingCenterComponent />'
   if (rules)
     return (
@@ -222,7 +222,7 @@ const AtualizaUsuario = () => {
               label="Perfil"
               options={rules}
               id="rule"
-              opacity={userAuth.rule === 3 ? null : 0}
+              opacity={userAuth.rule === 3? null : 0}
             />
 
             <InputSelect
