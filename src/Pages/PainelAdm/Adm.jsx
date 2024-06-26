@@ -46,7 +46,7 @@ const Adm = () => {
 
   return (
     <>
-      {userAuth.status && userAuth.rule === 1 && (
+      {userAuth.status && userAuth.rule === 3 && (
         <main className={`${styles.containerAdm}`}>
           <HeadNav activeView={activeView} handleView={handleView} />
           <div className={styles.containerListas}>
