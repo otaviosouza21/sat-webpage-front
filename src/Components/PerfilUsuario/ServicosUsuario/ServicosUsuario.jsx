@@ -4,9 +4,8 @@ import { jwtDecode } from "jwt-decode";
 import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
-import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent.jsx";
+import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import { Link, useNavigate } from "react-router-dom";
-import Title from "../../Titles/Title.jsx";
 import ServicoUsuario from "./ServicoUsuario.jsx";
 
 const ServicosUsuario = () => {

@@ -1,0 +1,23 @@
+.buttonExport {
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  gap: 10px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  background-color: var(--primary2);
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.247);
+  font-size: .80rem;
+}
+
+.buttonExport:hover {
+  background-color:var(--primary2);
+  transition: 0.5s;
+}
+
+.buttonExport img {
+  width: 25px;
+}

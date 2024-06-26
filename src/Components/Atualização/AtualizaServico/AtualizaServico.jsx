@@ -191,7 +191,7 @@ const AtualizaServico = () => {
               />
 
               {userAuth.status &&
-                userAuth.rule === 3 && ( // Acesso ADM
+                userAuth.rule === 1 && ( // Acesso ADM
                   <InputSelect
                     label="Status"
                     options={[{ nome: "Ativo" }, { nome: "Inativo" }]}

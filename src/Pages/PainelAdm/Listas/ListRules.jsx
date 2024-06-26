@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import useFetch from "../../Hooks/useFetch";
-import { GET_ALL } from "../../Api/api";
+import useFetch from "../../../Hooks/useFetch";
+import { GET_ALL } from "../../../Api/api";
 import styles from "./Listas.module.css";
-import LoadingCenterComponent from "../Utils/LoadingCenterComponent/LoadingCenterComponent";
-
+import LoadingCenterComponent from "../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 const ListRules = () => {
   const { request, loading } = useFetch();
@@ -43,9 +42,7 @@ const ListRules = () => {
                     <td>{rule.id}</td>
                     <td>{rule.nome}</td>
                     <td>{rule.status ? "Ativo" : "Inativo"}</td>
-                    <td>
-                   
-                    </td>
+                    <td></td>
                   </tr>
                 );
               })}

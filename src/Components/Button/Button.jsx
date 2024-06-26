@@ -21,7 +21,6 @@ const Button = ({ color, children, patch, handleSubmit, modalParam}) => {
         if(modalParam){
           setModal(modalParam)
         }
-    
       }} to={patch}>
         {children}
       </Link>

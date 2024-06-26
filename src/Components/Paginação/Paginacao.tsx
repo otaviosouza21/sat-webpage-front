@@ -1,7 +1,14 @@
 import React from 'react'
 import styles from './Paginacao.module.css'
 
-const Paginacao = ({paginacao,page,lastPage}) => {
+interface PaginacaoType {
+  paginacao:(page:number)=>void;
+  page:number;
+  lastPage:number;
+}
+
+
+const Paginacao = ({paginacao,page,lastPage}: PaginacaoType) => {
   return (
     <div className={`${styles.paginacao} animeLeft`}>
       {page !==1 ? <button type='button' onClick={()=> paginacao(1)}>primeira</button>: <button type='button' disabled>primeira</button>}

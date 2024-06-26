@@ -12,6 +12,7 @@ import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 
 const AtualizaUsuario = () => {
   const [rules, setRules] = useState(null);
@@ -146,6 +147,7 @@ const AtualizaUsuario = () => {
     }
   }
 
+  if(loading) return '<LoadingCenterComponent />'
   if (rules)
     return (
       <section>
@@ -220,7 +222,7 @@ const AtualizaUsuario = () => {
               label="Perfil"
               options={rules}
               id="rule"
-              opacity={userAuth.rule === 3 ? null : 0}
+              opacity={userAuth.rule === 3? null : 0}
             />
 
             <InputSelect
