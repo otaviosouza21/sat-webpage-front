@@ -66,7 +66,6 @@ const HomeEmpreendedores = () => {
           />
         </div>
       </section>
-        <SendEmailForm />
     </main>
   );
 };

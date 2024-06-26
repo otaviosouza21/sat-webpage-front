@@ -53,6 +53,10 @@ const CadastroServico = () => {
     fetchValidaToken();
   }, []);
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
   function handleSubmit(e) {
     e.preventDefault();
     if (
@@ -62,7 +66,7 @@ const CadastroServico = () => {
       userAuth.status // apenas cadastrar com usuario logado/autenticado
     ) {
       const dataServico = {
-        nome_negocio: nomeNegocioForm.value,
+        nome_negocio: capitalizeFirstLetter(nomeNegocioForm.value),
         descricao_servico: descricaoForm.value,
         tempo_negocio: +tempoNegocio.value,
         status: false,
@@ -70,6 +74,8 @@ const CadastroServico = () => {
         usuario_id: userAuth.usuario.id,
         possui_nome_negocio: true,
       };
+
+      
 
       async function postServico() {
         const { url, options } = POST_DATA("servico", dataServico);

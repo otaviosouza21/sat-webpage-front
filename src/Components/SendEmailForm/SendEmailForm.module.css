@@ -2,12 +2,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-content: center;
-    padding: 50px 0;
+    padding: 10px 0;
+    margin: 20px auto !important;
 }
 
 
 .title h1{
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
     color: #E8E8E8;
     margin-bottom: 20px;
@@ -69,7 +70,11 @@ transition: .5s;
     }
 }
 
-@media (max-width:830px) {
+@media (max-width:500px) {
+.containerForm{
+padding: 5px 20px;
+}
+
     .title h1{
         font-size: 2rem;
     }

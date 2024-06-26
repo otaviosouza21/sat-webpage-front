@@ -35,14 +35,9 @@ const CadastroUsuario = () => {
 
   function closeModal(event) {
     event.preventDefault();
-    if (
-      event.target === modalContainerPost.current ||
-      event.target === CloseContainerPost.current
-    ) {
       setModal("");
       const overflow = document.querySelector("body");
       overflow.classList.remove("overFlow");
-    }
   }
 
   //==============Puxa rules da api=================//
@@ -54,6 +49,12 @@ const CadastroUsuario = () => {
     }
     getRules();
   }, []);
+
+
+//previne evento ao clicar no botao enter
+  window.addEventListener('keydown',(e)=>{
+   if(e.key ==='Enter') e.preventDefault() 
+  })
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -108,7 +109,6 @@ const CadastroUsuario = () => {
 
   return (
     <section
-      onClick={closeModal}
       ref={modalContainerPost}
       className={styles.containerModal}
     >

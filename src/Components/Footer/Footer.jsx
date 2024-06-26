@@ -7,22 +7,40 @@ import facebook from "../../assets/icons/facebook.svg";
 import phone from "../../assets/icons/phone-footer.svg";
 import email from "../../assets/icons/email.svg";
 import { NavLink } from "react-router-dom";
+import SendEmailForm from "../SendEmailForm/SendEmailForm";
+import { formataTelefone } from "../../plugins/Format";
 
 const Footer = () => {
+  const contatoSat = {
+    email: "amigosdetaiacupeba@gmail.com",
+    telefone: "1147244248",
+    instagram: "https://www.instagram.com/sat_taiacupeba/",
+    face: "https://www.facebook.com/NossaTaia/",
+  };
+
   return (
     <footer className={styles.footer}>
+      <SendEmailForm />
       <div className={styles.top}>
         <div className={styles.left}>
-          <NavLink to='/' className={styles.logotipo}>
+          <NavLink to="/" className={styles.logotipo}>
             <img src={logo} alt="logotipo" />
             <h1>SAT</h1>
           </NavLink>
           <div className={styles.redes}>
             <p>Siga nas redes</p>
             <div>
-              <img src={whatsapp} alt="logo-whatsapp" />
-              <img src={facebook} alt="logo-facebook" />
-              <img src={instagram} alt="logo-instagram" />
+              <NavLink
+                to={`https://api.whatsapp.com/send?phone=55${contatoSat.telefone}`}
+              >
+                <img src={whatsapp} alt="logo-whatsapp" />
+              </NavLink>
+              <NavLink to={contatoSat.face}>
+                <img src={facebook} alt="logo-facebook" />
+              </NavLink>
+              <NavLink to={contatoSat.instagram}>
+                <img src={instagram} alt="logo-instagram" />
+              </NavLink>
             </div>
           </div>
         </div>
@@ -51,7 +69,7 @@ const Footer = () => {
           <ul className={styles.lista}>
             <li>Usuario</li>
             <li>
-              <NavLink>Meu Perfil</NavLink>
+              <NavLink to="/meu_perfil/perfil">Meu Perfil</NavLink>
             </li>
             <li>
               <NavLink to="/">Inicio</NavLink>
@@ -60,11 +78,17 @@ const Footer = () => {
           <ul className={styles.lista}>
             <li>
               <img src={phone} alt="" />
-              <NavLink>11 99828-9779</NavLink>
+              <NavLink
+                to={`https://api.whatsapp.com/send?phone=55${contatoSat.telefone}`}
+              >
+                {formataTelefone(contatoSat.telefone)}
+              </NavLink>
             </li>
             <li>
               <img src={email} alt="" />
-              <NavLink>contato@sat.com.br</NavLink>
+              <NavLink to={`mailto:${contatoSat.email}`}>
+                {contatoSat.email}
+              </NavLink>
             </li>
           </ul>
         </div>

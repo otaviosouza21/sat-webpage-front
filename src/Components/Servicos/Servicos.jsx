@@ -4,11 +4,16 @@ import InputSearch from "../Forms/InputSearch/InputSearch.jsx";
 import ServicoContainer from "../ServicoContainer/ServicoContainer";
 import styles from "./Servicos.module.css";
 import useFetch from "../../Hooks/useFetch";
-import { GET_ALL, GET_AUTH_USER, GET_INNER } from "../../Api/api.ts";
+import {
+  GET_ALL,
+  GET_AUTH_USER,
+  GET_INNER,
+  GET_INNER_SEARCH,
+} from "../../Api/api";
 import Loading from "../Utils/Loading/Loading.jsx";
 import Error from "../Utils/Error/Error.jsx";
 import { jwtDecode } from "jwt-decode";
-import { GlobalContext } from "../../Hooks/GlobalContext.tsx";
+import { GlobalContext } from "../../Hooks/GlobalContext";
 import Paginacao from "../Paginação/Paginacao";
 
 const Servicos = () => {
@@ -23,8 +28,12 @@ const Servicos = () => {
     setLastPage,
     notFind,
     setnotFind,
+    pageServicos,
+    setPageServicos,
+    pesquisaPaginacao,
+    inputPesquisa,
+    setInputPesquisa,
   } = useContext(GlobalContext);
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     document.title = "SAT | Serviços";
@@ -46,7 +55,7 @@ const Servicos = () => {
   }, []);
 
   useEffect(() => {
-    const { url, options } = GET_INNER("servico", "usuario", page);
+    const { url, options } = GET_INNER("servico", "usuario", pageServicos);
     async function getServicoUsuario() {
       const { json, response } = await request(url, options);
       if (response.ok) {
@@ -59,7 +68,7 @@ const Servicos = () => {
   }, []);
 
   async function paginacao(page) {
-    setPage(page);
+    setPageServicos(page);
     const { url, options } = GET_INNER("servico", "usuario", page);
     const { response, json } = await request(url, options);
     if (response.ok) {
@@ -67,6 +76,19 @@ const Servicos = () => {
       setLastPage(json.paginacao.total_Pages);
       setnotFind(null);
     }
+  }
+  async function paginacao2(page) {
+    setPageServicos(page);
+    const { url, options } = GET_INNER_SEARCH(
+      "servico",
+      "usuario",
+      page,
+      inputPesquisa
+    );
+    const { json, response } = await request(url, options);
+    setServicos(json.servicos.retorno);
+    setLastPage(json.paginacao.total_Pages);
+    setnotFind(null);
   }
 
   if (loading) return <Loading />;
@@ -86,9 +108,19 @@ const Servicos = () => {
               ) : null;
             })}
         </div>
-        <div>{notFind && <p>{notFind}</p>}</div>
-        {!loading && (
-          <Paginacao paginacao={paginacao} page={page} lastPage={lastPage} />
+        {inputPesquisa.length === 0 && (
+          <Paginacao
+            paginacao={paginacao}
+            page={pageServicos}
+            lastPage={lastPage}
+          />
+        )}
+        {inputPesquisa.length > 0 && (
+          <Paginacao
+            paginacao={paginacao2}
+            page={pageServicos}
+            lastPage={lastPage}
+          />
         )}
       </section>
     </main>

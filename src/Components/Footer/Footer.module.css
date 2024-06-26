@@ -65,8 +65,8 @@
 .listas {
   display: flex;
   flex: 4;
-  justify-content: space-between;
-  gap: 60px;
+  justify-content: space-around;
+  gap: 40px;
   flex-wrap: wrap;
 }
 
@@ -126,12 +126,16 @@
       display: none;
     }
 
+    .lista li{
+      font-size: .9rem;
+    }
+
     .redes{
       align-items: center;
     }
 
     .lista {
-      gap: 5px;
+      gap: 2px;
     }
 
     .botton{

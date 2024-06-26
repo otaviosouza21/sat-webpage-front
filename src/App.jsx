@@ -2,7 +2,7 @@ import "./App.css";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import HomeEmpreendedores from "./Components/Home-Empreendedores/HomeEmpreendedores";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Servicos from "./Components/Servicos/Servicos";
 import Sobre from "./Components/Sobre/Sobre";
 import CadastroUsuario from "./Components/Cadastros/CadastroUsuario.jsx/CadastroUsuario";
