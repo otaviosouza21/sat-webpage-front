@@ -159,7 +159,7 @@ function normalizaServicos(servicos: ServicosDataProps[]) : ServicosNormalizados
             setModal={setModal}
             setUpdate={setUpdate}
             update={update}
-            table="servicos"
+            table="servico"
           />
         )}
   </div>
