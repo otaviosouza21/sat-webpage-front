@@ -10,12 +10,16 @@ const
   const selectInput = useRef();
   const [searchTerm, setSearchTerm] = useState("");
   const { error, loading, request } = useFetch();
-  const { setServicos,setLastPage, setnotFind, pageServicos, setPageServicos,inputPesquisa, setInputPesquisa } = useContext(GlobalContext);
+  const globalContext = useContext(GlobalContext);
+  if (!globalContext) {
+    throw new Error("GlobalContext must be used within a GlobalProvider");
+  }
+  const { setServicos,setLastPage, setnotFind, pageServicos, setPageServicos,inputPesquisa, setInputPesquisa } = globalContext;
 
 
   
   useEffect(()=>{
-    if(inputPesquisa.length > 0){
+    if(inputPesquisa && inputPesquisa.length > 0){
       async function handleSearch(){
         const { url, options } = GET_INNER_SEARCH("servico", "usuario",pageServicos,inputPesquisa);
         const {json,response} = await request(url, options);

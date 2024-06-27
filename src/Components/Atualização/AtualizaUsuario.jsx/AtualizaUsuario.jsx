@@ -147,7 +147,7 @@ const AtualizaUsuario = () => {
     }
   }
 
-  if(loading) return '<LoadingCenterComponent />'
+  if(loading) return <LoadingCenterComponent />
   if (rules)
     return (
       <section>
