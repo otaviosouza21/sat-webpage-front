@@ -51,10 +51,10 @@ const Footer = () => {
               <NavLink to="/sobre">Sobre</NavLink>
             </li>
             <li>
-              <NavLink>SAT</NavLink>
+              <NavLink to='taiacupeba.com.br'>SAT</NavLink>
             </li>
             <li>
-              <NavLink>Ajuda</NavLink>
+              <NavLink to='/'>Ajuda</NavLink>
             </li>
           </ul>
           <ul className={styles.lista}>
@@ -63,7 +63,7 @@ const Footer = () => {
               <NavLink to="/servicos">Serviços</NavLink>
             </li>
             <li>
-              <NavLink>Cadastre-se</NavLink>
+              <NavLink to='/'> Cadastre-se</NavLink>
             </li>
           </ul>
           <ul className={styles.lista}>

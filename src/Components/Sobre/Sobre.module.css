@@ -1,5 +1,5 @@
 .sat {
-    margin-bottom: 2rem;
+    margin: 3rem 0;
 }
 
 .sat h1,.portal h1{
@@ -87,4 +87,62 @@
 .containerImg img{
     width: 100px;
    
+}
+
+
+@media (max-width:960px) {
+
+    .sat h1,.portal h1{
+        margin-bottom: 1rem;
+        
+    }
+
+    .sat p{
+        font-size: 1.2rem;
+        max-width: none;
+    }
+
+    .sat img, .portal>img{
+        width: 100%;
+        position: initial;
+        margin-top: 25px;
+        display: block;
+    
+       
+   
+    }
+
+    .sat button{
+        font-size: 1.2rem;
+    }
+
+    .portal{
+        padding: 2rem 10px;
+    }
+    
+    .portal_servicos{
+        gap: 2rem;
+    }
+
+    .portal_servicos li{
+     font-size: 1.2rem;   
+    }
+
+    .containerImg img{
+        width: 60px;
+    }
+
+    
+}
+
+@media (max-width:480px) {
+    .portal>p{
+        font-size: 1rem;
+    }
+
+    .portal_servicos li{
+        gap: 1rem;
+        font-size: 1rem;   
+       }
+
 }

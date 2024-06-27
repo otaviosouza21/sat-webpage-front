@@ -21,29 +21,29 @@ const Sobre = () => {
     <section>
       <div className={`container ${style.sat}`}>
         <Title fontSize="3" text="Sociedade Amigos de Taiaçupeba" />
-        <p>Transformamos esforços individuais em sucessos coletivos em Taiaçupeba.</p>
-        <p>Priorizamos o crescimento pessoal e o respeito mútuo, promovendo justiça social e solidariedade.</p>
+        <p data-aos="zoom-in">Transformamos esforços individuais em sucessos coletivos em Taiaçupeba.</p>
+        <p data-aos="zoom-in">Priorizamos o crescimento pessoal e o respeito mútuo, promovendo justiça social e solidariedade.</p>
         <Button>Saiba Mais</Button>
-        <img src={figuraSat} alt="" />
+        <img data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" src={figuraSat} alt="" />
       </div>
       <div style={{background: "var(--primary2)",marginBottom:"2rem"}}>
         <div className={`container ${style.portal}`}>
         <Title fontSize="3" text="Portal do Empreendedor" />
         <p>Simplificando o acesso às oportunidades.</p>
         <ul className={style.portal_servicos}>
-          <li>
+          <li data-aos="fade-right">
             <div className={style.containerImg}>
               <img src={worker} alt="" />
             </div>
             <p>Encontre facilmente serviços na sua região: reunimos todas as informações que você precisa em um único lugar.</p>
           </li>
-          <li>
+          <li data-aos="fade-left">
             <div className={style.containerImg}>
               <img src={star} alt="" />
             </div>
             <p>Avalie o serviço recebido e colabore com o crescimento do profissional, ajudando mais pessoas a conhecê-lo.</p>
           </li>
-          <li>
+          <li data-aos="fade-right">
             <div className={style.containerImg}>
               <img src={tools} alt="" />
             </div>
@@ -51,7 +51,7 @@ const Sobre = () => {
           </li>
           
         </ul>
-        <img className={style.figura} src={figuraPortal} alt="" />
+        <img data-aos="fade-down" data-aos-easing="linear" data-aos-duration="500"  className={style.figura} src={figuraPortal} alt="" />
         </div>
       </div>
       
