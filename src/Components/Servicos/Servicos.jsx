@@ -13,11 +13,17 @@ import {
 import Loading from "../Utils/Loading/Loading.jsx";
 import Error from "../Utils/Error/Error.jsx";
 import { jwtDecode } from "jwt-decode";
-import { GlobalContext } from "../../Hooks/GlobalContext";
 import Paginacao from "../Paginação/Paginacao";
+import { GlobalContext } from "../../Hooks/GlobalContext";
+
 
 const Servicos = () => {
   const { error, loading, request } = useFetch();
+  const globalContext = useContext(GlobalContext);
+  if (!globalContext) {
+    throw new Error("GlobalContext must be used within a GlobalProvider");
+  }
+
   const {
     userAuth,
     setUserAuth,
@@ -33,7 +39,7 @@ const Servicos = () => {
     pesquisaPaginacao,
     inputPesquisa,
     setInputPesquisa,
-  } = useContext(GlobalContext);
+  } = globalContext
 
   useEffect(() => {
     document.title = "SAT | Serviços";
@@ -55,6 +61,7 @@ const Servicos = () => {
   }, []);
 
   useEffect(() => {
+    console.log(pageServicos);
     const { url, options } = GET_INNER("servico", "usuario", pageServicos);
     async function getServicoUsuario() {
       const { json, response } = await request(url, options);
