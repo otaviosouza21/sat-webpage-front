@@ -17,7 +17,7 @@ interface GlobalContextProps {
   userAuth: UserAuth;
   setUserAuth: React.Dispatch<React.SetStateAction<UserAuth>>;
   modal: string;
-  setModal: React.Dispatch<React.SetStateAction<string | any>>;
+  setModal: React.Dispatch<React.SetStateAction<string | boolean>>;
   logout: () => void;
   servicos: any;
   setServicos: React.Dispatch<React.SetStateAction<any>>;
@@ -27,10 +27,6 @@ interface GlobalContextProps {
   setnotFind: React.Dispatch<React.SetStateAction<any>>;
   listaFiltrada: any;
   setListaFiltrada: React.Dispatch<React.SetStateAction<any>>;
-  pageServicos: number;
-  setPageServicos: React.Dispatch<React.SetStateAction<number>>;
-  inputPesquisa: string;
-  setInputPesquisa: React.Dispatch<React.SetStateAction<string>>
 }
 
 export const GlobalContext = createContext<GlobalContextProps | undefined>(undefined);
@@ -53,8 +49,6 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   const [modal, setModal] = useState('');
   const [dataUpdate, setDataUpdate] = useState(false);
   const [listaFiltrada,setListaFiltrada] = useState(null)
-  const [pageServicos, setPageServicos] = useState(1)
-  const [inputPesquisa, setInputPesquisa] = useState("");
 
   function logout() {
     window.localStorage.removeItem('token');
@@ -80,11 +74,7 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
         notFind,
         setnotFind,
         listaFiltrada,
-        setListaFiltrada,
-        pageServicos,
-        setPageServicos,
-        inputPesquisa,
-        setInputPesquisa
+        setListaFiltrada
       }}
     >
       {children}
