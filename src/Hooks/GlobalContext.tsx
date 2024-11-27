@@ -17,7 +17,7 @@ interface GlobalContextProps {
   userAuth: UserAuth;
   setUserAuth: React.Dispatch<React.SetStateAction<UserAuth>>;
   modal: string;
-  setModal: React.Dispatch<React.SetStateAction<string | boolean>>;
+  setModal: React.Dispatch<React.SetStateAction<string>>;
   logout: () => void;
   servicos: any;
   setServicos: React.Dispatch<React.SetStateAction<any>>;
@@ -46,7 +46,7 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   const [servicos, setServicos] = useState(null);
   const [lastPage, setLastPage] = useState(0);
   const [notFind, setnotFind] = useState(null);
-  const [modal, setModal] = useState('');
+  const [modal, setModal] = useState<string>('');
   const [dataUpdate, setDataUpdate] = useState(false);
   const [listaFiltrada,setListaFiltrada] = useState(null)
 

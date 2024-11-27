@@ -1,0 +1,14 @@
+.container {
+  min-width: 50vw;
+  max-width: 1200px;
+  min-height: 50vh;
+  margin-top: 70px;
+  padding: 30px;
+}
+
+.form {
+    margin-top: 50px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}

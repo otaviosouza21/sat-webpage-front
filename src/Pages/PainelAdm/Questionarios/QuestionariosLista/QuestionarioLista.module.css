@@ -1,0 +1,25 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.button{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+
+}
+
+.button:hover{
+    transform: scale(1.02);
+}
+
+.button:focus{
+    transform: scale(1);
+}
+
+.button img{
+    width: 40px;
+}

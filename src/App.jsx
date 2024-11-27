@@ -18,6 +18,8 @@ import ResetPassword from "./Components/PerfilUsuario/ResetPassword/ResetPasswor
 import SendRequest from "./Components/PerfilUsuario/ResetPassword/SendRequest";
 import CadastroCategoria from './Components/Cadastros/CadastroCategoria/CadastroCategoria'
 import AtualizaCategoria from "./Components/Atualização/AtualizaCategoria/AtualizaCategoria";
+import QuestionariosLista from "./Pages/PainelAdm/Questionarios/QuestionariosLista/QuestionariosLista";
+import QuestionariosCadastro from "./Pages/PainelAdm/Questionarios/QuestionariosCadastro/QuestionariosCadastro";
 
 function App() {
   AOS.init();
@@ -40,6 +42,7 @@ function App() {
           <Route exact path="adm" element={<Adm />} />
           <Route exact path="reset-password" element={<ResetPassword />} />
           <Route exact path="send-request" element={<SendRequest />} />
+          <Route exact path="questionario/cadastro" element={<QuestionariosCadastro />} />
         </Routes>
         <Footer />
       </BrowserRouter>
