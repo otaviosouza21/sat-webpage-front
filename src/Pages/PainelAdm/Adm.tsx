@@ -11,33 +11,13 @@ import HeadNav from "./HeadNav/HeadNav";
 import Usuarios from "./Listas/UsuariosLista";
 import ServicosLista from "./Listas/ServicosLista";
 import QuestionariosLista from "./Questionarios/QuestionariosLista/QuestionariosLista";
-
-
-
+import useTokenValidate from "../../Hooks/useTokenValidate";
 
 const Adm = () => {
   const [activeView, setActiveView] = useState("servicos");
-  const { userAuth, setUserAuth, logout } : any = useContext(GlobalContext);
-  const { request, loading } = useFetch();
-  const navigate = useNavigate();
+  const { fetchValidaToken, userAuth } = useTokenValidate();
 
-  useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    async function fetchValidaToken() {
-      if (token) {
-        const { id, rule } : any = jwtDecode(token);
-        const { url, options } = GET_AUTH_USER("usuarios", token, id);
-        const { response, json } = await request(url, options);
-        if (response && response.ok) {
-          setUserAuth({ token, usuario: json, status: true, rule });
-        } else {
-          setUserAuth({});
-          logout();
-        }
-      } else {
-        navigate("/");
-      }
-    }
+  useEffect(() => { // valida token com o hook no carregamento da pagina
     fetchValidaToken();
   }, [userAuth.rule]);
 
