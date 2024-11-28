@@ -11,21 +11,20 @@ import useFetch from "../../../../Hooks/useFetch";
 import useForm from "../../../../Hooks/useForm";
 import { GlobalContext } from "../../../../Hooks/GlobalContext";
 import { POST_DATA } from "../../../../Api/api";
-import Toast from "../../../../Components/Toast/Toast";
+import Toast from "../../../../Components/Toast/Toast"
+import 'react-toastify/dist/ReactToastify.css';
+import useToast from "../../../../Hooks/useToast";
+import QuestionConfig from "./QuestionConfig/QuestionConfig";
 
 const QuestionariosCadastro = () => {
-  const [statusCadastro, setStatusCadastro] = useState({
-    mensagem: "",
-    status: false,
-  });
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
+  const activeToast = useToast()
 
   const tituloForm = useForm();
   const vigenciaInicioForm = useForm();
   const vigenciaFimForm = useForm();
   const descricaoForm = useForm();
-  const statusForm = useForm();
   const tipoForm = useForm();
 
   useEffect(() => {
@@ -51,9 +50,8 @@ const QuestionariosCadastro = () => {
         tipo: tipoForm.value,
       };
 
-      async function postQuestionario() {
-  
 
+      async function postQuestionario() {
         const { url, options } = POST_DATA("formularios", dataQuestionario);
         const questionarioRequest = await request(url, options);
         if (questionarioRequest.response.ok) {
@@ -62,27 +60,21 @@ const QuestionariosCadastro = () => {
           vigenciaFimForm.reset();
           descricaoForm.reset();
           tipoForm.reset();
-          setStatusCadastro({
-            mensagem: "Questionario Cadastrado",
-            status: true,
-          });
+          activeToast('Questionário cadastrado','success');
+        } else {
+          activeToast('Erro ao cadastrar formulário','error');
         }
       }
       postQuestionario();
     } else {
-      setStatusCadastro({
-        mensagem: "Preencha os campos necessarios",
-        status: true,
-      });
-      setTimeout(() => {
-        setStatusCadastro({ mensagem: "", status: false });
-      }, 2000);
+      activeToast('Preencha os campos obrigatórios','warning')
+   
     }
   }
 
   return (
     <div className={styles.container}>
-      <Title text="Cadastrar Questionário" fontSize="3" />
+      <Title text="Cadastrar Questionário" fontSize="1" />
       <form className={styles.form}>
         <InputText {...tituloForm} label="Titulo" gridColumn="1/3" />
         <InputText
@@ -104,23 +96,19 @@ const QuestionariosCadastro = () => {
       <div className={styles.line}></div>
       <div className={styles.newQuestions}>
         <div className={styles.header}>
-          <Title text="Perguntas" fontSize="2" />
+          <Title text="Perguntas" fontSize="3" />
           <Link to={"/questionario/cadastro"} className={styles.button}>
             <img src={Plus} alt="" />
             Nova Pergunta
           </Link>
         </div>
-        <div className={styles.questionsList}>
-          <QuestionCard text="Há Quanto tempo reside em Taiaçupeba?" />
-          <QuestionCard text="Há Quanto tempo reside em Taiaçupeba?" />
-          <QuestionCard text="Há Quanto tempo reside em Taiaçupeba?" />
-          <QuestionCard text="Há Quanto tempo reside em Taiaçupeba?" />
-          <QuestionCard text="Há Quanto tempo reside em Taiaçupeba?" />
-        </div>
+        <ul className={styles.questionsList}>
+        </ul>
       </div>
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}
       </Button>
+      <QuestionConfig />
     </div>
   );
 };

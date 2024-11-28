@@ -6,18 +6,18 @@ import Title from "../../Titles/Title";
 import InputSelect from "../../Forms/Input/InputSelect";
 import useForm from "../../../Hooks/useForm";
 import useFetch from "../../../Hooks/useFetch";
-import { GET_ALL, GET_AUTH_USER, UPDATE_DATA } from "../../../Api/api";
-import Loading from "../../Utils/Loading/Loading";
+import { GET_ALL, UPDATE_DATA } from "../../../Api/api";
 import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
+import useTokenValidate from "../../../Hooks/useTokenValidate";
+import useToast from "../../../Hooks/useToast";
 
 const AtualizaUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { dataUpdate, userAuth,setUserAuth } = useContext(GlobalContext);
+  const { dataUpdate } = useContext(GlobalContext);
   const formRef = useRef(); // utilizado para acesso ao input options
   const navigate = useNavigate();
 
@@ -30,26 +30,12 @@ const AtualizaUsuario = () => {
   const morador = useForm();
   const socioSatForm = useForm(false);
   const { request, data, loading, error } = useFetch();
+  const { fetchValidaToken, userAuth } = useTokenValidate();
+  const activeToast = useToast();
 
   useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    async function fetchValidaToken() {
-      if (token) {
-        const { id, rule } = jwtDecode(token);
-        const { url, options } = GET_AUTH_USER("usuarios", token, id);
-        const { response, json } = await request(url, options);
-        if (response.ok) {
-          setUserAuth({ token, usuario: json, status: true, rule });
-        } else {
-          setUserAuth({});
-          logout();
-        }
-      } else {
-        navigate("/");
-      }
-    }
     fetchValidaToken();
-  }, []);
+  }, [userAuth.rule]);
 
   //================UPDATE=====================//
   useEffect(() => {
@@ -63,10 +49,10 @@ const AtualizaUsuario = () => {
       morador.setValue(dataUpdate.tempo_reside);
       console.log(dataUpdate);
       setTimeout(() => {
-          formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
-          formRef.current["rule"].value = String(dataUpdate.rule_id);
-          formRef.current["status"].value =
-            dataUpdate.status === "1" ? "Ativo" : "Inativo";
+        formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
+        formRef.current["rule"].value = String(dataUpdate.rule_id);
+        formRef.current["status"].value =
+          dataUpdate.status === "1" ? "Ativo" : "Inativo";
       }, 1000);
     }
   }, []);
@@ -136,18 +122,29 @@ const AtualizaUsuario = () => {
           contatoP2Form.reset();
           morador.reset();
           formRef.current["socio_sat"].unchecked;
+          activeToast(
+            userRequest.json.message
+              ? userRequest.json.messag
+              : "Categoria Atualizada com Sucesso",
+            "success"
+          );
           setTimeout(() => {
             navigate(-1);
           }, 1000);
+        } else {
+          activeToast(error, "error");
         }
       }
       postUser();
     } else {
-      setStatusCadastro("Verifique se todos os campos estao preenchidos");
+      activeToast(
+        "Por Favor, Preencha todos os campos obrigatórios",
+        "warning"
+      );
     }
   }
 
-  if(loading) return '<LoadingCenterComponent />'
+  if (loading) return "<LoadingCenterComponent />";
   if (rules)
     return (
       <section>
@@ -222,7 +219,7 @@ const AtualizaUsuario = () => {
               label="Perfil"
               options={rules}
               id="rule"
-              opacity={userAuth.rule === 3? null : 0}
+              opacity={userAuth.rule === 3 ? null : 0}
             />
 
             <InputSelect
@@ -244,9 +241,7 @@ const AtualizaUsuario = () => {
               {loading ? "Salvando..." : "Salvar"}
             </Button>
             {error && <Toast message={error} color="tomato" />}
-            {statusCadastro && (
-              <Toast message={statusCadastro} color="green" />
-            )}
+            {statusCadastro && <Toast message={statusCadastro} color="green" />}
           </form>
         </section>
       </section>

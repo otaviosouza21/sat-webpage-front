@@ -3,20 +3,17 @@ import InputText from "../../Forms/Input/InputText";
 import styles from "../CadastroForm.module.css";
 import Button from "../../Button/Button";
 import Title from "../../Titles/Title";
-import InputSelect from "../../Forms/Input/InputSelect";
 import useForm from "../../../Hooks/useForm";
 import useFetch from "../../../Hooks/useFetch";
 import { GET_ALL, POST_DATA_USER, UPDATE_DATA } from "../../../Api/api";
-import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import CloseButton from "../../CloseButton/CloseButton";
+import useToast from "../../../Hooks/useToast";
 
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
-  const [alert,setAlert] = useState(null)
-  const [statusCadastro, setStatusCadastro] = useState(null);
   const [cadastroRealizado, setCadastroRealizado] = useState(false);
   const { userAuth, setModal } = useContext(GlobalContext);
   const formRef = useRef(); // utilizado para acesso ao input options
@@ -32,12 +29,13 @@ const CadastroUsuario = () => {
   const morador = useForm();
   const socioSatForm = useForm(false);
   const { request, data, loading, error } = useFetch();
+  const activeToast = useToast();
 
   function closeModal(event) {
     event.preventDefault();
-      setModal("");
-      const overflow = document.querySelector("body");
-      overflow.classList.remove("overFlow");
+    setModal("");
+    const overflow = document.querySelector("body");
+    overflow.classList.remove("overFlow");
   }
 
   //==============Puxa rules da api=================//
@@ -50,11 +48,10 @@ const CadastroUsuario = () => {
     getRules();
   }, []);
 
-
-//previne evento ao clicar no botao enter
-  window.addEventListener('keydown',(e)=>{
-   if(e.key ==='Enter') e.preventDefault() 
-  })
+  //previne evento ao clicar no botao enter
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") e.preventDefault();
+  });
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -85,7 +82,6 @@ const CadastroUsuario = () => {
         const { url, options } = POST_DATA_USER("usuarios", dataUsuario);
         const userRequest = await request(url, options);
         if (userRequest.response.ok) {
-          setStatusCadastro(userRequest.json.message);
           nameForm.reset();
           emailForm.reset();
           senhaForm.reset();
@@ -94,122 +90,125 @@ const CadastroUsuario = () => {
           contatoP1Form.reset();
           contatoP2Form.reset();
           morador.reset();
-          setAlert('Cadastro realizado com sucesso')
+          activeToast("Cadastro realizado com sucesso", "success");
           setCadastroRealizado(true);
           /*   setTimeout(() => {
             navigate("/");
           }, 1000); */
+        } else {
+          activeToast(error, "error");
         }
       }
       postUser();
     } else {
-      setStatusCadastro("Verifique se todos os campos estao preenchidos");
+      activeToast(
+        "Por Favor, Preencha todos os campos obrigatórios",
+        "warning"
+      );
     }
   }
 
   return (
-    <section
-      ref={modalContainerPost}
-      className={styles.containerModal}
-    >
-      <form ref={formRef} className={`${styles.containerForm} animation-opacity`}>
-        {loading ? (<LoadingCenterComponent />) : (<div className={styles.cadastroUsuario}>
-              <div className={styles.header}>
-                <Title text="Novo Cadastro" fontSize="3" />
-                <CloseButton
-                  closeModal={closeModal}
-                  CloseContainerPost={CloseContainerPost}
-                />
-              </div>
-
-              <InputText
-                label="Nome Completo*"
-                type="text"
-                id="nome"
-                placeholder="João de Souza"
-                gridColumn="1/4"
-                {...nameForm}
+    <section ref={modalContainerPost} className={styles.containerModal}>
+      <form
+        ref={formRef}
+        className={`${styles.containerForm} animation-opacity`}
+      >
+        {loading ? (
+          <LoadingCenterComponent />
+        ) : (
+          <div className={styles.cadastroUsuario}>
+            <div className={styles.header}>
+              <Title text="Novo Cadastro" fontSize="3" />
+              <CloseButton
+                closeModal={closeModal}
+                CloseContainerPost={CloseContainerPost}
               />
-              <InputText
-                label="Email*"
-                type="email"
-                id="email"
-                placeholder="joao@email.com"
-                gridColumn="1/2"
-                {...emailForm}
-              />
-              <InputText
-                label="Senha*"
-                type="password"
-                id="password"
-                gridColumn="2/4"
-                {...senhaForm}
-              />
-              <InputText
-                label="Contato Pessoal*"
-                type="text"
-                id="contato_pessoal_01"
-                gridColumn="1/2"
-                placeholder="(xx) xxxxx-xxxx"
-                {...contatoP1Form}
-              />
-              {userAuth.status &&
-                userAuth.rule === 3 && ( //somente ADM
-                  <InputText
-                    label="Contato Pessoal 2"
-                    type="text"
-                    id="contato_pessoal_02"
-                    placeholder="(xx) xxxxx-xxxx"
-                    {...contatoP2Form}
-                  />
-                )}
-              <InputText
-                label="Contato Negocio*"
-                type="text"
-                id="contato_negocio_01 "
-                placeholder="(xx) xxxxx-xxxx"
-                gridColumn="2/4"
-                {...contatoN1Form}
-              />
-              {userAuth.status &&
-                userAuth.rule === 3 && ( //somente ADM
-                  <InputText
-                    label="Contato Negocio 2"
-                    type="text"
-                    id="contato_negocio_02"
-                    placeholder="(xx) xxxxx-xxxx"
-                    {...contatoN2Form}
-                  />
-                )}
-              <InputText
-                label="Morador (Anos)"
-                type="number"
-                id="tempo_reside"
-                placeholder="Tempo que reside em Taiaçupeba"
-                gridColumn="1/2"
-                {...morador}
-              />
-
-              <span
-                className={styles.possuiConta}
-                onClick={() => {
-                  setModal(false);
-                  setModal("modalLogin");
-                }}
-              >
-                Ja possuo uma conta
-              </span>
-              <Button handleSubmit={handleSubmit}>
-                {loading ? "Salvando..." : "Salvar"}
-              </Button>
             </div>
-          
+
+            <InputText
+              label="Nome Completo*"
+              type="text"
+              id="nome"
+              placeholder="João de Souza"
+              gridColumn="1/4"
+              {...nameForm}
+            />
+            <InputText
+              label="Email*"
+              type="email"
+              id="email"
+              placeholder="joao@email.com"
+              gridColumn="1/2"
+              {...emailForm}
+            />
+            <InputText
+              label="Senha*"
+              type="password"
+              id="password"
+              gridColumn="2/4"
+              {...senhaForm}
+            />
+            <InputText
+              label="Contato Pessoal*"
+              type="text"
+              id="contato_pessoal_01"
+              gridColumn="1/2"
+              placeholder="(xx) xxxxx-xxxx"
+              {...contatoP1Form}
+            />
+            {userAuth.status &&
+              userAuth.rule === 3 && ( //somente ADM
+                <InputText
+                  label="Contato Pessoal 2"
+                  type="text"
+                  id="contato_pessoal_02"
+                  placeholder="(xx) xxxxx-xxxx"
+                  {...contatoP2Form}
+                />
+              )}
+            <InputText
+              label="Contato Negocio*"
+              type="text"
+              id="contato_negocio_01 "
+              placeholder="(xx) xxxxx-xxxx"
+              gridColumn="2/4"
+              {...contatoN1Form}
+            />
+            {userAuth.status &&
+              userAuth.rule === 3 && ( //somente ADM
+                <InputText
+                  label="Contato Negocio 2"
+                  type="text"
+                  id="contato_negocio_02"
+                  placeholder="(xx) xxxxx-xxxx"
+                  {...contatoN2Form}
+                />
+              )}
+            <InputText
+              label="Morador (Anos)"
+              type="number"
+              id="tempo_reside"
+              placeholder="Tempo que reside em Taiaçupeba"
+              gridColumn="1/2"
+              {...morador}
+            />
+
+            <span
+              className={styles.possuiConta}
+              onClick={() => {
+                setModal(false);
+                setModal("modalLogin");
+              }}
+            >
+              Ja possuo uma conta
+            </span>
+            <Button handleSubmit={handleSubmit}>
+              {loading ? "Salvando..." : "Salvar"}
+            </Button>
+          </div>
         )}
       </form>
-      {error && <Toast message={error} color="tomato" />}
-              {statusCadastro && (
-                <Toast message={statusCadastro} color="green" />
-              )}
       {cadastroRealizado && (
         <ModalAlert title="Cadastro Realizado" mensagem="Cadastrar serviço?" />
       )}

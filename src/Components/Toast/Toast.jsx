@@ -4,6 +4,8 @@ import styles from "./Toast.module.css";
 const Toast = ({ message,color }) => {
   const [visible, setVisible] = useState(true);
 
+
+
   useEffect(() => {
     setTimeout(() => {
       setVisible(false);
