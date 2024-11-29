@@ -34,8 +34,7 @@ const CadastroUsuario = () => {
   function closeModal(event) {
     event.preventDefault();
     setModal("");
-    const overflow = document.querySelector("body");
-    overflow.classList.remove("overFlow");
+   
   }
 
   //==============Puxa rules da api=================//

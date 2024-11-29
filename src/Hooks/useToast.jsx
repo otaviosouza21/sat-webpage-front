@@ -21,7 +21,6 @@ const useToast = ( ) => {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      theme: "dark",
       theme: "colored",
       style: {
         backgroundColor: typeTotastColor()

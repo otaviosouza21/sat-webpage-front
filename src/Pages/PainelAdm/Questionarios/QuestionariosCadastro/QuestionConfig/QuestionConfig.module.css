@@ -1,0 +1,20 @@
+.container{
+    display: flex;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 50vw;
+  max-width: 1200px;
+  min-height: 50vh;
+  margin: 20px;
+  padding: 30px;
+  gap: 30px;
+  border-radius: 10px;
+  overflow-y: auto !important;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.13);
+  background-color: hsla(0, 0%, 100%, 0.979);
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+}

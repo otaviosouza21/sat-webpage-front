@@ -68,3 +68,8 @@
   align-self: flex-start;
   gap: 10px;
 }
+
+.header{
+  display: flex;
+  align-items: center;
+}
