@@ -35,6 +35,7 @@ const Servicos = () => {
     setInputPesquisa,
   } = useContext(GlobalContext);
 
+  //valida login
   useEffect(() => {
     document.title = "SAT | Serviços";
     const token = window.localStorage.getItem("token");
@@ -55,41 +56,47 @@ const Servicos = () => {
   }, []);
 
   useEffect(() => {
-    const { url, options } = GET_INNER("servico", "usuario", pageServicos);
+    const { url, options } = GET_INNER("categoria", "servicos");
+    // const { url, options } = GET_INNER("servico", "usuario", pageServicos);
     async function getServicoUsuario() {
       const { json, response } = await request(url, options);
-      if (response.ok) {
-        setServicos(json.servicos.retorno);
-        setLastPage(json.paginacao.total_Pages);
+      if (response.ok) {        
+        setServicos(json);
+        // setLastPage(json.paginacao.total_Pages);
         setnotFind(null);
       }
     }
     getServicoUsuario();
   }, []);
 
-  async function paginacao(page) {
-    setPageServicos(page);
-    const { url, options } = GET_INNER("servico", "usuario", page);
-    const { response, json } = await request(url, options);
-    if (response.ok) {
-      setServicos(json.servicos.retorno);
-      setLastPage(json.paginacao.total_Pages);
-      setnotFind(null);
-    }
-  }
-  async function paginacao2(page) {
-    setPageServicos(page);
-    const { url, options } = GET_INNER_SEARCH(
-      "servico",
-      "usuario",
-      page,
-      inputPesquisa
-    );
-    const { json, response } = await request(url, options);
-    setServicos(json.servicos.retorno);
-    setLastPage(json.paginacao.total_Pages);
-    setnotFind(null);
-  }
+  useEffect(()=>{
+    console.log(servicos);
+    
+  },[servicos])
+
+  // async function paginacao(page) {
+  //   setPageServicos(page);
+  //   const { url, options } = GET_INNER("servico", "usuario", page);
+  //   const { response, json } = await request(url, options);
+  //   if (response.ok) {
+  //     setServicos(json.servicos.retorno);
+  //     setLastPage(json.paginacao.total_Pages);
+  //     setnotFind(null);
+  //   }
+  // }
+  // async function paginacao2(page) {
+  //   setPageServicos(page);
+  //   const { url, options } = GET_INNER_SEARCH(
+  //     "servico",
+  //     "usuario",
+  //     page,
+  //     inputPesquisa
+  //   );
+  //   const { json, response } = await request(url, options);
+  //   setServicos(json.servicos.retorno);
+  //   setLastPage(json.paginacao.total_Pages);
+  //   setnotFind(null);
+  // }
 
   if (loading) return <Loading />;
   if (error) return <Error error={error} />;
@@ -100,15 +107,34 @@ const Servicos = () => {
           <Title text="Buscar Profissionais" fontSize="3" />
           <InputSearch placeholder="Busque um serviço" option="nome_negocio" />
         </div>
-        <div className={styles.servicosGrid}>
-          {servicos &&
-            servicos.map((servico) => {
-              return servico.status ? (
-                <ServicoContainer key={servico.id} servicosData={servico} />
-              ) : null;
-            })}
+        <div className={''}>
+        {servicos &&
+            servicos.map((servico) =>{
+
+              let categoria = {nome: servico.nome, cor:servico.cor_categoria}
+
+              return servico.Servicos.length && servico.Servicos.find(servico => servico.status)?
+              (
+                <div key={servico.id} className={`${styles.rowCategoriaServicos} animeLeft`}>
+                <div className={styles.infoRowCategoria}>
+                  <span 
+                    className={styles.categoriaName}
+                    style={{ background: servico.cor_categoria }}
+                    >{servico.nome}</span>
+                  <span className={styles.verMais}>Ver mais</span>
+                </div>
+                <div className={`${styles.containerServicosArray} `}>
+                  {servico.Servicos.map((servico)=>{
+                    return servico.status ? <ServicoContainer key={servico.id} servicosData={servico} categoria={categoria}/>
+                    :null
+                  }
+            )}
+                </div>
+              </div>
+            ):null;
+          })}
         </div>
-        {inputPesquisa.length === 0 && (
+        {/* {inputPesquisa.length === 0 && (
           <Paginacao
             paginacao={paginacao}
             page={pageServicos}
@@ -121,7 +147,7 @@ const Servicos = () => {
             page={pageServicos}
             lastPage={lastPage}
           />
-        )}
+        )} */}
       </section>
     </main>
   );

@@ -14,37 +14,37 @@ const
 
 
   
-  useEffect(()=>{
-    if(inputPesquisa.length > 0){
-      async function handleSearch(){
-        const { url, options } = GET_INNER_SEARCH("servico", "usuario",pageServicos,inputPesquisa);
-        const {json,response} = await request(url, options);
-        if(response.ok){
-          setServicos(json.servicos.retorno);
-          setLastPage(json.paginacao.total_Pages)
-        }else{
-          setServicos(null);
-          setLastPage(1)
-          setnotFind(error)    
-        }
-      }
-      handleSearch();
-    }else{
-      async function handleSearch(){
-      const { url, options } = GET_INNER("servico", "usuario",pageServicos);
-      const {json,response} = await request(url, options);
-      if(response.ok){
-        setServicos(json.servicos.retorno);
-        setLastPage(json.paginacao.total_Pages)
-      }else{
-        setServicos(null);
-        setLastPage(1)
-        setnotFind(error)    
-      }
-    }
-    handleSearch();
-  }
-  },[inputPesquisa])
+  // useEffect(()=>{
+  //   if(inputPesquisa.length > 0){
+  //     async function handleSearch(){
+  //       const { url, options } = GET_INNER_SEARCH("servico", "usuario",pageServicos,inputPesquisa);
+  //       const {json,response} = await request(url, options);
+  //       if(response.ok){
+  //         setServicos(json.servicos.retorno);
+  //         setLastPage(json.paginacao.total_Pages)
+  //       }else{
+  //         setServicos(null);
+  //         setLastPage(1)
+  //         setnotFind(error)    
+  //       }
+  //     }
+  //     handleSearch();
+  //   }else{
+  //     async function handleSearch(){
+  //     const { url, options } = GET_INNER("servico", "usuario",pageServicos);
+  //     const {json,response} = await request(url, options);
+  //     if(response.ok){
+  //       setServicos(json.servicos.retorno);
+  //       setLastPage(json.paginacao.total_Pages)
+  //     }else{
+  //       setServicos(null);
+  //       setLastPage(1)
+  //       setnotFind(error)    
+  //     }
+  //   }
+  //   handleSearch();
+  // }
+  // },[inputPesquisa])
  
 
   return (

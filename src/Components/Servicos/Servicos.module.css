@@ -4,15 +4,48 @@
   min-height: 600px;
   gap: 30px;
   position: relative;
-
 }
 
 .servicosGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 450px;
-  
   gap: 30px;
+}
+
+.rowCategoriaServicos{
+  margin-bottom: 20px;
+  padding:  0 20px;
+}
+
+.infoRowCategoria{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categoriaName{
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 7px;
+}
+
+.verMais{
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.containerServicosArray{
+  display: flex;
+  padding-left: 10px;
+  margin-top: 5px;
+  gap: 20px;
+  height: 220px;
+  align-items: start;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 @media (max-width: 970px) {
