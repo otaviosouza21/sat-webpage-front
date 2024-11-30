@@ -26,10 +26,10 @@ const QuestionConfig = ({ setQuestionList }) => {
     if (titleForm.validate(), descricaoForm.validate()) {
       setQuestionList((prevQuestions) => {
         const question = {
-          title: titleForm.value,
+          titulo: titleForm.value,
           descricao: descricaoForm.value,
-          tipo_resposta: showInputOptions === 1 ? 'Texto' : 'MultiRespostas',
-          possui_sub_pergunta: showInputOptions === 1 ? false : true
+          tipo_resposta: showInputOptions === 2 ? 'Texto' : 'MultiRespostas',
+          possui_sub_pergunta: showInputOptions === 2 ? false : true
         }
         return [...prevQuestions, question];
       });
@@ -43,7 +43,7 @@ const QuestionConfig = ({ setQuestionList }) => {
       ref={formRef}
     >
       <div className={styles.header}>
-        <Title text="Nova Pergunta" fontSize="3" />
+        <Title text="Nova Pergunta" fontSize="2" />
         <CloseButton
           closeModal={setModal}
           /* closeModal={closeModal}

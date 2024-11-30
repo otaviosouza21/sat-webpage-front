@@ -14,13 +14,14 @@ import useToast from "../../../../Hooks/useToast";
 import QuestionConfig from "./QuestionConfig/QuestionConfig";
 import ModalScreen from "../../../../Components/ModalScreen/ModalScreen";
 import { GlobalContext } from "../../../../Hooks/GlobalContext";
-import QuestionCard from './QuestionCard/QuestionCard'
+import QuestionCard from "./QuestionCard/QuestionCard";
 
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
   const { setModal, modal } = useContext(GlobalContext);
-  const [questionList,setQuestionList] = useState([])
+  const [questionList, setQuestionList] = useState([]);
+  const [fimVigencia, setFimVigencia] = useState(false);
 
   const activeToast = useToast();
 
@@ -46,13 +47,20 @@ const QuestionariosCadastro = () => {
       tipoForm.validate() &&
       userAuth.status // apenas cadastrar com usuario logado/autenticado
     ) {
+      if (vigenciaInicioForm.value > vigenciaFimForm.value) {
+        return activeToast("Inicio da vigencia maior do que o fim", "warning");
+      }
+
       const dataQuestionario = {
-        titulo: tituloForm.value,
-        descricao: descricaoForm.value,
-        vigencia_inicio: vigenciaInicioForm.value,
-        vigencia_fim: vigenciaFimForm.value,
-        usuario_id: userAuth.usuario.id,
-        tipo: tipoForm.value,
+        form: {
+          titulo: tituloForm.value,
+          descricao: descricaoForm.value,
+          vigencia_inicio: vigenciaInicioForm.value,
+          vigencia_fim: vigenciaFimForm.value,
+          usuario_id: userAuth.usuario.id,
+          tipo: tipoForm.value,
+        },
+        question: [...questionList],
       };
 
       async function postQuestionario() {
@@ -75,10 +83,16 @@ const QuestionariosCadastro = () => {
     }
   }
 
+  function handleChangeCheckbox() {
+    setFimVigencia(!fimVigencia);
+  }
+
+  console.log(fimVigencia);
+  
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-      {/*   <Title text="Cadastrar Questionário" fontSize="1" /> */}
+        <Title text="Cadastrar Questionário" fontSize="3" />
         <span onClick={() => navigation(-1)}>Voltar</span>
       </div>
       <form className={styles.form}>
@@ -89,19 +103,22 @@ const QuestionariosCadastro = () => {
           label="Vigencia Inicio"
           gridColumn="3"
         />
-        <InputText
-          {...vigenciaFimForm}
-          type="date"
-          label="Vigencia Fim"
-          gridColumn="4"
-        />
+        <div>
+          <input checked={fimVigencia} onChange={handleChangeCheckbox} type="checkbox" />
+          <InputText
+            {...vigenciaFimForm}
+            type="date"
+            label="Vigencia Fim"
+            gridColumn="4"
+          />
+        </div>
         <InputText {...descricaoForm} label="Descrição" gridColumn="1/5" />
         <InputText {...tipoForm} label="Tipo" gridColumn="1/5" />
       </form>
       <div className={styles.line}></div>
       <div className={styles.newQuestions}>
         <div className={styles.header}>
-          {/* <Title text="Perguntas" fontSize="3" /> */}
+          <Title text="Perguntas" fontSize="2" />
           <div
             onClick={() => setModal("show-QuestionConfig")}
             className={styles.button}
@@ -110,11 +127,13 @@ const QuestionariosCadastro = () => {
             Nova Pergunta
           </div>
         </div>
-        <ul className={styles.questionsList}></ul>
+        <ul className={styles.questionsList}>
+          {questionList.map((question) => {
+            return <QuestionCard text={question.titulo} />;
+          })}
+        </ul>
       </div>
-      {questionList.map((question)=>{
-        return <QuestionCard text={question.title} />
-      })}
+
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}
       </Button>
