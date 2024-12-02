@@ -15,6 +15,7 @@ import QuestionConfig from "./QuestionConfig/QuestionConfig";
 import ModalScreen from "../../../../Components/ModalScreen/ModalScreen";
 import { GlobalContext } from "../../../../Hooks/GlobalContext";
 import QuestionCard from "./QuestionCard/QuestionCard";
+import QuestionCard from "./QuestionCard/QuestionCard";
 
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
@@ -47,6 +48,10 @@ const QuestionariosCadastro = () => {
       tipoForm.validate() &&
       userAuth.status // apenas cadastrar com usuario logado/autenticado
     ) {
+      if (vigenciaInicioForm.value > vigenciaFimForm.value) {
+        return activeToast("Inicio da vigencia maior do que o fim", "warning");
+      }
+
       const dataQuestionario = {
           form: {
             titulo: tituloForm.value,
@@ -85,6 +90,12 @@ const QuestionariosCadastro = () => {
     }
   }
 
+  function handleChangeCheckbox() {
+    setFimVigencia(!fimVigencia);
+  }
+
+  console.log(fimVigencia);
+  
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -99,19 +110,22 @@ const QuestionariosCadastro = () => {
           label="Vigencia Inicio"
           gridColumn="3"
         />
-        <InputText
-          {...vigenciaFimForm}
-          type="date"
-          label="Vigencia Fim"
-          gridColumn="4"
-        />
+        <div>
+          <input checked={fimVigencia} onChange={handleChangeCheckbox} type="checkbox" />
+          <InputText
+            {...vigenciaFimForm}
+            type="date"
+            label="Vigencia Fim"
+            gridColumn="4"
+          />
+        </div>
         <InputText {...descricaoForm} label="Descrição" gridColumn="1/5" />
         <InputText {...tipoForm} label="Tipo" gridColumn="1/5" />
       </form>
       <div className={styles.line}></div>
       <div className={styles.newQuestions}>
         <div className={styles.header}>
-          {/* <Title text="Perguntas" fontSize="3" /> */}
+          <Title text="Perguntas" fontSize="2" />
           <div
             onClick={() => setModal("show-QuestionConfig")}
             className={styles.button}
@@ -120,7 +134,11 @@ const QuestionariosCadastro = () => {
             Nova Pergunta
           </div>
         </div>
-        <ul className={styles.questionsList}></ul>
+        <ul className={styles.questionsList}>
+          {questionList.map((question) => {
+            return <QuestionCard text={question.titulo} />;
+          })}
+        </ul>
       </div>
       {questionList.map((question,idx) => {
         return <QuestionCard key={idx} text={question.titulo} />;

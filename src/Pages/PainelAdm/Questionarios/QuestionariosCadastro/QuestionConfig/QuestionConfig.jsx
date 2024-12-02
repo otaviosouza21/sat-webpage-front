@@ -28,6 +28,7 @@ const QuestionConfig = ({ setQuestionList }) => {
       setQuestionList((prevQuestions) => {
         const question = {
           titulo: titleForm.value,
+          titulo: titleForm.value,
           descricao: descricaoForm.value,
           tipo_resposta:  formRef.current['tipo_resposta'].value === '1' ? 'Texto' : 'MultiRespostas',
           possui_sub_pergunta: formRef.current['tipo_resposta'].value  === '1' ? false : true
@@ -46,7 +47,7 @@ const QuestionConfig = ({ setQuestionList }) => {
       ref={formRef}
     >
       <div className={styles.header}>
-        <Title text="Nova Pergunta" fontSize="3" />
+        <Title text="Nova Pergunta" fontSize="2" />
         <CloseButton
           closeModal={setModal}
           /* closeModal={closeModal}
