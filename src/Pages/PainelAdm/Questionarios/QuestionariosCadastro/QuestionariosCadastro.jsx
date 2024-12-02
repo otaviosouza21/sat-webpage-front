@@ -14,13 +14,14 @@ import useToast from "../../../../Hooks/useToast";
 import QuestionConfig from "./QuestionConfig/QuestionConfig";
 import ModalScreen from "../../../../Components/ModalScreen/ModalScreen";
 import { GlobalContext } from "../../../../Hooks/GlobalContext";
-import QuestionCard from './QuestionCard/QuestionCard'
+import QuestionCard from "./QuestionCard/QuestionCard";
 
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
   const { setModal, modal } = useContext(GlobalContext);
-  const [questionList,setQuestionList] = useState([])
+  const [questionList, setQuestionList] = useState([]);
+
 
   const activeToast = useToast();
 
@@ -47,13 +48,18 @@ const QuestionariosCadastro = () => {
       userAuth.status // apenas cadastrar com usuario logado/autenticado
     ) {
       const dataQuestionario = {
-        titulo: tituloForm.value,
-        descricao: descricaoForm.value,
-        vigencia_inicio: vigenciaInicioForm.value,
-        vigencia_fim: vigenciaFimForm.value,
-        usuario_id: userAuth.usuario.id,
-        tipo: tipoForm.value,
-      };
+          form: {
+            titulo: tituloForm.value,
+            descricao: descricaoForm.value,
+            vigencia_inicio: vigenciaInicioForm.value,
+            vigencia_fim: vigenciaFimForm.value,
+            usuario_id: userAuth.usuario.id,
+            tipo: tipoForm.value,
+          },
+          question: questionList
+        }
+      
+        
 
       async function postQuestionario() {
         const { url, options } = POST_DATA("formularios", dataQuestionario);
@@ -65,12 +71,16 @@ const QuestionariosCadastro = () => {
           descricaoForm.reset();
           tipoForm.reset();
           activeToast("Questionário cadastrado", "success");
+          setTimeout(()=>{
+            navigation(-1)
+          },2000)
         } else {
           activeToast(error, "error");
         }
       }
       postQuestionario();
     } else {
+      
       activeToast("Preencha os campos obrigatórios", "warning");
     }
   }
@@ -78,7 +88,7 @@ const QuestionariosCadastro = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-      {/*   <Title text="Cadastrar Questionário" fontSize="1" /> */}
+        {/*   <Title text="Cadastrar Questionário" fontSize="1" /> */}
         <span onClick={() => navigation(-1)}>Voltar</span>
       </div>
       <form className={styles.form}>
@@ -112,8 +122,8 @@ const QuestionariosCadastro = () => {
         </div>
         <ul className={styles.questionsList}></ul>
       </div>
-      {questionList.map((question)=>{
-        return <QuestionCard text={question.title} />
+      {questionList.map((question,idx) => {
+        return <QuestionCard key={idx} text={question.titulo} />;
       })}
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}

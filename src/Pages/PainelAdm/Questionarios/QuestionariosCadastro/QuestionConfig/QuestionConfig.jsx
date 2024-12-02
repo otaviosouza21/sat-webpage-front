@@ -22,15 +22,18 @@ const QuestionConfig = ({ setQuestionList }) => {
   const descricaoForm = useForm();
 
   const handleClick = () => {
-
+   formRef.current['tipo_resposta'].value
+    
     if (titleForm.validate(), descricaoForm.validate()) {
       setQuestionList((prevQuestions) => {
         const question = {
-          title: titleForm.value,
+          titulo: titleForm.value,
           descricao: descricaoForm.value,
-          tipo_resposta: showInputOptions === 1 ? 'Texto' : 'MultiRespostas',
-          possui_sub_pergunta: showInputOptions === 1 ? false : true
+          tipo_resposta:  formRef.current['tipo_resposta'].value === '1' ? 'Texto' : 'MultiRespostas',
+          possui_sub_pergunta: formRef.current['tipo_resposta'].value  === '1' ? false : true
         }
+      
+        
         return [...prevQuestions, question];
       });
        setModal('') 
@@ -53,6 +56,7 @@ const QuestionConfig = ({ setQuestionList }) => {
       <InputText {...titleForm} label="Titulo da pergunta" />
       <InputText {...descricaoForm} label="Descrição" />
       <InputSelect
+    
         label="Tipo de Entrada"
         id="tipo_resposta"
         options={[

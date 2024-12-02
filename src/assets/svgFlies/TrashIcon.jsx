@@ -1,8 +1,9 @@
 import React from "react";
 
-const TrashIcon = ({color,size}) => {
+const TrashIcon = ({color,size, onclick}) => {
   return (
     <svg
+    onClick={onclick}
       width={size}
       height={size}
       viewBox="0 0 24 24"
