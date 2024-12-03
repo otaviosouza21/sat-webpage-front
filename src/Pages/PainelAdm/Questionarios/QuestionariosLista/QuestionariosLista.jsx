@@ -10,13 +10,13 @@ import TrashIcon from '../../../../assets/svgFlies/TrashIcon';
 import PenIcon from '../../../../assets/svgFlies/PenIcon';
 import useTokenValidate from "../../../../Hooks/useTokenValidate";
 import { useToast } from "react-toastify";
-const activeToast = useToast();
+
 
 const QuestionariosLista = () => {
   const { request, loading, error } = useFetch();
   const [formulariosData, setFormulariosData] = useState([]);
   const { fetchValidaToken, userAuth } = useTokenValidate();
-  const activeToast = useToast();
+ /*  const activeToast = useToast(); */
 
   useEffect(() => {
     fetchValidaToken();
@@ -37,7 +37,7 @@ const QuestionariosLista = () => {
   async function handleDelete(id){
     const { url, options } = DELETE_DATA("formularios", id);
     const questionarioRequest = await request(url, options);
-    activeToast("Questionário cadastrado", "success");
+    /* activeToast("Questionário cadastrado", "success"); */
     
   }
 
@@ -54,7 +54,7 @@ const QuestionariosLista = () => {
         {formulariosData ? (
           formulariosData.map((form, index) => {
             return (
-              <li className={styles.card}>
+              <li key={index} className={styles.card}>
                 <h4>{form.titulo}</h4>
                 <p>{form.descricao}</p>
                 <div className={styles.data}>

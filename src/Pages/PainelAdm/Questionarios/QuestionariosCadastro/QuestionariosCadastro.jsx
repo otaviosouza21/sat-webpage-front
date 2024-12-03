@@ -15,7 +15,7 @@ import QuestionConfig from "./QuestionConfig/QuestionConfig";
 import ModalScreen from "../../../../Components/ModalScreen/ModalScreen";
 import { GlobalContext } from "../../../../Hooks/GlobalContext";
 import QuestionCard from "./QuestionCard/QuestionCard";
-import QuestionCard from "./QuestionCard/QuestionCard";
+
 
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();

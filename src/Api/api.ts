@@ -1,5 +1,5 @@
 const PORT = 3333;
-const URL = "http://localhost:3000";
+const URL = "http://localhost:3333";
 
 export interface PropsApiReturn {
   url: string;

@@ -28,7 +28,6 @@ const QuestionConfig = ({ setQuestionList }) => {
       setQuestionList((prevQuestions) => {
         const question = {
           titulo: titleForm.value,
-          titulo: titleForm.value,
           descricao: descricaoForm.value,
           tipo_resposta:  formRef.current['tipo_resposta'].value === '1' ? 'Texto' : 'MultiRespostas',
           possui_sub_pergunta: formRef.current['tipo_resposta'].value  === '1' ? false : true
