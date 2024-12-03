@@ -11,7 +11,6 @@ const QuestionCard = ({text}) => {
         <h3>{text}</h3>
         <TrashIcon color={"#FFFFFF"} size={"30px"} />
         <PenIcon color={"#FFFFFF"} size={"30px"} />
-        
     </div>
   )
 }

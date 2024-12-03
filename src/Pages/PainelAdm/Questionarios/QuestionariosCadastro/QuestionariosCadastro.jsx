@@ -94,7 +94,7 @@ const QuestionariosCadastro = () => {
     setFimVigencia(!fimVigencia);
   }
 
-  console.log(fimVigencia);
+
   
   return (
     <div className={styles.container}>
@@ -111,7 +111,7 @@ const QuestionariosCadastro = () => {
           gridColumn="3"
         />
         <div>
-          <input checked={fimVigencia} onChange={handleChangeCheckbox} type="checkbox" />
+          <input /* checked={fimVigencia} */ onChange={handleChangeCheckbox} type="checkbox" />
           <InputText
             {...vigenciaFimForm}
             type="date"
@@ -136,13 +136,10 @@ const QuestionariosCadastro = () => {
         </div>
         <ul className={styles.questionsList}>
           {questionList.map((question) => {
-            return <QuestionCard text={question.titulo} />;
+            return <QuestionCard key={question.id} text={question.titulo} />;
           })}
         </ul>
       </div>
-      {questionList.map((question,idx) => {
-        return <QuestionCard key={idx} text={question.titulo} />;
-      })}
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}
       </Button>

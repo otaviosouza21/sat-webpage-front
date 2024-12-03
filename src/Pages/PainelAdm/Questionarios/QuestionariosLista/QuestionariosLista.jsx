@@ -4,23 +4,30 @@ import Plus from "../../../../assets/icons/plus.svg";
 import styles from "./QuestionarioLista.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../../../Hooks/useFetch";
-import { DELETE_DATA, GET_ALL } from "../../../../Api/api";
+import {
+  DELETE_DATA,
+  DELETE_DATA_FORM,
+  GET_ALL,
+  GET_TO_WHERE,
+} from "../../../../Api/api";
 import { convertData } from "../../../../plugins/convertData";
-import TrashIcon from '../../../../assets/svgFlies/TrashIcon';
-import PenIcon from '../../../../assets/svgFlies/PenIcon';
+import TrashIcon from "../../../../assets/svgFlies/TrashIcon";
+import PenIcon from "../../../../assets/svgFlies/PenIcon";
 import useTokenValidate from "../../../../Hooks/useTokenValidate";
-import { useToast } from "react-toastify";
-
+import useToast from "../../../../Hooks/useToast";
 
 const QuestionariosLista = () => {
   const { request, loading, error } = useFetch();
   const [formulariosData, setFormulariosData] = useState([]);
   const { fetchValidaToken, userAuth } = useTokenValidate();
- /*  const activeToast = useToast(); */
+  const [update,setUpdate] = useState(false)
+  const activeToast = useToast();
 
   useEffect(() => {
     fetchValidaToken();
   }, [userAuth.rule]);
+
+
 
   useEffect(() => {
     async function postQuestionario() {
@@ -34,11 +41,35 @@ const QuestionariosLista = () => {
     postQuestionario();
   }, []);
 
-  async function handleDelete(id){
-    const { url, options } = DELETE_DATA("formularios", id);
-    const questionarioRequest = await request(url, options);
-    /* activeToast("Questionário cadastrado", "success"); */
-    
+  async function getQuestionsVerify(id) {
+    const { url, options } = GET_TO_WHERE("perguntas", "formulario_id", id);
+    const perguntasGetRequest = await request(url, options);
+    return perguntasGetRequest.json.data;
+  }
+
+  async function handleDelete(id) {
+    const questionsData = await getQuestionsVerify(id);
+
+    if (questionsData.length > 0) {
+      const { url, options } = DELETE_DATA_FORM("perguntas", id);
+      const perguntasRequest = await request(url, options);
+
+      if (perguntasRequest.response.ok) {
+        const { url, options } = DELETE_DATA("formularios", id);
+        const questionarioRequest = await request(url, options);
+        if (questionarioRequest.response.ok) {
+          activeToast("Questionário Deletado com sucesso", "warning");
+          setFormulariosData(prevData => prevData.filter(form => form.id !== id));
+        } else {
+          activeToast("Falha ao deletar questionario", "success");
+        }
+      }
+    } else {
+      const { url, options } = DELETE_DATA("formularios", id);
+      const questionarioRequest = await request(url, options);
+      activeToast("Questionário Deletado com sucesso", "warning");
+      setUpdate(!update)
+    }
   }
 
   return (
@@ -62,8 +93,12 @@ const QuestionariosLista = () => {
                   <span>Fim: {convertData(form.vigencia_fim)}</span>
                 </div>
                 <div className={styles.icons}>
-                 <TrashIcon onclick={()=> handleDelete(form.id)} color={'green'} size="30px" />
-                 <PenIcon  color={'green'} size="30px" />
+                  <TrashIcon
+                    onclick={() => handleDelete(form.id)}
+                    color={"green"}
+                    size="30px"
+                  />
+                  <PenIcon color={"green"} size="30px" />
                 </div>
               </li>
             );

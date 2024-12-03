@@ -54,6 +54,19 @@ export function GET_TO_ID(tableName: string, id: string) : PropsApiReturn {
   };
 }
 
+//=================Retorna registros com WHERE====================//
+export function GET_TO_WHERE(tableName: string, column: string, id: string) : PropsApiReturn {
+  return {
+    url: `${URL}/api/${tableName}/${id}/${column}`,
+    options: {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    },
+  };
+}
+
 //=================Cria novo usuario====================//
 export function POST_DATA_USER(tableName: string, data: Record<string, unknown>) : PropsApiReturn {
   return {
@@ -197,6 +210,19 @@ export function DELETE_DATA(tableName: string, id: number, token: string) : Prop
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+      },
+    },
+  };
+}
+
+//=================[autenticado] Deleta registro====================//
+export function DELETE_DATA_FORM(tableName: string,  id: number) : PropsApiReturn {
+  return {
+    url: `${URL}/api/${tableName}/form/${id}`,
+    options: {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
       },
     },
   };
