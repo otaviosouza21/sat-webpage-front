@@ -99,7 +99,7 @@ const QuestionariosCadastro = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        {/*   <Title text="Cadastrar Questionário" fontSize="1" /> */}
+          <Title text="Cadastrar Questionário" fontSize="3" /> 
         <span onClick={() => navigation(-1)}>Voltar</span>
       </div>
       <form className={styles.form}>
@@ -111,7 +111,7 @@ const QuestionariosCadastro = () => {
           gridColumn="3"
         />
         <div>
-          <input /* checked={fimVigencia} */ onChange={handleChangeCheckbox} type="checkbox" />
+          
           <InputText
             {...vigenciaFimForm}
             type="date"
