@@ -20,20 +20,25 @@ const QuestionConfig = ({ setQuestionList }) => {
 
   const titleForm = useForm();
   const descricaoForm = useForm();
+  const newMultipleResponse = []
 
   const handleClick = () => {
-   formRef.current['tipo_resposta'].value
-    
+    if(formRef.current['tipo_resposta'].value  === '2'){
+      formRef.current['multipleRespose'].forEach((response)=>{
+        newMultipleResponse.push(response.value)
+      })
+    }
+
     if (titleForm.validate(), descricaoForm.validate()) {
       setQuestionList((prevQuestions) => {
         const question = {
           titulo: titleForm.value,
           descricao: descricaoForm.value,
           tipo_resposta:  formRef.current['tipo_resposta'].value === '1' ? 'Texto' : 'MultiRespostas',
-          possui_sub_pergunta: formRef.current['tipo_resposta'].value  === '1' ? false : true
+          possui_sub_pergunta: formRef.current['tipo_resposta'].value  === '1' ? false : true,
+          multipleQuestionOptions: newMultipleResponse.length > 0 ? newMultipleResponse : false
         }
-      
-        
+   
         return [...prevQuestions, question];
       });
        setModal('') 

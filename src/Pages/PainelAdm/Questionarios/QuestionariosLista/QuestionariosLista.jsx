@@ -6,9 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../../../Hooks/useFetch";
 import {
   DELETE_DATA,
-  DELETE_DATA_FORM,
   GET_ALL,
-  GET_TO_WHERE,
 } from "../../../../Api/api";
 import { convertData } from "../../../../plugins/convertData";
 import TrashIcon from "../../../../assets/svgFlies/TrashIcon";
@@ -20,55 +18,34 @@ const QuestionariosLista = () => {
   const { request, loading, error } = useFetch();
   const [formulariosData, setFormulariosData] = useState([]);
   const { fetchValidaToken, userAuth } = useTokenValidate();
-  const [update,setUpdate] = useState(false)
   const activeToast = useToast();
 
   useEffect(() => {
     fetchValidaToken();
   }, [userAuth.rule]);
 
-
-
   useEffect(() => {
-    async function postQuestionario() {
+    async function getQuestionarios() {
       const { url, options } = GET_ALL("formularios");
       const questionarioRequest = await request(url, options);
-
       if (!questionarioRequest.response?.ok)
         throw new Error("Não foi possivel puxar dados");
       setFormulariosData(questionarioRequest.json.data);
     }
-    postQuestionario();
+    getQuestionarios();
   }, []);
 
-  async function getQuestionsVerify(id) {
-    const { url, options } = GET_TO_WHERE("perguntas", "formulario_id", id);
-    const perguntasGetRequest = await request(url, options);
-    return perguntasGetRequest.json.data;
-  }
 
   async function handleDelete(id) {
-    const questionsData = await getQuestionsVerify(id);
-
-    if (questionsData.length > 0) {
-      const { url, options } = DELETE_DATA_FORM("perguntas", id);
-      const perguntasRequest = await request(url, options);
-
-      if (perguntasRequest.response.ok) {
-        const { url, options } = DELETE_DATA("formularios", id);
-        const questionarioRequest = await request(url, options);
-        if (questionarioRequest.response.ok) {
-          activeToast("Questionário Deletado com sucesso", "warning");
-          setFormulariosData(prevData => prevData.filter(form => form.id !== id));
-        } else {
-          activeToast("Falha ao deletar questionario", "success");
-        }
-      }
-    } else {
-      const { url, options } = DELETE_DATA("formularios", id);
-      const questionarioRequest = await request(url, options);
+    const { url, options } = DELETE_DATA("formularios", id);
+    const questionarioRequest = await request(url, options);
+    if (questionarioRequest.response.ok) {
       activeToast("Questionário Deletado com sucesso", "warning");
-      setUpdate(!update)
+      setFormulariosData((prevData) =>
+        prevData.filter((form) => form.id !== id)
+      );
+    } else {
+      activeToast(error, "error");
     }
   }
 

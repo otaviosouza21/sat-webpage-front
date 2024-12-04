@@ -36,6 +36,7 @@ const MultipleResponses = () => {
               placeholder={`Opção ${option.id}`}
               value={option.value}
               onChange={(e) => handleChange(option.id, e.target.value)}
+              id='multipleRespose'
             />
             <img onClick={() => OptionDelete(option.id) } src={sub} alt="" />
           </div>

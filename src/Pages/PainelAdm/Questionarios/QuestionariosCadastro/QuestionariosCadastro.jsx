@@ -67,6 +67,12 @@ const QuestionariosCadastro = () => {
         
 
       async function postQuestionario() {
+        
+        if(dataQuestionario.question.length < 1){
+          window.alert('Por favor, insira pelo menos uma pergunta')
+          return
+        }
+
         const { url, options } = POST_DATA("formularios", dataQuestionario);
         const questionarioRequest = await request(url, options);
         if (questionarioRequest.response.ok) {
@@ -135,8 +141,8 @@ const QuestionariosCadastro = () => {
           </div>
         </div>
         <ul className={styles.questionsList}>
-          {questionList.map((question) => {
-            return <QuestionCard key={question.id} text={question.titulo} />;
+          {questionList.map((question,index) => {
+            return <QuestionCard key={index} text={question.titulo} />;
           })}
         </ul>
       </div>

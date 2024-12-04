@@ -215,7 +215,7 @@ export function DELETE_DATA(tableName: string, id: number, token: string) : Prop
   };
 }
 
-//=================[autenticado] Deleta registro====================//
+/* //=================[autenticado] Deleta registro====================//
 export function DELETE_DATA_FORM(tableName: string,  id: number) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/form/${id}`,
@@ -226,7 +226,7 @@ export function DELETE_DATA_FORM(tableName: string,  id: number) : PropsApiRetur
       },
     },
   };
-}
+} */
 
 //=================Envia email para reset de senha====================//
 export function RECOVER_PASSWORD(tableName: string, email: string) : PropsApiReturn {
