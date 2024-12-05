@@ -65,7 +65,6 @@ const QuestionariosCadastro = () => {
         }
       
         
-
       async function postQuestionario() {
         
         if(dataQuestionario.question.length < 1){

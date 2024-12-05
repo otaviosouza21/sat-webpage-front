@@ -25,7 +25,7 @@ const QuestionConfig = ({ setQuestionList }) => {
   const handleClick = () => {
     if(formRef.current['tipo_resposta'].value  === '2'){
       formRef.current['multipleRespose'].forEach((response)=>{
-        newMultipleResponse.push(response.value)
+        newMultipleResponse.push({titulo: response.value})
       })
     }
 
