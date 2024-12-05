@@ -4,7 +4,6 @@ import style from './LoadingDots.module.css'
 const LoadingDots = () => {
   return (
     <div className={style.loading}>
-      
     </div>
   )
 }

@@ -4,15 +4,14 @@ import Plus from "../../../../assets/icons/plus.svg";
 import styles from "./QuestionarioLista.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../../../Hooks/useFetch";
-import {
-  DELETE_DATA,
-  GET_ALL,
-} from "../../../../Api/api";
+import { DELETE_DATA, GET_ALL } from "../../../../Api/api";
 import { convertData } from "../../../../plugins/convertData";
 import TrashIcon from "../../../../assets/svgFlies/TrashIcon";
 import PenIcon from "../../../../assets/svgFlies/PenIcon";
 import useTokenValidate from "../../../../Hooks/useTokenValidate";
 import useToast from "../../../../Hooks/useToast";
+import LoadingDots from "../../../../Components/Utils/LoadingDots/LoadingDots";
+import LoadingCenterComponent from '../../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent'
 
 const QuestionariosLista = () => {
   const { request, loading, error } = useFetch();
@@ -35,7 +34,6 @@ const QuestionariosLista = () => {
     getQuestionarios();
   }, []);
 
-
   async function handleDelete(id) {
     const { url, options } = DELETE_DATA("formularios", id);
     const questionarioRequest = await request(url, options);
@@ -48,7 +46,8 @@ const QuestionariosLista = () => {
       activeToast(error, "error");
     }
   }
-
+  if (loading) return <LoadingCenterComponent />;
+  if (error) return <p>Não foi possivel carregar dados</p>
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -59,7 +58,7 @@ const QuestionariosLista = () => {
         </Link>
       </div>
       <ul className={styles.cards}>
-        {formulariosData ? (
+        {formulariosData.length > 0 ? (
           formulariosData.map((form, index) => {
             return (
               <li key={index} className={styles.card}>
@@ -81,7 +80,7 @@ const QuestionariosLista = () => {
             );
           })
         ) : (
-          <p>Impossivel exibir dados</p>
+          <p style={{ margin: "16px 0" }}>Sem formularios cadastrados</p>
         )}
       </ul>
     </div>

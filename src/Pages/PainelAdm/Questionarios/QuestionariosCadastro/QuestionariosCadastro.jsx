@@ -16,13 +16,11 @@ import ModalScreen from "../../../../Components/ModalScreen/ModalScreen";
 import { GlobalContext } from "../../../../Hooks/GlobalContext";
 import QuestionCard from "./QuestionCard/QuestionCard";
 
-
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
   const { setModal, modal } = useContext(GlobalContext);
   const [questionList, setQuestionList] = useState([]);
-
 
   const activeToast = useToast();
 
@@ -53,23 +51,21 @@ const QuestionariosCadastro = () => {
       }
 
       const dataQuestionario = {
-          form: {
-            titulo: tituloForm.value,
-            descricao: descricaoForm.value,
-            vigencia_inicio: vigenciaInicioForm.value,
-            vigencia_fim: vigenciaFimForm.value,
-            usuario_id: userAuth.usuario.id,
-            tipo: tipoForm.value,
-          },
-          question: questionList
-        }
-      
-        
+        form: {
+          titulo: tituloForm.value,
+          descricao: descricaoForm.value,
+          vigencia_inicio: vigenciaInicioForm.value,
+          vigencia_fim: vigenciaFimForm.value,
+          usuario_id: userAuth.usuario.id,
+          tipo: tipoForm.value,
+        },
+        question: questionList,
+      };
+
       async function postQuestionario() {
-        
-        if(dataQuestionario.question.length < 1){
-          window.alert('Por favor, insira pelo menos uma pergunta')
-          return
+        if (dataQuestionario.question.length < 1) {
+          window.alert("Por favor, insira pelo menos uma pergunta");
+          return;
         }
 
         const { url, options } = POST_DATA("formularios", dataQuestionario);
@@ -81,30 +77,36 @@ const QuestionariosCadastro = () => {
           descricaoForm.reset();
           tipoForm.reset();
           activeToast("Questionário cadastrado", "success");
-          setTimeout(()=>{
-            navigation(-1)
-          },2000)
+          setTimeout(() => {
+            navigation(-1);
+          }, 2000);
         } else {
           activeToast(error, "error");
         }
       }
       postQuestionario();
     } else {
-      
       activeToast("Preencha os campos obrigatórios", "warning");
     }
+  }
+
+  function handleCardDelete(index) {
+    setQuestionList((prevData) => prevData.filter((_, i) => i !== index));
   }
 
   function handleChangeCheckbox() {
     setFimVigencia(!fimVigencia);
   }
 
-
-  
   return (
-    <div className={styles.container}>
+    <div
+      data-aos="fade-right"
+      data-aos-easing="linear"
+      data-aos-duration="500"
+      className={`${styles.container} `}
+    >
       <div className={styles.header}>
-          <Title text="Cadastrar Questionário" fontSize="3" /> 
+        <Title text="Cadastrar Questionário" fontSize="3" />
         <span onClick={() => navigation(-1)}>Voltar</span>
       </div>
       <form className={styles.form}>
@@ -116,7 +118,6 @@ const QuestionariosCadastro = () => {
           gridColumn="3"
         />
         <div>
-          
           <InputText
             {...vigenciaFimForm}
             type="date"
@@ -140,9 +141,20 @@ const QuestionariosCadastro = () => {
           </div>
         </div>
         <ul className={styles.questionsList}>
-          {questionList.map((question,index) => {
-            return <QuestionCard key={index} text={question.titulo} />;
-          })}
+          {questionList.length > 0 ? (
+            questionList.map((question, index) => {
+              return (
+                <QuestionCard
+                  index={index}
+                  handleCardDelete={handleCardDelete}
+                  key={index}
+                  text={question.titulo}
+                />
+              );
+            })
+          ) : (
+            <p style={{ margin: "10px 0px" }}>Sem perguntas cadastradas</p>
+          )}
         </ul>
       </div>
       <Button handleSubmit={handleSubmit}>
