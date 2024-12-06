@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Title from "../../../../Components/Titles/Title";
 import Plus from "../../../../assets/icons/plus.svg";
 import styles from "./QuestionarioLista.module.css";
@@ -11,12 +11,15 @@ import PenIcon from "../../../../assets/svgFlies/PenIcon";
 import useTokenValidate from "../../../../Hooks/useTokenValidate";
 import useToast from "../../../../Hooks/useToast";
 import LoadingDots from "../../../../Components/Utils/LoadingDots/LoadingDots";
-import LoadingCenterComponent from '../../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent'
+import LoadingCenterComponent from "../../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent";
+import { GlobalContext } from "../../../../Hooks/GlobalContext";
 
 const QuestionariosLista = () => {
   const { request, loading, error } = useFetch();
   const [formulariosData, setFormulariosData] = useState([]);
   const { fetchValidaToken, userAuth } = useTokenValidate();
+  const { setDataUpdate } = useContext(GlobalContext);
+  const navigate = useNavigate();
   const activeToast = useToast();
 
   useEffect(() => {
@@ -46,13 +49,23 @@ const QuestionariosLista = () => {
       activeToast(error, "error");
     }
   }
+
+  async function handleEdit(form) {
+    setDataUpdate(form);
+    navigate("/questionario/cadastro");
+  }
+
   if (loading) return <LoadingCenterComponent />;
-  if (error) return <p>Não foi possivel carregar dados</p>
+  if (error) return <p>Não foi possivel carregar dados</p>;
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <Title text="Questionários" fontSize="3" />
-        <Link to={"/questionario/cadastro"} className={styles.button}>
+        <Link
+          to={"/questionario/cadastro"}
+          onClick={() => setDataUpdate('')}
+          className={styles.button}
+        >
           <img src={Plus} alt="" />
           Novo Questionário
         </Link>
@@ -62,7 +75,16 @@ const QuestionariosLista = () => {
           formulariosData.map((form, index) => {
             return (
               <li key={index} className={styles.card}>
-                <h4>{form.titulo}</h4>
+                <div className={styles.header}>
+                  <h4>{form.titulo}</h4>
+                  <span
+                    style={
+                      form.status ? { color: "green" } : { color: "tomato" }
+                    }
+                  >
+                    {form.status ? "Ativo" : "Inativo"}
+                  </span>
+                </div>
                 <p>{form.descricao}</p>
                 <div className={styles.data}>
                   <span>Inicio: {convertData(form.vigencia_inicio)}</span>
@@ -74,7 +96,11 @@ const QuestionariosLista = () => {
                     color={"green"}
                     size="30px"
                   />
-                  <PenIcon color={"green"} size="30px" />
+                  <PenIcon
+                    onclick={() => handleEdit(form)}
+                    color={"green"}
+                    size="30px"
+                  />
                 </div>
               </li>
             );

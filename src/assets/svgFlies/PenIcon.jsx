@@ -1,8 +1,9 @@
 import React from "react";
 
-const PenIcon = ({color,size}) => {
+const PenIcon = ({color,size,onclick}) => {
   return (
     <svg
+     onClick={onclick}
       width={size}
       height={size}
       viewBox="0 0 24 24"

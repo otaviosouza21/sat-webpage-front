@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./QuestionariosCadastro.module.css";
 import Title from "../../../../Components/Titles/Title";
 import InputText from "../../../../Components/Forms/Input/InputText";
@@ -8,19 +8,22 @@ import { Link, useNavigate } from "react-router-dom";
 import Plus from "../../../../assets/icons/plus.svg";
 import useFetch from "../../../../Hooks/useFetch";
 import useForm from "../../../../Hooks/useForm";
-import { POST_DATA } from "../../../../Api/api";
+import { GET_TO_WHERE, POST_DATA } from "../../../../Api/api";
 import "react-toastify/dist/ReactToastify.css";
 import useToast from "../../../../Hooks/useToast";
 import QuestionConfig from "./QuestionConfig/QuestionConfig";
 import ModalScreen from "../../../../Components/ModalScreen/ModalScreen";
 import { GlobalContext } from "../../../../Hooks/GlobalContext";
 import QuestionCard from "./QuestionCard/QuestionCard";
+import InputSelect from "../../../../Components/Forms/Input/InputSelect";
+import { convertData, convertDataUS } from "../../../../plugins/convertData";
 
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
-  const { setModal, modal } = useContext(GlobalContext);
+  const { setModal, modal, dataUpdate } = useContext(GlobalContext);
   const [questionList, setQuestionList] = useState([]);
+  const formRef = useRef();
 
   const activeToast = useToast();
 
@@ -34,6 +37,28 @@ const QuestionariosCadastro = () => {
 
   useEffect(() => {
     fetchValidaToken();
+    if (dataUpdate) {
+      tituloForm.setValue(dataUpdate.titulo);
+      descricaoForm.setValue(dataUpdate.descricao);
+      vigenciaInicioForm.setValue(convertDataUS(dataUpdate.vigencia_inicio));
+      vigenciaFimForm.setValue(convertDataUS(dataUpdate.vigencia_fim));
+      tipoForm.setValue(dataUpdate.tipo);
+      formRef.current["status"].value = dataUpdate.status ? "1" : "2";
+
+      async function getQuestions() {
+        const { url, options } = GET_TO_WHERE(
+          "perguntas",
+          "formulario_id",
+          dataUpdate.id
+        );
+        const perguntasRequest = await request(url, options);
+        if (!perguntasRequest.response.ok)
+          throw new Error("Não foi possivel buscar as perguntas");
+
+        setQuestionList(perguntasRequest.json.data);
+      }
+      getQuestions();
+    }
   }, [userAuth.rule]);
 
   function handleSubmit(e) {
@@ -58,6 +83,7 @@ const QuestionariosCadastro = () => {
           vigencia_fim: vigenciaFimForm.value,
           usuario_id: userAuth.usuario.id,
           tipo: tipoForm.value,
+          status: formRef.current["status"].value === "1" ? true : false,
         },
         question: questionList,
       };
@@ -106,10 +132,10 @@ const QuestionariosCadastro = () => {
       className={`${styles.container} `}
     >
       <div className={styles.header}>
-        <Title text="Cadastrar Questionário" fontSize="3" />
+        {/* <Title text="Cadastrar Questionário" fontSize="3" /> */}
         <span onClick={() => navigation(-1)}>Voltar</span>
       </div>
-      <form className={styles.form}>
+      <form ref={formRef} className={styles.form}>
         <InputText {...tituloForm} label="Titulo" gridColumn="1/3" />
         <InputText
           {...vigenciaInicioForm}
@@ -126,12 +152,21 @@ const QuestionariosCadastro = () => {
           />
         </div>
         <InputText {...descricaoForm} label="Descrição" gridColumn="1/5" />
-        <InputText {...tipoForm} label="Tipo" gridColumn="1/5" />
+        <InputText {...tipoForm} label="Tipo" gridColumn="1/4" />
+        <InputSelect
+          label="Status"
+          id="status"
+          options={[
+            { id: 1, nome: "Ativo" },
+            { id: 2, nome: "Inativo" },
+          ]}
+          gridColumn="2"
+        />
       </form>
       <div className={styles.line}></div>
       <div className={styles.newQuestions}>
         <div className={styles.header}>
-          <Title text="Perguntas" fontSize="2" />
+          {/*  <Title text="Perguntas" fontSize="2" /> */}
           <div
             onClick={() => setModal("show-QuestionConfig")}
             className={styles.button}

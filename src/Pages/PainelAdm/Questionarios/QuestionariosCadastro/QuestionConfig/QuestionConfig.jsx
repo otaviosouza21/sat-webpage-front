@@ -52,11 +52,7 @@ const QuestionConfig = ({ setQuestionList }) => {
     >
       <div className={styles.header}>
         <Title text="Nova Pergunta" fontSize="2" />
-        <CloseButton
-          closeModal={setModal}
-          /* closeModal={closeModal}
-        CloseContainerPost={CloseContainerPost} */
-        />
+        <CloseButton closeModal={setModal} />
       </div>
       <InputText {...titleForm} label="Titulo da pergunta" />
       <InputText {...descricaoForm} label="Descrição" />
