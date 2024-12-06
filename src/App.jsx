@@ -18,9 +18,18 @@ import ResetPassword from "./Components/PerfilUsuario/ResetPassword/ResetPasswor
 import SendRequest from "./Components/PerfilUsuario/ResetPassword/SendRequest";
 import CadastroCategoria from './Components/Cadastros/CadastroCategoria/CadastroCategoria'
 import AtualizaCategoria from "./Components/Atualização/AtualizaCategoria/AtualizaCategoria";
+import {iniciaAnalytics, logPageView} from './plugins/iniciaAnalytics'
+import { useEffect } from "react";
+
+
 
 function App() {
   AOS.init();
+
+  useEffect(()=>{
+    iniciaAnalytics()
+    logPageView()
+  },[])
 
   return (
     <GlobalStorage>

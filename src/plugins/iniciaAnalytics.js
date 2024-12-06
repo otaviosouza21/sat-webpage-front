@@ -1,7 +1,10 @@
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
-const iniciaAnalytics = () =>{
+export const iniciaAnalytics = () =>{
     ReactGA.initialize('G-L6LDB78164')
 }
 
-export default iniciaAnalytics;
+export const logPageView = () => {
+    ReactGA.send({ hitType: 'pageview', page: window.location.pathname + window.location.search });
+  };
+
