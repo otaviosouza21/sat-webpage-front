@@ -1,87 +1,66 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import styles from "./QuestionariosCadastro.module.css";
+import styles from "../QuestionariosCadastro/QuestionariosCadastro.module.css";
+import Title from "../../../../Components/Titles/Title";
+import InputText from "../../../../Components/Forms/Input/InputText";
 import useTokenValidate from "../../../../Hooks/useTokenValidate";
 import Button from "../../../../Components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Plus from "../../../../assets/icons/plus.svg";
 import useFetch from "../../../../Hooks/useFetch";
 import useForm from "../../../../Hooks/useForm";
-import { GET_TO_WHERE, POST_DATA, UPDATE_DATA } from "../../../../Api/api";
+import { GET_TO_WHERE, POST_DATA } from "../../../../Api/api";
 import "react-toastify/dist/ReactToastify.css";
 import useToast from "../../../../Hooks/useToast";
 import QuestionConfig from "./QuestionConfig/QuestionConfig";
 import ModalScreen from "../../../../Components/ModalScreen/ModalScreen";
 import { GlobalContext } from "../../../../Hooks/GlobalContext";
-import { convertDataUS } from "../../../../plugins/convertData";
-import QuestionarioForm from "./QuestionarioForm/QuestionarioForm";
-import LoadingCenterComponent from "../../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent";
-import QuestionList from "./QuestionList/QuestionList";
+import QuestionCard from "./QuestionCard/QuestionCard";
+import InputSelect from "../../../../Components/Forms/Input/InputSelect";
+import { convertData, convertDataUS } from "../../../../plugins/convertData";
 
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
   const { setModal, modal, dataUpdate } = useContext(GlobalContext);
   const [questionList, setQuestionList] = useState([]);
-
   const formRef = useRef();
+
   const activeToast = useToast();
+
   const tituloForm = useForm();
   const vigenciaInicioForm = useForm();
   const vigenciaFimForm = useForm();
   const descricaoForm = useForm();
   const tipoForm = useForm();
+
   const navigation = useNavigate();
 
   useEffect(() => {
     fetchValidaToken();
-
-    
     if (dataUpdate) {
       tituloForm.setValue(dataUpdate.titulo);
       descricaoForm.setValue(dataUpdate.descricao);
       vigenciaInicioForm.setValue(convertDataUS(dataUpdate.vigencia_inicio));
       vigenciaFimForm.setValue(convertDataUS(dataUpdate.vigencia_fim));
       tipoForm.setValue(dataUpdate.tipo);
-      setTimeout(()=>{
-        formRef.current["status"].value = dataUpdate.status ? "1" : "2";
-      },500)
-    
-      
-      getQuestions();
+      formRef.current["status"].value = dataUpdate.status ? "1" : "2";
 
+      async function getQuestions() {
+        const { url, options } = GET_TO_WHERE(
+          "perguntas",
+          "formulario_id",
+          dataUpdate.id
+        );
+        const perguntasRequest = await request(url, options);
+        if (!perguntasRequest.response.ok)
+          throw new Error("Não foi possivel buscar as perguntas");
+
+        setQuestionList(perguntasRequest.json.data);
+      }
+      getQuestions();
     }
   }, [userAuth.rule]);
 
-  //cria novo formulario
-  function createForm(dataQuestionario) {
-    const { url, options } = POST_DATA("formularios", dataQuestionario);
-    return { url, options };
-  }
-
-// atualiza formulario
-  function updateForm(dataQuestionario) {
-    const { url, options } = UPDATE_DATA(
-      "formularios",
-      dataQuestionario,
-      dataUpdate.id,
-      userAuth.token
-    );
-    return { url, options };
-  }
-
-  // pega perguntas cadastradas na atualização do formulario
-  async function getQuestions() {
-    const { url, options } = GET_TO_WHERE(
-      "perguntas",
-      "formulario_id",
-      dataUpdate.id
-    );
-    const perguntasRequest = await request(url, options);
-    if (!perguntasRequest.response.ok)
-      throw new Error("Não foi possivel buscar as perguntas");
-    setQuestionList(perguntasRequest.json.data);
-  }
-
- 
   function handleSubmit(e) {
     e.preventDefault();
     if (
@@ -109,28 +88,24 @@ const QuestionariosCadastro = () => {
         question: questionList,
       };
 
-
       async function postQuestionario() {
         if (dataQuestionario.question.length < 1) {
           window.alert("Por favor, insira pelo menos uma pergunta");
           return;
         }
 
-        const { url, options } = dataUpdate
-          ? updateForm(dataQuestionario)
-          : createForm(dataQuestionario);
-          
+        const { url, options } = POST_DATA("formularios", dataQuestionario);
         const questionarioRequest = await request(url, options);
-
         if (questionarioRequest.response.ok) {
-          const message = questionarioRequest.json.message
           tituloForm.reset();
           vigenciaInicioForm.reset();
           vigenciaFimForm.reset();
           descricaoForm.reset();
           tipoForm.reset();
-          activeToast(message, "success");
-          navigation(-1);
+          activeToast("Questionário cadastrado", "success");
+          setTimeout(() => {
+            navigation(-1);
+          }, 2000);
         } else {
           activeToast(error, "error");
         }
@@ -149,8 +124,6 @@ const QuestionariosCadastro = () => {
     setFimVigencia(!fimVigencia);
   }
 
-  if (loading) return <LoadingCenterComponent />;
-  if (error) return <p>Erro ao carregar os dados: {error}</p>;
   return (
     <div
       data-aos="fade-right"
@@ -160,24 +133,65 @@ const QuestionariosCadastro = () => {
     >
       <div className={styles.header}>
         {/* <Title text="Cadastrar Questionário" fontSize="3" /> */}
-        <span style={{ cursor: "pointer" }} onClick={() => navigation(-1)}>
-          Voltar
-        </span>
+        <span style={{cursor: 'pointer'}} onClick={() => navigation(-1)}>Voltar</span>
       </div>
-      <QuestionarioForm
-        formRef={formRef}
-        tituloForm={tituloForm}
-        vigenciaInicioForm={vigenciaInicioForm}
-        vigenciaFimForm={vigenciaFimForm}
-        descricaoForm={descricaoForm}
-        tipoForm={tipoForm}
-      />
+      <form ref={formRef} className={styles.form}>
+        <InputText {...tituloForm} label="Titulo" gridColumn="1/3" />
+        <InputText
+          {...vigenciaInicioForm}
+          type="date"
+          label="Vigencia Inicio"
+          gridColumn="3"
+        />
+        <div>
+          <InputText
+            {...vigenciaFimForm}
+            type="date"
+            label="Vigencia Fim"
+            gridColumn="4"
+          />
+        </div>
+        <InputText {...descricaoForm} label="Descrição" gridColumn="1/5" />
+        <InputText {...tipoForm} label="Tipo" gridColumn="1/4" />
+        <InputSelect
+          label="Status"
+          id="status"
+          options={[
+            { id: 1, nome: "Ativo" },
+            { id: 2, nome: "Inativo" },
+          ]}
+          gridColumn="2"
+        />
+      </form>
       <div className={styles.line}></div>
-      <QuestionList
-        questionList={questionList}
-        handleCardDelete={handleCardDelete}
-        setModal={setModal}
-      />
+      <div className={styles.newQuestions}>
+        <div className={styles.header}>
+          {/*  <Title text="Perguntas" fontSize="2" /> */}
+          <div
+            onClick={() => setModal("show-QuestionConfig")}
+            className={styles.button}
+          >
+            <img src={Plus} alt="" />
+            Nova Pergunta
+          </div>
+        </div>
+        <ul className={styles.questionsList}>
+          {questionList.length > 0 ? (
+            questionList.map((question, index) => {
+              return (
+                <QuestionCard
+                  index={index}
+                  handleCardDelete={handleCardDelete}
+                  key={index}
+                  question={question}
+                />
+              );
+            })
+          ) : (
+            <p style={{ margin: "10px 0px" }}>Sem perguntas cadastradas</p>
+          )}
+        </ul>
+      </div>
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}
       </Button>

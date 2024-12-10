@@ -12,7 +12,7 @@ import { GlobalContext } from "../../../../../Hooks/GlobalContext";
 const QuestionConfig = ({ setQuestionList }) => {
   const formRef = useRef();
   const [showInputOptions, setShowInputOptions] = useState("");
-  const { setModal, dataUpdate } = useContext(GlobalContext);
+  const { setModal, dataUpdate, setDataUpdate } = useContext(GlobalContext);
   const handleChandSelect = () => {
     const tipoResposta = +formRef.current["tipo_resposta"].value; // Acessa o valor
     setShowInputOptions(tipoResposta);
@@ -22,25 +22,27 @@ const QuestionConfig = ({ setQuestionList }) => {
   const descricaoForm = useForm();
   const newMultipleResponse = []
 
-  useEffect(()=>{
+ /* useEffect(()=>{
     if(dataUpdate){
       titleForm.setValue(dataUpdate.titulo)
       descricaoForm.setValue(dataUpdate.descricao)
-      const tipoResposta = +formRef.current["tipo_resposta"].value; // Acessa o valor
-      setShowInputOptions(tipoResposta);
+      formRef.current["tipo_resposta"].value = dataUpdate.possui_sub_pergunta ? '2' : '1';
+      setShowInputOptions(() => {
+        return [...dataUpdate.multipleQuestionOptions]
+      }); 
+      
+      console.log(showInputOptions);
       
       if(dataUpdate.possui_sub_pergunta){
       newMultipleResponse.push(...dataUpdate.multipleQuestionOptions)
-     
-      
-        
-        
-      }
+
+      } 
     }
-  },[])
+  },[])  */
 
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault()
     if(formRef.current['tipo_resposta'].value  === '2'){
       formRef.current['multipleRespose'].forEach((response)=>{
         newMultipleResponse.push({titulo: response.value})
@@ -63,6 +65,12 @@ const QuestionConfig = ({ setQuestionList }) => {
     }
   };
 
+  function handleCloseModal(){
+    setModal();
+    setDataUpdate({})
+
+  }
+
   return (
     <form
       className={`${styles.container} animation-opacity`}
@@ -70,7 +78,7 @@ const QuestionConfig = ({ setQuestionList }) => {
     >
       <div className={styles.header}>
         <Title text="Nova Pergunta" fontSize="2" />
-        <CloseButton closeModal={setModal} />
+        <CloseButton closeModal={handleCloseModal} />
       </div>
       <InputText {...titleForm} label="Titulo da pergunta" />
       <InputText {...descricaoForm} label="Descrição" />
