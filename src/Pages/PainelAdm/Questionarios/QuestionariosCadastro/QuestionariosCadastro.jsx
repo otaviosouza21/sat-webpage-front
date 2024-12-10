@@ -133,7 +133,7 @@ const QuestionariosCadastro = () => {
     >
       <div className={styles.header}>
         {/* <Title text="Cadastrar Questionário" fontSize="3" /> */}
-        <span onClick={() => navigation(-1)}>Voltar</span>
+        <span style={{cursor: 'pointer'}} onClick={() => navigation(-1)}>Voltar</span>
       </div>
       <form ref={formRef} className={styles.form}>
         <InputText {...tituloForm} label="Titulo" gridColumn="1/3" />
@@ -183,7 +183,7 @@ const QuestionariosCadastro = () => {
                   index={index}
                   handleCardDelete={handleCardDelete}
                   key={index}
-                  text={question.titulo}
+                  question={question}
                 />
               );
             })

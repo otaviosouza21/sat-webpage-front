@@ -12,7 +12,7 @@ import { GlobalContext } from "../../../../../Hooks/GlobalContext";
 const QuestionConfig = ({ setQuestionList }) => {
   const formRef = useRef();
   const [showInputOptions, setShowInputOptions] = useState("");
-  const { setModal } = useContext(GlobalContext);
+  const { setModal, dataUpdate } = useContext(GlobalContext);
   const handleChandSelect = () => {
     const tipoResposta = +formRef.current["tipo_resposta"].value; // Acessa o valor
     setShowInputOptions(tipoResposta);
@@ -21,6 +21,24 @@ const QuestionConfig = ({ setQuestionList }) => {
   const titleForm = useForm();
   const descricaoForm = useForm();
   const newMultipleResponse = []
+
+  useEffect(()=>{
+    if(dataUpdate){
+      titleForm.setValue(dataUpdate.titulo)
+      descricaoForm.setValue(dataUpdate.descricao)
+      const tipoResposta = +formRef.current["tipo_resposta"].value; // Acessa o valor
+      setShowInputOptions(tipoResposta);
+      
+      if(dataUpdate.possui_sub_pergunta){
+      newMultipleResponse.push(...dataUpdate.multipleQuestionOptions)
+     
+      
+        
+        
+      }
+    }
+  },[])
+
 
   const handleClick = () => {
     if(formRef.current['tipo_resposta'].value  === '2'){
@@ -57,7 +75,6 @@ const QuestionConfig = ({ setQuestionList }) => {
       <InputText {...titleForm} label="Titulo da pergunta" />
       <InputText {...descricaoForm} label="Descrição" />
       <InputSelect
-    
         label="Tipo de Entrada"
         id="tipo_resposta"
         options={[
