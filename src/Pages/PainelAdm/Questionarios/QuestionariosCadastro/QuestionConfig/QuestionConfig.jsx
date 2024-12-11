@@ -31,10 +31,6 @@ const QuestionConfig = ({ setQuestionList }) => {
       
       if(dataUpdate.possui_sub_pergunta){
       newMultipleResponse.push(...dataUpdate.multipleQuestionOptions)
-     
-      
-        
-        
       }
     }
   },[])
