@@ -8,6 +8,8 @@ import ModalServico from "../ModalServico/ModalServico";
 import ModalContato from "./ModalContato/ModalContato";
 import btn from "../Button/Button.module.css";
 import { Link } from "react-router-dom";
+import ReactGA from 'react-ga4';
+import { logButtonClick } from "../../plugins/logButtonClick";
 
 const ServicoContainer = ({ servicosData,categoria }) => {
   const [categoriaData, setCategoriaData] = useState();
@@ -53,7 +55,13 @@ const ServicoContainer = ({ servicosData,categoria }) => {
           </button>
           </div>
           {showContatos && <ModalContato contato={contatos} />}
-        <button onClick={showModal} className={styles.showMore}>
+
+        </div>
+        <button onClick={()=> {
+          showModal()
+         logButtonClick()
+        }} className={styles.showMore}>
+
           +Ver Mais
         </button>
         </div>

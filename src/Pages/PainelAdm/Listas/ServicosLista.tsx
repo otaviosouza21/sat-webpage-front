@@ -43,7 +43,8 @@ const ServicosLista = () => {
   const [page, setPage] = useState<number>(1);
   const [lastPage, setLastPage] = useState<number>(0);
   const { request, loading, data } = useFetch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const globalContext = useContext(GlobalContext);
   if (!globalContext) {
     throw new Error("GlobalContext must be used within a GlobalProvider");

@@ -1,0 +1,27 @@
+.container {
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.container img {
+  width: 40px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.container img:hover {
+  transform: scale(1.09);
+  transition: 0.3s;
+}
+
+.input > div {
+  flex: 2;
+}
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}

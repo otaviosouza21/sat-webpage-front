@@ -16,11 +16,9 @@ const ModalLogin = ({ modal, setModal }) => {
   const [buttonState, setButtonState] = useState("Entrar");
   const { request, error, loading, data } = useFetch();
   const { userAuth, setUserAuth } = useContext(GlobalContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const emailForm = useForm("email");
   const senhaForm = useForm("senha");
-  
-  
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -38,7 +36,7 @@ const ModalLogin = ({ modal, setModal }) => {
           setToken(token);
           window.localStorage.setItem("token", token);
           authLogin(token, requestLogin.json.id);
-          navigate('/meu_perfil/perfil')
+          navigate("/meu_perfil/perfil");
         } else {
           setToken(null);
         }
@@ -56,7 +54,6 @@ const ModalLogin = ({ modal, setModal }) => {
           setUserAuth({ token: token, usuario: json, status: true });
           setButtonState("Bem Vindo");
           setModal(false);
-   
         }
       }
 
@@ -70,22 +67,19 @@ const ModalLogin = ({ modal, setModal }) => {
       event.target === modalContainerPost.current ||
       event.target === CloseContainerPost.current
     ) {
-      setModal('');
+      setModal("");
       const overflow = document.querySelector("body");
       overflow.classList.remove("overFlow");
     }
   }
 
-  
   return (
     <div
-      onClick={closeModal}
+  /*     onClick={closeModal} */
       ref={modalContainerPost}
       className={styles.modalContainer}
     >
-      <form
-        className={`${styles.modalLogin} animation-opacity`}
-      >
+      <form className={`${styles.modalLogin} animation-opacity`}>
         <button
           ref={CloseContainerPost}
           onClick={closeModal}
@@ -98,17 +92,20 @@ const ModalLogin = ({ modal, setModal }) => {
         <InputText {...emailForm} label="Email" id="email" type="email" />
         <InputText {...senhaForm} label="Senha" id="password" type="password" />
         <div>
-          <p className={data && !loading ? styles.error : ''}>
-            {data && !loading ? data.message : ''}
+          <p className={data && !loading ? styles.error : ""}>
+            {data && !loading ? data.message : ""}
           </p>
-
         </div>
         <div className={styles.options}>
-          <span onClick={()=>navigate('/send-request')}>Esqueci a Senha</span>
-          <span onClick={()=>{
-            setModal(false)
-            setModal('cadUsuario')
-          }}>Me Cadastrar</span>
+          <span onClick={() => navigate("/send-request")}>Esqueci a Senha</span>
+          <span
+            onClick={() => {
+              setModal(false);
+              setModal("cadUsuario");
+            }}
+          >
+            Me Cadastrar
+          </span>
         </div>
         <button onClick={handleSubmit}>
           {loading ? "Entrando..." : buttonState}

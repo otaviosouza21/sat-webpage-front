@@ -10,20 +10,28 @@ import { GlobalContext } from "../../../Hooks/GlobalContext";
 import useFetch from "../../../Hooks/useFetch";
 import styles from "../CadastroForm.module.css";
 import { useNavigate } from "react-router-dom";
+import useToast from "../../../Hooks/useToast";
+import useTokenValidate from "../../../Hooks/useTokenValidate";
 
 const AtualizaCategoria = () => {
-  const { data, request, loading, error } = useFetch();
+  const { request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState(null);
   const { setUpdate, update,dataUpdate } = useContext(GlobalContext);
   const navigate = useNavigate()
+  const activeToast = useToast()
 
   const formRef = useRef();
   const nomeForm = useForm();
   const corForm = useForm();
+
+  const { fetchValidaToken, userAuth } = useTokenValidate();
+
+  useEffect(() => {
+    fetchValidaToken();
+  }, [userAuth.rule]);
   
   useEffect(()=>{
    if(dataUpdate){
-    console.log(dataUpdate);
      nomeForm.setValue(dataUpdate.nome)
      corForm.setValue(dataUpdate.cor_categoria)
      formRef.current["status"].value
@@ -45,22 +53,20 @@ const AtualizaCategoria = () => {
         const { url, options } = UPDATE_DATA("categoria_servico", dataCategoria,dataUpdate.id,token);
         const servicoRequest = await request(url, options);
         if (servicoRequest.response.ok) {
-          setStatusCadastro("Categoria Cadastrada com Sucesso");
+          activeToast("Categoria Atualizada com Sucesso", 'success');
           setUpdate(!update);
           nomeForm.reset();
           setTimeout(() => {
-            setStatusCadastro(null);
             navigate(-1)
           }, 1000);
+        } else {
+          activeToast(error, 'error');
         }
       }
     }
       atualizaCategoria();
     } else {
-      setStatusCadastro("Por Favor, Preencha todos os Campos");
-      setTimeout(() => {
-        setStatusCadastro(null);
-      }, 1000);
+      activeToast("Por Favor, Preencha todos os campos obrigatórios", 'warning');
     }
   }
 
@@ -95,10 +101,6 @@ const AtualizaCategoria = () => {
           <Button handleSubmit={handleSubmit}>
             {loading ? "Atualizando..." : "Atualizar"}
           </Button>
-          {error && <Toast message={error} color="tomato" />}
-          {statusCadastro && (
-            <Toast message={statusCadastro} color="green" />
-          )}
         </form>
       </section>
     </section>
