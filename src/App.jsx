@@ -25,6 +25,11 @@ import { ToastContainer, Zoom } from "react-toastify";
 function App() {
   AOS.init();
 
+  useEffect(()=>{
+    iniciaAnalytics()
+    logPageView()
+  },[])
+
   return (
     <GlobalStorage>
       <BrowserRouter>
