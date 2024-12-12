@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import ReactGA from 'react-ga4';
 import { logButtonClick } from "../../plugins/logButtonClick";
 
-const ServicoContainer = ({ servicosData }) => {
+const ServicoContainer = ({ servicosData,categoria }) => {
   const [categoriaData, setCategoriaData] = useState();
   const [modal, setModal] = useState(false);
   const [showContatos, setShowContatos] = useState(false);
@@ -19,17 +19,6 @@ const ServicoContainer = ({ servicosData }) => {
   const { request } = useFetch();
   const { nome, contato_pessoal_01, contato_negocio_01 } = servicosData.Usuario;
   const contatos = { contato_pessoal_01, contato_negocio_01 };
-
-  //busca categorias na API
-  useEffect(() => {
-    const { url, options } = GET_TO_ID("categoria_servico", categoria_id);
-    const response = request(url, options);
-    async function getCategorias() {
-      setCategoriaData((await response).json);
-    }
-
-    getCategorias();
-  }, []);
 
   function show() {
     setShowContatos(!showContatos);
@@ -40,7 +29,7 @@ const ServicoContainer = ({ servicosData }) => {
     overflow.classList.add("overFlow");
   }
 
-  if (categoriaData && servicosData /*  && usuarioData */)
+  if ( servicosData /*  && usuarioData */)
     return (
       <div className={`${styles.servicosContainer} animeLeft`}>
         {modal === "servicoDetalhes" && (
@@ -52,24 +41,30 @@ const ServicoContainer = ({ servicosData }) => {
         )}
         <div className={`${styles.servico}`}>
           <h3>{nome_negocio}</h3>
-          <span style={{ background: categoriaData.cor_categoria }}>
-            {categoriaData.nome}
+          <span style={{ background: categoria.cor }}>
+            {categoria.nome}
           </span>
+          <div className={styles.containerNomeEBtn}>
+
           <p>{nome}</p>
-          <button className={btn.button} onClick={show}>
+          <button className={styles.button} onClick={show}>
             <Link>
               <img src={wppIcon} alt="" />
               Contato
             </Link>
           </button>
+          </div>
           {showContatos && <ModalContato contato={contatos} />}
+
         </div>
         <button onClick={()=> {
           showModal()
          logButtonClick()
         }} className={styles.showMore}>
+
           +Ver Mais
         </button>
+        </div>
       </div>
     );
 };
