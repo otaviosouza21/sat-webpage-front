@@ -1,61 +1,41 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../CadastroForm.module.css";
 import InputText from "../../Forms/Input/InputText";
 import InputSelect from "../../Forms/Input/InputSelect";
 import Button from "../../Button/Button";
 import Title from "../../Titles/Title";
 import useFetch from "../../../Hooks/useFetch";
-import {
-  GET_ALL,
-  GET_AUTH_USER,
-  POST_DATA,
-  UPDATE_DATA,
-} from "../../../Api/api";
+import { GET_ALL, POST_DATA } from "../../../Api/api";
 import useForm from "../../../Hooks/useForm";
 import Loading from "../../Utils/Loading/Loading";
 import Toast from "../../Toast/Toast";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
+import useTokenValidate from "../../../Hooks/useTokenValidate";
+import useToast from "../../../Hooks/useToast";
 
 const CadastroServico = () => {
   const [categorias, setCategorias] = useState();
   const { request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState({
-    mensagem: '',
-    status: false
+    mensagem: "",
+    status: false,
   });
-  const { setModal, setUserAuth, userAuth,logout } = useContext(GlobalContext);
+  const activeToast = useToast();
   const formRef = useRef();
   const navigate = useNavigate();
-  //
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
 
-  //check de login na transição para pagina de cadastro/ verifica se está locado
+  const { fetchValidaToken, userAuth } = useTokenValidate();
   useEffect(() => {
-    async function fetchValidaToken() {
-      const token = window.localStorage.getItem("token");
-      if (token) {
-        const { id, rule } = jwtDecode(token);
-        const { url, options } = GET_AUTH_USER("usuarios", token, id);
-        const { response, json } = await request(url, options);
-        if (response.ok) {
-          setUserAuth({ token, usuario: json, status: true, rule });
-        } else {
-          setUserAuth({});
-          logout()
-        }
-      }
-    }
     fetchValidaToken();
-  }, []);
+  }, [userAuth.rule]);
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -75,8 +55,6 @@ const CadastroServico = () => {
         possui_nome_negocio: true,
       };
 
-      
-
       async function postServico() {
         const { url, options } = POST_DATA("servico", dataServico);
         const servicoRequest = await request(url, options);
@@ -84,14 +62,22 @@ const CadastroServico = () => {
           nomeNegocioForm.reset();
           descricaoForm.reset();
           tempoNegocio.reset();
-          setStatusCadastro({mensagem: 'Serviço enviado para analise', status: true});
+          setStatusCadastro({
+            mensagem: "Serviço enviado para analise",
+            status: true,
+          });
+        } else {
+          activeToast(error, "error");
         }
       }
       postServico();
     } else {
-      setStatusCadastro({mensagem: 'Preencha os campos necessarios', status: false});
+      activeToast(
+        "Por Favor, Preencha todos os campos obrigatórios",
+        "warning"
+      );
       setTimeout(() => {
-        setStatusCadastro({mensagem: '', status: false});
+        setStatusCadastro({ mensagem: "", status: false });
       }, 2000);
     }
   }
@@ -158,13 +144,16 @@ const CadastroServico = () => {
               {error && <Toast message={error} color="tomato" />}
               {statusCadastro.status && (
                 <>
-                  <ModalAlert title={statusCadastro.mensagem} mensagem='Você será avisado quando seu serviço for aprovado. Qualquer duvida entre em contato'  />
+                  <ModalAlert
+                    title={statusCadastro.mensagem}
+                    mensagem="Você será avisado quando seu serviço for aprovado. Qualquer duvida entre em contato"
+                  />
                 </>
               )}
             </form>
           </section>
         ) : (
-          navigate('/')
+          navigate("/")
         )}
       </section>
     );

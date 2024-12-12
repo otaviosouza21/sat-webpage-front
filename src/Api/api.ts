@@ -1,5 +1,5 @@
 const PORT = 3333;
-const URL = "https://taiacupeba.com.br";
+const URL = "http://localhost:3000";
 
 export interface PropsApiReturn {
   url: string;
@@ -45,6 +45,19 @@ export function GET_ALL_USERS(tableName: string, token: string) : PropsApiReturn
 export function GET_TO_ID(tableName: string, id: string) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}/${id}`,
+    options: {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    },
+  };
+}
+
+//=================Retorna registros com WHERE====================//
+export function GET_TO_WHERE(tableName: string, column: string, id: string) : PropsApiReturn {
+  return {
+    url: `${URL}/api/${tableName}/${id}/${column}`,
     options: {
       method: "GET",
       headers: {
@@ -201,6 +214,19 @@ export function DELETE_DATA(tableName: string, id: number, token: string) : Prop
     },
   };
 }
+
+/* //=================[autenticado] Deleta registro====================//
+export function DELETE_DATA_FORM(tableName: string,  id: number) : PropsApiReturn {
+  return {
+    url: `${URL}/api/${tableName}/form/${id}`,
+    options: {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  };
+} */
 
 //=================Envia email para reset de senha====================//
 export function RECOVER_PASSWORD(tableName: string, email: string) : PropsApiReturn {

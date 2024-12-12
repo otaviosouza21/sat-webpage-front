@@ -1,0 +1,30 @@
+.container{
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 16px;
+background-color: var(--primary3);
+padding: 8px 16px;
+border-radius: 10px;
+transition: .3s;
+justify-self: flex-start;
+transform: translateX(300px);
+animation: showCards forwards .5s;
+}
+
+.container h3{
+    color: #FFF !important;
+}
+
+
+.container:hover{
+    transform: scale(1.01);
+    cursor: pointer;
+    transition: .3s;
+}
+
+@keyframes showCards {
+    100%{
+        transform: initial 
+    }
+}
