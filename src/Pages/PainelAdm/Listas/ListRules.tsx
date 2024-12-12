@@ -4,15 +4,24 @@ import { GET_ALL } from "../../../Api/api";
 import styles from "./Listas.module.css";
 import LoadingCenterComponent from "../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent";
 
+interface rulesProps{
+  id: number;
+  nome: string;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string
+}
+
+
 const ListRules = () => {
   const { request, loading } = useFetch();
-  const [rules, setRules] = useState(null);
+  const [rules, setRules] = useState<rulesProps[] | null>(null);
 
   useEffect(() => {
     async function getRules() {
       const { url, options } = GET_ALL("rules");
       const { response, json } = await request(url, options);
-      if (!response.ok) {
+      if (response && !response.ok) {
         console.log("Ocorreu um erro ao buscar Servicos");
       }
       setRules(json);

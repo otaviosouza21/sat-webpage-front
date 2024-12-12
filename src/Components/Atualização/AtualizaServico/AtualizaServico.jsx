@@ -7,8 +7,6 @@ import Title from "../../Titles/Title";
 import useFetch from "../../../Hooks/useFetch";
 import {
   GET_ALL,
-  GET_AUTH_USER,
-  POST_DATA,
   SEND_EMAIL,
   UPDATE_DATA,
 } from "../../../Api/api";
@@ -17,37 +15,25 @@ import Loading from "../../Utils/Loading/Loading";
 import Toast from "../../Toast/Toast";
 import { GlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import useTokenValidate from "../../../Hooks/useTokenValidate";
+import useToast from "../../../Hooks/useToast";
 
 const AtualizaServico = () => {
   const [categorias, setCategorias] = useState();
   const { request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { dataUpdate, setModal, setUserAuth, userAuth, logout } =
-    useContext(GlobalContext);
+  const { dataUpdate } = useContext(GlobalContext);
   const formRef = useRef();
   const navigate = useNavigate();
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
-  //validação acesso
+  const activeToast = useToast()
+  const { fetchValidaToken, userAuth } = useTokenValidate();
+
   useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    async function fetchValidaToken() {
-      if (token) {
-        const { id, rule } = jwtDecode(token);
-        const { url, options } = GET_AUTH_USER("usuarios", token, id);
-        const { response, json } = await request(url, options);
-        if (response.ok) {
-          setUserAuth({ token, usuario: json, status: true, rule });
-        } else {
-          setUserAuth();
-          logout();
-        }
-      }
-    }
     fetchValidaToken();
-  }, []);
+  }, [userAuth.rule]);
 
   useEffect(() => {
     if (dataUpdate) {
@@ -103,21 +89,22 @@ const AtualizaServico = () => {
           );
           const servicoRequest = await request(url, options);
           if (servicoRequest.response.ok) {
-            setStatusCadastro("Serviço Atualizado com Sucesso");
+            activeToast("Serviço Atualizado com Sucesso" ,'success');
             nomeNegocioForm.reset(); //limpa campos
             descricaoForm.reset();
             tempoNegocio.reset();
             statusDiferente && sendEmail()
             setTimeout(() => {
               navigate(-1);
-              setStatusCadastro(null);
             }, 1000);
+          } else{
+            activeToast(error, 'error');
           }
         }
       }
       postServico();
     } else {
-      setStatusCadastro("Por Favor, Preencha todos os Campos");
+      activeToast("Por Favor, Preencha todos os campos obrigatórios", 'warning');
       setTimeout(() => {
         setStatusCadastro(null);
       }, 1000);
@@ -191,7 +178,7 @@ const AtualizaServico = () => {
               />
 
               {userAuth.status &&
-                userAuth.rule === 1 && ( // Acesso ADM
+                userAuth.rule === 3 && ( // Acesso ADM
                   <InputSelect
                     label="Status"
                     options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
@@ -201,10 +188,6 @@ const AtualizaServico = () => {
               <Button handleSubmit={handleSubmit}>
                 {loading ? "Salvando..." : "Salvar"}
               </Button>
-              {error && <Toast message={error} color="tomato" />}
-              {statusCadastro && (
-                <Toast message={statusCadastro} color="green" />
-              )}
             </form>
           </section>
         ) : (

@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef} from "react";
 import useForm from "../../../Hooks/useForm";
 import InputSelect from "../../Forms/Input/InputSelect";
-import Toast from "../../Toast/Toast";
 import Title from "../../Titles/Title";
 import InputText from "../../Forms/Input/InputText";
 import Button from "../../Button/Button";
@@ -10,16 +9,24 @@ import { GlobalContext } from "../../../Hooks/GlobalContext";
 import useFetch from "../../../Hooks/useFetch";
 import styles from "../../Atualização/CadastroForm.module.css";
 import { useNavigate } from "react-router-dom";
+import useToast from "../../../Hooks/useToast";
+import useTokenValidate from "../../../Hooks/useTokenValidate";
+
 
 const CadastroCategoria = () => {
-  const { data, request, loading, error } = useFetch();
-  const [statusCadastro, setStatusCadastro] = useState(null);
-  const { setUpdate, update,dataUpdate } = useContext(GlobalContext);
+  const { request, loading, error } = useFetch();
+  const { setUpdate, update } = useContext(GlobalContext);
   const navigate = useNavigate()
+  const activeToast = useToast()
 
   const formRef = useRef();
   const nomeForm = useForm();
   const corForm = useForm();
+
+  const { fetchValidaToken, userAuth } = useTokenValidate();
+  useEffect(() => {
+    fetchValidaToken();
+  }, [userAuth.rule]);
   
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,24 +41,22 @@ const CadastroCategoria = () => {
         const token = window.localStorage.getItem("token")
         if(token){
         const { url, options } = POST_DATA("categoria_servico", dataCategoria);
-        const servicoRequest = await request(url, options);
-        if (servicoRequest.response.ok) {
-          setStatusCadastro("Categoria Cadastrada com Sucesso");
+        const categoriaRequest = await request(url, options);
+        if (categoriaRequest.response.ok) {
+          activeToast("Categoria Cadastrada com Sucesso", 'success');
           setUpdate(!update);
           nomeForm.reset();
           setTimeout(() => {
-            setStatusCadastro(null);
             navigate(-1)
           }, 1000);
+        } else{
+          activeToast(error, 'error');
         }
       }
     }
       cadastraCategoria();
     } else {
-      setStatusCadastro("Por Favor, Preencha todos os Campos");
-      setTimeout(() => {
-        setStatusCadastro(null);
-      }, 1000);
+      activeToast("Por Favor, Preencha todos os campos obrigatórios", 'warning');
     }
   }
 
@@ -86,10 +91,6 @@ const CadastroCategoria = () => {
           <Button handleSubmit={handleSubmit}>
             {loading ? "Cadastrando..." : "Cadastrar"}
           </Button>
-          {error && <Toast message={error} color="tomato" />}
-          {statusCadastro && (
-            <Toast message={statusCadastro} color="green" />
-          )}
         </form>
       </section>
     </section>

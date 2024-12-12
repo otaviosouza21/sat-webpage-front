@@ -16,12 +16,11 @@ import Footer from "./Components/Footer/Footer";
 import PerfilUsuario from "./Components/PerfilUsuario/PerfilUsuario";
 import ResetPassword from "./Components/PerfilUsuario/ResetPassword/ResetPassword";
 import SendRequest from "./Components/PerfilUsuario/ResetPassword/SendRequest";
-import CadastroCategoria from './Components/Cadastros/CadastroCategoria/CadastroCategoria'
+import CadastroCategoria from "./Components/Cadastros/CadastroCategoria/CadastroCategoria";
 import AtualizaCategoria from "./Components/Atualização/AtualizaCategoria/AtualizaCategoria";
-import {iniciaAnalytics, logPageView} from './plugins/iniciaAnalytics'
-import { useEffect } from "react";
-
-
+import QuestionariosLista from "./Pages/PainelAdm/Questionarios/QuestionariosLista/QuestionariosLista";
+import QuestionariosCadastro from "./Pages/PainelAdm/Questionarios/QuestionariosCadastro/QuestionariosCadastro";
+import { ToastContainer, Zoom } from "react-toastify";
 
 function App() {
   AOS.init();
@@ -39,17 +38,39 @@ function App() {
           <Route exact path="/" element={<HomeEmpreendedores />} />
           <Route exact path="servicos" element={<Servicos />} />
           <Route exact path="usuario/cadastro" element={<CadastroUsuario />} />
-          <Route exact path="usuarios/cadastro/atualiza"element={<AtualizaUsuario />}/>
+          <Route
+            exact
+            path="usuarios/cadastro/atualiza"
+            element={<AtualizaUsuario />}
+          />
           <Route exact path="meu_perfil/*" element={<PerfilUsuario />} />
           <Route exact path="servico/cadastro" element={<CadastroServico />} />
-          <Route exact path="servico/cadastro/atualiza" element={<AtualizaServico />} />
-          <Route exact path="categoria/cadastro" element={<CadastroCategoria />} />
-          <Route exact path="categoria/cadastro/atualiza" element={<AtualizaCategoria />} />
+          <Route
+            exact
+            path="servico/cadastro/atualiza"
+            element={<AtualizaServico />}
+          />
+          <Route
+            exact
+            path="categoria/cadastro"
+            element={<CadastroCategoria />}
+          />
+          <Route
+            exact
+            path="categoria/cadastro/atualiza"
+            element={<AtualizaCategoria />}
+          />
           <Route exact path="sobre" element={<Sobre />} />
           <Route exact path="adm" element={<Adm />} />
           <Route exact path="reset-password" element={<ResetPassword />} />
           <Route exact path="send-request" element={<SendRequest />} />
+          <Route
+            exact
+            path="questionario/cadastro"
+            element={<QuestionariosCadastro />}
+          />
         </Routes>
+        <ToastContainer />
         <Footer />
       </BrowserRouter>
     </GlobalStorage>

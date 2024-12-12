@@ -12,6 +12,7 @@ import { GET_AUTH_USER } from "../../Api/api";
 import useFetch from "../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
 import SendEmailForm from "../SendEmailForm/SendEmailForm";
+import QuestionariosCadastro from "../../Pages/PainelAdm/Questionarios/QuestionariosCadastro/QuestionariosCadastro";
 
 const HomeEmpreendedores = () => {
   const { setUserAuth, logout, setModal } = useContext(GlobalContext);
@@ -65,6 +66,7 @@ const HomeEmpreendedores = () => {
             patch="/servico/cadastro"
           />
         </div>
+      
       </section>
     </main>
   );

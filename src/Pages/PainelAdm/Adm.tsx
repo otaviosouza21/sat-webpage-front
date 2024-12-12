@@ -6,41 +6,22 @@ import { jwtDecode } from "jwt-decode";
 import { GET_AUTH_USER } from "../../Api/api";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 import useFetch from "../../Hooks/useFetch";
-import Loading from "../../Components/Utils/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import HeadNav from "./HeadNav/HeadNav";
-import Usuarios from './Listas/UsuariosLista'
-import ServicosLista from './Listas/ServicosLista'
-
+import Usuarios from "./Listas/UsuariosLista";
+import ServicosLista from "./Listas/ServicosLista";
+import QuestionariosLista from "./Questionarios/QuestionariosLista/QuestionariosLista";
+import useTokenValidate from "../../Hooks/useTokenValidate";
 
 const Adm = () => {
   const [activeView, setActiveView] = useState("servicos");
-  const { userAuth, setUserAuth, logout } = useContext(GlobalContext);
-  const { request, loading } = useFetch();
-  const navigate = useNavigate();
+  const { fetchValidaToken, userAuth } = useTokenValidate();
 
-  useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    async function fetchValidaToken() {
-      if (token) {
-        const { id, rule } = jwtDecode(token);
-        const { url, options } = GET_AUTH_USER("usuarios", token, id);
-        const { response, json } = await request(url, options);
-        if (response.ok) {
-          setUserAuth({ token, usuario: json, status: true, rule });
-        } else {
-          setUserAuth({});
-          setCurrentUser({});
-          logout();
-        }
-      } else {
-        navigate("/");
-      }
-    }
+  useEffect(() => { // valida token com o hook no carregamento da pagina
     fetchValidaToken();
   }, [userAuth.rule]);
 
-  const handleView = (view) => {
+  const handleView = (view: string) => {
     setActiveView(view);
   };
 
@@ -50,11 +31,11 @@ const Adm = () => {
         <main className={`${styles.containerAdm}`}>
           <HeadNav activeView={activeView} handleView={handleView} />
           <div className={styles.containerListas}>
-            
             {activeView === "servicos" && <ServicosLista />}
-            {activeView === "usuarios" && <Usuarios/>}
+            {activeView === "usuarios" && <Usuarios />}
             {activeView === "categorias" && <CategoriasLista />}
-            {activeView === "rules" && <ListRules />} 
+            {activeView === "rules" && <ListRules />}
+            {activeView === "questionarios" && <QuestionariosLista />}
           </div>
         </main>
       )}
