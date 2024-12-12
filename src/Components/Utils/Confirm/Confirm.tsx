@@ -7,7 +7,7 @@ import useFetch from "../../../Hooks/useFetch";
 interface ConfirmTypes{
   mensagem:string;
   id:number | null;
-  setModal:React.Dispatch<React.SetStateAction<string | boolean>>;
+  setModal:React.Dispatch<React.SetStateAction<string>>;
   table:string;
   update: boolean;
   setUpdate: React.Dispatch<React.SetStateAction<boolean>>
@@ -27,7 +27,7 @@ const Confirm = ({ mensagem, id, setModal, table, update, setUpdate }:ConfirmTyp
         if (response?.ok) {
           setUpdate(!update);
           SetAlert("Registro Deletado");
-          setModal(false);
+          setModal("");
           setTimeout(() => {
             SetAlert(false);
           }, 3000);
@@ -49,7 +49,7 @@ const Confirm = ({ mensagem, id, setModal, table, update, setUpdate }:ConfirmTyp
             style={{ fontSize: "1rem", marginRight: "6px" }}
             type="button"
             className="btn btn-outline-secondary btn-sm"
-            onClick={() => setModal(false)}
+            onClick={() => setModal("")}
           >
             Voltar
           </button>
