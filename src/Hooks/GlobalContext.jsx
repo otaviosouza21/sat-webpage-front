@@ -22,7 +22,6 @@ export const GlobalStorage = ({ children }) => {
 
   
   const [modal,setModal] = useState('')
-  const [dataUpdate, setDataUpdate] = useState(null);
 
 
   function logout() {

@@ -65,7 +65,7 @@ const ServicoContainer = ({ servicosData,categoria }) => {
           +Ver Mais
         </button>
         </div>
-      </div>
+      
     );
 };
 

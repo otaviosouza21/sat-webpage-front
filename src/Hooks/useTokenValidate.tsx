@@ -2,12 +2,12 @@ import { jwtDecode } from "jwt-decode";
 import React, { useContext } from "react";
 import { GET_AUTH_USER } from "../Api/api";
 import useFetch from "./useFetch";
-import { GlobalContext } from "./GlobalContext";
+import { useGlobalContext } from "./GlobalContext";
 import { useNavigate } from "react-router-dom";
 
 const useTokenValidate = () => {
   const { request } = useFetch();
-  const { setUserAuth, logout, userAuth }: any = useContext(GlobalContext);
+  const { setUserAuth, logout, userAuth } = useGlobalContext();
   const navigate = useNavigate();
 
   const token = window.localStorage.getItem("token");
@@ -24,7 +24,12 @@ const useTokenValidate = () => {
         }
       } catch (error) {
         console.error("Erro ao validar token:", error);
-        setUserAuth({});
+        setUserAuth({
+          token: "",
+          usuario: null,
+          status: false,
+          rule: 1
+        });
         logout();
         navigate("/");
       }

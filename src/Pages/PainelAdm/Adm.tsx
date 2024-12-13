@@ -1,16 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CategoriasLista from "./Listas/CategoriasLista";
 import ListRules from "./Listas/ListRules";
 import styles from "./Adm.module.css";
-import { jwtDecode } from "jwt-decode";
-import { GET_AUTH_USER } from "../../Api/api";
-import { GlobalContext } from "../../Hooks/GlobalContext";
-import useFetch from "../../Hooks/useFetch";
-import { useNavigate } from "react-router-dom";
+
 import HeadNav from "./HeadNav/HeadNav";
 import Usuarios from "./Listas/UsuariosLista";
 import ServicosLista from "./Listas/ServicosLista";
-import QuestionariosLista from "./Questionarios/QuestionariosLista/QuestionariosLista";
+import QuestionariosLista from "./Questionarios/QuestionariosLista/QuestionariosLista.tsx";
 import useTokenValidate from "../../Hooks/useTokenValidate";
 
 const Adm = () => {

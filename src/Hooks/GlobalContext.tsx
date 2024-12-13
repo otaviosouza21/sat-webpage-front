@@ -6,7 +6,7 @@ interface UserAuth {
   token: string;
   usuario: any;
   status: boolean;
-  rule: string;
+  rule: number;
 }
 
 interface GlobalContextProps {
@@ -29,10 +29,17 @@ interface GlobalContextProps {
   setListaFiltrada: React.Dispatch<React.SetStateAction<any>>;
 }
 
-export const GlobalContext = createContext<GlobalContextProps | undefined>(undefined);
-
 interface GlobalStorageProps {
   children: ReactNode;
+}
+
+export const GlobalContext = createContext<GlobalContextProps | null>(null);
+
+export const useGlobalContext = ()=>{
+
+  const context = React.useContext(GlobalContext)
+  if(!context) throw new Error('useContext deve estar dentro do Provider');
+  return context;
 }
 
 export const GlobalStorage = ({ children }: GlobalStorageProps) => {
@@ -41,13 +48,13 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
     token: "",
     usuario: null,
     status: false,
-    rule: ''
+    rule: 1
   });
   const [servicos, setServicos] = useState(null);
   const [lastPage, setLastPage] = useState(0);
   const [notFind, setnotFind] = useState(null);
   const [modal, setModal] = useState<string>('');
-  const [dataUpdate, setDataUpdate] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listaFiltrada,setListaFiltrada] = useState(null)
 
   function logout() {

@@ -21,6 +21,8 @@ import AtualizaCategoria from "./Components/Atualização/AtualizaCategoria/Atua
 import QuestionariosLista from "./Pages/PainelAdm/Questionarios/QuestionariosLista/QuestionariosLista";
 import QuestionariosCadastro from "./Pages/PainelAdm/Questionarios/QuestionariosCadastro/QuestionariosCadastro";
 import { ToastContainer, Zoom } from "react-toastify";
+import { useEffect } from "react";
+import { iniciaAnalytics, logPageView } from "./plugins/iniciaAnalytics";
 
 function App() {
   AOS.init();

@@ -1,11 +1,20 @@
 import React, { useContext } from "react";
 import style from "./Button.module.css";
 import { Link } from "react-router-dom";
-import { GlobalContext } from "../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../Hooks/GlobalContext";
 import ReactGA from 'react-ga'
 
-const Button = ({ color, children, patch, handleSubmit, modalParam}) => {
-  const {setDataUpdate, setModal} = useContext(GlobalContext)
+type ButtonProps = React.ComponentProps<'button'>&{
+  color:string;
+  path:string;
+  handleSubmit?: React.MouseEventHandler;
+  modalParam: string;
+  children?: React.ReactNode
+}
+
+
+const Button = ({ color, path, handleSubmit, modalParam, children}:ButtonProps) => {
+  const {setDataUpdate, setModal} = useGlobalContext()
 
 
   return (
@@ -21,7 +30,7 @@ const Button = ({ color, children, patch, handleSubmit, modalParam}) => {
         if(modalParam){
           setModal(modalParam)
         }
-      }} to={patch}>
+      }} to={path}>
         {children}
       </Link>
     </button>

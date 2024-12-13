@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import styles from "./QuestionariosCadastro.module.css";
 import useTokenValidate from "../../../../Hooks/useTokenValidate";
-import Button from "../../../../Components/Button/Button";
+import Button from "../../../../Components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../../../Hooks/useFetch";
 import useForm from "../../../../Hooks/useForm";
@@ -10,19 +10,34 @@ import "react-toastify/dist/ReactToastify.css";
 import useToast from "../../../../Hooks/useToast";
 import QuestionConfig from "./QuestionConfig/QuestionConfig";
 import ModalScreen from "../../../../Components/ModalScreen/ModalScreen";
-import { GlobalContext } from "../../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../../Hooks/GlobalContext";
 import { convertDataUS } from "../../../../plugins/convertData";
 import QuestionarioForm from "./QuestionarioForm/QuestionarioForm";
 import LoadingCenterComponent from "../../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent";
 import QuestionList from "./QuestionList/QuestionList";
+import { Form } from "../QuestionariosLista/QuestionariosLista";
+
+
+export interface questionListProps {
+  descricao: string;
+  formulario_id: number;
+  possui_sub_pergunta: boolean;
+  tipo_resposta: string;
+  titulo: string;
+}
+
+export interface QuestionForm{
+  form: Form
+  question:questionListProps[]
+}
 
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
-  const { setModal, modal, dataUpdate } = useContext(GlobalContext);
-  const [questionList, setQuestionList] = useState([]);
+  const { modal, dataUpdate } = useGlobalContext()
+  const [questionList, setQuestionList] = useState<questionListProps[]>([]);
 
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const activeToast = useToast();
   const tituloForm = useForm();
   const vigenciaInicioForm = useForm();
@@ -33,7 +48,6 @@ const QuestionariosCadastro = () => {
 
   useEffect(() => {
     fetchValidaToken();
-
     
     if (dataUpdate) {
       tituloForm.setValue(dataUpdate.titulo);
@@ -42,23 +56,24 @@ const QuestionariosCadastro = () => {
       vigenciaFimForm.setValue(convertDataUS(dataUpdate.vigencia_fim));
       tipoForm.setValue(dataUpdate.tipo);
       setTimeout(()=>{
-        formRef.current["status"].value = dataUpdate.status ? "1" : "2";
+        if(formRef.current){
+          formRef.current["status"].value = dataUpdate.status ? "1" : "2";
+        }
       },500)
-    
-      
+            
       getQuestions();
 
     }
   }, [userAuth.rule]);
 
   //cria novo formulario
-  function createForm(dataQuestionario) {
+  function createForm(dataQuestionario:QuestionForm) {
     const { url, options } = POST_DATA("formularios", dataQuestionario);
     return { url, options };
   }
 
 // atualiza formulario
-  function updateForm(dataQuestionario) {
+  function updateForm(dataQuestionario:QuestionForm) {
     const { url, options } = UPDATE_DATA(
       "formularios",
       dataQuestionario,
@@ -75,14 +90,19 @@ const QuestionariosCadastro = () => {
       "formulario_id",
       dataUpdate.id
     );
-    const perguntasRequest = await request(url, options);
-    if (!perguntasRequest.response.ok)
+    const {response, json} = await request(url, options);
+    if (!response?.ok) {
       throw new Error("Não foi possivel buscar as perguntas");
-    setQuestionList(perguntasRequest.json.data);
+    } 
+    if (!json?.data) {
+      throw new Error("Formato inesperado de resposta da API");
+    }
+    const data : questionListProps[] = json.data
+    setQuestionList(data);
   }
 
  
-  function handleSubmit(e) {
+  function handleSubmit(e:React.MouseEvent) {
     e.preventDefault();
     if (
       tituloForm.validate() &&
@@ -93,7 +113,7 @@ const QuestionariosCadastro = () => {
       userAuth.status // apenas cadastrar com usuario logado/autenticado
     ) {
       if (vigenciaInicioForm.value > vigenciaFimForm.value) {
-        return activeToast("Inicio da vigencia maior do que o fim", "warning");
+        return activeToast({message:"Inicio da vigencia maior do que o fim",type: "warning"});
       }
 
       const dataQuestionario = {
@@ -104,7 +124,7 @@ const QuestionariosCadastro = () => {
           vigencia_fim: vigenciaFimForm.value,
           usuario_id: userAuth.usuario.id,
           tipo: tipoForm.value,
-          status: formRef.current["status"].value === "1" ? true : false,
+          status: formRef.current ? formRef.current["status"].value === "1" ? true : false : false,
         },
         question: questionList,
       };
@@ -122,31 +142,27 @@ const QuestionariosCadastro = () => {
           
         const questionarioRequest = await request(url, options);
 
-        if (questionarioRequest.response.ok) {
+        if (questionarioRequest.response?.ok) {
           const message = questionarioRequest.json.message
           tituloForm.reset();
           vigenciaInicioForm.reset();
           vigenciaFimForm.reset();
           descricaoForm.reset();
           tipoForm.reset();
-          activeToast(message, "success");
+          activeToast({message, type:"success"});
           navigation(-1);
         } else {
-          activeToast(error, "error");
+          if(error) activeToast({message:error, type:"error"});
         }
       }
       postQuestionario();
     } else {
-      activeToast("Preencha os campos obrigatórios", "warning");
+      activeToast({message:"Preencha os campos obrigatórios", type:"warning"});
     }
   }
 
-  function handleCardDelete(index) {
+  function handleCardDelete(index:number) {
     setQuestionList((prevData) => prevData.filter((_, i) => i !== index));
-  }
-
-  function handleChangeCheckbox() {
-    setFimVigencia(!fimVigencia);
   }
 
   if (loading) return <LoadingCenterComponent />;
@@ -176,7 +192,7 @@ const QuestionariosCadastro = () => {
       <QuestionList
         questionList={questionList}
         handleCardDelete={handleCardDelete}
-        setModal={setModal}
+        // setModal={setModal}
       />
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}

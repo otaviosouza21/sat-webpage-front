@@ -8,7 +8,7 @@ const useFetch = () => {
 
   const request = useCallback(async (url: string, options?: PropsApiReturn | RequestInit | any) => {
     let response;
-    let json;
+    let json: Promise<any> | any;
     try {
       setError(null);
       setLoading(true);

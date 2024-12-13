@@ -1,14 +1,19 @@
 
 import styles from './QuestionCard.module.css'
-import trash from "../../../../../assets/icons/trash2.svg";
-import pen from "../../../../../assets/icons/pen.svg";
 import TrashIcon from '../../../../../assets/svgFlies/TrashIcon';
 import PenIcon from '../../../../../assets/svgFlies/PenIcon';
-import { useContext } from 'react';
-import { GlobalContext } from '../../../../../Hooks/GlobalContext';
+import { useGlobalContext } from '../../../../../Hooks/GlobalContext';
+import { questionListProps } from '../QuestionariosCadastro';
 
-const QuestionCard = ({question,handleCardDelete,index}) => {
-  const { setModal,setDataUpdate } = useContext(GlobalContext);
+
+interface QuestionCardProps{
+  index: number;
+  handleCardDelete: (index:number)=> void;
+  question:questionListProps
+}
+
+const QuestionCard = ({question,handleCardDelete,index}:QuestionCardProps) => {
+  const { setModal,setDataUpdate } = useGlobalContext();
 
   
   function handleUpdateClick(){

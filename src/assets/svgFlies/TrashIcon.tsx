@@ -1,6 +1,8 @@
 import React from "react";
+import { svgProps } from "../../types/svgTypes";
 
-const TrashIcon = ({color,size, onclick}) => {
+
+const TrashIcon = ({color,size, onclick}:svgProps) => {
   return (
     <svg
     onClick={onclick}

@@ -1,7 +1,7 @@
 const PORT = 3333;
 
 // const URL = "https://taiacupeba.com.br";
-const URL = "http://localhost:3333";
+const URL = "http://localhost:"+PORT;
 
 
 export interface PropsApiReturn {
@@ -171,7 +171,7 @@ export function GET_INNER_ID(
 }
 
 //=================Cria novo registro====================//
-export function POST_DATA(tableName: string, data: Record<string, unknown>) : PropsApiReturn {
+export function POST_DATA(tableName: string, data: any) : PropsApiReturn {
   return {
     url: `${URL}/api/${tableName}`,
     options: {
@@ -187,7 +187,7 @@ export function POST_DATA(tableName: string, data: Record<string, unknown>) : Pr
 //=================[autenticado] Atualiza registro====================//
 export function UPDATE_DATA(
   tableName: string,
-  updateData: Record<string, unknown>,
+  updateData: any,
   id: number,
   token: string
 ) : PropsApiReturn {

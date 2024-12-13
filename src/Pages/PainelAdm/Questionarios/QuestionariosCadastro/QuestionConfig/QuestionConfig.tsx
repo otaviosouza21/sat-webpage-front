@@ -22,23 +22,6 @@ const QuestionConfig = ({ setQuestionList }) => {
   const descricaoForm = useForm();
   const newMultipleResponse = []
 
- /* useEffect(()=>{
-    if(dataUpdate){
-      titleForm.setValue(dataUpdate.titulo)
-      descricaoForm.setValue(dataUpdate.descricao)
-      formRef.current["tipo_resposta"].value = dataUpdate.possui_sub_pergunta ? '2' : '1';
-      setShowInputOptions(() => {
-        return [...dataUpdate.multipleQuestionOptions]
-      }); 
-      
-      console.log(showInputOptions);
-      
-      if(dataUpdate.possui_sub_pergunta){
-      newMultipleResponse.push(...dataUpdate.multipleQuestionOptions)
-      }
-    }
-  },[])  */
-
 
   const handleClick = (e) => {
     e.preventDefault()
