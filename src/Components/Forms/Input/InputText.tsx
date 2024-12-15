@@ -2,7 +2,7 @@ import React, { ChangeEvent } from "react";
 import styles from "./Input.module.css";
 
 type InputTextProps = React.ComponentProps<"input"> & {
-  label: string;
+  label?: string;
   id?: string;
   type?: string;
   placeholder?: string;
@@ -12,7 +12,7 @@ type InputTextProps = React.ComponentProps<"input"> & {
   error: string | null;
   value: string;
   errorConfere?: "";
-  opacity?: "";
+  opacity?: number | null;
 };
 
 const InputText = ({
@@ -30,7 +30,7 @@ const InputText = ({
 }: InputTextProps) => {
   return (
     <div
-      style={{ gridColumn: gridColumn, opacity: opacity }}
+      style={{ gridColumn: gridColumn, opacity: opacity ? opacity : 1 }}
       className={styles.inputContainer}
     >
       <label htmlFor={id}>{label}</label>

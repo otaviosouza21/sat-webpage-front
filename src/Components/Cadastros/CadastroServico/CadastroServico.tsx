@@ -8,9 +8,7 @@ import useFetch from "../../../Hooks/useFetch";
 import { GET_ALL, POST_DATA } from "../../../Api/api";
 import useForm from "../../../Hooks/useForm";
 import Loading from "../../Utils/Loading/Loading";
-import Toast from "../../Toast/Toast";
-import { useNavigate } from "react-router-dom";
-import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
+import ModalAlert from "../../Utils/ModalAlert/ModalAlert.tsx";
 import useTokenValidate from "../../../Hooks/useTokenValidate";
 import useToast from "../../../Hooks/useToast";
 
@@ -22,8 +20,7 @@ const CadastroServico = () => {
     status: false,
   });
   const activeToast = useToast();
-  const formRef = useRef();
-  const navigate = useNavigate();
+  const formRef = useRef<HTMLFormElement>(null);
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
@@ -33,11 +30,11 @@ const CadastroServico = () => {
     fetchValidaToken();
   }, [userAuth.rule]);
 
-  function capitalizeFirstLetter(string) {
+  function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any) {
     e.preventDefault();
     if (
       nomeNegocioForm.validate() &&
@@ -50,7 +47,7 @@ const CadastroServico = () => {
         descricao_servico: descricaoForm.value,
         tempo_negocio: +tempoNegocio.value,
         status: false,
-        categoria_id: +formRef.current["categoria"].value,
+        categoria_id: formRef.current && +formRef.current["categoria"].value,
         usuario_id: userAuth.usuario.id,
         possui_nome_negocio: true,
       };
@@ -58,7 +55,7 @@ const CadastroServico = () => {
       async function postServico() {
         const { url, options } = POST_DATA("servico", dataServico);
         const servicoRequest = await request(url, options);
-        if (servicoRequest.response.ok) {
+        if (servicoRequest.response?.ok) {
           nomeNegocioForm.reset();
           descricaoForm.reset();
           tempoNegocio.reset();
@@ -67,15 +64,18 @@ const CadastroServico = () => {
             status: true,
           });
         } else {
-          activeToast(error, "error");
+          activeToast({
+            message: error ? error : "Ocorreu um erro",
+            type: "error",
+          });
         }
       }
       postServico();
     } else {
-      activeToast(
-        "Por Favor, Preencha todos os campos obrigatórios",
-        "warning"
-      );
+      activeToast({
+        message: "Por Favor, Preencha todos os campos obrigatórios",
+        type: "warning",
+      });
       setTimeout(() => {
         setStatusCadastro({ mensagem: "", status: false });
       }, 2000);
@@ -87,7 +87,7 @@ const CadastroServico = () => {
     async function getCategorias() {
       const { url, options } = GET_ALL("categoria_servico");
       const { response, json } = await request(url, options);
-      if (!response.ok) {
+      if (!response?.ok) {
         console.log("Falha ao buscar Categorias");
       }
       setCategorias(json);
@@ -95,7 +95,7 @@ const CadastroServico = () => {
     getCategorias();
   }, []);
 
-  if (error) return <Error error={error} />;
+  /* if (error) return <Error error={error} />; */
   if (loading) return <Loading />;
   if (categorias)
     return (
@@ -141,7 +141,6 @@ const CadastroServico = () => {
               <Button handleSubmit={handleSubmit}>
                 {loading ? "Salvando..." : "Salvar"}
               </Button>
-              {error && <Toast message={error} color="tomato" />}
               {statusCadastro.status && (
                 <>
                   <ModalAlert
@@ -153,7 +152,7 @@ const CadastroServico = () => {
             </form>
           </section>
         ) : (
-          navigate("/")
+          <div>Sem permissão para cadastrar, contate o administrador</div>
         )}
       </section>
     );

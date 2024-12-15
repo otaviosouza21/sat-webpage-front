@@ -1,25 +1,24 @@
-import React, { useContext, useEffect, useRef} from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import useForm from "../../../Hooks/useForm";
 import InputSelect from "../../Forms/Input/InputSelect";
 import Title from "../../Titles/Title";
 import InputText from "../../Forms/Input/InputText";
 import Button from "../../Button/Button";
 import { POST_DATA } from "../../../Api/api";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { GlobalContext, useGlobalContext } from "../../../Hooks/GlobalContext";
 import useFetch from "../../../Hooks/useFetch";
 import styles from "../../Atualização/CadastroForm.module.css";
 import { useNavigate } from "react-router-dom";
 import useToast from "../../../Hooks/useToast";
 import useTokenValidate from "../../../Hooks/useTokenValidate";
 
-
 const CadastroCategoria = () => {
   const { request, loading, error } = useFetch();
-  const { setUpdate, update } = useContext(GlobalContext);
-  const navigate = useNavigate()
-  const activeToast = useToast()
+  const { setUpdate, update } = useGlobalContext();
+  const navigate = useNavigate();
+  const activeToast = useToast();
 
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const nomeForm = useForm();
   const corForm = useForm();
 
@@ -27,36 +26,52 @@ const CadastroCategoria = () => {
   useEffect(() => {
     fetchValidaToken();
   }, [userAuth.rule]);
-  
-  function handleSubmit(e) {
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any) {
     e.preventDefault();
     if (nomeForm.validate()) {
       const dataCategoria = {
         nome: nomeForm.value,
         cor_categoria: corForm.value,
-        status: formRef.current["status"].value === "Ativo" ? true : false,
+        status: formRef.current
+          ? formRef.current["status"].value === "Ativo"
+            ? true
+            : false
+          : false,
       };
 
       async function cadastraCategoria() {
-        const token = window.localStorage.getItem("token")
-        if(token){
-        const { url, options } = POST_DATA("categoria_servico", dataCategoria);
-        const categoriaRequest = await request(url, options);
-        if (categoriaRequest.response.ok) {
-          activeToast("Categoria Cadastrada com Sucesso", 'success');
-          setUpdate(!update);
-          nomeForm.reset();
-          setTimeout(() => {
-            navigate(-1)
-          }, 1000);
-        } else{
-          activeToast(error, 'error');
+        const token = window.localStorage.getItem("token");
+        if (token) {
+          const { url, options } = POST_DATA(
+            "categoria_servico",
+            dataCategoria
+          );
+          const categoriaRequest = await request(url, options);
+          if (categoriaRequest.response?.ok) {
+            activeToast({
+              message: "Categoria Cadastrada com Sucesso",
+              type: "success",
+            });
+            setUpdate(!update);
+            nomeForm.reset();
+            setTimeout(() => {
+              navigate(-1);
+            }, 1000);
+          } else {
+            activeToast({
+              message: error ? error : "Ocorreu um erro",
+              type: "error",
+            });
+          }
         }
       }
-    }
       cadastraCategoria();
     } else {
-      activeToast("Por Favor, Preencha todos os campos obrigatórios", 'warning');
+      activeToast({
+        message: "Por Favor, Preencha todos os campos obrigatórios",
+        type: "warning",
+      });
     }
   }
 
@@ -85,7 +100,10 @@ const CadastroCategoria = () => {
 
           <InputSelect
             label="Status"
-            options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+            options={[
+              { id: 1, nome: "Ativo" },
+              { id: 2, nome: "Inativo" },
+            ]}
             id="status"
           />
           <Button handleSubmit={handleSubmit}>

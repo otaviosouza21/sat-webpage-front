@@ -2,34 +2,39 @@ import React, { useContext, useEffect, useRef } from "react";
 import menuBurguer from "../../../assets/icons/menu-burgues.svg";
 import closeIcon from "../../../assets/icons/close.svg";
 import style from "./NavLinkMobile.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { Link, NavLinkProps, useNavigate } from "react-router-dom";
+import { GlobalContext, useGlobalContext } from "../../../Hooks/GlobalContext";
 
-const NavLinkMobile = ({ links }) => {
+interface NavLinkMobileProps {
+  links: {
+    nome: string;
+    patch: string;
+  }[];
+}
+
+const NavLinkMobile = ({ links }: NavLinkMobileProps) => {
   const [menuMobile, setMenuMobile] = React.useState(false);
-  const { userAuth, modal, setModal } = useContext(GlobalContext);
+  const { userAuth, modal, setModal } = useGlobalContext();
   const navigate = useNavigate();
-  const closeMenuBtn = useRef();
+  const closeMenuBtn = useRef<HTMLUListElement>(null);
 
-
-function openMenuMobile(){
-  if (menuMobile) { 
-    closeMenuBtn.current.removeAttribute('class','animation-rigth-left') 
-    closeMenuBtn.current.setAttribute('class','animation-left-rigth') 
+  function openMenuMobile() {
+    if (menuMobile && closeMenuBtn.current) {
+      closeMenuBtn.current.removeAttribute("class");
+      closeMenuBtn.current.setAttribute("class", "animation-left-rigth");
+    }
+    setMenuMobile(true);
   }
-  setMenuMobile(true)
-}
 
-function closeMenuMobile(){
-  if (closeMenuBtn.current) { 
-    closeMenuBtn.current.removeAttribute('class','animation-left-rigth') 
-    closeMenuBtn.current.setAttribute('class','animation-rigth-left') 
+  function closeMenuMobile() {
+    if (closeMenuBtn.current) {
+      closeMenuBtn.current.removeAttribute("class");
+      closeMenuBtn.current.setAttribute("class", "animation-rigth-left");
+    }
+    setTimeout(() => {
+      setMenuMobile(false);
+    }, 500);
   }
-  setTimeout(()=>{
-    setMenuMobile(false)
-  },500)
-
-}
   return (
     <div className={style.containerMenuMobile}>
       <img
@@ -39,13 +44,15 @@ function closeMenuMobile(){
         alt=""
       />
       {menuMobile && (
-        <ul className={`${style.navLinksMobile} animation-left-rigth`} ref={closeMenuBtn}>
+        <ul
+          className={`${style.navLinksMobile} animation-left-rigth`}
+          ref={closeMenuBtn}
+        >
           <img
             onClick={closeMenuMobile}
             className={style.closeMenu}
             src={closeIcon}
             alt=""
-            
           />
           {!userAuth.status && (
             <li className={style.butonsMobile}>
@@ -61,10 +68,9 @@ function closeMenuMobile(){
               <p
                 className="btn btn-success"
                 onClick={() => {
-                    setModal("cadUsuario")
-                    closeMenuMobile();
-
-                  }}
+                  setModal("cadUsuario");
+                  closeMenuMobile();
+                }}
               >
                 Cadastre-se
               </p>

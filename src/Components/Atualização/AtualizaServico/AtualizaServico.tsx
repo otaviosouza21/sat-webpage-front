@@ -5,15 +5,11 @@ import InputSelect from "../../Forms/Input/InputSelect";
 import Button from "../../Button/Button";
 import Title from "../../Titles/Title";
 import useFetch from "../../../Hooks/useFetch";
-import {
-  GET_ALL,
-  SEND_EMAIL,
-  UPDATE_DATA,
-} from "../../../Api/api";
+import { GET_ALL, SEND_EMAIL, UPDATE_DATA } from "../../../Api/api";
 import useForm from "../../../Hooks/useForm";
-import Loading from "../../Utils/Loading/Loading";
-import Toast from "../../Toast/Toast";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import Loading from "../../Utils/Loading/Loading.tsx";
+
+import { useGlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import useTokenValidate from "../../../Hooks/useTokenValidate";
 import useToast from "../../../Hooks/useToast";
@@ -22,13 +18,13 @@ const AtualizaServico = () => {
   const [categorias, setCategorias] = useState();
   const { request, loading, error } = useFetch();
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { dataUpdate } = useContext(GlobalContext);
-  const formRef = useRef();
+  const { dataUpdate } = useGlobalContext();
+  const formRef = useRef<HTMLFormElement>(null);
   const navigate = useNavigate();
   const nomeNegocioForm = useForm();
   const descricaoForm = useForm();
   const tempoNegocio = useForm();
-  const activeToast = useToast()
+  const activeToast = useToast();
   const { fetchValidaToken, userAuth } = useTokenValidate();
 
   useEffect(() => {
@@ -36,29 +32,26 @@ const AtualizaServico = () => {
   }, [userAuth.rule]);
 
   useEffect(() => {
-    if (dataUpdate) {
+    if (dataUpdate && formRef.current) {
       window.localStorage.setItem("updateData", JSON.stringify(dataUpdate));
+      const dadosAtualizados = JSON.parse(
+        window.localStorage.getItem("updateData") || "{}"
+      );
+      if (dadosAtualizados) {
+        nomeNegocioForm.setValue(dadosAtualizados.nome_negocio);
+        descricaoForm.setValue(dadosAtualizados.descricao_servico);
+        tempoNegocio.setValue(dadosAtualizados.tempo_negocio);
+      }
+      formRef.current["categoria"].value = String(dataUpdate.categoria_id);
+      if (formRef.current["status"]) {
+        formRef.current["status"].value = dataUpdate.status
+          ? "Ativo"
+          : "Inativo";
+      }
     }
-    const dadosAtualizados = JSON.parse(
-      window.localStorage.getItem("updateData")
-    );
-    if (dadosAtualizados) {
-      nomeNegocioForm.setValue(dadosAtualizados.nome_negocio);
-      descricaoForm.setValue(dadosAtualizados.descricao_servico);
-      tempoNegocio.setValue(dadosAtualizados.tempo_negocio);
-      setTimeout(() => {
-        formRef.current["categoria"].value = String(
-          dadosAtualizados.categoria_id
-        );
-        if (formRef.current["status"])
-          formRef.current["status"].value = dadosAtualizados.status
-            ? "Ativo"
-            : "Inativo";
-      }, 2000);
-    }
-  }, []);
+  }, [dataUpdate]);
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any) {
     e.preventDefault();
     if (
       nomeNegocioForm.validate() &&
@@ -70,41 +63,48 @@ const AtualizaServico = () => {
         nome_negocio: nomeNegocioForm.value,
         descricao_servico: descricaoForm.value,
         tempo_negocio: +tempoNegocio.value,
-        status:
-          formRef.current["status"] &&
-          formRef.current["status"].value === "Ativo"
+        status: formRef.current
+          ? formRef.current["status"].value === "Ativo"
             ? true
-            : false,
-        categoria_id: +formRef.current["categoria"].value,
+            : false
+          : false,
+        categoria_id: formRef.current && +formRef.current["categoria"].value,
         possui_nome_negocio: true,
       };
-      
-      const statusDiferente = dataUpdate.status !== dataServico.status
+
+      const statusDiferente = dataUpdate.status !== dataServico.status;
       async function postServico() {
         if (dataUpdate) {
           const { url, options } = UPDATE_DATA(
             "servico",
             dataServico,
-            dataUpdate.id
+            dataUpdate.id,
+            userAuth.token
           );
           const servicoRequest = await request(url, options);
-          if (servicoRequest.response.ok) {
-            activeToast("Serviço Atualizado com Sucesso" ,'success');
+          if (servicoRequest.response?.ok) {
+            activeToast({
+              message: "Serviço Atualizado com Sucesso",
+              type: "success",
+            });
             nomeNegocioForm.reset(); //limpa campos
             descricaoForm.reset();
             tempoNegocio.reset();
-            statusDiferente && sendEmail()
+            statusDiferente && sendEmail();
             setTimeout(() => {
               navigate(-1);
             }, 1000);
-          } else{
-            activeToast(error, 'error');
+          } else {
+            activeToast({ message: error ? error : "", type: "error" });
           }
         }
       }
       postServico();
     } else {
-      activeToast("Por Favor, Preencha todos os campos obrigatórios", 'warning');
+      activeToast({
+        message: "Por Favor, Preencha todos os campos obrigatórios",
+        type: "warning",
+      });
       setTimeout(() => {
         setStatusCadastro(null);
       }, 1000);
@@ -118,8 +118,7 @@ const AtualizaServico = () => {
       text: "O status do seu serviço foi atualizado no portal do Empreendedor de Taiaçupeba",
     };
     const { url, options } = SEND_EMAIL(emailBody);
-    const { response, json } = request(url, options);
-    
+    request(url, options);
   }
 
   // pega as categorias e salva no estado
@@ -127,7 +126,7 @@ const AtualizaServico = () => {
     async function getCategorias() {
       const { url, options } = GET_ALL("categoria_servico");
       const { response, json } = await request(url, options);
-      if (!response.ok) {
+      if (!response?.ok) {
         console.log("Falha ao buscar Categorias");
       }
       setCategorias(json);
@@ -181,7 +180,10 @@ const AtualizaServico = () => {
                 userAuth.rule === 3 && ( // Acesso ADM
                   <InputSelect
                     label="Status"
-                    options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+                    options={[
+                      { id: 1, nome: "Ativo" },
+                      { id: 1, nome: "Inativo" },
+                    ]}
                     id="status"
                   />
                 )}
@@ -191,7 +193,7 @@ const AtualizaServico = () => {
             </form>
           </section>
         ) : (
-          navigate("/")
+          <div>Sem autorização para atualizar, contate o administrador</div>
         )}
       </section>
     );

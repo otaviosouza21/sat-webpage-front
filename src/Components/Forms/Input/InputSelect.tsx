@@ -10,7 +10,7 @@ interface InputSelectProps {
   }[];
   placeholder?: string;
   gridColumn?: string;
-  opacity?: "";
+  opacity?: number | null;
   onChange?: React.ChangeEventHandler<HTMLSelectElement> | undefined;
 }
 
@@ -25,7 +25,7 @@ const InputSelect = ({
   onChange,
 }: InputSelectProps) => {
   return (
-    <div className={styles.inputContainer} style={{ opacity: opacity }}>
+    <div className={styles.inputContainer} style={{ opacity: opacity ? opacity : '' }}>
       <label htmlFor={id}>{label}</label>
       <select
         style={{ gridColumn: gridColumn }}

@@ -6,17 +6,17 @@ import Title from "../../Titles/Title";
 import useForm from "../../../Hooks/useForm";
 import useFetch from "../../../Hooks/useFetch";
 import { GET_ALL, POST_DATA_USER, UPDATE_DATA } from "../../../Api/api";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext";
 import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
-import CloseButton from "../../CloseButton/CloseButton";
+import CloseButton from "../../CloseButton/CloseButton.tsx";
 import useToast from "../../../Hooks/useToast";
 
 const CadastroUsuario = () => {
   const [rules, setRules] = useState(null);
   const [cadastroRealizado, setCadastroRealizado] = useState(false);
-  const { userAuth, setModal } = useContext(GlobalContext);
-  const formRef = useRef(); // utilizado para acesso ao input options
+  const { userAuth, setModal } = useGlobalContext();
+  const formRef = useRef<HTMLFormElement>(null); // utilizado para acesso ao input options
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
   const nameForm = useForm();
@@ -31,10 +31,9 @@ const CadastroUsuario = () => {
   const { request, data, loading, error } = useFetch();
   const activeToast = useToast();
 
-  function closeModal(event) {
-    event.preventDefault();
+  function closeModal(e: React.FormEvent<HTMLFormElement> | any) {
+    e.preventDefault();
     setModal("");
-   
   }
 
   //==============Puxa rules da api=================//
@@ -52,8 +51,8 @@ const CadastroUsuario = () => {
     if (e.key === "Enter") e.preventDefault();
   });
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any) {
+    e.preventDefault();
     //valida todos os campos
     if (
       nameForm.validate() &&
@@ -80,7 +79,7 @@ const CadastroUsuario = () => {
       async function postUser() {
         const { url, options } = POST_DATA_USER("usuarios", dataUsuario);
         const userRequest = await request(url, options);
-        if (userRequest.response.ok) {
+        if (userRequest.response?.ok) {
           nameForm.reset();
           emailForm.reset();
           senhaForm.reset();
@@ -89,21 +88,27 @@ const CadastroUsuario = () => {
           contatoP1Form.reset();
           contatoP2Form.reset();
           morador.reset();
-          activeToast("Cadastro realizado com sucesso", "success");
+          activeToast({
+            message: "Cadastro realizado com sucesso",
+            type: "success",
+          });
           setCadastroRealizado(true);
           /*   setTimeout(() => {
             navigate("/");
           }, 1000); */
         } else {
-          activeToast(error, "error");
+          activeToast({
+            message: error ? error : "Ocorreu um erro",
+            type: "error",
+          });
         }
       }
       postUser();
     } else {
-      activeToast(
-        "Por Favor, Preencha todos os campos obrigatórios",
-        "warning"
-      );
+      activeToast({
+        message: "Por Favor, Preencha todos os campos obrigatórios",
+        type: "warning",
+      });
     }
   }
 
@@ -196,7 +201,7 @@ const CadastroUsuario = () => {
             <span
               className={styles.possuiConta}
               onClick={() => {
-                setModal(false);
+                setModal("");
                 setModal("modalLogin");
               }}
             >

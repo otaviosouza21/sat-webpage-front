@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import InputText from "../../Forms/Input/InputText";
 import styles from "../CadastroForm.module.css";
 import Button from "../../Button/Button";
@@ -7,8 +7,8 @@ import InputSelect from "../../Forms/Input/InputSelect";
 import useForm from "../../../Hooks/useForm";
 import useFetch from "../../../Hooks/useFetch";
 import { GET_ALL, UPDATE_DATA } from "../../../Api/api";
-import Toast from "../../Toast/Toast";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+
+import { useGlobalContext } from "../../../Hooks/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import useTokenValidate from "../../../Hooks/useTokenValidate";
@@ -17,8 +17,8 @@ import useToast from "../../../Hooks/useToast";
 const AtualizaUsuario = () => {
   const [rules, setRules] = useState(null);
   const [statusCadastro, setStatusCadastro] = useState(null);
-  const { dataUpdate } = useContext(GlobalContext);
-  const formRef = useRef(); // utilizado para acesso ao input options
+  const { dataUpdate } = useGlobalContext();
+  const formRef = useRef<HTMLFormElement>(null); // utilizado para acesso ao input options
   const navigate = useNavigate();
 
   const nameForm = useForm();
@@ -39,7 +39,7 @@ const AtualizaUsuario = () => {
 
   //================UPDATE=====================//
   useEffect(() => {
-    if (dataUpdate) {
+    if (dataUpdate && formRef.current) {
       nameForm.setValue(dataUpdate.nome);
       emailForm.setValue(dataUpdate.email);
       contatoP1Form.setValue(dataUpdate.contato_pessoal_01);
@@ -47,12 +47,14 @@ const AtualizaUsuario = () => {
       contatoN1Form.setValue(dataUpdate.contato_negocio_01);
       contatoN2Form.setValue(dataUpdate.contato_negocio_02);
       morador.setValue(dataUpdate.tempo_reside);
-      console.log(dataUpdate);
+
       setTimeout(() => {
-        formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
-        formRef.current["rule"].value = String(dataUpdate.rule_id);
-        formRef.current["status"].value =
-          dataUpdate.status === "1" ? "Ativo" : "Inativo";
+        if (formRef.current) {
+          formRef.current["socio_sat"].checked = dataUpdate.socio_sat;
+          formRef.current["rule"].value = String(dataUpdate.rule_id);
+          formRef.current["status"].value =
+            dataUpdate.status === "1" ? "Ativo" : "Inativo";
+        }
       }, 1000);
     }
   }, []);
@@ -67,7 +69,7 @@ const AtualizaUsuario = () => {
     getRules();
   }, []);
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any) {
     e.preventDefault();
     //valida todos os campos
     if (
@@ -88,31 +90,32 @@ const AtualizaUsuario = () => {
         contato_negocio_02: contatoN2Form.value,
         tempo_reside: morador.value,
         socio_sat:
-          userAuth.rule === 3
+          userAuth.rule === 3 && formRef.current
             ? formRef.current["socio_sat"].checked
               ? "Sim"
               : "Não"
             : "False",
         status:
-          userAuth.rule === 3
+          userAuth.rule === 3 && formRef.current
             ? formRef.current["status"].value === "Ativo"
               ? "1"
               : "3"
             : "1",
-        rule_id: +formRef.current["rule"].value,
+        rule_id: formRef.current && +formRef.current["rule"].value,
       };
 
       async function postUser() {
         const token = window.localStorage.getItem("token");
+
         const { url, options } = UPDATE_DATA(
           "usuarios",
           dataUsuario,
           dataUpdate.id,
-          token
+          token ? token : ""
         );
 
         const userRequest = await request(url, options);
-        if (userRequest.response.ok) {
+        if (userRequest.response?.ok) {
           setStatusCadastro(userRequest.json.message);
           nameForm.reset();
           emailForm.reset();
@@ -121,26 +124,25 @@ const AtualizaUsuario = () => {
           contatoP1Form.reset();
           contatoP2Form.reset();
           morador.reset();
-          formRef.current["socio_sat"].unchecked;
+          formRef.current && formRef.current["socio_sat"].unchecked;
           activeToast(
             userRequest.json.message
               ? userRequest.json.messag
-              : "Categoria Atualizada com Sucesso",
-            "success"
+              : { message: "Categoria Atualizada com Sucesso", type: "success" }
           );
           setTimeout(() => {
             navigate(-1);
           }, 1000);
         } else {
-          activeToast(error, "error");
+          activeToast({ message: error ? error : "", type: "error" });
         }
       }
       postUser();
     } else {
-      activeToast(
-        "Por Favor, Preencha todos os campos obrigatórios",
-        "warning"
-      );
+      activeToast({
+        message: "Por Favor, Preencha todos os campos obrigatórios",
+        type: "warning",
+      });
     }
   }
 
@@ -224,7 +226,10 @@ const AtualizaUsuario = () => {
 
             <InputSelect
               label="Status"
-              options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+              options={[
+                { id: 1, nome: "Ativo" },
+                { id: 1, nome: "Inativo" },
+              ]}
               id="status"
               opacity={userAuth.rule === 3 ? null : 0}
             />
@@ -240,8 +245,6 @@ const AtualizaUsuario = () => {
             <Button handleSubmit={handleSubmit}>
               {loading ? "Salvando..." : "Salvar"}
             </Button>
-            {error && <Toast message={error} color="tomato" />}
-            {statusCadastro && <Toast message={statusCadastro} color="green" />}
           </form>
         </section>
       </section>

@@ -7,7 +7,7 @@ import facebook from "../../assets/icons/facebook.svg";
 import phone from "../../assets/icons/phone-footer.svg";
 import email from "../../assets/icons/email.svg";
 import { NavLink } from "react-router-dom";
-import SendEmailForm from "../SendEmailForm/SendEmailForm";
+import SendEmailForm from "../SendEmailForm/SendEmailForm.tsx";
 import { formataTelefone } from "../../plugins/Format";
 
 const Footer = () => {
@@ -51,10 +51,10 @@ const Footer = () => {
               <NavLink to="/sobre">Sobre</NavLink>
             </li>
             <li>
-              <NavLink to='taiacupeba.com.br'>SAT</NavLink>
+              <NavLink to="taiacupeba.com.br">SAT</NavLink>
             </li>
             <li>
-              <NavLink to='/'>Ajuda</NavLink>
+              <NavLink to="/">Ajuda</NavLink>
             </li>
           </ul>
           <ul className={styles.lista}>
@@ -63,7 +63,7 @@ const Footer = () => {
               <NavLink to="/servicos">Serviços</NavLink>
             </li>
             <li>
-              <NavLink to='/'> Cadastre-se</NavLink>
+              <NavLink to="/"> Cadastre-se</NavLink>
             </li>
           </ul>
           <ul className={styles.lista}>

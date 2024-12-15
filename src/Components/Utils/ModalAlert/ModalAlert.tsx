@@ -2,11 +2,16 @@ import React, { useContext } from "react";
 import styles from "../../ModalLogin/ModalLogin.module.css";
 import Title from "../../Titles/Title";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext";
 
-const ModalAlert = ({ title, mensagem }) => {
+interface ModalAlertProps {
+  title: string;
+  mensagem: string;
+}
+
+const ModalAlert = ({ title, mensagem }: ModalAlertProps) => {
   const navigate = useNavigate();
-  const { setModal } = useContext(GlobalContext);
+  const { setModal } = useGlobalContext();
   return (
     <div className={styles.modalContainer}>
       <div className={`${styles.modalLogin} animation-opacity`}>
@@ -16,7 +21,7 @@ const ModalAlert = ({ title, mensagem }) => {
           <button
             onClick={() => {
               navigate("/");
-              setModal(null);
+              setModal('');
             }}
             className="btn btn-outline-success "
           >
@@ -26,7 +31,7 @@ const ModalAlert = ({ title, mensagem }) => {
             <button
               onClick={() => {
                 navigate("/servico/cadastro");
-                setModal(null);
+                setModal("");
               }}
               className="btn btn-success"
             >

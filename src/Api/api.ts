@@ -1,3 +1,5 @@
+import { EmailBodyProps } from "../types/apiTypes";
+
 const PORT = 3333;
 
 // const URL = "https://taiacupeba.com.br";
@@ -263,7 +265,7 @@ export function UPDATE_PASSWORD(
   };
 }
 //=================Envio de email====================//
-export function SEND_EMAIL(emailBody: string) : PropsApiReturn {
+export function SEND_EMAIL(emailBody: EmailBodyProps)  {
   return {
     url: `${URL}/api/send-email`,
     options: {

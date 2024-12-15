@@ -5,7 +5,7 @@ import Button from "../Button/Button";
 import useForm from "../../Hooks/useForm";
 import useFetch from "../../Hooks/useFetch";
 import { SEND_EMAIL } from "../../Api/api";
-import Toast from "../Toast/Toast";
+import useToast from "../../Hooks/useToast";
 
 const SendEmailForm = () => {
   const nomeForm = useForm();
@@ -13,8 +13,9 @@ const SendEmailForm = () => {
   const mensagemForm = useForm();
   const { data, request, loading, error } = useFetch();
   const [alert, setAlert] = useState(null);
+  const activeToast = useToast();
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any) {
     e.preventDefault();
     if (
       nomeForm.validate() &&
@@ -35,17 +36,21 @@ const SendEmailForm = () => {
       async function sendEmail() {
         const { url, options } = SEND_EMAIL(emailBody);
         const { response } = await request(url, options);
-        if (response.ok) {
+        if (response?.ok) {
           nomeForm.reset();
           emailForm.reset();
           mensagemForm.reset();
-          setAlert({ message: "Mensagem Enviada com sucesso", color: "green" });
+
+          activeToast({
+            message: "Mensagem Enviada com sucesso",
+            type: "success",
+          });
         } else
-          setAlert({ message: "Ocorreu um erro ao enviar", color: "tomato" });
+          activeToast({ message: "Ocorreu um erro ao enviar", type: "error" });
       }
       sendEmail();
     } else {
-      setAlert({ message: "Preencha todos os campos", color: "tomato" });
+      activeToast({ message: "Preencha todos os campos", type: "warning" });
     }
 
     setTimeout(() => {
@@ -65,7 +70,6 @@ const SendEmailForm = () => {
           <InputText {...emailForm} type="email" placeholder="Seu Email" />
           <InputText {...mensagemForm} type="text" placeholder="Mensagem" />
           <button>{loading ? "Enviando..." : "Enviar"}</button>
-          {alert && <Toast message={alert.message} color={alert.color} />}
         </form>
       </div>
     </section>

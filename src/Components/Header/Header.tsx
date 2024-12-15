@@ -6,17 +6,16 @@ import NavLinks from "./NavLinks/NavLinks";
 import { Link } from "react-router-dom";
 import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
 import ModalLogin from "../ModalLogin/ModalLogin";
-import { GlobalContext } from "../../Hooks/GlobalContext";
+import { GlobalContext, useGlobalContext } from "../../Hooks/GlobalContext";
 import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario";
 import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
 import LoadingDots from "../Utils/LoadingDots/LoadingDots";
 
 export const Header = () => {
   const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
-  const { setDataUpdate, modal, setModal, userAuth } = useContext(GlobalContext);
+  const { modal, setModal, userAuth } = useGlobalContext();
   const [modalUsuario, setModalUsuario] = useState(false);
   const [loading, setLoading] = useState(false);
- 
 
   const navLinks = [
     {
@@ -67,7 +66,7 @@ export const Header = () => {
         </Link>
 
         {isTelaPequena ? (
-          <NavLinkMobile isTelaPequena={isTelaPequena} links={navLinks} />
+          <NavLinkMobile links={navLinks} />
         ) : (
           <NavLinks links={navLinks} />
         )}
@@ -82,7 +81,7 @@ export const Header = () => {
           <>
             <div className={styles.usuarioLogado} onClick={handleClick}>
               <p className={styles.welcome}>
-                {`Bem Vindo, ${userAuth.usuario.nome.split(' ')[0]}`} 
+                {`Bem Vindo, ${userAuth.usuario.nome.split(" ")[0]}`}
               </p>
               {modalUsuario && <ModalUsuario />}
             </div>
@@ -91,10 +90,10 @@ export const Header = () => {
         {!userAuth.status && !modalUsuario && !loading && (
           <div className={styles.headerButtons}>
             <button onClick={() => setModal("cadUsuario")}>
-              <Link >Cadastre-se</Link>
+              <a>Cadastre-se</a>
             </button>
             <button onClick={() => setModal("modalLogin")}>
-              <Link>Entrar</Link>
+              <a>Entrar</a>
             </button>
           </div>
         )}
