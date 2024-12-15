@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { FormEventHandler, useContext, useEffect, useRef, useState } from "react";
 import useForm from "../../../Hooks/useForm";
 import InputSelect from "../../Forms/Input/InputSelect";
-import Toast from "../../Toast/Toast";
 import Title from "../../Titles/Title";
 import InputText from "../../Forms/Input/InputText";
 import Button from "../../Button/Button";
 import { UPDATE_DATA } from "../../../Api/api";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext";
 import useFetch from "../../../Hooks/useFetch";
 import styles from "../CadastroForm.module.css";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +14,11 @@ import useTokenValidate from "../../../Hooks/useTokenValidate";
 
 const AtualizaCategoria = () => {
   const { request, loading, error } = useFetch();
-  const [statusCadastro, setStatusCadastro] = useState(null);
-  const { setUpdate, update,dataUpdate } = useContext(GlobalContext);
-  const navigate = useNavigate()
-  const activeToast = useToast()
+  const { setUpdate, update, dataUpdate } = useGlobalContext();
+  const navigate = useNavigate();
+  const activeToast = useToast();
 
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const nomeForm = useForm();
   const corForm = useForm();
 
@@ -29,44 +27,58 @@ const AtualizaCategoria = () => {
   useEffect(() => {
     fetchValidaToken();
   }, [userAuth.rule]);
-  
-  useEffect(()=>{
-   if(dataUpdate){
-     nomeForm.setValue(dataUpdate.nome)
-     corForm.setValue(dataUpdate.cor_categoria)
-     formRef.current["status"].value
-   }
-  },[])
 
-  function handleSubmit(e) {
+  useEffect(() => {
+    if (dataUpdate) {
+      nomeForm.setValue(dataUpdate.nome);
+      corForm.setValue(dataUpdate.cor_categoria);
+    }
+  }, []);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any ) {
     e.preventDefault();
     if (nomeForm.validate()) {
       const dataCategoria = {
         nome: nomeForm.value,
         cor_categoria: corForm.value,
-        status: formRef.current["status"].value === "Ativo" ? true : false,
+        status: formRef.current
+        ? formRef.current["status"].value === "Ativo"
+          ? true
+          : false
+        : false,
       };
 
       async function atualizaCategoria() {
-        const token = window.localStorage.getItem("token")
-        if(token && dataUpdate){
-        const { url, options } = UPDATE_DATA("categoria_servico", dataCategoria,dataUpdate.id,token);
-        const servicoRequest = await request(url, options);
-        if (servicoRequest.response.ok) {
-          activeToast("Categoria Atualizada com Sucesso", 'success');
-          setUpdate(!update);
-          nomeForm.reset();
-          setTimeout(() => {
-            navigate(-1)
-          }, 1000);
-        } else {
-          activeToast(error, 'error');
+        const token = window.localStorage.getItem("token");
+        if (token && dataUpdate) {
+          const { url, options } = UPDATE_DATA(
+            "categoria_servico",
+            dataCategoria,
+            dataUpdate.id,
+            token
+          );
+          const servicoRequest = await request(url, options);
+          if (servicoRequest.response?.ok) {
+            activeToast({
+              message: "Categoria Atualizada com Sucesso",
+              type: "success",
+            });
+            setUpdate(!update);
+            nomeForm.reset();
+            setTimeout(() => {
+              navigate(-1);
+            }, 1000);
+          } else {
+            activeToast({ message: error ? error : "", type: "error" });
+          }
         }
       }
-    }
       atualizaCategoria();
     } else {
-      activeToast("Por Favor, Preencha todos os campos obrigatórios", 'warning');
+      activeToast({
+        message: "Por Favor, Preencha todos os campos obrigatórios",
+        type: "warning",
+      });
     }
   }
 
@@ -95,7 +107,10 @@ const AtualizaCategoria = () => {
 
           <InputSelect
             label="Status"
-            options={[{ nome: "Ativo" }, { nome: "Inativo" }]}
+            options={[
+              { id: 1, nome: "Ativo" },
+              { id: 2, nome: "Inativo" },
+            ]}
             id="status"
           />
           <Button handleSubmit={handleSubmit}>

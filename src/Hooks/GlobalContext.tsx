@@ -36,7 +36,6 @@ interface GlobalStorageProps {
 export const GlobalContext = createContext<GlobalContextProps | null>(null);
 
 export const useGlobalContext = ()=>{
-
   const context = React.useContext(GlobalContext)
   if(!context) throw new Error('useContext deve estar dentro do Provider');
   return context;

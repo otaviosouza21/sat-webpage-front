@@ -1,8 +1,7 @@
 import { jwtDecode } from "jwt-decode";
-import React, { useContext } from "react";
 import { GET_AUTH_USER } from "../Api/api";
 import useFetch from "./useFetch";
-import { useGlobalContext } from "./GlobalContext";
+import { useGlobalContext } from "./GlobalContext.tsx";
 import { useNavigate } from "react-router-dom";
 
 const useTokenValidate = () => {

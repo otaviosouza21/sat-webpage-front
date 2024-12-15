@@ -5,6 +5,17 @@ import {
   regexPhone,
 } from "../Components/Utils/Regex/validacaoRegex.ts";
 
+export interface useFormProps {
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  error: string | null;
+  setError: React.Dispatch<React.SetStateAction<string | null>>;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  validate: (value: string) => boolean;
+  onBlur: () => void;
+  reset: () => void;
+}
+
 type ValidationType = "email" | "senha" | "phone" | false;
 
 interface ValidationRules {
@@ -30,7 +41,7 @@ const validacao: ValidationRules = {
   },
 };
 
-const useForm = (type: ValidationType) => {
+const useForm = (type?: ValidationType) => {
   const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
@@ -74,7 +85,10 @@ const useForm = (type: ValidationType) => {
     const clampedDigits = onlyDigits.slice(0, 11);
 
     // Formatação
-    let formatted = clampedDigits.replace(/^(\d{2})(\d{0,5})(\d{0,4}).*/, "($1) $2-$3");
+    let formatted = clampedDigits.replace(
+      /^(\d{2})(\d{0,5})(\d{0,4}).*/,
+      "($1) $2-$3"
+    );
 
     // Remove o traço (-) caso não tenham dígitos suficientes para o número principal
     formatted = formatted.replace(/(-)$/, "");

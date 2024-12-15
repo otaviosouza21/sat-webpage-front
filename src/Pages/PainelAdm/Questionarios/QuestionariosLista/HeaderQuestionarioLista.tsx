@@ -3,7 +3,7 @@ import styles from "./QuestionarioLista.module.css";
 import Plus from "../../../../assets/icons/plus.svg";
 import Title from "../../../../Components/Titles/Title";
 import { Link } from "react-router-dom";
-import { useGlobalContext } from "../../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../../Hooks/GlobalContext.tsx";
 
 const HeaderQuestionarioLista = () => {
 

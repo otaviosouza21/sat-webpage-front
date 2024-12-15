@@ -2,7 +2,7 @@
 import styles from './QuestionCard.module.css'
 import TrashIcon from '../../../../../assets/svgFlies/TrashIcon';
 import PenIcon from '../../../../../assets/svgFlies/PenIcon';
-import { useGlobalContext } from '../../../../../Hooks/GlobalContext';
+import { useGlobalContext } from '../../../../../Hooks/GlobalContext.tsx';
 import { questionListProps } from '../QuestionariosCadastro';
 
 

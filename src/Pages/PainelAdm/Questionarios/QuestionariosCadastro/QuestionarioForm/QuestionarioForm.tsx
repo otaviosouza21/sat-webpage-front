@@ -1,7 +1,17 @@
 import React from "react";
-import styles from './QuestionarioForm.module.css'
-import InputText from "../../../../../Components/Forms/Input/InputText";
-import InputSelect from "../../../../../Components/Forms/Input/InputSelect";
+import styles from "./QuestionarioForm.module.css";
+import InputText from "../../../../../Components/Forms/Input/InputText.tsx";
+import InputSelect from "../../../../../Components/Forms/Input/InputSelect.tsx";
+import { useFormProps } from "../../../../../Hooks/useForm";
+
+type questionarioFormProps = React.ComponentProps<"form"> & {
+  formRef: React.RefObject<HTMLFormElement>;
+  tituloForm: useFormProps;
+  vigenciaInicioForm: useFormProps;
+  vigenciaFimForm: useFormProps;
+  descricaoForm: useFormProps;
+  tipoForm: useFormProps;
+};
 
 const QuestionarioForm = ({
   formRef,
@@ -10,7 +20,7 @@ const QuestionarioForm = ({
   vigenciaFimForm,
   descricaoForm,
   tipoForm,
-}) => {
+}: questionarioFormProps) => {
   return (
     <form ref={formRef} className={styles.form}>
       <InputText {...tituloForm} label="Titulo" gridColumn="1/3" />

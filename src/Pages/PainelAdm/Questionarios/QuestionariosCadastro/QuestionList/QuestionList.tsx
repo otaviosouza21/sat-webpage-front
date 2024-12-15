@@ -2,23 +2,22 @@ import React from "react";
 import styles from '../QuestionariosCadastro.module.css'
 import Plus from "../../../../../assets/icons/plus.svg";
 import QuestionCard from '../QuestionCard/QuestionCard.tsx'
-import { useGlobalContext } from "../../../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../../../Hooks/GlobalContext.tsx";
 import { questionListProps } from "../QuestionariosCadastro";
+import Title from "../../../../../Components/Titles/Title.tsx";
 
 const {setModal} = useGlobalContext();
 
 export type QuestionListProps = React.ComponentProps<'div'>&{
   handleCardDelete: (index:number)=> void;
   questionList: questionListProps[];
-
-
-
 }
+
 const QuestionList = ({ handleCardDelete, questionList, ...props }:QuestionListProps) => {
   return (
     <div className={styles.newQuestions} {...props}>
       <div className={styles.header}>
-        {/*  <Title text="Perguntas" fontSize="2" /> */}
+         <Title text="Perguntas" fontSize="2" /> 
         <div
           onClick={() => setModal("show-QuestionConfig")}
           className={styles.button}
