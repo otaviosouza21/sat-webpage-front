@@ -1,13 +1,7 @@
 // src/Hooks/GlobalContext.ts
 
 import React, { createContext, useState, ReactNode } from "react";
-
-interface UserAuth {
-  token: string;
-  usuario: any;
-  status: boolean;
-  rule?: number;
-}
+import { UserAuth, CurrentUser,defaultCurrentUser, defaultUserAuth } from "../types/apiTypes";
 
 interface GlobalContextProps {
   update: boolean;
@@ -27,6 +21,12 @@ interface GlobalContextProps {
   setnotFind: React.Dispatch<React.SetStateAction<any>>;
   listaFiltrada: any;
   setListaFiltrada: React.Dispatch<React.SetStateAction<any>>;
+  
+  inputPesquisa: string;
+  setInputPesquisa: React.Dispatch<React.SetStateAction<any>>;
+
+  currentUser: CurrentUser;
+  setCurrentUser: React.Dispatch<React.SetStateAction<CurrentUser>>
 }
 
 interface GlobalStorageProps {
@@ -43,18 +43,17 @@ export const useGlobalContext = ()=>{
 
 export const GlobalStorage = ({ children }: GlobalStorageProps) => {
   const [update, setUpdate] = useState(false);
-  const [userAuth, setUserAuth] = useState<UserAuth>({
-    token: "",
-    usuario: null,
-    status: false,
-    rule: 1
-  });
+  const [userAuth, setUserAuth] = useState<UserAuth>(defaultUserAuth);
+
+  const [currentUser, setCurrentUser] = useState<CurrentUser>(defaultCurrentUser)
   const [servicos, setServicos] = useState(null);
   const [lastPage, setLastPage] = useState(0);
   const [notFind, setnotFind] = useState(null);
   const [modal, setModal] = useState<string>('');
   const [dataUpdate, setDataUpdate] = useState({});
   const [listaFiltrada,setListaFiltrada] = useState(null)
+  const [inputPesquisa, setInputPesquisa] = useState("");
+
 
   function logout() {
     window.localStorage.removeItem('token');
@@ -80,7 +79,10 @@ export const GlobalStorage = ({ children }: GlobalStorageProps) => {
         notFind,
         setnotFind,
         listaFiltrada,
-        setListaFiltrada
+        setListaFiltrada,
+        inputPesquisa, setInputPesquisa,
+        currentUser, setCurrentUser,
+
       }}
     >
       {children}

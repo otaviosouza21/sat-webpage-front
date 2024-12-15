@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Title from "../../Titles/Title";
 import style from "./MinhaConta.module.css";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext";
 import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";
@@ -9,29 +9,35 @@ import Button from "../../Button/Button";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import { Link, useNavigate } from "react-router-dom";
 import styleButton from "../../Button/Button.module.css";
+import useTokenValidate from "../../../Hooks/useTokenValidate";
+import { defaultCurrentUser, defaultUserAuth, Servicos, ServicoUsuarioProps } from "../../../types/apiTypes";
 
-const MinhaConta = () => {
+
+interface MinhaContaProps extends React.ComponentProps<'div'> {
+
+}
+
+const MinhaConta: React.FC<MinhaContaProps>  = () => {
   const navigate = useNavigate();
-  const { userAuth, setUserAuth, logout, setDataUpdate } =
-    useContext(GlobalContext);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [servicosAtivos, setServicosAtivos] = useState(null);
-  const [servicosInativos, setServicosInativos] = useState(null);
+  useTokenValidate()
+  const { userAuth, setUserAuth, logout, setDataUpdate,currentUser, setCurrentUser, } = useGlobalContext();
+  const [servicosAtivos, setServicosAtivos] = useState(0);
+  const [servicosInativos, setServicosInativos] = useState(0);
   const { request, loading } = useFetch();
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
-        const { id, rule } = jwtDecode(token);
+        const { id, rule } :any = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
-        if (response.ok) {
+        if (response?.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
           setCurrentUser(json);
         } else {
-          setUserAuth({});
-          setCurrentUser(null);
+          setUserAuth(defaultUserAuth);
+          setCurrentUser(defaultCurrentUser);
           logout();
         }
       } else {
@@ -47,9 +53,10 @@ const MinhaConta = () => {
         const { id } = userAuth.usuario;
         const { url, options } = GET_INNER_ID("servico", "usuario", id);
         const { response, json } = await request(url, options);
-        if (response.ok) {
-          const ativos = json.Servicos.filter((servico) => servico.status);
-          const inativos = json.Servicos.filter((servico) => !servico.status);
+        const servicos: Servicos[] = json
+        if (response?.ok) {
+          const ativos = servicos.filter((servico) => servico.status);
+          const inativos = servicos.filter((servico) => !servico.status);
           setServicosAtivos(ativos.length)
           setServicosInativos(inativos.length)
         }
@@ -110,7 +117,7 @@ const MinhaConta = () => {
                 <p>{servicosAtivos}</p>
               </li>
               <button onClick={handleEdit} className={styleButton.button}>
-                <Link>Editar</Link>
+                <a>Editar</a>
               </button>
             </>
           )}
