@@ -5,7 +5,7 @@ import Title from "../Titles/Title";
 import useForm from "../../Hooks/useForm";
 import useFetch from "../../Hooks/useFetch";
 import { GET_AUTH_USER, POST_LOGIN } from "../../Api/api";
-import { useGlobalContext } from "../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../Hooks/GlobalContext.tsx";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 

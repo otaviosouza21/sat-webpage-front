@@ -6,7 +6,7 @@ import NavLinks from "./NavLinks/NavLinks";
 import { Link } from "react-router-dom";
 import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
 import ModalLogin from "../ModalLogin/ModalLogin.tsx";
-import { useGlobalContext } from "../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../Hooks/GlobalContext.tsx";
 import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario.tsx";
 import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
 import LoadingDots from "../Utils/LoadingDots/LoadingDots.tsx";

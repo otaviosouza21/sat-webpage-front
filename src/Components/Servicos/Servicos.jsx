@@ -8,8 +8,8 @@ import {
   GET_AUTH_USER,
   GET_INNER,
 } from "../../Api/api";
-import Loading from "../Utils/Loading/Loading.jsx";
-import Error from "../Utils/Error/Error.jsx";
+import Loading from "../Utils/Loading/Loading.tsx";
+import Error from "../Utils/Error/Error.tsx";
 import { jwtDecode } from "jwt-decode";
 import { GlobalContext } from "../../Hooks/GlobalContext";
 

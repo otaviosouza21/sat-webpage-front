@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styles from "../../ModalLogin/ModalLogin.module.css";
 import Title from "../../Titles/Title";
 import { useNavigate } from "react-router-dom";
-import { useGlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 
 interface ModalAlertProps {
   title: string;
