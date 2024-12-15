@@ -1,20 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import Title from "../Titles/Title";
-import InputSearch from "../Forms/InputSearch/InputSearch.jsx";
-import ServicoContainer from "../ServicoContainer/ServicoContainer";
+import Title from "../Titles/Title.tsx";
+import InputSearch from "../Forms/InputSearch/InputSearch.tsx";
+import ServicoContainer from "../ServicoContainer/ServicoContainer.jsx";
 import styles from "./Servicos.module.css";
-import useFetch from "../../Hooks/useFetch";
+import useFetch from "../../Hooks/useFetch.tsx";
 import {
   GET_ALL,
   GET_AUTH_USER,
   GET_INNER,
   GET_INNER_SEARCH,
-} from "../../Api/api";
-import Loading from "../Utils/Loading/Loading.jsx";
+} from "../../Api/api.ts";
+import Loading from "../Utils/Loading/Loading.tsx";
 import Error from "../Utils/Error/Error.jsx";
 import { jwtDecode } from "jwt-decode";
-import { GlobalContext } from "../../Hooks/GlobalContext";
-import Paginacao from "../Paginação/Paginacao";
+import { GlobalContext } from "../../Hooks/GlobalContext.tsx";
+import Paginacao from "../Paginação/Paginacao.tsx";
 
 const Servicos = () => {
   const { error, loading, request } = useFetch();
