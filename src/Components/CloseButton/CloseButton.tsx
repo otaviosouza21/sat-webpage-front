@@ -5,9 +5,10 @@ import { GlobalContext } from "../../Hooks/GlobalContext";
 interface CloseButtonProps {
   closeModal: (e: any) => void;
   CloseContainerPost: LegacyRef<HTMLButtonElement> | undefined;
+  modalContainer: LegacyRef<HTMLDivElement> | undefined
 }
 
-const CloseButton = ({ closeModal, CloseContainerPost }: CloseButtonProps) => {
+const CloseButton = ({ closeModal, CloseContainerPost,modalContainer }: CloseButtonProps) => {
   const overflow = document.querySelector("body");
   overflow?.classList.add("overFlow");
   return (

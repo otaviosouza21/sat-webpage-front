@@ -6,7 +6,7 @@ import Title from "../../Titles/Title";
 import useForm from "../../../Hooks/useForm";
 import useFetch from "../../../Hooks/useFetch";
 import { GET_ALL, POST_DATA_USER, UPDATE_DATA } from "../../../Api/api";
-import { useGlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import CloseButton from "../../CloseButton/CloseButton.tsx";

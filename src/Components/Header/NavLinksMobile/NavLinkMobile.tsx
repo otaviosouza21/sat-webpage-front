@@ -3,7 +3,7 @@ import menuBurguer from "../../../assets/icons/menu-burgues.svg";
 import closeIcon from "../../../assets/icons/close.svg";
 import style from "./NavLinkMobile.module.css";
 import { Link, NavLinkProps, useNavigate } from "react-router-dom";
-import { GlobalContext, useGlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 
 interface NavLinkMobileProps {
   links: {

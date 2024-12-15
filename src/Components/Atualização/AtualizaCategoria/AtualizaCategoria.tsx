@@ -5,7 +5,7 @@ import Title from "../../Titles/Title";
 import InputText from "../../Forms/Input/InputText";
 import Button from "../../Button/Button";
 import { UPDATE_DATA } from "../../../Api/api";
-import { useGlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import useFetch from "../../../Hooks/useFetch";
 import styles from "../CadastroForm.module.css";
 import { useNavigate } from "react-router-dom";

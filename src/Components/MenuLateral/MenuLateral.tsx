@@ -2,7 +2,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from './MenuLateral.module.css'
 import { NavLink } from 'react-router-dom'
 
-const MenuLateral = ({link1, link2, text1, text2, setBtnAtivo}) => {
+
+interface MenuLateralProps{
+  link1: string;
+  link2: string;
+  text1: string;
+  text2: string;
+}
+
+const MenuLateral = ({link1, link2, text1, text2}: MenuLateralProps) => {
 
   return (
     <div className={`${styles.menuLateral}`}>

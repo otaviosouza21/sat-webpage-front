@@ -5,22 +5,27 @@ import Title from "../Titles/Title";
 import useForm from "../../Hooks/useForm";
 import useFetch from "../../Hooks/useFetch";
 import { GET_AUTH_USER, POST_LOGIN } from "../../Api/api";
-import { GlobalContext } from "../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../Hooks/GlobalContext.tsx";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-const ModalLogin = ({ modal, setModal }) => {
+interface ModalLoginProps {
+  modal: string;
+  setModal: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ModalLogin = ({ modal, setModal }: ModalLoginProps) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
   const [token, setToken] = useState(null);
   const [buttonState, setButtonState] = useState("Entrar");
   const { request, error, loading, data } = useFetch();
-  const { userAuth, setUserAuth } = useContext(GlobalContext);
+  const { setUserAuth } = useGlobalContext();
   const navigate = useNavigate();
   const emailForm = useForm("email");
   const senhaForm = useForm("senha");
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any) {
     e.preventDefault();
     if (emailForm.validate() && senhaForm.validate()) {
       const dataLogin = {
@@ -31,29 +36,29 @@ const ModalLogin = ({ modal, setModal }) => {
       async function postLogin() {
         const { url, options } = POST_LOGIN("usuarios", dataLogin);
         const requestLogin = await request(url, options);
-        if (requestLogin.response.ok) {
+        if (requestLogin.response?.ok) {
           const token = requestLogin.json.token;
           setToken(token);
           window.localStorage.setItem("token", token);
-          authLogin(token, requestLogin.json.id);
+          authLogin(token);
           navigate("/meu_perfil/perfil");
         } else {
           setToken(null);
         }
       }
 
-      async function authLogin(token) {
-        const { id } = jwtDecode(token);
+      async function authLogin(token: string) {
+        const { id }: any = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
 
-        if (!response.ok) {
+        if (!response?.ok) {
           console.log("Erro ao realizar Login");
           setUserAuth({ token: "", usuario: null, status: false });
         } else {
           setUserAuth({ token: token, usuario: json, status: true });
           setButtonState("Bem Vindo");
-          setModal(false);
+          setModal("");
         }
       }
 
@@ -61,24 +66,20 @@ const ModalLogin = ({ modal, setModal }) => {
     }
   }
 
-  function closeModal(event) {
-    event.preventDefault();
+  function closeModal(e: React.MouseEvent | any) {
+    e.preventDefault();
     if (
-      event.target === modalContainerPost.current ||
-      event.target === CloseContainerPost.current
+      e.target === modalContainerPost.current ||
+      e.target === CloseContainerPost.current
     ) {
       setModal("");
       const overflow = document.querySelector("body");
-      overflow.classList.remove("overFlow");
+      overflow?.classList.remove("overFlow");
     }
   }
 
   return (
-    <div
-  /*     onClick={closeModal} */
-      ref={modalContainerPost}
-      className={styles.modalContainer}
-    >
+    <div ref={modalContainerPost} className={styles.modalContainer}>
       <form className={`${styles.modalLogin} animation-opacity`}>
         <button
           ref={CloseContainerPost}
@@ -100,7 +101,7 @@ const ModalLogin = ({ modal, setModal }) => {
           <span onClick={() => navigate("/send-request")}>Esqueci a Senha</span>
           <span
             onClick={() => {
-              setModal(false);
+              setModal("");
               setModal("cadUsuario");
             }}
           >

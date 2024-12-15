@@ -9,7 +9,7 @@ import { GET_ALL, SEND_EMAIL, UPDATE_DATA } from "../../../Api/api";
 import useForm from "../../../Hooks/useForm";
 import Loading from "../../Utils/Loading/Loading.tsx";
 
-import { useGlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import { useNavigate } from "react-router-dom";
 import useTokenValidate from "../../../Hooks/useTokenValidate";
 import useToast from "../../../Hooks/useToast";

@@ -5,7 +5,6 @@ import ServicoContainer from "../ServicoContainer/ServicoContainer.jsx";
 import styles from "./Servicos.module.css";
 import useFetch from "../../Hooks/useFetch.tsx";
 import {
-  GET_ALL,
   GET_AUTH_USER,
   GET_INNER,
   GET_INNER_SEARCH,
@@ -15,7 +14,6 @@ import Error from "../Utils/Error/Error.jsx";
 import { jwtDecode } from "jwt-decode";
 import { GlobalContext } from "../../Hooks/GlobalContext.tsx";
 import Paginacao from "../Paginação/Paginacao.tsx";
-
 const Servicos = () => {
   const { error, loading, request } = useFetch();
   const {

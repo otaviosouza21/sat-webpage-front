@@ -7,8 +7,7 @@ import InputSelect from "../../Forms/Input/InputSelect";
 import useForm from "../../../Hooks/useForm";
 import useFetch from "../../../Hooks/useFetch";
 import { GET_ALL, UPDATE_DATA } from "../../../Api/api";
-
-import { useGlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import { useNavigate } from "react-router-dom";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
 import useTokenValidate from "../../../Hooks/useTokenValidate";
