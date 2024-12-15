@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from "react";
-import Button from "../Button/Button";
+import React, { useState } from "react";
 import wppIcon from "../../assets/icons/wathsapp.svg";
 import styles from "./ServicoContainer.module.css";
-import useFetch from "../../Hooks/useFetch";
-import { GET_TO_ID } from "../../Api/api";
 import ModalServico from "../ModalServico/ModalServico";
 import ModalContato from "./ModalContato/ModalContato";
 import { Link } from "react-router-dom";
-import { logButtonClick } from "../../plugins/logButtonClick";
+import { logButtonClick } from "../../plugins/logButtonClick.ts";
+import { Categoria, ServicoUsuarioProps } from "../../types/apiTypes";
 
-const ServicoContainer = ({ servicosData,categoria }) => {
-  const [categoriaData, setCategoriaData] = useState();
-  const [modal, setModal] = useState(false);
+
+
+interface ServicoContainerProps extends React.ComponentProps<'div'>{
+  servicosData: ServicoUsuarioProps
+  categoria: Categoria
+}
+
+const ServicoContainer = ({ servicosData,categoria }:ServicoContainerProps) => {
+  const [modal, setModal] = useState('');
   const [showContatos, setShowContatos] = useState(false);
   const { nome_negocio, categoria_id, usuario_id } = servicosData;
-  const { request } = useFetch();
   const { nome, contato_pessoal_01, contato_negocio_01 } = servicosData.Usuario;
   const contatos = { contato_pessoal_01, contato_negocio_01 };
-
+  
   function show() {
     setShowContatos(!showContatos);
   }
   function showModal() {
     setModal("servicoDetalhes");
     const overflow = document.querySelector("body");
-    overflow.classList.add("overFlow");
+    overflow?.classList.add("overFlow");
   }
 
   if ( servicosData /*  && usuarioData */)
@@ -46,10 +49,10 @@ const ServicoContainer = ({ servicosData,categoria }) => {
 
           <p>{nome}</p>
           <button className={styles.button} onClick={show}>
-            <Link>
+            <a>
               <img src={wppIcon} alt="" />
               Contato
-            </Link>
+            </a>
           </button>
           </div>
           {showContatos && <ModalContato contato={contatos} />}

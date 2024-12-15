@@ -1,7 +1,6 @@
 import React, { createContext, useState } from "react";
-import {  useNavigate } from "react-router-dom";
 
-export const GlobalContext = createContext();
+export const _GlobalContext = createContext();
 
 export const GlobalStorage = ({ children }) => {
   const [update, setUpdate] = useState(false);

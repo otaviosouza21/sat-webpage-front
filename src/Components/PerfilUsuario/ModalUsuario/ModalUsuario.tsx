@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
 import styles from "./ModalUsuario.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { GlobalContext, useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 
 
 const ModalUsuario = () => {

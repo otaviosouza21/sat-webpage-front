@@ -1,11 +1,11 @@
-import React, { LegacyRef, useContext, useRef } from "react";
+import { LegacyRef } from "react";
 import styles from "../CloseButton/CloseButton.module.css";
-import { GlobalContext } from "../../Hooks/GlobalContext";
+
 
 interface CloseButtonProps {
   closeModal: (e: any) => void;
-  CloseContainerPost: LegacyRef<HTMLButtonElement> | undefined;
-  modalContainer: LegacyRef<HTMLDivElement> | undefined
+  CloseContainerPost?: LegacyRef<HTMLButtonElement> | undefined;
+  modalContainer?: LegacyRef<HTMLDivElement> | undefined
 }
 
 const CloseButton = ({ closeModal, CloseContainerPost,modalContainer }: CloseButtonProps) => {

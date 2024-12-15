@@ -13,10 +13,10 @@ export interface UserAuth {
 }
 
 export interface Servicos{
+      id: number;
       categoria_id: number;
       createdAt: string;
       descricao_servico: string;
-      id: number;
       nome_negocio: string;
       possui_nome_negocio: boolean;
       status: boolean;
@@ -25,6 +25,10 @@ export interface Servicos{
       usuario_id: number;   
 }
 
+export interface Categoria {
+      nome: string;
+      cor: string;
+}
 export interface ServicoUsuarioProps {
       categoria_id: number;
       createdAt: string;
@@ -37,7 +41,14 @@ export interface ServicoUsuarioProps {
       updatedAt: string;
       Usuario: CurrentUser;
       usuario_id: number;
-      servicos:Servicos[];
+
+}
+
+export interface CategoriaInnerServico{
+      id:number,
+      nome:string,
+      cor_categoria:string,
+      Servicos:ServicoUsuarioProps[]
 }
  
 export interface CurrentUser{
@@ -54,6 +65,8 @@ export interface CurrentUser{
       updatedAt: string;
       tempo_reside:number;
 }
+
+
 
 export const defaultCurrentUser: CurrentUser = {
       contato_negocio_01: '',
@@ -76,3 +89,41 @@ export const defaultUserAuth: UserAuth= {
       status: false,
       rule: 1
 }
+export const defaultServicos: Servicos[] = [
+      {
+        id: 0,
+        nome_negocio: '',
+        usuario_id: 0,
+        categoria_id: 0,
+        createdAt: '',
+        descricao_servico: '',
+        possui_nome_negocio: false,
+        status: false,
+        tempo_negocio: 0,
+        updatedAt: '',
+      },
+];
+
+export const defaultServicosInnerUsuario: ServicoUsuarioProps={
+      id: 0,
+      possui_nome_negocio: false,
+      nome_negocio: "",
+      tempo_negocio: 0,
+      descricao_servico: "",
+      status: false,
+      createdAt: "",
+      updatedAt: "",
+      categoria_id: 0,
+      usuario_id: 0,
+      Usuario: defaultCurrentUser
+}
+
+
+export const defaultCategoriaInnerServicos: CategoriaInnerServico[] = [
+      {
+            id: 0,
+            nome: "",
+            cor_categoria: "",
+            Servicos:[defaultServicosInnerUsuario]
+          }
+];

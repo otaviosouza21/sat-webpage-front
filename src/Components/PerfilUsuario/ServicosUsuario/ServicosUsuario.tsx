@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import style from "./ServicoUsuario.module.css";
 import { jwtDecode } from "jwt-decode";
-import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api";
-import useFetch from "../../../Hooks/useFetch";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
-import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
+import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api.ts";
+import useFetch from "../../../Hooks/useFetch.js";
+
+import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent.tsx";
 import { Link, useNavigate } from "react-router-dom";
-import ServicoUsuario from "./ServicoUsuario.jsx";
+import ServicoUsuario from "./ServicoUsuario.js";
+import { defaultCurrentUser, defaultServicosInnerUsuario, defaultUserAuth, ServicoUsuarioProps } from "../../../types/apiTypes.js";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 
 const ServicosUsuario = () => {
-  const { userAuth, setUserAuth, logout, modal, setModal,update} =
-    useContext(GlobalContext);
-  const [currentUser, setCurrentUser] = useState(null);
+  const { userAuth, setUserAuth, logout, modal, setModal,update,currentUser, setCurrentUser} = useGlobalContext();
   const { request, loading, error } = useFetch();
-  const [servicosUser, setServicoUser] = useState(null);
+  const [servicosUser, setServicoUser] = useState<ServicoUsuarioProps[]>([defaultServicosInnerUsuario]);
   const navigate = useNavigate();
 
 
@@ -21,15 +21,15 @@ const ServicosUsuario = () => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
-        const { id, rule } = jwtDecode(token);
+        const { id, rule }:any = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
-        if (response.ok) {
+        if (response?.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
           setCurrentUser(json);
         } else {
-          setUserAuth({});
-          setCurrentUser({});
+          setUserAuth(defaultUserAuth);
+          setCurrentUser(defaultCurrentUser);
           logout();
         }
       } else {
@@ -45,7 +45,7 @@ const ServicosUsuario = () => {
         const { id } = userAuth.usuario;
         const { url, options } = GET_INNER_ID("servico", "usuario", id);
         const { response, json } = await request(url, options);
-        if (response.ok) {
+        if (response?.ok) {
           setServicoUser(json.Servicos);
         }
       }

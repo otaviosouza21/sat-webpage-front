@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../Cadastros/CadastroForm.module.css";
 import useForm from "../../../Hooks/useForm";
 import Title from "../../Titles/Title";
@@ -6,37 +6,38 @@ import Button from "../../Button/Button";
 import InputText from "../../Forms/Input/InputText";
 import useFetch from "../../../Hooks/useFetch";
 import { RECOVER_PASSWORD } from "../../../Api/api";
-import Toast from "../../Toast/Toast";
-import ModalAlert from "../../Utils/ModalAlert/ModalAlert";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+ 
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent";
-
+import useToast from "../../../Hooks/useToast";
+ 
 const SendRequest = () => {
   const email = useForm("email");
   const { data,request, loading,error } = useFetch();
   const [alert, setAlert] = useState(null);
   const [errorAlert,setErrorAlert] = useState(null)
-  const { setModal } = useContext(GlobalContext);
-
-
+  const { setModal } = useGlobalContext();
+  const activeToast = useToast()
+ 
+ 
   useEffect(()=>{
     setModal('')
     setAlert(null)
     setErrorAlert(null)
   },[])
-
-  function handleSubmit(e) {
+ 
+  function handleSubmit(e: React.FormEvent<HTMLFormElement> | any ) {
     e.preventDefault();
-
+ 
     if (email.validate()) {
       const requestEmail = { email: email.value };
       async function sendEmail() {
-        const { url, options } = RECOVER_PASSWORD("recover-password", requestEmail);
+        const { url, options } = RECOVER_PASSWORD("recover-password", requestEmail.email);
         const { response, json } = await request(url, options);
-        if (!response.ok) {
+        if (!response?.ok) {
           return;
         } else {
-          setAlert(`${json.mensagem} para ${json.email}`);
+          activeToast({message: `${json.mensagem} para ${json.email}`, type: 'success'});
           email.reset();
         }
       }
@@ -59,13 +60,11 @@ const SendRequest = () => {
               gridColumn='1/4'
             />
             <Button handleSubmit={handleSubmit}>Recuperar Senha</Button>
-            {alert && (<ModalAlert  mensagem={`${alert}`} />)} 
-            {data && !data.status && <Toast color="tomato" message={data.mensagem}/>}
           </form>
         </>
       )}
     </section>
   );
 };
-
+ 
 export default SendRequest;

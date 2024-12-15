@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, {  useRef } from "react";
 import menuBurguer from "../../../assets/icons/menu-burgues.svg";
 import closeIcon from "../../../assets/icons/close.svg";
 import style from "./NavLinkMobile.module.css";

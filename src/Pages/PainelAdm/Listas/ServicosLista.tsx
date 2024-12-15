@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GET_ALL, GET_ALL_USERS, GET_INNER_ALL } from "../../../Api/api";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import useFetch from "../../../Hooks/useFetch";
 import Lista from "./Lista";
 import { convertData } from "../../../plugins/convertData.ts";
@@ -45,10 +45,6 @@ const ServicosLista = () => {
   const { request, loading, data } = useFetch();
   const navigate = useNavigate();
 
-  const globalContext = useContext(GlobalContext);
-  if (!globalContext) {
-    throw new Error("GlobalContext must be used within a GlobalProvider");
-  }
   const {
     setUpdate,
     update,
@@ -57,7 +53,7 @@ const ServicosLista = () => {
     setDataUpdate,
     listaFiltrada,
     setListaFiltrada,
-  } = globalContext;
+  } =useGlobalContext();;
 
   function normalizaServicos(
     servicos: ServicosDataProps[]

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./ModalLogin.module.css";
 import InputText from "../Forms/Input/InputText";
 import Title from "../Titles/Title";
@@ -8,6 +8,7 @@ import { GET_AUTH_USER, POST_LOGIN } from "../../Api/api";
 import { useGlobalContext } from "../../Hooks/GlobalContext.tsx";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { defaultUserAuth } from "../../types/apiTypes.ts";
 
 interface ModalLoginProps {
   modal: string;
@@ -54,9 +55,9 @@ const ModalLogin = ({ modal, setModal }: ModalLoginProps) => {
 
         if (!response?.ok) {
           console.log("Erro ao realizar Login");
-          setUserAuth({ token: "", usuario: null, status: false });
+          setUserAuth(defaultUserAuth);
         } else {
-          setUserAuth({ token: token, usuario: json, status: true });
+          setUserAuth(defaultUserAuth);
           setButtonState("Bem Vindo");
           setModal("");
         }

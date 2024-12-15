@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import style from "./Button.module.css";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../../Hooks/GlobalContext.tsx";

@@ -3,7 +3,7 @@ import searchIcon from "../../../assets/icons/search.svg";
 import styles from "./InputSearch.module.css";
 
 // import useFetch from "../../../Hooks/useFetch";
-import { useGlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 
 
 interface InputSearchProps extends React.ComponentProps<'div'> {

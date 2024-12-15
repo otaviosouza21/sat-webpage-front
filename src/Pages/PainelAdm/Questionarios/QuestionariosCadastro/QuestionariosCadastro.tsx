@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import styles from "./QuestionariosCadastro.module.css";
 import useTokenValidate from "../../../../Hooks/useTokenValidate";
 import Button from "../../../../Components/Button/Button.tsx";
@@ -19,12 +19,14 @@ import { Form } from "../QuestionariosLista/QuestionariosLista";
 
 
 export interface questionListProps {
-  descricao: string;
-  formulario_id: number;
-  possui_sub_pergunta: boolean;
-  tipo_resposta: string;
+  formulario_id: string;
   titulo: string;
+  descricao: string;
+  tipo_resposta: string;
+  possui_sub_pergunta: boolean;
+  multipleQuestionOptions?: boolean | { titulo: string }[]; 
 }
+
 
 export interface QuestionForm{
   form: Form

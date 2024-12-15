@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import InputText from "../../../../../Components/Forms/Input/InputText";
 import Title from "../../../../../Components/Titles/Title";
 import InputSelect from "../../../../../Components/Forms/Input/InputSelect";
@@ -7,57 +7,73 @@ import MultipleResponses from "./MultipleResponses/MultipleResponses";
 import useForm from "../../../../../Hooks/useForm";
 import styles from "./QuestionConfig.module.css";
 import CloseButton from "../../../../../Components/CloseButton/CloseButton";
-import { GlobalContext } from "../../../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../../../Hooks/GlobalContext";
+import { questionListProps } from "../QuestionariosCadastro";
 
-const QuestionConfig = ({ setQuestionList }) => {
-  const formRef = useRef();
-  const [showInputOptions, setShowInputOptions] = useState("");
-  const { setModal, dataUpdate, setDataUpdate } = useContext(GlobalContext);
+type QuestionConfigProps = {
+  setQuestionList: React.Dispatch<React.SetStateAction<questionListProps[]>>;
+};
+
+type FormRef = HTMLFormElement & {
+  tipo_resposta: HTMLSelectElement;
+  multipleRespose?: HTMLInputElement[];
+};
+
+const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
+  const formRef = useRef<FormRef | null>(null);
+  const [showInputOptions, setShowInputOptions] = useState<string>("");
+  const { setModal, dataUpdate, setDataUpdate } = useGlobalContext();
+
   const handleChandSelect = () => {
-    const tipoResposta = +formRef.current["tipo_resposta"].value; // Acessa o valor
-    setShowInputOptions(tipoResposta);
+    if (formRef.current) {
+      const tipoResposta = formRef.current["tipo_resposta"].value;
+      setShowInputOptions(tipoResposta);
+    }
   };
 
   const titleForm = useForm();
   const descricaoForm = useForm();
-  const newMultipleResponse = []
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
-  const handleClick = (e) => {
-    e.preventDefault()
-    if(formRef.current['tipo_resposta'].value  === '2'){
-      formRef.current['multipleRespose'].forEach((response)=>{
-        newMultipleResponse.push({titulo: response.value})
-      })
+    const newMultipleResponse: { titulo: string }[] = [];
+
+    if (formRef.current && formRef.current["tipo_resposta"].value === "2") {
+      formRef.current["multipleRespose"]?.forEach((response) => {
+        if (response.value) {
+          newMultipleResponse.push({ titulo: response.value });
+        }
+      });
     }
 
-    if (titleForm.validate(), descricaoForm.validate()) {
+    if (titleForm.validate() && descricaoForm.validate() && formRef.current) {
       setQuestionList((prevQuestions) => {
-        const question = {
+        const question: questionListProps = {
+          formulario_id: dataUpdate?.formulario_id || "", // Preencha com um valor padrão ou derive do contexto
           titulo: titleForm.value,
           descricao: descricaoForm.value,
-          tipo_resposta:  formRef.current['tipo_resposta'].value === '1' ? 'Texto' : 'MultiRespostas',
-          possui_sub_pergunta: formRef.current['tipo_resposta'].value  === '1' ? false : true,
-          multipleQuestionOptions: newMultipleResponse.length > 0 ? newMultipleResponse : false
-        }
-   
+          tipo_resposta:
+            formRef.current&& formRef.current["tipo_resposta"].value === "1" ? "Texto" : "MultiRespostas",
+          possui_sub_pergunta:formRef.current&& formRef.current["tipo_resposta"].value === "2" ? true : false, // Garantir valor booleano
+          multipleQuestionOptions: newMultipleResponse.length > 0 ? newMultipleResponse : false,
+        };
+      
         return [...prevQuestions, question];
       });
-       setModal('') 
+      
+      
+      setModal("");
     }
   };
 
-  function handleCloseModal(){
-    setModal();
-    setDataUpdate({})
-
-  }
+  const handleCloseModal = () => {
+    setModal("");
+    setDataUpdate({});
+  };
 
   return (
-    <form
-      className={`${styles.container} animation-opacity`}
-      ref={formRef}
-    >
+    <form className={`${styles.container} animation-opacity`} ref={formRef}>
       <div className={styles.header}>
         <Title text="Nova Pergunta" fontSize="2" />
         <CloseButton closeModal={handleCloseModal} />
@@ -73,7 +89,7 @@ const QuestionConfig = ({ setQuestionList }) => {
         ]}
         onChange={handleChandSelect}
       />
-      {showInputOptions === 2 && <MultipleResponses />}
+      {showInputOptions === "2" && <MultipleResponses />}
       <Button handleSubmit={handleClick}>Salvar</Button>
     </form>
   );

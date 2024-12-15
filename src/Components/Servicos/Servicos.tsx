@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import Title from "../Titles/Title.tsx";
 import InputSearch from "../Forms/InputSearch/InputSearch.tsx";
-import ServicoContainer from "../ServicoContainer/ServicoContainer.jsx";
+import ServicoContainer from "../ServicoContainer/ServicoContainer.js";
 import styles from "./Servicos.module.css";
 import useFetch from "../../Hooks/useFetch.tsx";
 import {
@@ -10,28 +10,22 @@ import {
   GET_INNER_SEARCH,
 } from "../../Api/api.ts";
 import Loading from "../Utils/Loading/Loading.tsx";
-import Error from "../Utils/Error/Error.jsx";
+import Error from "../Utils/Error/Error.tsx";
 import { jwtDecode } from "jwt-decode";
-import { GlobalContext } from "../../Hooks/GlobalContext.tsx";
+import { useGlobalContext } from "../../Hooks/GlobalContext.tsx";
+
 import Paginacao from "../Paginação/Paginacao.tsx";
-const Servicos = () => {
+import { defaultUserAuth } from "../../types/apiTypes.ts";
+
+const Servicos: FC<React.ComponentProps<'main'>> = () => {
   const { error, loading, request } = useFetch();
   const {
-    userAuth,
     setUserAuth,
     logout,
-    servicos,
-    setServicos,
-    lastPage,
-    setLastPage,
-    notFind,
-    setnotFind,
-    pageServicos,
-    setPageServicos,
-    pesquisaPaginacao,
-    inputPesquisa,
-    setInputPesquisa,
-  } = useContext(GlobalContext);
+    categoriaInnerServico,
+    setCategoriaInnerServico,
+    setNotFind,
+  } = useGlobalContext();
 
   //valida login
   useEffect(() => {
@@ -39,13 +33,13 @@ const Servicos = () => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
-        const { id, rule } = jwtDecode(token);
+        const { id, rule } :any = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
-        if (response.ok) {
+        if (response?.ok) {
           setUserAuth({ token, usuario: json, status: true, rule });
         } else {
-          setUserAuth({});
+          setUserAuth(defaultUserAuth);
           logout();
         }
       }
@@ -54,32 +48,32 @@ const Servicos = () => {
   }, []);
 
   useEffect(() => {
-    const { url, options } = GET_INNER("categoria", "servicos");
+    const { url, options } = GET_INNER("categoria", "servicos",1);
     // const { url, options } = GET_INNER("servico", "usuario", pageServicos);
     async function getServicoUsuario() {
       const { json, response } = await request(url, options);
-      if (response.ok) {        
-        setServicos(json);
+      if (response?.ok) {        
+        setCategoriaInnerServico(json);
         // setLastPage(json.paginacao.total_Pages);
-        setnotFind(null);
+        setNotFind(null);
       }
     }
     getServicoUsuario();
   }, []);
 
   useEffect(()=>{
-    console.log(servicos);
+    console.log(categoriaInnerServico);
     
-  },[servicos])
+  },[categoriaInnerServico])
 
   // async function paginacao(page) {
   //   setPageServicos(page);
   //   const { url, options } = GET_INNER("servico", "usuario", page);
   //   const { response, json } = await request(url, options);
   //   if (response.ok) {
-  //     setServicos(json.servicos.retorno);
+  //     setCategoriaInnerServico(json.servicos.retorno);
   //     setLastPage(json.paginacao.total_Pages);
-  //     setnotFind(null);
+  //     setNotFind(null);
   //   }
   // }
   // async function paginacao2(page) {
@@ -91,9 +85,9 @@ const Servicos = () => {
   //     inputPesquisa
   //   );
   //   const { json, response } = await request(url, options);
-  //   setServicos(json.servicos.retorno);
+  //   setCategoriaInnerServico(json.servicos.retorno);
   //   setLastPage(json.paginacao.total_Pages);
-  //   setnotFind(null);
+  //   setNotFind(null);
   // }
 
   if (loading) return <Loading />;
@@ -103,11 +97,11 @@ const Servicos = () => {
       <section className={`container ${styles.servicosContainer}`}>
         <div className="animeDown">
           <Title text="Buscar Profissionais" fontSize="3" />
-          <InputSearch placeholder="Busque um serviço" option="nome_negocio" />
+          <InputSearch id='busca' placeholder="Busque um serviço" option="nome_negocio" />
         </div>
         <div className={''}>
-        {servicos &&
-            servicos.map((servico) =>{
+        {categoriaInnerServico &&
+            categoriaInnerServico.map((servico) =>{
 
               let categoria = {nome: servico.nome, cor:servico.cor_categoria}
 

@@ -1,19 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, {  useState } from "react";
 import trash from "../../../assets/icons/trash2.svg";
 import pen from "../../../assets/icons/pen.svg";
 import view from "../../../assets/icons/view.svg";
 import style from "./ServicoUsuario.module.css";
 import ModalServico from "../../ModalServico/ModalServico";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import { useNavigate } from "react-router-dom";
 import Confirm from "../../Utils/Confirm/Confirm";
+import { Servicos } from "../../../types/apiTypes";
 
-const ServicoUsuario = ({ servico }) => {
-  const [idTodelete, setIdToDelete] = useState(null);
+
+interface ServicoUsuarioProps extends React.ComponentProps<'li'>{
+  servico: Servicos;
+}
+
+
+const ServicoUsuario:React.FC<ServicoUsuarioProps> = ({ servico }) => {
+  const [idTodelete, setIdToDelete] = useState(0);
   const navigate = useNavigate();
-  const { setDataUpdate, setModal,modal,setUpdate,update } = useContext(GlobalContext);
+  const { setDataUpdate, setModal,modal,setUpdate,update } = useGlobalContext();
 
-  const confirmDelete = (id) => {
+  const confirmDelete = (id:number) => {
     if(id){
       setIdToDelete(id);
       setModal("confirmDelete");

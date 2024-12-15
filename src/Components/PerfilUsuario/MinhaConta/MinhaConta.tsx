@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../Titles/Title";
 import style from "./MinhaConta.module.css";
-import { useGlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api";
 import useFetch from "../../../Hooks/useFetch";
 import { jwtDecode } from "jwt-decode";

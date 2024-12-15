@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import InputText from "../../Forms/Input/InputText";
 import styles from "../CadastroForm.module.css";
 import Button from "../../Button/Button";

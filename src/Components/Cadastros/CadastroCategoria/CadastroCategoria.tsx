@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, {  useEffect, useRef } from "react";
 import useForm from "../../../Hooks/useForm";
 import InputSelect from "../../Forms/Input/InputSelect";
 import Title from "../../Titles/Title";
 import InputText from "../../Forms/Input/InputText";
 import Button from "../../Button/Button";
 import { POST_DATA } from "../../../Api/api";
-import { GlobalContext, useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
+import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import useFetch from "../../../Hooks/useFetch";
 import styles from "../../Atualização/CadastroForm.module.css";
 import { useNavigate } from "react-router-dom";

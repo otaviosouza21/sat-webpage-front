@@ -6,7 +6,6 @@ import { useGlobalContext } from "../../../../../Hooks/GlobalContext.tsx";
 import { questionListProps } from "../QuestionariosCadastro";
 import Title from "../../../../../Components/Titles/Title.tsx";
 
-const {setModal} = useGlobalContext();
 
 export type QuestionListProps = React.ComponentProps<'div'>&{
   handleCardDelete: (index:number)=> void;
@@ -14,6 +13,7 @@ export type QuestionListProps = React.ComponentProps<'div'>&{
 }
 
 const QuestionList = ({ handleCardDelete, questionList, ...props }:QuestionListProps) => {
+  const {setModal} = useGlobalContext();
   return (
     <div className={styles.newQuestions} {...props}>
       <div className={styles.header}>

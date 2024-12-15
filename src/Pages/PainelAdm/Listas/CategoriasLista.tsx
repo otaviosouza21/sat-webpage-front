@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../../../Hooks/useFetch";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { useGlobalContext } from "../../../Hooks/GlobalContext";
 import { convertData } from "../../../plugins/convertData";
 import { GET_ALL, GET_INNER_ALL } from "../../../Api/api";
 import { useNavigate } from "react-router-dom";
@@ -35,10 +35,6 @@ const CategoriasLista = () => {
   const [idTodelete, setIdToDelete] = useState<number | null>(null);
   const navigate = useNavigate();
   const { request, loading, data } = useFetch();
-  const globalContext = useContext(GlobalContext);
-  if (!globalContext) {
-    throw new Error("GlobalContext must be used within a GlobalProvider");
-  }
   const {
     setUpdate,
     update,
@@ -47,7 +43,7 @@ const CategoriasLista = () => {
     setDataUpdate,
     listaFiltrada,
     setListaFiltrada,
-  } = globalContext;
+  } =useGlobalContext();
 
   function normalizaCategorias(
     categorias: CategoriasDataProps[]

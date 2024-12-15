@@ -3,6 +3,7 @@ import { GET_AUTH_USER } from "../Api/api";
 import useFetch from "./useFetch";
 import { useGlobalContext } from "./GlobalContext.tsx";
 import { useNavigate } from "react-router-dom";
+import { defaultUserAuth } from "../types/apiTypes.ts";
 
 const useTokenValidate = () => {
   const { request } = useFetch();
@@ -23,12 +24,7 @@ const useTokenValidate = () => {
         }
       } catch (error) {
         console.error("Erro ao validar token:", error);
-        setUserAuth({
-          token: "",
-          usuario: null,
-          status: false,
-          rule: 1
-        });
+        setUserAuth(defaultUserAuth);
         logout();
         navigate("/");
       }

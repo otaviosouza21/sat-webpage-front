@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { Header } from "../Header/Header";
-import Footer from "../Footer/Footer";
+import { useEffect } from "react";
+
 import Title from "../Titles/Title";
 import Button from "../Button/Button";
 import style from "./Sobre.module.css";

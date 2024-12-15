@@ -7,11 +7,11 @@ type InputTextProps = React.ComponentProps<"input"> & {
   type?: string;
   placeholder?: string;
   gridColumn?: string;
-  onBlur: () => void;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  error: string | null;
+  onBlur?: () => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  error?: string | null;
   value: string;
-  errorConfere?: "";
+  errorConfere?: string | null;
   opacity?: number | null;
 };
 

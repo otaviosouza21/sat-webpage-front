@@ -1,32 +1,39 @@
-// src/Hooks/GlobalContext.ts
-
-import React, { createContext, useState, ReactNode } from "react";
-import { UserAuth, CurrentUser,defaultCurrentUser, defaultUserAuth } from "../types/apiTypes";
+import React, { createContext, useState, useMemo, ReactNode, Dispatch, SetStateAction } from "react";
+import {
+  UserAuth,
+  CurrentUser,
+  defaultCurrentUser,
+  defaultUserAuth,
+  Servicos,
+  defaultServicos,
+  defaultCategoriaInnerServicos,
+  CategoriaInnerServico,
+} from "../types/apiTypes";
 
 interface GlobalContextProps {
   update: boolean;
-  setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
-  dataUpdate: any;
-  setDataUpdate: React.Dispatch<React.SetStateAction<any>>;
+  setUpdate: Dispatch<SetStateAction<boolean>>;
+  dataUpdate: any; // Substituir 'any' por um tipo específico, se disponível
+  setDataUpdate: Dispatch<SetStateAction<any>>; // Substituir 'any' por um tipo específico, se disponível
   userAuth: UserAuth;
-  setUserAuth: React.Dispatch<React.SetStateAction<UserAuth>>;
+  setUserAuth: Dispatch<SetStateAction<UserAuth>>;
   modal: string;
-  setModal: React.Dispatch<React.SetStateAction<string>>;
+  setModal: Dispatch<SetStateAction<string>>;
   logout: () => void;
-  servicos: any;
-  setServicos: React.Dispatch<React.SetStateAction<any>>;
+  servicos: Servicos[];
+  setServicos: Dispatch<SetStateAction<Servicos[]>>;
+  categoriaInnerServico: CategoriaInnerServico[];
+  setCategoriaInnerServico: Dispatch<SetStateAction<CategoriaInnerServico[]>>;
   lastPage: number;
-  setLastPage: React.Dispatch<React.SetStateAction<number>>;
-  notFind: any;
-  setnotFind: React.Dispatch<React.SetStateAction<any>>;
-  listaFiltrada: any;
-  setListaFiltrada: React.Dispatch<React.SetStateAction<any>>;
-  
+  setLastPage: Dispatch<SetStateAction<number>>;
+  notFind: any; // Substituir 'any' por um tipo específico, se disponível
+  setNotFind: Dispatch<SetStateAction<any>>; // Substituir 'any' por um tipo específico, se disponível
+  listaFiltrada: any; // Substituir 'any' por um tipo específico, se disponível
+  setListaFiltrada: Dispatch<SetStateAction<any>>; // Substituir 'any' por um tipo específico, se disponível
   inputPesquisa: string;
-  setInputPesquisa: React.Dispatch<React.SetStateAction<any>>;
-
+  setInputPesquisa: Dispatch<SetStateAction<string>>;
   currentUser: CurrentUser;
-  setCurrentUser: React.Dispatch<React.SetStateAction<CurrentUser>>
+  setCurrentUser: Dispatch<SetStateAction<CurrentUser>>;
 }
 
 interface GlobalStorageProps {
@@ -35,57 +42,75 @@ interface GlobalStorageProps {
 
 export const GlobalContext = createContext<GlobalContextProps | null>(null);
 
-export const useGlobalContext = ()=>{
-  const context = React.useContext(GlobalContext)
-  if(!context) throw new Error('useContext deve estar dentro do Provider');
-  return context;
-}
-
-export const GlobalStorage = ({ children }: GlobalStorageProps) => {
-  const [update, setUpdate] = useState(false);
-  const [userAuth, setUserAuth] = useState<UserAuth>(defaultUserAuth);
-
-  const [currentUser, setCurrentUser] = useState<CurrentUser>(defaultCurrentUser)
-  const [servicos, setServicos] = useState(null);
-  const [lastPage, setLastPage] = useState(0);
-  const [notFind, setnotFind] = useState(null);
-  const [modal, setModal] = useState<string>('');
-  const [dataUpdate, setDataUpdate] = useState({});
-  const [listaFiltrada,setListaFiltrada] = useState(null)
-  const [inputPesquisa, setInputPesquisa] = useState("");
-
-
-  function logout() {
-    window.localStorage.removeItem('token');
-    window.location.reload();
+export const useGlobalContext = () => {
+  const context = React.useContext(GlobalContext);
+  if (!context) {
+    throw new Error("useGlobalContext deve ser usado dentro de um GlobalStorage.");
   }
+  return context;
+};
 
-  return (
-    <GlobalContext.Provider
-      value={{
-        update,
-        setUpdate,
-        dataUpdate,
-        setDataUpdate,
-        userAuth,
-        setUserAuth,
-        modal,
-        setModal,
-        logout,
-        servicos,
-        setServicos,
-        lastPage,
-        setLastPage,
-        notFind,
-        setnotFind,
-        listaFiltrada,
-        setListaFiltrada,
-        inputPesquisa, setInputPesquisa,
-        currentUser, setCurrentUser,
+export const GlobalStorage: React.FC<GlobalStorageProps> = ({ children }) => {
+  const [update, setUpdate] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState<any>({}); // Tipar adequadamente
+  const [userAuth, setUserAuth] = useState<UserAuth>(defaultUserAuth);
+  const [currentUser, setCurrentUser] = useState<CurrentUser>(defaultCurrentUser);
+  const [servicos, setServicos] = useState<Servicos[]>(defaultServicos);
+  const [categoriaInnerServico, setCategoriaInnerServico] = useState<CategoriaInnerServico[]>(defaultCategoriaInnerServicos);
+  const [lastPage, setLastPage] = useState(0);
+  const [notFind, setNotFind] = useState<any>(null); // Tipar adequadamente
+  const [modal, setModal] = useState<string>("");
+  const [listaFiltrada, setListaFiltrada] = useState<any>(null); // Tipar adequadamente
+  const [inputPesquisa, setInputPesquisa] = useState<string>("");
 
-      }}
-    >
-      {children}
-    </GlobalContext.Provider>
+  // Função de logout
+  const logout = () => {
+    window.localStorage.removeItem("token");
+    setUserAuth(defaultUserAuth);
+    setCurrentUser(defaultCurrentUser);
+  };
+
+  // useMemo para otimizar a recriação do objeto
+  const globalState = useMemo(
+    () => ({
+      update,
+      setUpdate,
+      dataUpdate,
+      setDataUpdate,
+      userAuth,
+      setUserAuth,
+      currentUser,
+      setCurrentUser,
+      servicos,
+      setServicos,
+      categoriaInnerServico,
+      setCategoriaInnerServico,
+      lastPage,
+      setLastPage,
+      notFind,
+      setNotFind,
+      modal,
+      setModal,
+      listaFiltrada,
+      setListaFiltrada,
+      inputPesquisa,
+      setInputPesquisa,
+      logout,
+    }),
+    [
+      update,
+      dataUpdate,
+      userAuth,
+      currentUser,
+      servicos,
+      categoriaInnerServico,
+      lastPage,
+      notFind,
+      modal,
+      listaFiltrada,
+      inputPesquisa,
+    ]
   );
+
+  return <GlobalContext.Provider value={globalState}>{children}</GlobalContext.Provider>;
 };
