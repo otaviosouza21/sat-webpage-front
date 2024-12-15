@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import styles from "./ModalUsuario.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { GlobalContext } from "../../../Hooks/GlobalContext";
+import { GlobalContext, useGlobalContext } from "../../../Hooks/GlobalContext";
 
 
 const ModalUsuario = () => {
-  const {userAuth} = useContext(GlobalContext)
+  const {userAuth} = useGlobalContext()
   const navigate = useNavigate()
 
   function logout() {

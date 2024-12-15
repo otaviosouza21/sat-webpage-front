@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./Header.module.css";
 import logoSat from "../../assets/icons/sat_logo.svg";
 import NavLinks from "./NavLinks/NavLinks";
 import { Link } from "react-router-dom";
 import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
-import ModalLogin from "../ModalLogin/ModalLogin";
-import { GlobalContext, useGlobalContext } from "../../Hooks/GlobalContext";
-import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario";
+import ModalLogin from "../ModalLogin/ModalLogin.tsx";
+import { useGlobalContext } from "../../Hooks/GlobalContext";
+import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario.tsx";
 import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
-import LoadingDots from "../Utils/LoadingDots/LoadingDots";
+import LoadingDots from "../Utils/LoadingDots/LoadingDots.tsx";
 
 export const Header = () => {
-  const [isTelaPequena, setIsTelaPequena] = useState(window.innerWidth);
+  const [isTelaPequena, setIsTelaPequena] = useState(false);
   const { modal, setModal, userAuth } = useGlobalContext();
   const [modalUsuario, setModalUsuario] = useState(false);
   const [loading, setLoading] = useState(false);

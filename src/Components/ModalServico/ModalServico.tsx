@@ -6,26 +6,36 @@ import wppIcon from "../../assets/icons/wathsapp.svg";
 import workserIcon from "../../assets/icons/person.svg";
 import toolsIcon from "../../assets/icons/tools.svg";
 import starIcon from "../../assets/icons/star.svg";
-import ModalContato from "../ServicoContainer/ModalContato/ModalContato";
+import ModalContato from "../ServicoContainer/ModalContato/ModalContato.tsx";
 import phone from "../../assets/icons/phone2.svg";
 import CloseButton from "../CloseButton/CloseButton";
+import { ServicoUsuarioProps } from "../../types/apiTypes";
 
-const ModalServico = ({ modal, setModal, servicoUsuario }) => {
+interface ModalServicoProps {
+  modal: string;
+  setModal: React.Dispatch<React.SetStateAction<string>>;
+  servicoUsuario: ServicoUsuarioProps;
+}
+
+const ModalServico = ({
+  modal,
+  setModal,
+  servicoUsuario,
+}: ModalServicoProps) => {
   const modalContainerPost = useRef(null);
   const CloseContainerPost = useRef(null);
   const { nome, contato_pessoal_01, contato_negocio_01 } =
     servicoUsuario.Usuario;
   const contato = { contato_pessoal_01, contato_negocio_01 };
 
-  function closeModal(event) {
- 
+  function closeModal(event: React.MouseEvent<HTMLDivElement>) {
     if (
       event.target === modalContainerPost.current ||
       event.target === CloseContainerPost.current
     ) {
-      setModal(!modal);
+      setModal("");
       const overflow = document.querySelector("body");
-      overflow.classList.remove("overFlow");
+      overflow?.classList.remove("overFlow");
     }
   }
 

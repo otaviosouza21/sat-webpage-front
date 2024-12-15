@@ -5,16 +5,13 @@ import ServicoContainer from "../ServicoContainer/ServicoContainer";
 import styles from "./Servicos.module.css";
 import useFetch from "../../Hooks/useFetch";
 import {
-  GET_ALL,
   GET_AUTH_USER,
   GET_INNER,
-  GET_INNER_SEARCH,
 } from "../../Api/api";
 import Loading from "../Utils/Loading/Loading.jsx";
 import Error from "../Utils/Error/Error.jsx";
 import { jwtDecode } from "jwt-decode";
 import { GlobalContext } from "../../Hooks/GlobalContext";
-import Paginacao from "../Paginação/Paginacao";
 
 const Servicos = () => {
   const { error, loading, request } = useFetch();

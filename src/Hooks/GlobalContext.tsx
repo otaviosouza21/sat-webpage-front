@@ -6,7 +6,7 @@ interface UserAuth {
   token: string;
   usuario: any;
   status: boolean;
-  rule: number;
+  rule?: number;
 }
 
 interface GlobalContextProps {
