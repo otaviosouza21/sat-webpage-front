@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import InputText from "../../Forms/Input/InputText.tsx";
+import InputText from "../../Formularios/Forms/Input/InputText.tsx";
 import Title from "../../Titles/Title.tsx";
 import Button from "../../Button/Button.tsx";
 import useForm from "../../../Hooks/useForm.tsx";
-import styles from "../../Cadastros/CadastroForm.module.css";
+import styles from "../../Formularios/Cadastros/CadastroForm.module.css";
 import { GET_AUTH_USER, UPDATE_PASSWORD } from "../../../Api/api.ts";
 import useFetch from "../../../Hooks/useFetch.tsx";
 import { jwtDecode } from "jwt-decode";

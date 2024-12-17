@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import wppIcon from "../../assets/icons/wathsapp.svg";
 import styles from "./ServicoContainer.module.css";
-import ModalServico from "../ModalServico/ModalServico";
+import ModalServico from "../../Pages/Servicos/ModalServico/ModalServico.tsx";
 import ModalContato from "./ModalContato/ModalContato";
 import { Link } from "react-router-dom";
 import { logButtonClick } from "../../plugins/logButtonClick.ts";

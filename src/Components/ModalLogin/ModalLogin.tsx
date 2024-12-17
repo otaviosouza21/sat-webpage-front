@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./ModalLogin.module.css";
-import InputText from "../Forms/Input/InputText";
+import InputText from "../Formularios/Forms/Input/InputText.tsx";
 import Title from "../Titles/Title";
 import useForm from "../../Hooks/useForm";
 import useFetch from "../../Hooks/useFetch";

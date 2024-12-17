@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InputText from "../../../../../../Components/Forms/Input/InputText";
+import InputText from "../../../../../../Components/Formularios/Forms/Input/InputText";
 import plus from "../../../../../../assets/icons/plus.svg";
 import sub from "../../../../../../assets/icons/sub.svg";
 import styles from "./MultipleResponses.module.css";

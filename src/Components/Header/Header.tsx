@@ -8,7 +8,7 @@ import NavLinkMobile from "./NavLinksMobile/NavLinkMobile";
 import ModalLogin from "../ModalLogin/ModalLogin.tsx";
 import { useGlobalContext } from "../../Hooks/GlobalContext.tsx";
 import ModalUsuario from "../PerfilUsuario/ModalUsuario/ModalUsuario.tsx";
-import CadastroUsuario from "../Cadastros/CadastroUsuario.jsx/CadastroUsuario";
+import CadastroUsuario from "../Formularios/Cadastros/CadastroUsuario.jsx/CadastroUsuario.tsx";
 import LoadingDots from "../Utils/LoadingDots/LoadingDots.tsx";
 
 export const Header = () => {

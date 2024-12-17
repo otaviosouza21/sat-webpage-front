@@ -7,7 +7,7 @@ import facebook from "../../assets/icons/facebook.svg";
 import phone from "../../assets/icons/phone-footer.svg";
 import email from "../../assets/icons/email.svg";
 import { NavLink } from "react-router-dom";
-import SendEmailForm from "../SendEmailForm/SendEmailForm.tsx";
+import SendEmailForm from "../Formularios/SendEmailForm/SendEmailForm.tsx";
 import { formataTelefone } from "../../plugins/Format";
 
 const Footer = () => {

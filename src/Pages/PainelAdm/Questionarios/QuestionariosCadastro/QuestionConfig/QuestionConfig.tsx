@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import InputText from "../../../../../Components/Forms/Input/InputText";
+
 import Title from "../../../../../Components/Titles/Title";
-import InputSelect from "../../../../../Components/Forms/Input/InputSelect";
+
 import Button from "../../../../../Components/Button/Button";
 import MultipleResponses from "./MultipleResponses/MultipleResponses";
 import useForm from "../../../../../Hooks/useForm";
@@ -9,6 +9,8 @@ import styles from "./QuestionConfig.module.css";
 import CloseButton from "../../../../../Components/CloseButton/CloseButton";
 import { useGlobalContext } from "../../../../../Hooks/GlobalContext";
 import { questionListProps } from "../QuestionariosCadastro";
+import InputText from "../../../../../Components/Formularios/Forms/Input/InputText";
+import InputSelect from "../../../../../Components/Formularios/Forms/Input/InputSelect";
 
 type QuestionConfigProps = {
   setQuestionList: React.Dispatch<React.SetStateAction<questionListProps[]>>;

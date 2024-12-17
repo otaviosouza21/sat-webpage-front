@@ -25,11 +25,11 @@ const Button = ({
     <button className={style.button} style={{ background: color && color }}>
       <Link
         onClick={(event) => {
-          ReactGA.event({
+       /*    ReactGA.event({
             category: "Button",
             action: "Click",
             label: "My Button",
-          });
+          }); */
           handleSubmit && handleSubmit(event);
           setDataUpdate(null);
           if (modalParam) {

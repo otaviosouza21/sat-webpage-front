@@ -54,7 +54,7 @@ const MinhaConta: React.FC<MinhaContaProps>  = () => {
         const { url, options } = GET_INNER_ID("servico", "usuario", id);
         const { response, json } = await request(url, options);
         const servicos: Servicos[] = json
-        if (response?.ok) {
+        if (response?.ok && Array.isArray(json)) {
           const ativos = servicos.filter((servico) => servico.status);
           const inativos = servicos.filter((servico) => !servico.status);
           setServicosAtivos(ativos.length)

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./QuestionarioForm.module.css";
-import InputText from "../../../../../Components/Forms/Input/InputText.tsx";
-import InputSelect from "../../../../../Components/Forms/Input/InputSelect.tsx";
+import InputText from "../../../../../Components/Formularios/Forms/Input/InputText.tsx";
+import InputSelect from "../../../../../Components/Formularios/Forms/Input/InputSelect.tsx";
 import { useFormProps } from "../../../../../Hooks/useForm";
 
 type questionarioFormProps = React.ComponentProps<"form"> & {

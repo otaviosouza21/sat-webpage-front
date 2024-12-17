@@ -1,6 +1,6 @@
 import { EmailBodyProps } from "../types/apiTypes";
 
-const PORT = 3333;
+const PORT = 3000;
 
 // const URL = "https://taiacupeba.com.br";
 const URL = "http://localhost:"+PORT;

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import styles from "../../Cadastros/CadastroForm.module.css";
+import styles from "../../Formularios/Cadastros/CadastroForm.module.css"
 import useForm from "../../../Hooks/useForm";
 import Title from "../../Titles/Title";
 import Button from "../../Button/Button";
-import InputText from "../../Forms/Input/InputText";
+import InputText from "../../Formularios/Forms/Input/InputText.tsx";
 import useFetch from "../../../Hooks/useFetch";
 import { RECOVER_PASSWORD } from "../../../Api/api";
  
