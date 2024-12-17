@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./ServicoUsuario.module.css";
 import { jwtDecode } from "jwt-decode";
 import { GET_AUTH_USER, GET_INNER_ID } from "../../../Api/api.ts";
@@ -7,21 +7,38 @@ import useFetch from "../../../Hooks/useFetch.js";
 import LoadingCenterComponent from "../../Utils/LoadingCenterComponent/LoadingCenterComponent.tsx";
 import { Link, useNavigate } from "react-router-dom";
 import ServicoUsuario from "./ServicoUsuario.js";
-import { defaultCurrentUser, defaultServicosInnerUsuario, defaultUserAuth, ServicoUsuarioProps } from "../../../types/apiTypes.js";
+import {
+  defaultCurrentUser,
+  defaultServicosInnerUsuario,
+  defaultUserAuth,
+  ServicoUsuarioProps,
+} from "../../../types/apiTypes.js";
 import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
+import { tipoFormulario } from "../../Utils/Questionarios/tiposFormulario.ts";
 
 const ServicosUsuario = () => {
-  const { userAuth, setUserAuth, logout, modal, setModal,update,currentUser, setCurrentUser} = useGlobalContext();
-  const { request, loading, error } = useFetch();
-  const [servicosUser, setServicoUser] = useState<ServicoUsuarioProps[]>([defaultServicosInnerUsuario]);
-  const navigate = useNavigate();
+  const {
+    userAuth,
+    setUserAuth,
+    logout,
+    modalScreen,
+    setModalScreen,
+    update,
+    currentUser,
+    setCurrentUser,
+  } = useGlobalContext();
 
+  const { request, loading } = useFetch();
+  const [servicosUser, setServicoUser] = useState<ServicoUsuarioProps[]>([
+    defaultServicosInnerUsuario,
+  ]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     async function fetchValidaToken() {
       if (token) {
-        const { id, rule }:any = jwtDecode(token);
+        const { id, rule }: any = jwtDecode(token);
         const { url, options } = GET_AUTH_USER("usuarios", token, id);
         const { response, json } = await request(url, options);
         if (response?.ok) {
@@ -51,7 +68,15 @@ const ServicosUsuario = () => {
       }
     }
     fetchValidaServicos();
-  }, [userAuth,update]);
+  }, [userAuth, update]);
+
+  function handleCadServicos() {
+    setModalScreen({
+      nomeModal: tipoFormulario[0].nome,
+      status: true,
+      data: { asd: 1 },
+    });
+  }
 
   return (
     <>
@@ -59,9 +84,12 @@ const ServicosUsuario = () => {
         {loading && <LoadingCenterComponent />}
         {!loading && (
           <div className={style.tituloModal}>
-            <Link to={"/servico/cadastro"} className={style.button}>
+            {/* <Link to={"/servico/cadastro"} className={style.button}>
               +Novo Serviço
-            </Link>
+            </Link> */}
+            <p className={style.button} onClick={handleCadServicos}>
+              +Novo Serviço
+            </p>
           </div>
         )}
         {currentUser &&
@@ -75,8 +103,9 @@ const ServicosUsuario = () => {
               </h2>
             </li>
           ) : (
-            servicosUser && servicosUser.map((servico) => (
-              <ServicoUsuario key={servico.id} servico={servico}/>
+            servicosUser &&
+            servicosUser.map((servico) => (
+              <ServicoUsuario key={servico.id} servico={servico} />
             ))
           ))}
       </ul>

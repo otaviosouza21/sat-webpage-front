@@ -5,7 +5,7 @@ export const tiposPergunta = [
   },
   {
     id: 2,
-    nome: "Multipla escolha",
+    nome: "Multipla Escolha",
   },
 ];
 

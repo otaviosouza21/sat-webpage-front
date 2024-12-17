@@ -1,0 +1,14 @@
+.modal {
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  width: 450px;
+  margin: 20px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  box-shadow: 0 0 5px 1px rgba(5, 39, 0, 0.404);
+  position: relative;
+  border: solid 2px var(--primary3);
+  color: var(--primary3);
+}
