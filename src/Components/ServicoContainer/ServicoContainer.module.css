@@ -4,16 +4,15 @@
   flex-wrap: wrap;
   padding: 20px;
   width: 400px;
-  height: 200px;
-  border-radius: 10px ;
+  min-height: 200px;
+  border-radius: 10px;
   color: var(--primary3);
   background-color: var(--gray2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s;
 }
 
-.servico:hover{
+.servico:hover {
   box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -21,11 +20,10 @@
   font-size: 1.4rem;
   font-weight: bold;
   width: 60%;
-  margin-right:40% ;
+  margin-right: 40%;
   transition: 0.3s;
   color: var(--primary2);
 }
-
 
 .servico span {
   position: absolute;
@@ -42,7 +40,7 @@
   font-weight: bold;
 }
 
-.containerNomeEBtn{
+.containerNomeEBtn {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -92,8 +90,6 @@
   transform: scale(1);
 }
 
-
-
 .showMore {
   width: 100%;
   padding: 5px 10px;
@@ -105,11 +101,14 @@
   border-radius: 10px;
   font-size: 1.2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s;
+  transition: 0.3s;
+}
+
+.showMore:hover {
+  background-color: rgb(138, 138, 138);
 }
 
 @media (max-width: 485px) {
-
   .servico {
     width: 320px;
   }
@@ -121,10 +120,10 @@
     width: 100%;
   }
 
-  .containerNomeEBtn{
+  .containerNomeEBtn {
     flex-wrap: wrap;
   }
-  .button{
+  .button {
     display: flex;
     justify-content: center;
     align-items: center;
