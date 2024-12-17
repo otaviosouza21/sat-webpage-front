@@ -13,18 +13,18 @@
   gap: 30px;
 }
 
-.rowCategoriaServicos{
+.rowCategoriaServicos {
   margin-bottom: 20px;
-  padding:  0 20px;
+  padding: 0 20px;
 }
 
-.infoRowCategoria{
+.infoRowCategoria {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.categoriaName{
+.categoriaName {
   font-weight: bold;
   font-size: 1.3rem;
   color: white;
@@ -32,18 +32,18 @@
   border-radius: 7px;
 }
 
-.verMais{
+.verMais {
   font-weight: bold;
   font-size: 1.2rem;
 }
 
-.containerServicosArray{
+.containerServicosArray {
   display: flex;
   padding-left: 10px;
   margin-top: 5px;
   gap: 20px;
-  height: 220px;
-  align-items: start;
+  height: 240px;
+  align-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
 }
@@ -53,5 +53,3 @@
     grid-template-columns: 1fr;
   }
 }
-
-  
