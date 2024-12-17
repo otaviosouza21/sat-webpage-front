@@ -10,6 +10,7 @@ import Error from "../../../Components/Utils/Error/Error.tsx";
 import { jwtDecode } from "jwt-decode";
 import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import { defaultUserAuth } from "../../../types/apiTypes.ts";
+import LoadingCenterComponent from "../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent.tsx";
 
 const Servicos: FC<React.ComponentProps<"main">> = () => {
   const { error, loading, request } = useFetch();
@@ -83,7 +84,7 @@ const Servicos: FC<React.ComponentProps<"main">> = () => {
   //   setNotFind(null);
   // }
 
-  if (loading) return <Loading />;
+  if (loading) return <LoadingCenterComponent />;
   if (error) return <Error error={error} />;
   return (
     <main>

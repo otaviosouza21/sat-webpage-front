@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./QuestionariosCadastro.module.css";
 import useTokenValidate from "../../../../Hooks/useTokenValidate";
 import Button from "../../../../Components/Button/Button.tsx";
@@ -16,7 +16,7 @@ import QuestionarioForm from "./QuestionarioForm/QuestionarioForm.tsx";
 import LoadingCenterComponent from "../../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent";
 import QuestionList from "./QuestionList/QuestionList";
 import { Form } from "../QuestionariosLista/QuestionariosLista";
-
+import { QuestionarioResposta } from "../../../../Components/Formularios/QuestionarioResposta/QuestionarioResposta.tsx";
 
 export interface questionListProps {
   formulario_id: string;
@@ -24,19 +24,18 @@ export interface questionListProps {
   descricao: string;
   tipo_resposta: string;
   possui_sub_pergunta: boolean;
-  multipleQuestionOptions?: boolean | { titulo: string }[]; 
+  multipleQuestionOptions?: boolean | { titulo: string }[];
 }
 
-
-export interface QuestionForm{
-  form: Form
-  question:questionListProps[]
+export interface QuestionForm {
+  form: Form;
+  question: questionListProps[];
 }
 
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
-  const { modal, dataUpdate } = useGlobalContext()
+  const { modal, dataUpdate } = useGlobalContext();
   const [questionList, setQuestionList] = useState<questionListProps[]>([]);
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -50,32 +49,31 @@ const QuestionariosCadastro = () => {
 
   useEffect(() => {
     fetchValidaToken();
-    
+
     if (dataUpdate) {
       tituloForm.setValue(dataUpdate.titulo);
       descricaoForm.setValue(dataUpdate.descricao);
       vigenciaInicioForm.setValue(convertDataUS(dataUpdate.vigencia_inicio));
       vigenciaFimForm.setValue(convertDataUS(dataUpdate.vigencia_fim));
       tipoForm.setValue(dataUpdate.tipo);
-      setTimeout(()=>{
-        if(formRef.current){
+      setTimeout(() => {
+        if (formRef.current) {
           formRef.current["status"].value = dataUpdate.status ? "1" : "2";
         }
-      },500)
-            
-      getQuestions();
+      }, 500);
 
+      getQuestions();
     }
   }, [userAuth.rule]);
 
   //cria novo formulario
-  function createForm(dataQuestionario:QuestionForm) {
+  function createForm(dataQuestionario: QuestionForm) {
     const { url, options } = POST_DATA("formularios", dataQuestionario);
     return { url, options };
   }
 
-// atualiza formulario
-  function updateForm(dataQuestionario:QuestionForm) {
+  // atualiza formulario
+  function updateForm(dataQuestionario: QuestionForm) {
     const { url, options } = UPDATE_DATA(
       "formularios",
       dataQuestionario,
@@ -92,19 +90,18 @@ const QuestionariosCadastro = () => {
       "formulario_id",
       dataUpdate.id
     );
-    const {response, json} = await request(url, options);
+    const { response, json } = await request(url, options);
     if (!response?.ok) {
       throw new Error("Não foi possivel buscar as perguntas");
-    } 
+    }
     if (!json?.data) {
       throw new Error("Formato inesperado de resposta da API");
     }
-    const data : questionListProps[] = json.data
+    const data: questionListProps[] = json.data;
     setQuestionList(data);
   }
 
- 
-  function handleSubmit(e:React.MouseEvent) {
+  function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
     if (
       tituloForm.validate() &&
@@ -115,7 +112,10 @@ const QuestionariosCadastro = () => {
       userAuth.status // apenas cadastrar com usuario logado/autenticado
     ) {
       if (vigenciaInicioForm.value > vigenciaFimForm.value) {
-        return activeToast({message:"Inicio da vigencia maior do que o fim",type: "warning"});
+        return activeToast({
+          message: "Inicio da vigencia maior do que o fim",
+          type: "warning",
+        });
       }
 
       const dataQuestionario = {
@@ -126,11 +126,14 @@ const QuestionariosCadastro = () => {
           vigencia_fim: vigenciaFimForm.value,
           usuario_id: userAuth.usuario.id,
           tipo: tipoForm.value,
-          status: formRef.current ? formRef.current["status"].value === "1" ? true : false : false,
+          status: formRef.current
+            ? formRef.current["status"].value === "1"
+              ? true
+              : false
+            : false,
         },
         question: questionList,
       };
-
 
       async function postQuestionario() {
         if (dataQuestionario.question.length < 1) {
@@ -141,29 +144,32 @@ const QuestionariosCadastro = () => {
         const { url, options } = dataUpdate
           ? updateForm(dataQuestionario)
           : createForm(dataQuestionario);
-          
+
         const questionarioRequest = await request(url, options);
 
         if (questionarioRequest.response?.ok) {
-          const message = questionarioRequest.json.message
+          const message = questionarioRequest.json.message;
           tituloForm.reset();
           vigenciaInicioForm.reset();
           vigenciaFimForm.reset();
           descricaoForm.reset();
           tipoForm.reset();
-          activeToast({message, type:"success"});
+          activeToast({ message, type: "success" });
           navigation(-1);
         } else {
-          if(error) activeToast({message:error, type:"error"});
+          if (error) activeToast({ message: error, type: "error" });
         }
       }
       postQuestionario();
     } else {
-      activeToast({message:"Preencha os campos obrigatórios", type:"warning"});
+      activeToast({
+        message: "Preencha os campos obrigatórios",
+        type: "warning",
+      });
     }
   }
 
-  function handleCardDelete(index:number) {
+  function handleCardDelete(index: number) {
     setQuestionList((prevData) => prevData.filter((_, i) => i !== index));
   }
 
@@ -204,6 +210,9 @@ const QuestionariosCadastro = () => {
           <QuestionConfig setQuestionList={setQuestionList} />
         </ModalScreen>
       )}
+      {/* <ModalScreen>
+        <QuestionarioResposta />
+      </ModalScreen> */}
     </div>
   );
 };

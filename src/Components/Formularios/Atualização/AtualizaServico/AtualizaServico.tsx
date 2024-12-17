@@ -13,6 +13,7 @@ import { useGlobalContext } from "../../../../Hooks/GlobalContext.tsx";
 import { useNavigate } from "react-router-dom";
 import useTokenValidate from "../../../../Hooks/useTokenValidate.tsx";
 import useToast from "../../../../Hooks/useToast.tsx";
+import LoadingCenterComponent from "../../../Utils/LoadingCenterComponent/LoadingCenterComponent.tsx";
 
 const AtualizaServico = () => {
   const [categorias, setCategorias] = useState();
@@ -130,10 +131,14 @@ const AtualizaServico = () => {
     getCategorias();
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <LoadingCenterComponent />;
   if (categorias)
     return (
-      <section>
+      <section
+        data-aos="fade-right"
+        data-aos-easing="linear"
+        data-aos-duration="500"
+      >
         {userAuth.status && userAuth.token ? (
           <section className={`${styles.cadastroContainer} container`}>
             <Title text="Atualizar Serviço" fontSize="3" />

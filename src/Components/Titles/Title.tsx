@@ -3,7 +3,7 @@ import styles from "./Title.module.css";
 
 interface TitleType{
   className?: String;
-  text:string;
+  text:string | undefined;
   fontSize?: string;
   subtitle?:string;
   icon?: HTMLOrSVGElement

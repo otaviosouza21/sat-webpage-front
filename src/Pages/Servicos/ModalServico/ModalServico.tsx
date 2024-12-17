@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import Title from "../../../Components/Titles/Title.tsx";
 import styles from "../ModalServico/ModalServico.module.css";
-import workserIcon from "../../assets/icons/person.svg";
-import toolsIcon from "../../assets/icons/tools.svg";
-import starIcon from "../../assets/icons/star.svg";
+import workserIcon from "../../../assets/icons/person.svg";
+import toolsIcon from "../../../assets/icons/tools.svg";
+import starIcon from "../../../assets/icons/star.svg";
 import ModalContato from "../../../Components/ServicoContainer/ModalContato/ModalContato.tsx";
-import phone from "../../assets/icons/phone2.svg";
+import phone from "../../../assets/icons/phone2.svg";
 import CloseButton from "../../../Components/CloseButton/CloseButton.tsx";
 import { ServicoUsuarioProps } from "../../../types/apiTypes";
 

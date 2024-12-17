@@ -10,7 +10,7 @@ type InputTextProps = React.ComponentProps<"input"> & {
   onBlur?: () => void;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   error?: string | null;
-  value: string;
+  value?: string;
   errorConfere?: string | null;
   opacity?: number | null;
 };

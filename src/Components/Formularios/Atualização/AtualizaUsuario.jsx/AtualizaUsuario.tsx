@@ -132,13 +132,16 @@ const AtualizaUsuario = () => {
     }
   }
 
-  if (loading) return "<LoadingCenterComponent />";
+  if (loading) return <LoadingCenterComponent />;
   if (rules)
     return (
       <section>
         <section className={`${styles.cadastroContainer} container`}>
           <Title text="Atualizar Cadastro" fontSize="3" />
           <form
+            data-aos="fade-right"
+            data-aos-easing="linear"
+            data-aos-duration="500"
             onSubmit={handleSubmit}
             ref={formRef}
             className={styles.cadastroUsuario}

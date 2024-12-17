@@ -9,6 +9,7 @@ import email from "../../assets/icons/email.svg";
 import { NavLink } from "react-router-dom";
 import SendEmailForm from "../Formularios/SendEmailForm/SendEmailForm.tsx";
 import { formataTelefone } from "../../plugins/Format";
+import { scrolTop } from "../../plugins/javascriptActions.ts";
 
 const Footer = () => {
   const contatoSat = {
@@ -23,7 +24,7 @@ const Footer = () => {
       <SendEmailForm />
       <div className={styles.top}>
         <div className={styles.left}>
-          <NavLink to="/" className={styles.logotipo}>
+          <NavLink onClick={scrolTop} to="/" className={styles.logotipo}>
             <img src={logo} alt="logotipo" />
             <h1>SAT</h1>
           </NavLink>
@@ -47,7 +48,7 @@ const Footer = () => {
         <div className={styles.listas}>
           <ul className={styles.lista}>
             <li>Empresa</li>
-            <li>
+            <li onClick={scrolTop}>
               <NavLink to="/sobre">Sobre</NavLink>
             </li>
             <li>
@@ -59,7 +60,7 @@ const Footer = () => {
           </ul>
           <ul className={styles.lista}>
             <li>Serviços</li>
-            <li>
+            <li onClick={scrolTop}>
               <NavLink to="/servicos">Serviços</NavLink>
             </li>
             <li>
@@ -68,10 +69,10 @@ const Footer = () => {
           </ul>
           <ul className={styles.lista}>
             <li>Usuario</li>
-            <li>
+            <li onClick={scrolTop}>
               <NavLink to="/meu_perfil/perfil">Meu Perfil</NavLink>
             </li>
-            <li>
+            <li onClick={scrolTop}>
               <NavLink to="/">Inicio</NavLink>
             </li>
           </ul>

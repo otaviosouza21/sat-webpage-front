@@ -327,7 +327,7 @@ a {
 /* ------------SCROLL BAR------------*/
 
 *::-webkit-scrollbar {
-  height: 12px;
+ width: 8px;
 }
 
 *::-webkit-scrollbar-track {
