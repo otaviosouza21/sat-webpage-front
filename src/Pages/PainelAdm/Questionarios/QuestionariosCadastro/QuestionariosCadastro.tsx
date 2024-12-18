@@ -24,7 +24,7 @@ export interface questionListProps {
   descricao: string;
   tipo_resposta: string;
   possui_sub_pergunta: boolean;
-  multipleQuestionOptions?: boolean | { titulo: string }[];
+  multipleQuestionOptions?: { titulo: string }[] | null;
 }
 
 export interface QuestionForm {
@@ -68,9 +68,11 @@ const QuestionariosCadastro = () => {
 
   //cria novo formulario
   function createForm(dataQuestionario: QuestionForm) {
+    
     const { url, options } = POST_DATA("formularios", dataQuestionario);
     return { url, options };
   }
+  
 
   // atualiza formulario
   function updateForm(dataQuestionario: QuestionForm) {
@@ -205,9 +207,12 @@ const QuestionariosCadastro = () => {
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}
       </Button>
-      <ModalScreen>
-        <QuestionConfig setQuestionList={setQuestionList} />
-      </ModalScreen>
+
+        <ModalScreen>
+          <QuestionConfig setQuestionList={setQuestionList} />
+        </ModalScreen>
+      )}
+     
     </div>
   );
 };

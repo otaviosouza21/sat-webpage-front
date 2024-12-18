@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Title from "../../../../../Components/Titles/Title";
 
@@ -21,34 +21,42 @@ type FormRef = HTMLFormElement & {
   multipleRespose?: HTMLInputElement[];
 };
 
+export interface Option {
+  id: number;
+  titulo: string;
+}
+
 const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
   const formRef = useRef<FormRef | null>(null);
   const [showInputOptions, setShowInputOptions] = useState<string>("");
-  const { setModal, dataUpdate, setDataUpdate, setModalScreen } =
-    useGlobalContext();
+  const { setModal, dataUpdate, setDataUpdate, setModalScreen } = useGlobalContext();
 
-  const handleChandSelect = () => {
-    if (formRef.current) {
-      const tipoResposta = formRef.current["tipo_resposta"].value;
-      setShowInputOptions(tipoResposta);
+
+  useEffect(() => {
+    if (dataUpdate) {
+      titleForm.setValue(dataUpdate.titulo);
+      descricaoForm.setValue(dataUpdate.descricao);
+      if (dataUpdate.tipo_resposta === "MultiRespostas") {
+        setQuestionType("2");
+      }
     }
+  }, []);
+
+  const optionsFormat = (options: Option[]) => {
+    const formatOptions = options.map((opt) => {
+      return {
+        titulo: opt.titulo
+      };
+    });
+    return formatOptions;
   };
+
 
   const titleForm = useForm();
   const descricaoForm = useForm();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    const newMultipleResponse: { titulo: string }[] = [];
-
-    if (formRef.current && formRef.current["tipo_resposta"].value === "2") {
-      formRef.current["multipleRespose"]?.forEach((response) => {
-        if (response.value) {
-          newMultipleResponse.push({ titulo: response.value });
-        }
-      });
-    }
 
     if (titleForm.validate() && descricaoForm.validate() && formRef.current) {
       setQuestionList((prevQuestions) => {
@@ -64,8 +72,7 @@ const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
             formRef.current && formRef.current["tipo_resposta"].value === "2"
               ? true
               : false, // Garantir valor booleano
-          multipleQuestionOptions:
-            newMultipleResponse.length > 0 ? newMultipleResponse : false,
+          multipleQuestionOptions: optionsFormat(options)  || null
         };
 
         return [...prevQuestions, question];
@@ -74,6 +81,8 @@ const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
       setModal("");
     }
   };
+
+
 
   const handleCloseModal = () => {
     setModalScreen({
@@ -99,9 +108,20 @@ const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
           { id: 1, nome: "Texto" },
           { id: 2, nome: "Multipla Escolha" },
         ]}
-        onChange={handleChandSelect}
+        onChange={(e) => { 
+          
+          setQuestionType(e.target.value)
+       
+        }}
+        value={questionType}
       />
-      {showInputOptions === "2" && <MultipleResponses />}
+      {questionType === "2" && (
+        <MultipleResponses
+          question_id={dataUpdate && dataUpdate.id}
+          options={options}
+          setOptions={setOptions}
+        />
+      )}
       <Button handleSubmit={handleClick}>Salvar</Button>
     </form>
   );
