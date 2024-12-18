@@ -13,13 +13,13 @@ export type QuestionListProps = React.ComponentProps<'div'>&{
 }
 
 const QuestionList = ({ handleCardDelete, questionList, ...props }:QuestionListProps) => {
-  const {setModal} = useGlobalContext();
+  const {setModal, setModalScreen} = useGlobalContext();
   return (
     <div className={styles.newQuestions} {...props}>
       <div className={styles.header}>
          <Title text="Perguntas" fontSize="2" /> 
         <div
-          onClick={() => setModal("show-QuestionConfig")}
+          onClick={() => setModalScreen({nomeModal: "Questionario Config", status: true})}
           className={styles.button}
         >
           <img src={Plus} alt="" />

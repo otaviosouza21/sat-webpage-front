@@ -60,30 +60,6 @@ const Servicos: FC<React.ComponentProps<"main">> = () => {
     console.log(categoriaInnerServico);
   }, [categoriaInnerServico]);
 
-  // async function paginacao(page) {
-  //   setPageServicos(page);
-  //   const { url, options } = GET_INNER("servico", "usuario", page);
-  //   const { response, json } = await request(url, options);
-  //   if (response.ok) {
-  //     setCategoriaInnerServico(json.servicos.retorno);
-  //     setLastPage(json.paginacao.total_Pages);
-  //     setNotFind(null);
-  //   }
-  // }
-  // async function paginacao2(page) {
-  //   setPageServicos(page);
-  //   const { url, options } = GET_INNER_SEARCH(
-  //     "servico",
-  //     "usuario",
-  //     page,
-  //     inputPesquisa
-  //   );
-  //   const { json, response } = await request(url, options);
-  //   setCategoriaInnerServico(json.servicos.retorno);
-  //   setLastPage(json.paginacao.total_Pages);
-  //   setNotFind(null);
-  // }
-
   if (loading) return <LoadingCenterComponent />;
   if (error) return <Error error={error} />;
   return (

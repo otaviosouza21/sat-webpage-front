@@ -5,7 +5,7 @@ export const tiposPergunta = [
   },
   {
     id: 2,
-    nome: "Multipla escolha",
+    nome: "Multipla Escolha",
   },
 ];
 
@@ -27,3 +27,5 @@ export const tipoFormulario = [
       "formulário ativará ao entrar na pagina principal (quando não logado)",
   },
 ];
+
+

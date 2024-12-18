@@ -35,7 +35,7 @@ export interface QuestionForm {
 const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
-  const { modal, dataUpdate } = useGlobalContext();
+  const { modal, dataUpdate, modalScreen } = useGlobalContext();
   const [questionList, setQuestionList] = useState<questionListProps[]>([]);
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -207,7 +207,7 @@ const QuestionariosCadastro = () => {
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}
       </Button>
-      {modal === "show-QuestionConfig" && (
+
         <ModalScreen>
           <QuestionConfig setQuestionList={setQuestionList} />
         </ModalScreen>

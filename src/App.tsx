@@ -27,44 +27,38 @@ import { iniciaAnalytics, logPageView } from "./plugins/iniciaAnalytics.ts";
 function App() {
   AOS.init();
 
-  useEffect(()=>{
-    iniciaAnalytics()
-    logPageView()
-  },[])
+  useEffect(() => {
+    iniciaAnalytics();
+    logPageView();
+  }, []);
 
   return (
     <GlobalStorage>
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route  path="/" element={<HomeEmpreendedores />} />
-          <Route  path="servicos" element={<Servicos />} />
-          <Route  path="usuario/cadastro" element={<CadastroUsuario />} />
-          <Route           
+          <Route path="/" element={<HomeEmpreendedores />} />
+          <Route path="servicos" element={<Servicos />} />
+          <Route path="usuario/cadastro" element={<CadastroUsuario />} />
+          <Route
             path="usuarios/cadastro/atualiza"
             element={<AtualizaUsuario />}
           />
-          <Route  path="meu_perfil/*" element={<PerfilUsuario />} />
-          <Route  path="servico/cadastro" element={<CadastroServico />} />
+          <Route path="meu_perfil/*" element={<PerfilUsuario />} />
+          <Route path="servico/cadastro" element={<CadastroServico />} />
           <Route
-           
             path="servico/cadastro/atualiza"
             element={<AtualizaServico />}
           />
+          <Route path="categoria/cadastro" element={<CadastroCategoria />} />
           <Route
-           
-            path="categoria/cadastro"
-            element={<CadastroCategoria />}
-          />
-          <Route
-           
             path="categoria/cadastro/atualiza"
             element={<AtualizaCategoria />}
           />
-          <Route  path="sobre" element={<Sobre />} />
-          <Route  path="adm" element={<Adm />} />
-          <Route  path="reset-password" element={<ResetPassword />} />
-          <Route  path="send-request" element={<SendRequest />} />
+          <Route path="sobre" element={<Sobre />} />
+          <Route path="adm" element={<Adm />} />
+          <Route path="reset-password" element={<ResetPassword />} />
+          <Route path="send-request" element={<SendRequest />} />
           <Route
             path="questionario/cadastro"
             element={<QuestionariosCadastro />}

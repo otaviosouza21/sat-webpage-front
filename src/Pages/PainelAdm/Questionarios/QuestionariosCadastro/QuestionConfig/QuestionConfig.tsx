@@ -28,9 +28,9 @@ export interface Option {
 
 const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
   const formRef = useRef<FormRef | null>(null);
-  const [questionType, setQuestionType] = useState<string>("1");
-  const [options, setOptions] = useState<Option[]>([{ id: 1, titulo: "" }]);
-  const { setModal, dataUpdate, setDataUpdate } = useGlobalContext();
+  const [showInputOptions, setShowInputOptions] = useState<string>("");
+  const { setModal, dataUpdate, setDataUpdate, setModalScreen } = useGlobalContext();
+
 
   useEffect(() => {
     if (dataUpdate) {
@@ -72,7 +72,7 @@ const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
             formRef.current && formRef.current["tipo_resposta"].value === "2"
               ? true
               : false, // Garantir valor booleano
-          multipleQuestionOptions: optionsFormat(options)  || null,
+          multipleQuestionOptions: optionsFormat(options)  || null
         };
 
         return [...prevQuestions, question];
@@ -85,7 +85,11 @@ const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
 
 
   const handleCloseModal = () => {
-    setModal("");
+    setModalScreen({
+      nomeModal: "",
+      status: false,
+      data: {}
+    });
     setDataUpdate({});
   };
 
