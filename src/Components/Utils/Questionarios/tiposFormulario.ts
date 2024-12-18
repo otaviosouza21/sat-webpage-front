@@ -27,3 +27,5 @@ export const tipoFormulario = [
       "formulário ativará ao entrar na pagina principal (quando não logado)",
   },
 ];
+
+

@@ -24,7 +24,8 @@ type FormRef = HTMLFormElement & {
 const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
   const formRef = useRef<FormRef | null>(null);
   const [showInputOptions, setShowInputOptions] = useState<string>("");
-  const { setModal, dataUpdate, setDataUpdate } = useGlobalContext();
+  const { setModal, dataUpdate, setDataUpdate, setModalScreen } =
+    useGlobalContext();
 
   const handleChandSelect = () => {
     if (formRef.current) {
@@ -56,21 +57,30 @@ const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
           titulo: titleForm.value,
           descricao: descricaoForm.value,
           tipo_resposta:
-            formRef.current&& formRef.current["tipo_resposta"].value === "1" ? "Texto" : "MultiRespostas",
-          possui_sub_pergunta:formRef.current&& formRef.current["tipo_resposta"].value === "2" ? true : false, // Garantir valor booleano
-          multipleQuestionOptions: newMultipleResponse.length > 0 ? newMultipleResponse : false,
+            formRef.current && formRef.current["tipo_resposta"].value === "1"
+              ? "Texto"
+              : "MultiRespostas",
+          possui_sub_pergunta:
+            formRef.current && formRef.current["tipo_resposta"].value === "2"
+              ? true
+              : false, // Garantir valor booleano
+          multipleQuestionOptions:
+            newMultipleResponse.length > 0 ? newMultipleResponse : false,
         };
-      
+
         return [...prevQuestions, question];
       });
-      
-      
+
       setModal("");
     }
   };
 
   const handleCloseModal = () => {
-    setModal("");
+    setModalScreen({
+      nomeModal: "",
+      status: false,
+      data: {}
+    });
     setDataUpdate({});
   };
 

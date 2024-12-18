@@ -17,9 +17,9 @@ import {
 } from "../types/apiTypes";
 
 interface modalScreenProps {
-  nomeModal: string;
+  nomeModal: "Questionario Config" | "Questionario Servico" | "" ;
   status: boolean;
-  data: object;
+  data?: object;
 }
 
 interface GlobalContextProps {
