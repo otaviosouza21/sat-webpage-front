@@ -4,12 +4,13 @@ import TrashIcon from '../../../../../assets/svgFlies/TrashIcon';
 import PenIcon from '../../../../../assets/svgFlies/PenIcon';
 import { useGlobalContext } from '../../../../../Hooks/GlobalContext.tsx';
 import { questionListProps } from '../QuestionariosCadastro';
+import { PerguntasProps } from '../../../../../types/apiTypes.ts';
 
 
 interface QuestionCardProps{
   index: number;
   handleCardDelete: (index:number)=> void;
-  question:questionListProps
+  question: PerguntasProps
 }
 
 const QuestionCard = ({question,handleCardDelete,index}:QuestionCardProps) => {
@@ -19,7 +20,6 @@ const QuestionCard = ({question,handleCardDelete,index}:QuestionCardProps) => {
   function handleUpdateClick(){
     setModal("show-QuestionConfig")
     setDataUpdate(question)
-    
   }
 
   return (

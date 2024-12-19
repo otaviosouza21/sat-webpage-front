@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
 import Title from "../../../../../Components/Titles/Title";
-
 import Button from "../../../../../Components/Button/Button";
 import MultipleResponses from "./MultipleResponses/MultipleResponses";
 import useForm from "../../../../../Hooks/useForm";
@@ -11,14 +9,13 @@ import { useGlobalContext } from "../../../../../Hooks/GlobalContext";
 import { questionListProps } from "../QuestionariosCadastro";
 import InputText from "../../../../../Components/Formularios/Forms/Input/InputText";
 import InputSelect from "../../../../../Components/Formularios/Forms/Input/InputSelect";
+import useToast from "../../../../../Hooks/useToast";
+import { PerguntasProps, tipoPerguntasProps } from "../../../../../types/apiTypes";
+import useFetch from "../../../../../Hooks/useFetch";
+import { GET_ALL } from "../../../../../Api/api";
 
 type QuestionConfigProps = {
-  setQuestionList: React.Dispatch<React.SetStateAction<questionListProps[]>>;
-};
-
-type FormRef = HTMLFormElement & {
-  tipo_resposta: HTMLSelectElement;
-  multipleRespose?: HTMLInputElement[];
+  setPerguntasData: React.Dispatch<React.SetStateAction<PerguntasProps[]>>;
 };
 
 export interface Option {
@@ -26,72 +23,71 @@ export interface Option {
   titulo: string;
 }
 
-const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
-  const formRef = useRef<FormRef | null>(null);
-  const [showInputOptions, setShowInputOptions] = useState<string>("");
-  const { setModal, dataUpdate, setDataUpdate, setModalScreen } = useGlobalContext();
-
-
-  useEffect(() => {
-    if (dataUpdate) {
-      titleForm.setValue(dataUpdate.titulo);
-      descricaoForm.setValue(dataUpdate.descricao);
-      if (dataUpdate.tipo_resposta === "MultiRespostas") {
-        setQuestionType("2");
-      }
-    }
-  }, []);
-
-  const optionsFormat = (options: Option[]) => {
-    const formatOptions = options.map((opt) => {
-      return {
-        titulo: opt.titulo
-      };
-    });
-    return formatOptions;
-  };
-
-
+const QuestionConfig = ({ setPerguntasData }: QuestionConfigProps) => {
+  const { request, loading } = useFetch();
+  const { setModalScreen, dataUpdate, setDataUpdate } = useGlobalContext();
+  const [tipoPergunta, setTipoPergunta] = useState<tipoPerguntasProps | null>(null);
+  const [currentTipoPergunta, setCurrentTipoPergunta] = useState<string>("1");
+  const [options, setOptions] = useState<Option[]>([]);
+  
+  const activeToast = useToast();
   const titleForm = useForm();
   const descricaoForm = useForm();
+  const formRef = useRef<HTMLFormElement>(null);
 
+  // Busca os tipos de perguntas disponíveis ao montar o componente
+  useEffect(() => {
+    const getTipoPerguntas = async () => {
+      try {
+        const { url, options } = GET_ALL("tipo-respostas");
+        const { response, json } = await request(url, options);
+        if (!response?.ok) throw new Error("Não foi possível buscar os tipos de pergunta");
+        setTipoPergunta(json);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getTipoPerguntas();
+  }, []);
+
+  // Função para atualizar o tipo de pergunta selecionado
+  const handleTipoPerguntaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCurrentTipoPergunta(e.target.value);
+  };
+
+  // Evento para adicionar nova pergunta
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (titleForm.validate() && descricaoForm.validate() && formRef.current) {
-      setQuestionList((prevQuestions) => {
-        const question: questionListProps = {
-          formulario_id: dataUpdate?.formulario_id || "", // Preencha com um valor padrão ou derive do contexto
+    if (titleForm.validate() && descricaoForm.validate()) {
+      setPerguntasData((prevQuestions) => {
+        const pergunta: PerguntasProps = {
           titulo: titleForm.value,
           descricao: descricaoForm.value,
-          tipo_resposta:
-            formRef.current && formRef.current["tipo_resposta"].value === "1"
-              ? "Texto"
-              : "MultiRespostas",
-          possui_sub_pergunta:
-            formRef.current && formRef.current["tipo_resposta"].value === "2"
-              ? true
-              : false, // Garantir valor booleano
-          multipleQuestionOptions: optionsFormat(options)  || null
+          tipo_resposta_id: currentTipoPergunta,
+          possui_sub_pergunta: tipoPergunta?.status || false,
         };
-
-        return [...prevQuestions, question];
+        return [...prevQuestions, pergunta];
       });
-
-      setModal("");
+      
+      setModalScreen({ nomeModal: "", status: false });
+      activeToast({ message: "Pergunta Cadastrada", type: "success" });
+    } else {
+      activeToast({ message: "Preencha os campos obrigatórios", type: "warning" });
     }
   };
 
-
-
-  const handleCloseModal = () => {
-    setModalScreen({
-      nomeModal: "",
-      status: false,
-      data: {}
-    });
-    setDataUpdate({});
+  const handleCloseModal = (e: React.FormEvent) => {
+    e.preventDefault();
+    setModalScreen({ nomeModal: "", status: false });
   };
+
+  console.log(currentTipoPergunta);
+  
+
+  // Renderiza spinner enquanto carrega os tipos de perguntas
+  if (!tipoPergunta || loading) return <p>Carregando...</p>;
 
   return (
     <form className={`${styles.container} animation-opacity`} ref={formRef}>
@@ -104,18 +100,11 @@ const QuestionConfig: React.FC<QuestionConfigProps> = ({ setQuestionList }) => {
       <InputSelect
         label="Tipo de Entrada"
         id="tipo_resposta"
-        options={[
-          { id: 1, nome: "Texto" },
-          { id: 2, nome: "Multipla Escolha" },
-        ]}
-        onChange={(e) => { 
-          
-          setQuestionType(e.target.value)
-       
-        }}
-        value={questionType}
+        options={tipoPergunta}
+        onChange={handleTipoPerguntaChange}
+        value={currentTipoPergunta}
       />
-      {questionType === "2" && (
+      {currentTipoPergunta === "3" && (
         <MultipleResponses
           question_id={dataUpdate && dataUpdate.id}
           options={options}

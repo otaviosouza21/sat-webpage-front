@@ -1,3 +1,4 @@
+import { tipoFormulario } from "./../Components/Utils/Questionarios/tiposFormulario";
 export interface EmailBodyProps {
   to: string;
   subject: string;
@@ -65,26 +66,54 @@ export interface CurrentUser {
 }
 
 export interface QuestionarioProps {
-  createdAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+  id?: number;
   descricao: string;
-  id: number;
+  tipo_id: string;
+  titulo: string;
+  usuario_id: number;
+  vigencia_fim: string;
+  vigencia_inicio: string;
+  status: boolean;
+}
+
+export interface QuestionarioCompletoProps {
+  createdAt?: string;
+  descricao: string;
+  id?: number;
   tipo: string;
   titulo: string;
-  updatedAt: string;
+  updatedAt?: string | undefined;
   usuario_id: number;
-  vigencia_fim: null;
-  vigencia_inicio: null;
+  vigencia_fim: string;
+  vigencia_inicio: string;
+  status: boolean;
+  Pergunta?: PerguntasProps[];
+  Tipos_formulario: tipoFormularioProps;
 }
 
 export interface PerguntasProps {
-  id: number;
-  formulario_id: number;
+  id?: number;
+  formulario_id?: number;
   titulo: string;
   descricao: string;
   possui_sub_pergunta: boolean;
-  tipo_resposta: string;
-  createdAt: string;
-  updatedAt: string;
+  tipo_resposta_id: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface tipoFormularioProps {
+  id: number;
+  nome: string;
+  status: boolean;
+}
+
+export interface tipoPerguntasProps {
+  id?: number;
+  nome: string;
+  status: boolean;
 }
 
 export const defaultCurrentUser: CurrentUser = {
@@ -143,5 +172,40 @@ export const defaultCategoriaInnerServicos: CategoriaInnerServico[] = [
     nome: "",
     cor_categoria: "",
     Servicos: [defaultServicosInnerUsuario],
+  },
+];
+
+export const defaultQuestionario: QuestionarioProps = {
+  descricao: "",
+  tipo_id: "",
+  titulo: "",
+  usuario_id: 0,
+  vigencia_fim: "",
+  vigencia_inicio: "",
+  status: false,
+};
+
+export const defaultQuestionarioCompleto: QuestionarioCompletoProps = {
+  descricao: "",
+  tipo: "",
+  titulo: "",
+  usuario_id: 0,
+  vigencia_fim: "",
+  vigencia_inicio: "",
+  status: false,
+  Pergunta: [],
+  Tipos_formulario: {
+    nome: "",
+    id: 0,
+    status: false,
+  },
+};
+
+export const defaultPerguntasProps: PerguntasProps[] = [
+  {
+    titulo: "string",
+    descricao: "string",
+    possui_sub_pergunta: false,
+    tipo_resposta_id: "string",
   },
 ];

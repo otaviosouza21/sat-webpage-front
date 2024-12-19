@@ -1,9 +1,11 @@
 import React from "react";
 import { svgProps } from "../../types/svgTypes";
 
+
 const PenIcon = ({color,size,onclick}:svgProps) => {
   return (
     <svg
+
      onClick={onclick}
       width={size}
       height={size}

@@ -4,10 +4,7 @@ import styles from "./Input.module.css";
 interface InputSelectProps {
   label: string;
   id: string;
-  options: {
-    id: number;
-    nome: string;
-  }[];
+  options: any;
   placeholder?: string;
   gridColumn?: string;
   opacity?: number | null;
@@ -39,7 +36,7 @@ const InputSelect = ({
       >
         {id === "categoria" && <option value={26}>Outros</option>}
         {options &&
-          options.map((option, index) => {
+          options.map((option: any, index: number) => {
             return (
               <option key={index} value={option.id}>
                 {option.nome}

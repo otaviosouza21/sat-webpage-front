@@ -12,6 +12,8 @@
   overflow-y: auto !important;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.13);
   background-color: hsla(0, 0%, 100%, 0.979);
+  overflow-y: auto;
+  max-height: 95%;
 }
 
 .header{

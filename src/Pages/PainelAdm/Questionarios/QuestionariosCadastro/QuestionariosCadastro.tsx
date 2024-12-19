@@ -5,7 +5,12 @@ import Button from "../../../../Components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../../../Hooks/useFetch";
 import useForm from "../../../../Hooks/useForm.tsx";
-import { GET_TO_WHERE, POST_DATA, UPDATE_DATA } from "../../../../Api/api";
+import {
+  GET_ALL,
+  GET_TO_WHERE,
+  POST_DATA,
+  UPDATE_DATA,
+} from "../../../../Api/api";
 import "react-toastify/dist/ReactToastify.css";
 import useToast from "../../../../Hooks/useToast";
 import QuestionConfig from "./QuestionConfig/QuestionConfig.tsx";
@@ -17,6 +22,7 @@ import LoadingCenterComponent from "../../../../Components/Utils/LoadingCenterCo
 import QuestionList from "./QuestionList/QuestionList";
 import { Form } from "../QuestionariosLista/QuestionariosLista";
 import { QuestionarioResposta } from "../../../../Components/Formularios/QuestionarioResposta/QuestionarioResposta.tsx";
+import { defaultPerguntasProps, defaultQuestionario, PerguntasProps, tipoFormularioProps } from "../../../../types/apiTypes.ts";
 
 export interface questionListProps {
   formulario_id: string;
@@ -36,7 +42,12 @@ const QuestionariosCadastro = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error } = useFetch();
   const { modal, dataUpdate, modalScreen } = useGlobalContext();
-  const [questionList, setQuestionList] = useState<questionListProps[]>([]);
+  const [formularioData, setFormularioData] =useState<Form>(defaultQuestionario);
+  const [tipoFormulario,setTiposFormulario] = useState<tipoFormularioProps[] | null>(null)
+  const [currentTipoForm,setCurrentTipoForm] = useState<string>("0")
+  const [perguntasData,setPerguntasData] = useState<PerguntasProps[]>(defaultPerguntasProps)
+  const [statusForm,setStatusForm] = useState<string>("1")
+
 
   const formRef = useRef<HTMLFormElement>(null);
   const activeToast = useToast();
@@ -44,35 +55,34 @@ const QuestionariosCadastro = () => {
   const vigenciaInicioForm = useForm();
   const vigenciaFimForm = useForm();
   const descricaoForm = useForm();
-  const tipoForm = useForm();
   const navigation = useNavigate();
 
+  // valida token de usuario logado
   useEffect(() => {
     fetchValidaToken();
+    async function getTiposFormulario() {
+      const { url, options } = GET_ALL("tipos-formulario");
+      const { response, json } = await request(url, options);
+      if(!response?.ok) throw new Error('Não foi possivel puxar tipos do formulario')
+      setTiposFormulario(json)
+      }
+      getTiposFormulario();
+  }, []);
 
-    if (dataUpdate) {
-      tituloForm.setValue(dataUpdate.titulo);
-      descricaoForm.setValue(dataUpdate.descricao);
-      vigenciaInicioForm.setValue(convertDataUS(dataUpdate.vigencia_inicio));
-      vigenciaFimForm.setValue(convertDataUS(dataUpdate.vigencia_fim));
-      tipoForm.setValue(dataUpdate.tipo);
-      setTimeout(() => {
-        if (formRef.current) {
-          formRef.current["status"].value = dataUpdate.status ? "1" : "2";
-        }
-      }, 500);
 
-      getQuestions();
-    }
-  }, [userAuth.rule]);
+
+  //Pega os tipos de fomulario ao carregar
+  async function getTiposFormulario() {
+    const { url, options } = GET_ALL("tipos-formulario");
+    const { response, json } = await request(url, options);
+    if(!response?.ok) throw new Error('Não foi possivel puxar tipos do formulario')
+  }
 
   //cria novo formulario
   function createForm(dataQuestionario: QuestionForm) {
-    
     const { url, options } = POST_DATA("formularios", dataQuestionario);
     return { url, options };
   }
-  
 
   // atualiza formulario
   function updateForm(dataQuestionario: QuestionForm) {
@@ -85,24 +95,7 @@ const QuestionariosCadastro = () => {
     return { url, options };
   }
 
-  // pega perguntas cadastradas na atualização do formulario
-  async function getQuestions() {
-    const { url, options } = GET_TO_WHERE(
-      "perguntas",
-      "formulario_id",
-      dataUpdate.id
-    );
-    const { response, json } = await request(url, options);
-    if (!response?.ok) {
-      throw new Error("Não foi possivel buscar as perguntas");
-    }
-    if (!json?.data) {
-      throw new Error("Formato inesperado de resposta da API");
-    }
-    const data: questionListProps[] = json.data;
-    setQuestionList(data);
-  }
-
+// inciar cadastro do formulario apos evento de clique no botao
   function handleSubmit(e: React.MouseEvent) {
     e.preventDefault();
     if (
@@ -110,9 +103,9 @@ const QuestionariosCadastro = () => {
       vigenciaInicioForm.validate() &&
       vigenciaFimForm.validate() &&
       descricaoForm.validate() &&
-      tipoForm.validate() &&
       userAuth.status // apenas cadastrar com usuario logado/autenticado
     ) {
+
       if (vigenciaInicioForm.value > vigenciaFimForm.value) {
         return activeToast({
           message: "Inicio da vigencia maior do que o fim",
@@ -120,24 +113,27 @@ const QuestionariosCadastro = () => {
         });
       }
 
-      const dataQuestionario = {
-        form: {
-          titulo: tituloForm.value,
-          descricao: descricaoForm.value,
-          vigencia_inicio: vigenciaInicioForm.value,
-          vigencia_fim: vigenciaFimForm.value,
-          usuario_id: userAuth.usuario.id,
-          tipo: tipoForm.value,
-          status: formRef.current
-            ? formRef.current["status"].value === "1"
-              ? true
-              : false
-            : false,
-        },
-        question: questionList,
-      };
+      // monta Formulario Principal
+      setFormularioData({
+        titulo: tituloForm.value,
+        descricao: descricaoForm.value,
+        vigencia_inicio: vigenciaInicioForm.value,
+        vigencia_fim: vigenciaInicioForm.value,
+        usuario_id: userAuth.usuario.id,
+        status: true,
+        tipo_id: currentTipoForm
+      })
 
-      async function postQuestionario() {
+      // monta Perguntas
+      setPerguntasData([{
+        titulo: "",
+        descricao: "",
+        possui_sub_pergunta: false,
+        tipo_resposta_id: ""
+      }])
+
+
+    /*   async function postQuestionario() {
         if (dataQuestionario.question.length < 1) {
           window.alert("Por favor, insira pelo menos uma pergunta");
           return;
@@ -155,14 +151,13 @@ const QuestionariosCadastro = () => {
           vigenciaInicioForm.reset();
           vigenciaFimForm.reset();
           descricaoForm.reset();
-          tipoForm.reset();
           activeToast({ message, type: "success" });
           navigation(-1);
         } else {
           if (error) activeToast({ message: error, type: "error" });
         }
-      }
-      postQuestionario();
+      } */
+ /*      postQuestionario(); */
     } else {
       activeToast({
         message: "Preencha os campos obrigatórios",
@@ -171,12 +166,13 @@ const QuestionariosCadastro = () => {
     }
   }
 
-  function handleCardDelete(index: number) {
+ /*  function handleCardDelete(index: number) {
     setQuestionList((prevData) => prevData.filter((_, i) => i !== index));
-  }
+  } */
 
   if (loading) return <LoadingCenterComponent />;
   if (error) return <p>Erro ao carregar os dados: {error}</p>;
+  
   return (
     <div
       data-aos="fade-right"
@@ -196,23 +192,25 @@ const QuestionariosCadastro = () => {
         vigenciaInicioForm={vigenciaInicioForm}
         vigenciaFimForm={vigenciaFimForm}
         descricaoForm={descricaoForm}
-        tipoForm={tipoForm}
+        tipoForm={tipoFormulario}
+        setCurrentTipoForm={setCurrentTipoForm}
+        currentTipoForm={currentTipoForm}
+        setStatusForm={setStatusForm}
+        statusForm={statusForm}
       />
       <div className={styles.line}></div>
-      <QuestionList
-        questionList={questionList}
-        handleCardDelete={handleCardDelete}
-        // setModal={setModal}
-      />
+     <QuestionList
+        perguntasData={perguntasData}
+        setPerguntasData={setPerguntasData}
+      /*   handleCardDelete={handleCardDelete} */
+      /> 
       <Button handleSubmit={handleSubmit}>
         {loading ? "Salvando..." : "Salvar"}
       </Button>
 
-        <ModalScreen>
-          <QuestionConfig setQuestionList={setQuestionList} />
-        </ModalScreen>
-      )}
-     
+      <ModalScreen>
+        <QuestionConfig setPerguntasData={setPerguntasData} />
+      </ModalScreen>
     </div>
   );
 };

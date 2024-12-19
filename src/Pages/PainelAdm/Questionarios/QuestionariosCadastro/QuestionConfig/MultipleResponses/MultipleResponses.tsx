@@ -34,7 +34,7 @@ const MultipleResponses = ({
         );
         const { response, json } = await request(url, options);
         if (response?.ok) {
-          setCurrentOptions(json.data);
+          setOptions(json.data);
         } else {
           activeToast({
             message: "Ocorreu um erro ao buscar opções",
@@ -71,29 +71,6 @@ const MultipleResponses = ({
 
   return (
     <div className={styles.container}>
-      {currentOptions ? (
-        currentOptions.map((option, index) => {
-          return (
-            <div key={option.id} className={styles.input}>
-              <InputText
-                key={option.id}
-                placeholder={`Opção ${option.id}`}
-                value={option.titulo}
-                onChange={(e) => handleChange(option.id, e.target.value)}
-                id="multipleResponse"
-              />
-              <img
-                onClick={() => handleDelete(option.id)}
-                src={sub}
-                alt="Remove Option"
-                className={styles.icon}
-              />
-            </div>
-          );
-        })
-      ) : (
-        <LoadingDots />
-      )}
       {options.map((option) => (
         <div key={option.id} className={styles.input}>
           <InputText

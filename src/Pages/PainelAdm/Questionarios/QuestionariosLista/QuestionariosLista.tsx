@@ -9,15 +9,15 @@ import useToast from "../../../../Hooks/useToast.tsx";
 
 import LoadingCenterComponent from "../../../../Components/Utils/LoadingCenterComponent/LoadingCenterComponent";
 import { useGlobalContext } from "../../../../Hooks/GlobalContext.tsx";
-import QuestionarioCardList from "./QuestionarioCardList.tsx";
-import HeaderQuestionarioLista from "./HeaderQuestionarioLista.tsx";
-
+import QuestionarioCardList from "./QuestionarioCard/QuestionarioCardList.tsx";
+import HeaderQuestionarioLista from "./HeaderQuestionarioLista/HeaderQuestionarioLista.tsx";
+import { QuestionarioCompletoProps } from "../../../../types/apiTypes.ts";
 
 export interface Form {
   id?: number;
   descricao: string;
   status: boolean;
-  tipo: string;
+  tipo_id: string;
   titulo: string;
   usuario_id: number;
   vigencia_fim: string;
@@ -26,7 +26,7 @@ export interface Form {
 
 const QuestionariosLista = () => {
   const { request, loading, error } = useFetch();
-  const [formulariosData, setFormulariosData] = useState<Form[]>([]);
+  const [formulariosData, setFormulariosData] = useState<QuestionarioCompletoProps[]>([]);
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { setDataUpdate } = useGlobalContext();
   const navigate = useNavigate();
@@ -39,19 +39,31 @@ const QuestionariosLista = () => {
   useEffect(() => {
     async function getQuestionarios() {
       const { url, options } = GET_ALL("formularios");
-      const questionarioRequest = await request(url, options)
-      if (!questionarioRequest.response?.ok)
+      const {response,json} = await request(url, options);
+
+      if (!response?.ok) {
         throw new Error("Não foi possivel puxar dados");
-      setFormulariosData(questionarioRequest.json.data);
+      } 
+      const {retorno} = json.data
+    
+      setFormulariosData(retorno);
     }
     getQuestionarios();
   }, []);
 
-  async function handleDelete(id:number) {
+  console.log(formulariosData);
+  
+ 
+  
+
+  async function handleDelete(id: number) {
     const { url, options } = DELETE_DATA("formularios", id, userAuth.token);
     const questionarioRequest = await request(url, options);
     if (questionarioRequest.response?.ok) {
-      activeToast({message: "Questionário Deletado com sucesso", type:'warning'});
+      activeToast({
+        message: "Questionário Deletado com sucesso",
+        type: "warning",
+      });
       setFormulariosData((prevData) =>
         prevData.filter((form) => form.id !== id)
       );
@@ -60,7 +72,7 @@ const QuestionariosLista = () => {
     }
   }
 
-  async function handleEdit(form:Form) {
+  async function handleEdit(form: Form) {
     setDataUpdate(form);
     navigate("/questionario/cadastro");
   }
