@@ -56,9 +56,7 @@ const Servicos: FC<React.ComponentProps<"main">> = () => {
     getServicoUsuario();
   }, []);
 
-  useEffect(() => {
-    console.log(categoriaInnerServico);
-  }, [categoriaInnerServico]);
+
 
   if (loading) return <LoadingCenterComponent />;
   if (error) return <Error error={error} />;

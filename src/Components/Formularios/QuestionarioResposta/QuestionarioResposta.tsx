@@ -26,7 +26,7 @@ export const QuestionarioResposta = () => {
       if (response?.ok) {
         const perguntas = json.data;
         setCurrentPerguntas(perguntas);
-        console.log(perguntas);
+      
       } else {
         activeToast({
           message: "Ocorreu um erro ao buscar dados",

@@ -8,17 +8,20 @@ import { GET_TO_WHERE } from "../../../../../../Api/api";
 import { Option } from "../QuestionConfig";
 import useToast from "../../../../../../Hooks/useToast";
 import LoadingDots from "../../../../../../Components/Utils/LoadingDots/LoadingDots";
+import { subPerguntasProps } from "../../../../../../types/apiTypes";
 
 interface MultipleResponsesProps {
   question_id: string;
   options: Option[];
   setOptions: React.Dispatch<React.SetStateAction<Option[]>>;
+  setSubPerguntasData: React.Dispatch<React.SetStateAction<subPerguntasProps[] | null>>
 }
 
 const MultipleResponses = ({
   question_id,
   options,
   setOptions,
+  setSubPerguntasData 
 }: MultipleResponsesProps) => {
   const { request, loading, error, data } = useFetch();
   const [currentOptions, setCurrentOptions] = useState<Option[] | null>(null);
@@ -51,6 +54,7 @@ const MultipleResponses = ({
   const handleClick = () => {
     const newOption: Option = { id: options.length + 1, titulo: "" };
     setOptions([...options, newOption]);
+    setSubPerguntasData(options)
   };
 
   // Atualiza o valor de uma opção específica

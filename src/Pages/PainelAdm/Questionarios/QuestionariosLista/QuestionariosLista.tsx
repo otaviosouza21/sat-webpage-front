@@ -17,7 +17,7 @@ export interface Form {
   id?: number;
   descricao: string;
   status: boolean;
-  tipo_id: string;
+  tipo_id: number;
   titulo: string;
   usuario_id: number;
   vigencia_fim: string;
@@ -51,9 +51,7 @@ const QuestionariosLista = () => {
     getQuestionarios();
   }, []);
 
-  console.log(formulariosData);
   
- 
   
 
   async function handleDelete(id: number) {

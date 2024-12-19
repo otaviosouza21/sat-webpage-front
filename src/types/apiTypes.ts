@@ -70,7 +70,7 @@ export interface QuestionarioProps {
   updatedAt?: string;
   id?: number;
   descricao: string;
-  tipo_id: string;
+  tipo_id: number;
   titulo: string;
   usuario_id: number;
   vigencia_fim: string;
@@ -82,16 +82,28 @@ export interface QuestionarioCompletoProps {
   createdAt?: string;
   descricao: string;
   id?: number;
-  tipo: string;
+  tipo_id: number;
   titulo: string;
   updatedAt?: string | undefined;
   usuario_id: number;
   vigencia_fim: string;
   vigencia_inicio: string;
   status: boolean;
-  Pergunta?: PerguntasProps[];
-  Tipos_formulario: tipoFormularioProps;
+  perguntas: [
+    {
+      titulo: string;
+      descricao: string;
+      tipo_resposta: string;
+      possui_sub_pergunta: boolean;
+      opcoes_reposta: [
+        {
+          titulo: string
+        } | null
+      ]
+    }
+  ];
 }
+
 
 export interface PerguntasProps {
   id?: number;
@@ -99,7 +111,7 @@ export interface PerguntasProps {
   titulo: string;
   descricao: string;
   possui_sub_pergunta: boolean;
-  tipo_resposta_id: string;
+  tipo_resposta_id: number;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -114,6 +126,11 @@ export interface tipoPerguntasProps {
   id?: number;
   nome: string;
   status: boolean;
+}
+
+export interface subPerguntasProps {
+  id?: number;
+  titulo: string;
 }
 
 export const defaultCurrentUser: CurrentUser = {
@@ -177,7 +194,7 @@ export const defaultCategoriaInnerServicos: CategoriaInnerServico[] = [
 
 export const defaultQuestionario: QuestionarioProps = {
   descricao: "",
-  tipo_id: "",
+  tipo_id: 0,
   titulo: "",
   usuario_id: 0,
   vigencia_fim: "",
@@ -187,18 +204,21 @@ export const defaultQuestionario: QuestionarioProps = {
 
 export const defaultQuestionarioCompleto: QuestionarioCompletoProps = {
   descricao: "",
-  tipo: "",
+  tipo_id: 0,
   titulo: "",
   usuario_id: 0,
   vigencia_fim: "",
   vigencia_inicio: "",
   status: false,
-  Pergunta: [],
-  Tipos_formulario: {
-    nome: "",
-    id: 0,
-    status: false,
-  },
+  perguntas:[
+    {
+      titulo: "",
+      tipo_resposta: "",
+      descricao: "",
+      possui_sub_pergunta: false,
+      opcoes_reposta: [{titulo: ""}]
+    }
+  ]
 };
 
 export const defaultPerguntasProps: PerguntasProps[] = [
@@ -206,6 +226,6 @@ export const defaultPerguntasProps: PerguntasProps[] = [
     titulo: "string",
     descricao: "string",
     possui_sub_pergunta: false,
-    tipo_resposta_id: "string",
+    tipo_resposta_id: 0,
   },
 ];

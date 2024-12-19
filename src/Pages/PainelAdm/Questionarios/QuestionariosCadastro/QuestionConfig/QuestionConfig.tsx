@@ -10,12 +10,14 @@ import { questionListProps } from "../QuestionariosCadastro";
 import InputText from "../../../../../Components/Formularios/Forms/Input/InputText";
 import InputSelect from "../../../../../Components/Formularios/Forms/Input/InputSelect";
 import useToast from "../../../../../Hooks/useToast";
-import { PerguntasProps, tipoPerguntasProps } from "../../../../../types/apiTypes";
+import { PerguntasProps, subPerguntasProps, tipoPerguntasProps } from "../../../../../types/apiTypes";
 import useFetch from "../../../../../Hooks/useFetch";
 import { GET_ALL } from "../../../../../Api/api";
+import LoadingDots from "../../../../../Components/Utils/LoadingDots/LoadingDots";
 
 type QuestionConfigProps = {
-  setPerguntasData: React.Dispatch<React.SetStateAction<PerguntasProps[]>>;
+  setPerguntasData: React.Dispatch<React.SetStateAction<PerguntasProps[] | null>>;
+  setSubPerguntasData: React.Dispatch<React.SetStateAction<subPerguntasProps[] | null>>
 };
 
 export interface Option {
@@ -23,7 +25,7 @@ export interface Option {
   titulo: string;
 }
 
-const QuestionConfig = ({ setPerguntasData }: QuestionConfigProps) => {
+const QuestionConfig = ({ setPerguntasData, setSubPerguntasData }: QuestionConfigProps) => {
   const { request, loading } = useFetch();
   const { setModalScreen, dataUpdate, setDataUpdate } = useGlobalContext();
   const [tipoPergunta, setTipoPergunta] = useState<tipoPerguntasProps | null>(null);
@@ -60,15 +62,17 @@ const QuestionConfig = ({ setPerguntasData }: QuestionConfigProps) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    if (titleForm.validate() && descricaoForm.validate()) {
+    if (titleForm.validate() && descricaoForm.validate() && tipoPergunta) {
+      console.log(currentTipoPergunta);
+      
       setPerguntasData((prevQuestions) => {
         const pergunta: PerguntasProps = {
           titulo: titleForm.value,
           descricao: descricaoForm.value,
-          tipo_resposta_id: currentTipoPergunta,
-          possui_sub_pergunta: tipoPergunta?.status || false,
+          tipo_resposta_id: Number(currentTipoPergunta),
+          possui_sub_pergunta: currentTipoPergunta === "3" ? true : false,
         };
-        return [...prevQuestions, pergunta];
+        return [...(prevQuestions || []), pergunta];
       });
       
       setModalScreen({ nomeModal: "", status: false });
@@ -83,11 +87,9 @@ const QuestionConfig = ({ setPerguntasData }: QuestionConfigProps) => {
     setModalScreen({ nomeModal: "", status: false });
   };
 
-  console.log(currentTipoPergunta);
-  
 
   // Renderiza spinner enquanto carrega os tipos de perguntas
-  if (!tipoPergunta || loading) return <p>Carregando...</p>;
+  if (!tipoPergunta || loading) return <LoadingDots />;
 
   return (
     <form className={`${styles.container} animation-opacity`} ref={formRef}>
@@ -109,6 +111,7 @@ const QuestionConfig = ({ setPerguntasData }: QuestionConfigProps) => {
           question_id={dataUpdate && dataUpdate.id}
           options={options}
           setOptions={setOptions}
+          setSubPerguntasData={setSubPerguntasData}
         />
       )}
       <Button handleSubmit={handleClick}>Salvar</Button>

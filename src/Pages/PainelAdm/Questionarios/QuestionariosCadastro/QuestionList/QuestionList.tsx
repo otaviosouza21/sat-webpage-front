@@ -8,8 +8,8 @@ import Title from "../../../../../Components/Titles/Title.tsx";
 import { PerguntasProps } from "../../../../../types/apiTypes.ts";
 
 export type QuestionListProps = React.ComponentProps<"div"> & {
-  perguntasData: PerguntasProps[];
-  setPerguntasData: React.Dispatch<React.SetStateAction<PerguntasProps[]>>;
+  perguntasData: PerguntasProps[] | null;
+  setPerguntasData: React.Dispatch<React.SetStateAction<PerguntasProps[] | null>>;
 };
 
 const QuestionList = ({ perguntasData,setPerguntasData, ...props }: QuestionListProps) => {
@@ -18,8 +18,8 @@ const QuestionList = ({ perguntasData,setPerguntasData, ...props }: QuestionList
 // delete a pergunta baseada no index
   function handleCardDelete(index: number | undefined) {
     if (index === undefined) return; // Adicione uma verificação de segurança
-    setPerguntasData((prevPerguntas: PerguntasProps[]) =>
-      prevPerguntas.filter((_, i) => i !== index) // Remova o item pelo índice
+    setPerguntasData((prevPerguntas: PerguntasProps[] | null) =>
+      prevPerguntas && prevPerguntas.filter((_, i) => i !== index) // Remova o item pelo índice
     );
   }
 
@@ -38,7 +38,7 @@ const QuestionList = ({ perguntasData,setPerguntasData, ...props }: QuestionList
         </div>
       </div>
       <ul className={styles.questionsList}>
-        {perguntasData.length > 0 ? (
+        {perguntasData && perguntasData.length > 0 ? (
           perguntasData.map((question, index) => {
             return (
               <QuestionCard
