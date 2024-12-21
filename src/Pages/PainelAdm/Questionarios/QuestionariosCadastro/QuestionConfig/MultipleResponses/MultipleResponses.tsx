@@ -12,86 +12,55 @@ import { subPerguntasProps } from "../../../../../../types/apiTypes";
 
 interface MultipleResponsesProps {
   question_id: string;
-  options: Option[];
-  setOptions: React.Dispatch<React.SetStateAction<Option[]>>;
-  setSubPerguntasData: React.Dispatch<React.SetStateAction<subPerguntasProps[] | null>>
+  setSubPerguntasData: React.Dispatch<
+    React.SetStateAction<subPerguntasProps[] | null>
+  >;
+  subPerguntasData: subPerguntasProps[] | null;
 }
 
 const MultipleResponses = ({
-  question_id,
-  options,
-  setOptions,
-  setSubPerguntasData 
+ 
+  setSubPerguntasData,
+  subPerguntasData,
 }: MultipleResponsesProps) => {
-  const { request, loading, error, data } = useFetch();
-  const [currentOptions, setCurrentOptions] = useState<Option[] | null>(null);
-  const activeToast = useToast();
 
-  useEffect(() => {
-    async function fetchOptions() {
-      if (question_id) {
-        const { url, options } = GET_TO_WHERE(
-          "subperguntas",
-          "pergunta_id",
-          question_id
-        );
-        const { response, json } = await request(url, options);
-        if (response?.ok) {
-          setOptions(json.data);
-        } else {
-          activeToast({
-            message: "Ocorreu um erro ao buscar opções",
-            type: "error",
-          });
-        }
+  const handleClick = () => {};
+
+  const handleChange = (newValue: string) => {
+    const newSubPergunta: subPerguntasProps = {titulo: newValue};
+  
+    setSubPerguntasData((prevData) => {
+      // Verifica se subPerguntasData não é null antes de realizar a operação
+      if (prevData) {
+        return [...prevData, newSubPergunta];  // Atualiza o estado
       }
-    }
-
-    fetchOptions();
-  }, []);
-
-  // Adiciona uma nova opção com um ID único
-  const handleClick = () => {
-    const newOption: Option = { id: options.length + 1, titulo: "" };
-    setOptions([...options, newOption]);
-    setSubPerguntasData(options)
+      return [newSubPergunta];  // Caso seja null, inicia com um novo array
+    });
   };
 
-  // Atualiza o valor de uma opção específica
-  const handleChange = (id: number, newValue: string) => {
-    const updatedOptions = options.map((option) =>
-      option.id === id ? { ...option, titulo: newValue } : option
-    );
-    setOptions(updatedOptions);
-  };
+  const handleDelete = (id: number) => {};
 
-  // Remove uma opção com base no ID
-  const handleDelete = (id: number) => {
-    const updatedOptions = options.filter((option) => option.id !== id);
-    const updateCurrentOptions = options.filter((option) => option.id !== id);
-    setCurrentOptions(updateCurrentOptions)
-    setOptions(updatedOptions);
-  };
-
+  if (subPerguntasData && subPerguntasData?.length < 1) return null;
   return (
     <div className={styles.container}>
-      {options.map((option) => (
-        <div key={option.id} className={styles.input}>
-          <InputText
-            key={option.id}
-            placeholder={`Opção ${option.id}`}
-            value={option.titulo}
-            onChange={(e) => handleChange(option.id, e.target.value)}
-            id="multipleResponse"
-          />
-          <img
-            onClick={() => handleDelete(option.id)}
-            src={sub}
-            alt="Remove Option"
-            className={styles.icon}
-          />
-        </div>
-      ))}
+      {subPerguntasData &&
+        subPerguntasData.map((option, index) => (
+          <div key={option.id} className={styles.input}>
+            <InputText
+              key={option.id}
+              placeholder={`Opção ${option.id}`}
+              value={option.titulo}
+              onChange={(e) => handleChange(e.target.value)}
+              id="multipleResponse"
+            />
+            <img
+              onClick={() => handleDelete(index)}
+              src={sub}
+              alt="Remove Option"
+              className={styles.icon}
+            />
+          </div>
+        ))}
       <img
         onClick={handleClick}
         src={plus}

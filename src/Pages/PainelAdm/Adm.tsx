@@ -14,6 +14,7 @@ const Adm = () => {
   const { fetchValidaToken, userAuth } = useTokenValidate();
 
   useEffect(() => { // valida token com o hook no carregamento da pagina
+    document.title = "SAT | Painel Adm";
     fetchValidaToken();
   }, [userAuth.rule]);
 

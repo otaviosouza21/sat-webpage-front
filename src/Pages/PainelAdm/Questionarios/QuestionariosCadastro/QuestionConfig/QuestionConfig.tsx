@@ -18,6 +18,7 @@ import LoadingDots from "../../../../../Components/Utils/LoadingDots/LoadingDots
 type QuestionConfigProps = {
   setPerguntasData: React.Dispatch<React.SetStateAction<PerguntasProps[] | null>>;
   setSubPerguntasData: React.Dispatch<React.SetStateAction<subPerguntasProps[] | null>>
+  subPerguntasData: subPerguntasProps[] | null
 };
 
 export interface Option {
@@ -25,12 +26,12 @@ export interface Option {
   titulo: string;
 }
 
-const QuestionConfig = ({ setPerguntasData, setSubPerguntasData }: QuestionConfigProps) => {
+const QuestionConfig = ({ setPerguntasData, setSubPerguntasData, subPerguntasData }: QuestionConfigProps) => {
   const { request, loading } = useFetch();
   const { setModalScreen, dataUpdate, setDataUpdate } = useGlobalContext();
   const [tipoPergunta, setTipoPergunta] = useState<tipoPerguntasProps | null>(null);
   const [currentTipoPergunta, setCurrentTipoPergunta] = useState<string>("1");
-  const [options, setOptions] = useState<Option[]>([]);
+
   
   const activeToast = useToast();
   const titleForm = useForm();
@@ -69,10 +70,11 @@ const QuestionConfig = ({ setPerguntasData, setSubPerguntasData }: QuestionConfi
         const pergunta: PerguntasProps = {
           titulo: titleForm.value,
           descricao: descricaoForm.value,
-          tipo_resposta_id: Number(currentTipoPergunta),
+          tipo_resposta_id: currentTipoPergunta === "1" ? Number(currentTipoPergunta)+1 : +currentTipoPergunta,
           possui_sub_pergunta: currentTipoPergunta === "3" ? true : false,
+          opcoes_resposta: subPerguntasData && subPerguntasData?.length > 0 ? subPerguntasData : null
         };
-        return [...(prevQuestions || []), pergunta];
+        return [...(prevQuestions || []), pergunta]
       });
       
       setModalScreen({ nomeModal: "", status: false });
@@ -109,9 +111,8 @@ const QuestionConfig = ({ setPerguntasData, setSubPerguntasData }: QuestionConfi
       {currentTipoPergunta === "3" && (
         <MultipleResponses
           question_id={dataUpdate && dataUpdate.id}
-          options={options}
-          setOptions={setOptions}
           setSubPerguntasData={setSubPerguntasData}
+          subPerguntasData={subPerguntasData}
         />
       )}
       <Button handleSubmit={handleClick}>Salvar</Button>

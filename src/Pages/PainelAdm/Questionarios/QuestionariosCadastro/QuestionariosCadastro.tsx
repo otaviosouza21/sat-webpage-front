@@ -28,7 +28,7 @@ export interface questionListProps {
   formulario_id: string;
   titulo: string;
   descricao: string;
-  tipo_resposta: string;
+  tipo_resposta_id: number;
   possui_sub_pergunta: boolean;
   multipleQuestionOptions?: { titulo: string }[] | null;
 }
@@ -42,8 +42,8 @@ const QuestionariosCadastro = () => {
   const { modal, dataUpdate, modalScreen } = useGlobalContext();
   const { fetchValidaToken, userAuth } = useTokenValidate();
   const { request, loading, error,data } = useFetch();
+  const navigate = useNavigate()
 
-  const [formularioData, setFormularioData] =useState<Form>(defaultQuestionario);
   const [perguntasData,setPerguntasData] = useState<PerguntasProps[] | null>(null)
   const [subPerguntasData,setSubPerguntasData] = useState<subPerguntasProps[] | null >(null)
 
@@ -87,12 +87,15 @@ const QuestionariosCadastro = () => {
 
   //cria novo formulario
   function createForm(dataQuestionario: QuestionarioCompletoProps) {
+    console.log(dataQuestionario);
+    
     const { url, options } = POST_DATA("formularios", dataQuestionario);
     return { url, options };
   }
 
   // atualiza formulario
   function updateForm(dataQuestionario: QuestionForm) {
+
     const { url, options } = UPDATE_DATA(
       "formularios",
       dataQuestionario,
@@ -121,40 +124,39 @@ const QuestionariosCadastro = () => {
       }
 
       // monta Formulario Principal
-      setFormularioData({
+      const formularioDataLocal = {
         titulo: tituloForm.value,
         descricao: descricaoForm.value,
         vigencia_inicio: vigenciaInicioForm.value,
-        vigencia_fim: vigenciaInicioForm.value,
+        vigencia_fim: vigenciaFimForm.value,
         usuario_id: userAuth.usuario.id,
         status: true,
-        tipo_id: Number(currentTipoForm)
-      })
+        tipo_id: Number(currentTipoForm),
+      };
+  
 
-   //Monta Perguntas completas
-      const perguntasCompletas = perguntasData?.map(pergunta=>{
-        const perguntaCompleta = {...pergunta,
-          opcoes_resposta: pergunta.possui_sub_pergunta && subPerguntasData
-        }
-        return perguntaCompleta
-      })
+  
+
 
       const formularioCompleto =  {
-        form: {
-          ...formularioData,
-          perguntas: perguntasCompletas
-        }
+          ...formularioDataLocal,
+          perguntas: perguntasData
       }
+
 
 
       if(formularioCompleto) {
         const {url,options} = createForm(formularioCompleto)
         const {response,json} = await request(url,options);
-        console.log(formularioCompleto);
+  
+  
+        if(!response?.ok) {
+          activeToast({message: "Erro", type: "warning"})
+          throw new Error("Erro ao cadastrar Formulario")
+        }
+        activeToast({message: json.message, type: "success"})
+        navigate(-1)
         
-        
-        if(!response?.ok) throw new Error("Erro ao cadastrar Formulario") 
-        activeToast({message: "Formulario Cadastrado com sucesso", type: "success"})
       }
       
     } else {
@@ -167,8 +169,8 @@ const QuestionariosCadastro = () => {
 
 
   if (loading) return <LoadingCenterComponent />;
-  if (error) return <p>Erro ao carregar os dados: {error}</p>;
-  
+  if (error) return <p>Erro ao carregar os dados:</p>;
+
   return (
     <div
       data-aos="fade-right"
@@ -204,7 +206,7 @@ const QuestionariosCadastro = () => {
       </Button>
 
       <ModalScreen>
-        <QuestionConfig setPerguntasData={setPerguntasData} setSubPerguntasData={setSubPerguntasData} />
+        <QuestionConfig setPerguntasData={setPerguntasData} subPerguntasData={subPerguntasData} setSubPerguntasData={setSubPerguntasData} />
       </ModalScreen>
     </div>
   );

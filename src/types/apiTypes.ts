@@ -89,19 +89,7 @@ export interface QuestionarioCompletoProps {
   vigencia_fim: string;
   vigencia_inicio: string;
   status: boolean;
-  perguntas: [
-    {
-      titulo: string;
-      descricao: string;
-      tipo_resposta: string;
-      possui_sub_pergunta: boolean;
-      opcoes_reposta: [
-        {
-          titulo: string
-        } | null
-      ]
-    }
-  ];
+  perguntas: PerguntasProps[]
 }
 
 
@@ -114,6 +102,7 @@ export interface PerguntasProps {
   tipo_resposta_id: number;
   createdAt?: string;
   updatedAt?: string;
+  opcoes_resposta: subPerguntasProps[] | null
 }
 
 export interface tipoFormularioProps {
@@ -213,10 +202,10 @@ export const defaultQuestionarioCompleto: QuestionarioCompletoProps = {
   perguntas:[
     {
       titulo: "",
-      tipo_resposta: "",
+      tipo_resposta_id: 0,
       descricao: "",
       possui_sub_pergunta: false,
-      opcoes_reposta: [{titulo: ""}]
+      opcoes_resposta: null
     }
   ]
 };
@@ -227,5 +216,6 @@ export const defaultPerguntasProps: PerguntasProps[] = [
     descricao: "string",
     possui_sub_pergunta: false,
     tipo_resposta_id: 0,
-  },
+    opcoes_resposta: null
+  }
 ];
