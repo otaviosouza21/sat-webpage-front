@@ -1,10 +1,15 @@
 import React, { ChangeEvent, ChangeEventHandler } from "react";
 import styles from "./Input.module.css";
 
+interface optionsProps {
+  nome: string,
+  id?: number
+}
+
 interface InputSelectProps {
   label: string;
   id: string;
-  options: any;
+  options: optionsProps[],
   placeholder?: string;
   gridColumn?: string;
   opacity?: number | null;

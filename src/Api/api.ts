@@ -62,7 +62,7 @@ export function GET_TO_ID(tableName: string, id: string) : PropsApiReturn {
 //=================Retorna registros com WHERE====================//
 export function GET_TO_WHERE(tableName: string, column: string, id: string) : PropsApiReturn {
   return {
-    url: `${URL}/api/${tableName}/${id}/${column}`,
+    url: `${URL}/api/${tableName}/${column}/${id}`,
     options: {
       method: "GET",
       headers: {

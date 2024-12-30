@@ -89,7 +89,8 @@ export interface QuestionarioCompletoProps {
   vigencia_fim: string;
   vigencia_inicio: string;
   status: boolean;
-  perguntas: PerguntasProps[]
+  perguntas: PerguntasProps[] | null
+  Tipos_formulario?: tipoFormularioProps
 }
 
 
@@ -103,6 +104,7 @@ export interface PerguntasProps {
   createdAt?: string;
   updatedAt?: string;
   opcoes_resposta: subPerguntasProps[] | null
+  SubPergunta?: subPerguntasProps
 }
 
 export interface tipoFormularioProps {

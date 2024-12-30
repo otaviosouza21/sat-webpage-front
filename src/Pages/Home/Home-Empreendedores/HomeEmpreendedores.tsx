@@ -9,10 +9,12 @@ import figuras1 from "../../../assets/img/figure1.svg";
 import figuras2 from "../../../assets/img/figure2.svg";
 import { useGlobalContext } from "../../../Hooks/GlobalContext.tsx";
 import useTokenValidate from "../../../Hooks/useTokenValidate.tsx";
+import ModalScreen from "../../../Components/ModalScreen/ModalScreen.tsx";
+import QuestionarioResposta from "../../PainelAdm/Questionarios/QuestionariosRespostas/QuestionarioResposta.tsx";
 
 
 const HomeEmpreendedores = () => {
-  const { setModal }  = useGlobalContext();
+  const { setModal, setModalScreen }  = useGlobalContext();
   const { fetchValidaToken } = useTokenValidate();
   const gridLinks = useRef<HTMLDivElement>(null);
 
@@ -22,6 +24,13 @@ const HomeEmpreendedores = () => {
     overflow && overflow.classList.remove("overFlow");
     const token = window.localStorage.getItem("token");
     if(token) fetchValidaToken();
+
+    setTimeout(()=>{
+      setModalScreen({
+        nomeModal: "Questionario Home",
+        status: true,
+      })
+    },1000)
   }, []);
 
   return (
@@ -50,8 +59,10 @@ const HomeEmpreendedores = () => {
             patch="/servico/cadastro"
           />
         </div>
-      
       </section>
+      <ModalScreen>
+        <QuestionarioResposta />
+      </ModalScreen>
     </main>
   );
 };

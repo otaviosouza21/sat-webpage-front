@@ -87,7 +87,6 @@ const QuestionariosCadastro = () => {
 
   //cria novo formulario
   function createForm(dataQuestionario: QuestionarioCompletoProps) {
-    console.log(dataQuestionario);
     
     const { url, options } = POST_DATA("formularios", dataQuestionario);
     return { url, options };
@@ -135,17 +134,13 @@ const QuestionariosCadastro = () => {
       };
   
 
-  
-
-
-      const formularioCompleto =  {
+      const formularioCompleto: QuestionarioCompletoProps =  {
           ...formularioDataLocal,
           perguntas: perguntasData
       }
+   
 
-
-
-      if(formularioCompleto) {
+      if(formularioCompleto && formularioCompleto.perguntas) {
         const {url,options} = createForm(formularioCompleto)
         const {response,json} = await request(url,options);
   
