@@ -30,8 +30,10 @@ const QuestionarioResposta = ({ tipoForm }: { tipoForm: string }) => {
     getFormulario();
   }, []);
 
+
+
   async function getFormulario() {
-    const { url, options } = GET_TO_WHERE("formularios", "tipo_id", "2");
+    const { url, options } = GET_TO_WHERE("formularios", "tipo_id", tipoForm);
     const { response, json } = await request(url, options);
     if (!response?.ok) {
       setModalScreen({ nomeModal: "", status: false });
@@ -43,10 +45,12 @@ const QuestionarioResposta = ({ tipoForm }: { tipoForm: string }) => {
 
   const handleCloseModal = (e: React.FormEvent) => {
     e.preventDefault();
+    window.localStorage.setItem("questionario-status", "s");
     setModalScreen({ nomeModal: "", status: false });
   };
 
-  if (loading) <LoadingDots />;
+
+  if (loading) return <LoadingDots />;
   return (
     <form
       data-aos="fade-right"
@@ -55,29 +59,33 @@ const QuestionarioResposta = ({ tipoForm }: { tipoForm: string }) => {
       className={styles.container}
     >
       <div className={styles.header}>
-        <div>
+        <div className={styles.title}>
           <Title text={currentQuestionario?.titulo} fontSize="2" />
           <p>{currentQuestionario?.descricao}</p>
         </div>
         <CloseButton closeModal={handleCloseModal} />
       </div>
-      <div className={styles.inputs}>
+      <form className={styles.inputs}>
         {currentPerguntas &&
           currentPerguntas.map((pergunta) => {
-      
-
             if (pergunta.possui_sub_pergunta) {
-              const subPerguntas: subPerguntasProps[] = pergunta?.SubPergunta;
+              const subPerguntas = Array.isArray(pergunta?.SubPergunta)
+                ? pergunta.SubPergunta
+                : [];
 
-              if(subPerguntas && subPerguntas?.length > 0){
-                const options = subPerguntas.map((sub,index)=>{
-                    return {id: index, nome: sub.titulo}
-                  })
+              if (subPerguntas && subPerguntas?.length > 0) {
+                const options = subPerguntas.map((sub, index) => {
+                  return { id: index, nome: sub.titulo };
+                });
 
-                  return <InputSelect id="" label={pergunta.titulo} options={options} />;
-
+                return (
+                  <InputSelect
+                    id=""
+                    label={pergunta.titulo}
+                    options={options}
+                  />
+                );
               }
-             
             }
             return (
               <InputText
@@ -86,7 +94,7 @@ const QuestionarioResposta = ({ tipoForm }: { tipoForm: string }) => {
               />
             );
           })}
-      </div>
+      </form>
       <Button>Enviar</Button>
     </form>
   );

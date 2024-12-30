@@ -7,6 +7,7 @@ import useFetch from "../../../../Hooks/useFetch";
 import useForm from "../../../../Hooks/useForm.tsx";
 import {
   GET_ALL,
+  GET_TO_ID,
   GET_TO_WHERE,
   POST_DATA,
   UPDATE_DATA,
@@ -76,6 +77,19 @@ const QuestionariosCadastro = () => {
       }
       getTiposFormulario();
   }, []);
+
+  useEffect(()=>{
+    if(dataUpdate !== null){
+      getQuestionario()
+    }
+  },[])
+
+  async function getQuestionario(){
+    const id = dataUpdate
+    const {url,options} = GET_TO_ID('formularios', id)
+    const {response,json} = await request(url,options)
+    console.log(json);
+  }
 
 
   //Pega os tipos de fomulario ao carregar

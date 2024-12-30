@@ -9,7 +9,7 @@ import { QuestionarioCompletoProps, QuestionarioProps } from "../../../../../typ
 type CardListProps = React.ComponentProps<"li"> & {
   form: QuestionarioCompletoProps;
   handleDelete: (id: number) => void;
-  handleEdit: (form: QuestionarioProps) => void;
+  handleEdit: (id: number | undefined) => void;
 };
 
 const QuestionarioCardList = ({
@@ -39,11 +39,11 @@ const QuestionarioCardList = ({
             color={"green"}
             size="30px"
           />
-         {/*  <PenIcon
-            onclick={() => handleEdit(form)}
+          <PenIcon
+            onclick={() => handleEdit(form.id)}
             color={"green"}
             size="30px"
-          /> */}
+          /> 
         </div>
       </li>
     );

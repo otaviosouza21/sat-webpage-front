@@ -70,8 +70,8 @@ const QuestionariosLista = () => {
     }
   }
 
-  async function handleEdit(form: Form) {
-    setDataUpdate(form);
+  async function handleEdit(id: number | undefined) {
+    setDataUpdate(id);
     navigate("/questionario/cadastro");
   }
 

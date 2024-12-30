@@ -3,7 +3,6 @@ import styles from "../QuestionariosCadastro.module.css";
 import Plus from "../../../../../assets/icons/plus.svg";
 import QuestionCard from "../QuestionCard/QuestionCard.tsx";
 import { useGlobalContext } from "../../../../../Hooks/GlobalContext.tsx";
-import { questionListProps } from "../QuestionariosCadastro";
 import Title from "../../../../../Components/Titles/Title.tsx";
 import { PerguntasProps } from "../../../../../types/apiTypes.ts";
 

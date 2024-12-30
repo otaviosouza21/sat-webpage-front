@@ -12,25 +12,29 @@ import useTokenValidate from "../../../Hooks/useTokenValidate.tsx";
 import ModalScreen from "../../../Components/ModalScreen/ModalScreen.tsx";
 import QuestionarioResposta from "../../PainelAdm/Questionarios/QuestionariosRespostas/QuestionarioResposta.tsx";
 
-
 const HomeEmpreendedores = () => {
-  const { setModal, setModalScreen }  = useGlobalContext();
+  const { setModal, setModalScreen } = useGlobalContext();
   const { fetchValidaToken } = useTokenValidate();
   const gridLinks = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.title = 'SAT | Portal do Empreendedor'
+    document.title = "SAT | Portal do Empreendedor";
     const overflow = document.querySelector("body");
     overflow && overflow.classList.remove("overFlow");
     const token = window.localStorage.getItem("token");
-    if(token) fetchValidaToken();
+    if (token) fetchValidaToken();
 
-    setTimeout(()=>{
-      setModalScreen({
-        nomeModal: "Questionario Home",
-        status: true,
-      })
-    },1000)
+    const questionarioStatus = window.localStorage.getItem(
+      "questionario-status"
+    );
+    if (questionarioStatus === null) {
+      setTimeout(() => {
+        setModalScreen({
+          nomeModal: "Questionario Home",
+          status: true,
+        });
+      }, 9000);
+    }
   }, []);
 
   return (
@@ -61,7 +65,7 @@ const HomeEmpreendedores = () => {
         </div>
       </section>
       <ModalScreen>
-        <QuestionarioResposta />
+        <QuestionarioResposta tipoForm="2" />
       </ModalScreen>
     </main>
   );
