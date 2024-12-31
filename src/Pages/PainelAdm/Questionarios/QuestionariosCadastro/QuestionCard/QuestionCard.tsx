@@ -14,12 +14,11 @@ interface QuestionCardProps{
 }
 
 const QuestionCard = ({question,handleCardDelete,index}:QuestionCardProps) => {
-  const { setModal,setDataUpdate } = useGlobalContext();
+  const { setModalScreen } = useGlobalContext();
 
-  
   function handleUpdateClick(){
-    setModal("show-QuestionConfig")
-    setDataUpdate(question)
+    setModalScreen({nomeModal:'Questionario Config',status: true, data: question})
+  
   }
 
   return (

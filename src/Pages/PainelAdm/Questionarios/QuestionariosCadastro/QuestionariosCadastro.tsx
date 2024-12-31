@@ -54,7 +54,6 @@ const QuestionariosCadastro = () => {
   const [statusForm,setStatusForm] = useState<string>("1")
  
 
-
   const formRef = useRef<HTMLFormElement>(null);
   const activeToast = useToast();
   const tituloForm = useForm();
@@ -63,8 +62,6 @@ const QuestionariosCadastro = () => {
   const descricaoForm = useForm();
   const navigation = useNavigate();
 
-
-  
 
   // valida token de usuario logado
   useEffect(() => {
@@ -76,19 +73,29 @@ const QuestionariosCadastro = () => {
       setTiposFormulario(json)
       }
       getTiposFormulario();
+
+      if(dataUpdate !== null){
+        getQuestionario()
+      } 
   }, []);
 
-  useEffect(()=>{
-    if(dataUpdate !== null){
-      getQuestionario()
-    }
-  },[])
 
+  // Em caso de Edição, puxa os dados do formulario
   async function getQuestionario(){
     const id = dataUpdate
     const {url,options} = GET_TO_ID('formularios', id)
     const {response,json} = await request(url,options)
-    console.log(json);
+    if(!response?.ok) throw new Error('Erro ao buscar formulario')
+    const {retorno} = json.data
+    setPerguntasData(retorno[0].Pergunta) 
+
+    //preenche campos em caso de atualizacao
+    tituloForm.setValue(retorno[0].titulo)
+    descricaoForm.setValue(retorno[0].descricao)
+    vigenciaInicioForm.setValue(convertDataUS(retorno[0].vigencia_inicio))
+    vigenciaFimForm.setValue(convertDataUS(retorno[0].vigencia_fim))
+    setCurrentTipoForm(retorno[0].tipo_id)
+    setStatusForm(retorno[0].status)
   }
 
 
@@ -108,7 +115,6 @@ const QuestionariosCadastro = () => {
 
   // atualiza formulario
   function updateForm(dataQuestionario: QuestionForm) {
-
     const { url, options } = UPDATE_DATA(
       "formularios",
       dataQuestionario,

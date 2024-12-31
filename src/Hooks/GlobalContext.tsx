@@ -19,7 +19,7 @@ import {
 interface modalScreenProps {
   nomeModal: "Questionario Config" | "Questionario Servico" | "Questionario Home" | "" ;
   status: boolean;
-  data?: object;
+  data?: any;
 }
 
 interface GlobalContextProps {

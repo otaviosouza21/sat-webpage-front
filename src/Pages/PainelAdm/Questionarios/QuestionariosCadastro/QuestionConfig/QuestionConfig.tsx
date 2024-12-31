@@ -14,6 +14,7 @@ import { PerguntasProps, subPerguntasProps, tipoPerguntasProps } from "../../../
 import useFetch from "../../../../../Hooks/useFetch";
 import { GET_ALL } from "../../../../../Api/api";
 import LoadingDots from "../../../../../Components/Utils/LoadingDots/LoadingDots";
+import ModalScreen from "../../../../../Components/ModalScreen/ModalScreen";
 
 type QuestionConfigProps = {
   setPerguntasData: React.Dispatch<React.SetStateAction<PerguntasProps[] | null>>;
@@ -28,7 +29,7 @@ export interface Option {
 
 const QuestionConfig = ({ setPerguntasData, setSubPerguntasData, subPerguntasData }: QuestionConfigProps) => {
   const { request, loading } = useFetch();
-  const { setModalScreen, dataUpdate, setDataUpdate } = useGlobalContext();
+  const { setModalScreen,modalScreen, dataUpdate, setDataUpdate } = useGlobalContext();
   const [tipoPergunta, setTipoPergunta] = useState<tipoPerguntasProps | null>(null);
   const [currentTipoPergunta, setCurrentTipoPergunta] = useState<string>("1");
 
@@ -52,7 +53,21 @@ const QuestionConfig = ({ setPerguntasData, setSubPerguntasData, subPerguntasDat
     };
 
     getTipoPerguntas();
+
+    if(modalScreen.data){
+      getCurrentQuestion()
+    }
   }, []);
+
+  const getCurrentQuestion = () =>{
+    titleForm.setValue(modalScreen.data?.titulo)
+    descricaoForm.setValue(modalScreen.data?.descricao)
+    setCurrentTipoPergunta(modalScreen.data?.tipo_resposta_id) 
+    if(modalScreen.data?.possui_sub_pergunta){
+      setSubPerguntasData(modalScreen.data?.SubPergunta)
+    }
+   
+  }
 
   // Função para atualizar o tipo de pergunta selecionado
   const handleTipoPerguntaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -64,7 +79,6 @@ const QuestionConfig = ({ setPerguntasData, setSubPerguntasData, subPerguntasDat
     e.preventDefault();
 
     if (titleForm.validate() && descricaoForm.validate() && tipoPergunta) {
-      console.log(currentTipoPergunta);
       
       setPerguntasData((prevQuestions) => {
         const pergunta: PerguntasProps = {

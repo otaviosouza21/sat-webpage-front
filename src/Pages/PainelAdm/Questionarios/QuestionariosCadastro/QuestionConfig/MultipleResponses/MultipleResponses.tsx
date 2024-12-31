@@ -18,6 +18,8 @@ const MultipleResponses = ({
   subPerguntasData,
 }: MultipleResponsesProps) => {
   const [inputs,setInputs] = useState([{id: 0 ,titulo: ""}])
+  console.log(subPerguntasData);
+  
 
   const handleAddInput = () => {setInputs([...inputs, {id: Date.now(), titulo: ""}])};
 

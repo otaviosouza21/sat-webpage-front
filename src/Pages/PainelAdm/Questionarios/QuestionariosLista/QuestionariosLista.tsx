@@ -34,6 +34,7 @@ const QuestionariosLista = () => {
 
   useEffect(() => {
     fetchValidaToken();
+    setDataUpdate(null)
   }, [userAuth.rule]);
 
   useEffect(() => {
